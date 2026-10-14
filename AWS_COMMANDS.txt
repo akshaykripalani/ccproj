@@ -2282,3 +2282,11 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T17:27:06.718393+00:00] df089425d11e EXIT 0
 [2026-10-14T17:27:06.996427+00:00] 2d2609a7d722 EXIT 0
 [2026-10-14T17:27:07.127272+00:00] 25f0dc3e4f8b EXIT 0
+
+[2026-10-14T17:29:40.348254+00:00] 19330a56984e Check current SNS subscription after confirmation-link error
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:29:42.600836+00:00] 19330a56984e EXIT 0
+
+[2026-10-14T17:29:42.829236+00:00] dab3fd02fc7c Verify current SNS subscription remains active
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "get-subscription-attributes", "--subscription-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1:924fc43d-dd83-4746-a097-fe7f0a651508", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:29:45.033954+00:00] dab3fd02fc7c EXIT 0
