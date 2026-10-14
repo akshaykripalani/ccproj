@@ -2202,3 +2202,83 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T17:25:10.423831+00:00] 399d169971f7 Remove only disposable live-test user
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-fa733669f96d@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-14T17:25:12.796164+00:00] 399d169971f7 EXIT 0
+
+[2026-10-14T17:26:50.001079+00:00] e76430fb4b87 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:26:52.142269+00:00] e76430fb4b87 EXIT 0
+
+[2026-10-14T17:26:52.261038+00:00] 241b8b468e03 Capture deployed acceptance evidence: stacks
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--query", "Stacks[?starts_with(StackName, 'ccproj')].{name:StackName,status:StackStatus}", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:26:52.261038+00:00] 852d844d020d Capture deployed acceptance evidence: subscriptions
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:26:52.261038+00:00] 5e9214b799fc Capture deployed acceptance evidence: consumer
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:26:52.262046+00:00] 4b1ca3ca85cc Capture deployed acceptance evidence: intentionalFailureLogs
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "filter-log-events", "--log-group-name", "/aws/lambda/ccproj-Processor", "--start-time", "1791996900000", "--end-time", "1791997500000", "--filter-pattern", "\"Processing failed\"", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:26:55.012270+00:00] 852d844d020d EXIT 0
+[2026-10-14T17:26:55.051310+00:00] 241b8b468e03 EXIT 0
+[2026-10-14T17:26:55.090905+00:00] 5e9214b799fc EXIT 0
+
+[2026-10-14T17:26:55.127807+00:00] b766670eab9e Capture deployed acceptance evidence: alarms
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudwatch", "describe-alarms", "--alarm-name-prefix", "ccproj-", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:26:55.243307+00:00] e2bfcbe727a0 Capture deployed acceptance evidence: budget
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "budgets", "describe-budget", "--account-id", "039379078306", "--budget-name", "ccproj-total-ceiling", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:26:55.361317+00:00] d0e8d8eef094 Capture deployed acceptance evidence: budgetNotifications
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "budgets", "describe-notifications-for-budget", "--account-id", "039379078306", "--budget-name", "ccproj-total-ceiling", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:26:55.645303+00:00] 4b1ca3ca85cc EXIT 0
+
+[2026-10-14T17:26:55.813979+00:00] 7edeea1a3658 Capture deployed acceptance evidence: instance
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ec2", "describe-instances", "--instance-ids", "i-098cf45e426dd3ab7", "--query", "Reservations[].Instances[].{id:InstanceId,state:State.Name,type:InstanceType,metadata:MetadataOptions,volumes:BlockDeviceMappings}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:26:58.092558+00:00] b766670eab9e EXIT 0
+[2026-10-14T17:26:58.121556+00:00] e2bfcbe727a0 EXIT 0
+[2026-10-14T17:26:58.178789+00:00] d0e8d8eef094 EXIT 0
+
+[2026-10-14T17:26:58.191076+00:00] bcab5f9ecf6f Capture deployed acceptance evidence: managedInstance
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "describe-instance-information", "--filters", "Key=InstanceIds,Values=i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:26:58.306755+00:00] 030f625151b3 Capture deployed acceptance evidence: recentTTL
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "describe-time-to-live", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:26:58.427899+00:00] a207a691b091 Capture deployed acceptance evidence: archiveVersioning
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "get-bucket-versioning", "--bucket", "ccproj-archive-mx5crrke5wcd", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:26:58.582668+00:00] 7edeea1a3658 EXIT 0
+
+[2026-10-14T17:26:58.880146+00:00] 586cec0eb071 Capture deployed acceptance evidence: archiveRetention
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "get-bucket-lifecycle-configuration", "--bucket", "ccproj-archive-mx5crrke5wcd", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:27:01.300061+00:00] bcab5f9ecf6f EXIT 0
+
+[2026-10-14T17:27:01.392823+00:00] 291c43e22adb Capture deployed acceptance evidence: hostingPrivacy
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "get-public-access-block", "--bucket", "ccproj-frontend-ipu2nmzptkhj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:27:01.392823+00:00] 030f625151b3 EXIT 0
+
+[2026-10-14T17:27:01.518705+00:00] 37eb07c9c6b6 Capture deployed acceptance evidence: athenaLimits
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "athena", "get-work-group", "--work-group", "ccproj-reports", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:27:01.542460+00:00] a207a691b091 EXIT 0
+
+[2026-10-14T17:27:01.559396+00:00] 73e6d6863149 Capture deployed acceptance evidence: queue
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:27:01.727487+00:00] 586cec0eb071 EXIT 0
+
+[2026-10-14T17:27:01.748143+00:00] 61b39490a346 Capture deployed acceptance evidence: deadLetters
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:27:04.175199+00:00] 291c43e22adb EXIT 0
+
+[2026-10-14T17:27:04.184282+00:00] df089425d11e Capture deployed acceptance evidence: motor-01
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--consistent-read", "--key", "{\"pk\": {\"S\": \"motor-01\"}, \"sk\": {\"S\": \"STATE\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:27:04.280386+00:00] 37eb07c9c6b6 EXIT 0
+
+[2026-10-14T17:27:04.392993+00:00] 2d2609a7d722 Capture deployed acceptance evidence: motor-02
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--consistent-read", "--key", "{\"pk\": {\"S\": \"motor-02\"}, \"sk\": {\"S\": \"STATE\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:27:04.421992+00:00] 61b39490a346 EXIT 0
+
+[2026-10-14T17:27:04.623434+00:00] 25f0dc3e4f8b Capture deployed acceptance evidence: motor-03
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--consistent-read", "--key", "{\"pk\": {\"S\": \"motor-03\"}, \"sk\": {\"S\": \"STATE\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:27:05.287330+00:00] 73e6d6863149 EXIT 0
+[2026-10-14T17:27:06.718393+00:00] df089425d11e EXIT 0
+[2026-10-14T17:27:06.996427+00:00] 2d2609a7d722 EXIT 0
+[2026-10-14T17:27:07.127272+00:00] 25f0dc3e4f8b EXIT 0

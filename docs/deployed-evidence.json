@@ -1,0 +1,785 @@
+{
+  "stacks": [
+    {
+      "name": "ccproj-simulator",
+      "status": "CREATE_COMPLETE"
+    },
+    {
+      "name": "ccproj",
+      "status": "CREATE_COMPLETE"
+    },
+    {
+      "name": "ccproj-artifacts",
+      "status": "UPDATE_COMPLETE"
+    }
+  ],
+  "subscriptions": {
+    "Subscriptions": [
+      {
+        "SubscriptionArn": "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1:924fc43d-dd83-4746-a097-fe7f0a651508",
+        "Owner": "039379078306",
+        "Protocol": "email",
+        "Endpoint": "collegeproject@akshaykripalani.com",
+        "TopicArn": "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+      }
+    ]
+  },
+  "consumer": {
+    "UUID": "0c7ebf06-260d-42de-b451-071598a6f2f9",
+    "BatchSize": 10,
+    "MaximumBatchingWindowInSeconds": 0,
+    "EventSourceArn": "arn:aws:sqs:ap-southeast-2:039379078306:ccproj-Telemetry-fZ6tZS66tzGn.fifo",
+    "FunctionArn": "arn:aws:lambda:ap-southeast-2:039379078306:function:ccproj-Processor",
+    "LastModified": "2026-10-14T22:51:33.497000+05:30",
+    "State": "Enabled",
+    "StateTransitionReason": "USER_INITIATED",
+    "FunctionResponseTypes": [
+      "ReportBatchItemFailures"
+    ],
+    "EventSourceMappingArn": "arn:aws:lambda:ap-southeast-2:039379078306:event-source-mapping:0c7ebf06-260d-42de-b451-071598a6f2f9"
+  },
+  "intentionalFailureLogs": {
+    "events": [
+      {
+        "logStreamName": "2026/10/14/[$LATEST]69ec39efb3144331a62fc596556cc843",
+        "timestamp": 1791997049508,
+        "message": "[ERROR]\t2026-10-14T16:57:29.507Z\t66b50ec3-7e01-57f9-95b8-6d8ac8b707ff\tProcessing failed message=3293898a-8f6d-4b4e-80f0-99a038abbb96\nTraceback (most recent call last):\n  File \"/var/task/backend/processor.py\", line 188, in handler\n    process_message(message)\n  File \"/var/task/backend/processor.py\", line 170, in process_message\n    received = parse_time(envelope[\"receivedAt\"])\n                          ~~~~~~~~^^^^^^^^^^^^^^\nKeyError: 'receivedAt'",
+        "ingestionTime": 1791997058521,
+        "eventId": "39962869597596574368783064541301342779882018155169185793"
+      },
+      {
+        "logStreamName": "2026/10/14/[$LATEST]69ec39efb3144331a62fc596556cc843",
+        "timestamp": 1791997229537,
+        "message": "[ERROR]\t2026-10-14T17:00:29.536Z\tf1bcb0c9-9710-52a1-8667-d380204af2a7\tProcessing failed message=3293898a-8f6d-4b4e-80f0-99a038abbb96\nTraceback (most recent call last):\n  File \"/var/task/backend/processor.py\", line 188, in handler\n    process_message(message)\n  File \"/var/task/backend/processor.py\", line 170, in process_message\n    received = parse_time(envelope[\"receivedAt\"])\n                          ~~~~~~~~^^^^^^^^^^^^^^\nKeyError: 'receivedAt'",
+        "ingestionTime": 1791997238575,
+        "eventId": "39962873612377431715052618306506702244066697901869301761"
+      },
+      {
+        "logStreamName": "2026/10/14/[$LATEST]69ec39efb3144331a62fc596556cc843",
+        "timestamp": 1791997409541,
+        "message": "[ERROR]\t2026-10-14T17:03:29.541Z\t32f846c6-80b0-53bb-bac9-258f38be719e\tProcessing failed message=3293898a-8f6d-4b4e-80f0-99a038abbb96\nTraceback (most recent call last):\n  File \"/var/task/backend/processor.py\", line 188, in handler\n    process_message(message)\n  File \"/var/task/backend/processor.py\", line 170, in process_message\n    received = parse_time(envelope[\"receivedAt\"])\n                          ~~~~~~~~^^^^^^^^^^^^^^\nKeyError: 'receivedAt'",
+        "ingestionTime": 1791997418560,
+        "eventId": "39962877626600770431358906493090644547806350686957076481"
+      }
+    ],
+    "searchedLogStreams": []
+  },
+  "alarms": {
+    "MetricAlarms": [
+      {
+        "AlarmName": "ccproj-ApiBackendErrors",
+        "AlarmArn": "arn:aws:cloudwatch:ap-southeast-2:039379078306:alarm:ccproj-ApiBackendErrors",
+        "AlarmConfigurationUpdatedTimestamp": "2026-10-14T22:09:51.494000+05:30",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [NonBreaching].",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-10-14T16:40:52.555+0000\",\"statistic\":\"Sum\",\"period\":60,\"recentDatapoints\":[],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-10-14T16:39:00.000+0000\"}]}",
+        "StateUpdatedTimestamp": "2026-10-14T22:10:52.556000+05:30",
+        "MetricName": "Errors",
+        "Namespace": "AWS/Lambda",
+        "Statistic": "Sum",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": "ccproj-ApiBackend"
+          }
+        ],
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-10-14T22:10:52.556000+05:30"
+      },
+      {
+        "AlarmName": "ccproj-ApiBackendThrottles",
+        "AlarmArn": "arn:aws:cloudwatch:ap-southeast-2:039379078306:alarm:ccproj-ApiBackendThrottles",
+        "AlarmConfigurationUpdatedTimestamp": "2026-10-14T22:09:51.464000+05:30",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [NonBreaching].",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-10-14T16:41:00.205+0000\",\"statistic\":\"Sum\",\"period\":60,\"recentDatapoints\":[],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-10-14T16:40:00.000+0000\"}]}",
+        "StateUpdatedTimestamp": "2026-10-14T22:11:00.206000+05:30",
+        "MetricName": "Throttles",
+        "Namespace": "AWS/Lambda",
+        "Statistic": "Sum",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": "ccproj-ApiBackend"
+          }
+        ],
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-10-14T22:11:00.206000+05:30"
+      },
+      {
+        "AlarmName": "ccproj-Backlog",
+        "AlarmArn": "arn:aws:cloudwatch:ap-southeast-2:039379078306:alarm:ccproj-Backlog",
+        "AlarmConfigurationUpdatedTimestamp": "2026-10-14T22:08:59.649000+05:30",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: 1 datapoint [0.0 (14/10/26 17:06:00)] was not greater than or equal to the threshold (120.0).",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-10-14T17:08:05.733+0000\",\"startDate\":\"2026-10-14T17:06:00.000+0000\",\"statistic\":\"Maximum\",\"period\":60,\"recentDatapoints\":[0.0],\"threshold\":120.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-10-14T17:06:00.000+0000\",\"sampleCount\":1.0,\"value\":0.0}]}",
+        "StateUpdatedTimestamp": "2026-10-14T22:38:05.735000+05:30",
+        "MetricName": "ApproximateAgeOfOldestMessage",
+        "Namespace": "AWS/SQS",
+        "Statistic": "Maximum",
+        "Dimensions": [
+          {
+            "Name": "QueueName",
+            "Value": "ccproj-Telemetry-fZ6tZS66tzGn.fifo"
+          }
+        ],
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 120.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-10-14T22:38:05.735000+05:30"
+      },
+      {
+        "AlarmName": "ccproj-DLQ",
+        "AlarmArn": "arn:aws:cloudwatch:ap-southeast-2:039379078306:alarm:ccproj-DLQ",
+        "AlarmConfigurationUpdatedTimestamp": "2026-10-14T22:08:59.705000+05:30",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: 1 datapoint [0.0 (14/10/26 17:07:00)] was not greater than or equal to the threshold (1.0).",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-10-14T17:09:28.140+0000\",\"startDate\":\"2026-10-14T17:07:00.000+0000\",\"statistic\":\"Maximum\",\"period\":60,\"recentDatapoints\":[0.0],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-10-14T17:07:00.000+0000\",\"sampleCount\":1.0,\"value\":0.0}]}",
+        "StateUpdatedTimestamp": "2026-10-14T22:39:28.147000+05:30",
+        "MetricName": "ApproximateNumberOfMessagesVisible",
+        "Namespace": "AWS/SQS",
+        "Statistic": "Maximum",
+        "Dimensions": [
+          {
+            "Name": "QueueName",
+            "Value": "ccproj-DeadLetter-YU54yXeRi1o8.fifo"
+          }
+        ],
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-10-14T22:39:28.147000+05:30"
+      },
+      {
+        "AlarmName": "ccproj-IngestionErrors",
+        "AlarmArn": "arn:aws:cloudwatch:ap-southeast-2:039379078306:alarm:ccproj-IngestionErrors",
+        "AlarmConfigurationUpdatedTimestamp": "2026-10-14T22:10:30.746000+05:30",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [NonBreaching].",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-10-14T16:41:04.342+0000\",\"statistic\":\"Sum\",\"period\":60,\"recentDatapoints\":[],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-10-14T16:40:00.000+0000\"}]}",
+        "StateUpdatedTimestamp": "2026-10-14T22:11:04.344000+05:30",
+        "MetricName": "Errors",
+        "Namespace": "AWS/Lambda",
+        "Statistic": "Sum",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": "ccproj-Ingestion"
+          }
+        ],
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-10-14T22:11:04.344000+05:30"
+      },
+      {
+        "AlarmName": "ccproj-IngestionThrottles",
+        "AlarmArn": "arn:aws:cloudwatch:ap-southeast-2:039379078306:alarm:ccproj-IngestionThrottles",
+        "AlarmConfigurationUpdatedTimestamp": "2026-10-14T22:10:30.747000+05:30",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [NonBreaching].",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-10-14T16:40:50.605+0000\",\"statistic\":\"Sum\",\"period\":60,\"recentDatapoints\":[],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-10-14T16:39:00.000+0000\"}]}",
+        "StateUpdatedTimestamp": "2026-10-14T22:10:50.606000+05:30",
+        "MetricName": "Throttles",
+        "Namespace": "AWS/Lambda",
+        "Statistic": "Sum",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": "ccproj-Ingestion"
+          }
+        ],
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-10-14T22:10:50.606000+05:30"
+      },
+      {
+        "AlarmName": "ccproj-NotifierErrors",
+        "AlarmArn": "arn:aws:cloudwatch:ap-southeast-2:039379078306:alarm:ccproj-NotifierErrors",
+        "AlarmConfigurationUpdatedTimestamp": "2026-10-14T22:09:51.554000+05:30",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [NonBreaching].",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-10-14T16:40:59.773+0000\",\"statistic\":\"Sum\",\"period\":60,\"recentDatapoints\":[],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-10-14T16:39:00.000+0000\"}]}",
+        "StateUpdatedTimestamp": "2026-10-14T22:10:59.774000+05:30",
+        "MetricName": "Errors",
+        "Namespace": "AWS/Lambda",
+        "Statistic": "Sum",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": "ccproj-Notifier"
+          }
+        ],
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-10-14T22:10:59.774000+05:30"
+      },
+      {
+        "AlarmName": "ccproj-NotifierThrottles",
+        "AlarmArn": "arn:aws:cloudwatch:ap-southeast-2:039379078306:alarm:ccproj-NotifierThrottles",
+        "AlarmConfigurationUpdatedTimestamp": "2026-10-14T22:09:51.630000+05:30",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: 1 datapoint [0.0 (14/10/26 16:40:00)] was not greater than or equal to the threshold (1.0).",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-10-14T16:41:37.966+0000\",\"startDate\":\"2026-10-14T16:40:00.000+0000\",\"statistic\":\"Sum\",\"period\":60,\"recentDatapoints\":[0.0],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-10-14T16:40:00.000+0000\",\"sampleCount\":1.0,\"value\":0.0}]}",
+        "StateUpdatedTimestamp": "2026-10-14T22:11:37.967000+05:30",
+        "MetricName": "Throttles",
+        "Namespace": "AWS/Lambda",
+        "Statistic": "Sum",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": "ccproj-Notifier"
+          }
+        ],
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-10-14T22:11:37.967000+05:30"
+      },
+      {
+        "AlarmName": "ccproj-ProcessorErrors",
+        "AlarmArn": "arn:aws:cloudwatch:ap-southeast-2:039379078306:alarm:ccproj-ProcessorErrors",
+        "AlarmConfigurationUpdatedTimestamp": "2026-10-14T22:10:30.743000+05:30",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [NonBreaching].",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-10-14T16:42:19.184+0000\",\"statistic\":\"Sum\",\"period\":60,\"recentDatapoints\":[],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-10-14T16:41:00.000+0000\"}]}",
+        "StateUpdatedTimestamp": "2026-10-14T22:12:19.185000+05:30",
+        "MetricName": "Errors",
+        "Namespace": "AWS/Lambda",
+        "Statistic": "Sum",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": "ccproj-Processor"
+          }
+        ],
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-10-14T22:12:19.185000+05:30"
+      },
+      {
+        "AlarmName": "ccproj-ProcessorThrottles",
+        "AlarmArn": "arn:aws:cloudwatch:ap-southeast-2:039379078306:alarm:ccproj-ProcessorThrottles",
+        "AlarmConfigurationUpdatedTimestamp": "2026-10-14T22:10:30.668000+05:30",
+        "ActionsEnabled": true,
+        "OKActions": [],
+        "AlarmActions": [
+          "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1"
+        ],
+        "InsufficientDataActions": [],
+        "StateValue": "OK",
+        "StateReason": "Threshold Crossed: no datapoints were received for 1 period and 1 missing datapoint was treated as [NonBreaching].",
+        "StateReasonData": "{\"version\":\"1.0\",\"queryDate\":\"2026-10-14T16:41:31.101+0000\",\"statistic\":\"Sum\",\"period\":60,\"recentDatapoints\":[],\"threshold\":1.0,\"evaluatedDatapoints\":[{\"timestamp\":\"2026-10-14T16:40:00.000+0000\"}]}",
+        "StateUpdatedTimestamp": "2026-10-14T22:11:31.104000+05:30",
+        "MetricName": "Throttles",
+        "Namespace": "AWS/Lambda",
+        "Statistic": "Sum",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": "ccproj-Processor"
+          }
+        ],
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1.0,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "StateTransitionedTimestamp": "2026-10-14T22:11:31.104000+05:30"
+      }
+    ],
+    "CompositeAlarms": [],
+    "LogAlarms": []
+  },
+  "budget": {
+    "Budget": {
+      "BudgetName": "ccproj-total-ceiling",
+      "BudgetLimit": {
+        "Amount": "50.0",
+        "Unit": "USD"
+      },
+      "CostTypes": {
+        "IncludeTax": true,
+        "IncludeSubscription": true,
+        "UseBlended": false,
+        "IncludeRefund": false,
+        "IncludeCredit": false,
+        "IncludeUpfront": true,
+        "IncludeRecurring": true,
+        "IncludeOtherSubscription": true,
+        "IncludeSupport": true,
+        "IncludeDiscount": true,
+        "UseAmortized": false
+      },
+      "TimeUnit": "CUSTOM",
+      "TimePeriod": {
+        "Start": "2026-10-14T22:00:01+05:30",
+        "End": "2027-03-16T05:30:00+05:30"
+      },
+      "CalculatedSpend": {
+        "ActualSpend": {
+          "Amount": "0.0",
+          "Unit": "USD"
+        }
+      },
+      "BudgetType": "COST",
+      "LastUpdatedTime": "2026-10-14T22:08:56.334000+05:30",
+      "HealthStatus": {
+        "Status": "HEALTHY",
+        "LastUpdatedTime": "2026-10-14T22:08:55.746000+05:30"
+      }
+    }
+  },
+  "budgetNotifications": {
+    "Notifications": [
+      {
+        "NotificationType": "ACTUAL",
+        "ComparisonOperator": "GREATER_THAN",
+        "Threshold": 20.0,
+        "ThresholdType": "ABSOLUTE_VALUE",
+        "NotificationState": "OK"
+      },
+      {
+        "NotificationType": "ACTUAL",
+        "ComparisonOperator": "GREATER_THAN",
+        "Threshold": 30.0,
+        "ThresholdType": "ABSOLUTE_VALUE",
+        "NotificationState": "OK"
+      },
+      {
+        "NotificationType": "ACTUAL",
+        "ComparisonOperator": "GREATER_THAN",
+        "Threshold": 40.0,
+        "ThresholdType": "ABSOLUTE_VALUE",
+        "NotificationState": "OK"
+      }
+    ]
+  },
+  "instance": [
+    {
+      "id": "i-098cf45e426dd3ab7",
+      "state": "running",
+      "type": "t4g.micro",
+      "metadata": {
+        "State": "applied",
+        "HttpTokens": "required",
+        "HttpPutResponseHopLimit": 1,
+        "HttpEndpoint": "enabled",
+        "HttpProtocolIpv6": "disabled",
+        "InstanceMetadataTags": "disabled"
+      },
+      "volumes": [
+        {
+          "DeviceName": "/dev/xvda",
+          "Ebs": {
+            "AttachTime": "2026-10-14T16:46:10+00:00",
+            "DeleteOnTermination": true,
+            "Status": "attached",
+            "VolumeId": "vol-0a3e03906bb8f7112",
+            "EbsCardIndex": 0
+          }
+        }
+      ]
+    }
+  ],
+  "managedInstance": {
+    "InstanceInformationList": [
+      {
+        "InstanceId": "i-098cf45e426dd3ab7",
+        "PingStatus": "Online",
+        "LastPingDateTime": "2026-10-14T22:56:21.624000+05:30",
+        "AgentVersion": "3.3.5390.0",
+        "IsLatestVersion": true,
+        "PlatformType": "Linux",
+        "PlatformName": "Amazon Linux",
+        "PlatformVersion": "2023",
+        "ResourceType": "EC2Instance",
+        "IPAddress": "10.42.0.35",
+        "ComputerName": "ip-10-42-0-35.ap-southeast-2.compute.internal",
+        "SourceId": "i-098cf45e426dd3ab7",
+        "SourceType": "AWS::EC2::Instance"
+      }
+    ]
+  },
+  "recentTTL": {
+    "TimeToLiveDescription": {
+      "TimeToLiveStatus": "ENABLED",
+      "AttributeName": "expiresAt"
+    }
+  },
+  "archiveVersioning": {
+    "Status": "Enabled"
+  },
+  "archiveRetention": {
+    "TransitionDefaultMinimumObjectSize": "all_storage_classes_128K",
+    "Rules": [
+      {
+        "Expiration": {
+          "Days": 30
+        },
+        "ID": "Retention",
+        "Filter": {
+          "Prefix": ""
+        },
+        "Status": "Enabled",
+        "NoncurrentVersionExpiration": {
+          "NoncurrentDays": 30
+        },
+        "AbortIncompleteMultipartUpload": {
+          "DaysAfterInitiation": 1
+        }
+      },
+      {
+        "Expiration": {
+          "ExpiredObjectDeleteMarker": true
+        },
+        "ID": "DeleteMarkers",
+        "Filter": {
+          "Prefix": ""
+        },
+        "Status": "Enabled"
+      }
+    ]
+  },
+  "hostingPrivacy": {
+    "PublicAccessBlockConfiguration": {
+      "BlockPublicAcls": true,
+      "IgnorePublicAcls": true,
+      "BlockPublicPolicy": true,
+      "RestrictPublicBuckets": true
+    }
+  },
+  "athenaLimits": {
+    "WorkGroup": {
+      "Name": "ccproj-reports",
+      "State": "ENABLED",
+      "Configuration": {
+        "ResultConfiguration": {
+          "OutputLocation": "s3://ccproj-results-noqdomj6xuph/queries/",
+          "EncryptionConfiguration": {
+            "EncryptionOption": "SSE_S3"
+          }
+        },
+        "EnforceWorkGroupConfiguration": true,
+        "PublishCloudWatchMetricsEnabled": false,
+        "BytesScannedCutoffPerQuery": 10485760,
+        "RequesterPaysEnabled": false,
+        "EngineVersion": {
+          "SelectedEngineVersion": "AUTO",
+          "EffectiveEngineVersion": "Athena engine version 3"
+        },
+        "EnableMinimumEncryptionConfiguration": false
+      },
+      "CreationTime": "2026-10-14T22:09:11.403000+05:30"
+    }
+  },
+  "queue": {
+    "Attributes": {
+      "ApproximateNumberOfMessages": "0",
+      "ApproximateNumberOfMessagesNotVisible": "0"
+    }
+  },
+  "deadLetters": {
+    "Attributes": {
+      "ApproximateNumberOfMessages": "0",
+      "ApproximateNumberOfMessagesNotVisible": "0"
+    }
+  },
+  "motor-01": {
+    "Item": {
+      "revision": {
+        "N": "117"
+      },
+      "lastSeen": {
+        "S": "2026-10-14T17:27:05.433Z"
+      },
+      "rules": {
+        "M": {
+          "temperature": {
+            "M": {
+              "above": {
+                "N": "0"
+              },
+              "active": {
+                "BOOL": false
+              },
+              "alertId": {
+                "S": "2026-10-14T16:51:04.122Z#temperature#96d9266a63c24168b48147f08c0aac5c:motor-01:13"
+              },
+              "healthy": {
+                "N": "3"
+              }
+            }
+          },
+          "vibration": {
+            "M": {
+              "above": {
+                "N": "0"
+              },
+              "active": {
+                "BOOL": false
+              },
+              "alertId": {
+                "S": "2026-10-14T16:52:04.448Z#vibration#96d9266a63c24168b48147f08c0aac5c:motor-01:19"
+              },
+              "healthy": {
+                "N": "3"
+              }
+            }
+          }
+        }
+      },
+      "temperatureC": {
+        "N": "51.84"
+      },
+      "eventId": {
+        "S": "f1ed77e0e7be451ea15d225e21fb64ce:motor-01:15"
+      },
+      "vibrationMmS": {
+        "N": "1.478"
+      },
+      "pk": {
+        "S": "motor-01"
+      },
+      "powerWatts": {
+        "N": "415.35"
+      },
+      "schemaVersion": {
+        "N": "1"
+      },
+      "sk": {
+        "S": "STATE"
+      },
+      "observedAt": {
+        "S": "2026-10-14T17:27:05.395Z"
+      },
+      "operatingState": {
+        "S": "running"
+      },
+      "deviceId": {
+        "S": "motor-01"
+      }
+    }
+  },
+  "motor-02": {
+    "Item": {
+      "lastSeen": {
+        "S": "2026-10-14T17:27:05.433Z"
+      },
+      "schemaVersion": {
+        "N": "1"
+      },
+      "observedAt": {
+        "S": "2026-10-14T17:27:05.395Z"
+      },
+      "pk": {
+        "S": "motor-02"
+      },
+      "eventId": {
+        "S": "f1ed77e0e7be451ea15d225e21fb64ce:motor-02:15"
+      },
+      "deviceId": {
+        "S": "motor-02"
+      },
+      "revision": {
+        "N": "103"
+      },
+      "temperatureC": {
+        "N": "52.23"
+      },
+      "powerWatts": {
+        "N": "427.06"
+      },
+      "rules": {
+        "M": {
+          "temperature": {
+            "M": {
+              "above": {
+                "N": "0"
+              },
+              "active": {
+                "BOOL": false
+              },
+              "healthy": {
+                "N": "3"
+              }
+            }
+          },
+          "vibration": {
+            "M": {
+              "above": {
+                "N": "0"
+              },
+              "active": {
+                "BOOL": false
+              },
+              "healthy": {
+                "N": "3"
+              }
+            }
+          }
+        }
+      },
+      "vibrationMmS": {
+        "N": "1.483"
+      },
+      "operatingState": {
+        "S": "running"
+      },
+      "sk": {
+        "S": "STATE"
+      }
+    }
+  },
+  "motor-03": {
+    "Item": {
+      "temperatureC": {
+        "N": "52.3"
+      },
+      "revision": {
+        "N": "112"
+      },
+      "sk": {
+        "S": "STATE"
+      },
+      "schemaVersion": {
+        "N": "1"
+      },
+      "rules": {
+        "M": {
+          "temperature": {
+            "M": {
+              "above": {
+                "N": "0"
+              },
+              "active": {
+                "BOOL": false
+              },
+              "healthy": {
+                "N": "3"
+              }
+            }
+          },
+          "vibration": {
+            "M": {
+              "above": {
+                "N": "0"
+              },
+              "active": {
+                "BOOL": false
+              },
+              "healthy": {
+                "N": "3"
+              }
+            }
+          }
+        }
+      },
+      "deviceId": {
+        "S": "motor-03"
+      },
+      "lastSeen": {
+        "S": "2026-10-14T17:27:05.433Z"
+      },
+      "powerWatts": {
+        "N": "420.47"
+      },
+      "operatingState": {
+        "S": "running"
+      },
+      "vibrationMmS": {
+        "N": "1.522"
+      },
+      "observedAt": {
+        "S": "2026-10-14T17:27:05.395Z"
+      },
+      "eventId": {
+        "S": "f1ed77e0e7be451ea15d225e21fb64ce:motor-03:15"
+      },
+      "pk": {
+        "S": "motor-03"
+      }
+    }
+  },
+  "capturedAt": "2026-10-14T17:26:52.260018+00:00",
+  "region": "ap-southeast-2"
+}

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="297.426" timestamp="2026-10-14T22:43:27.353848+05:30" hostname="Akshay_Laptop"><testcase classname="tests.live.test_aws_e2e" name="test_processing_interruption_buffers_then_catches_up" time="297.231"><failure message="AssertionError: Condition did not become true within 240 seconds">paused_simulator = &lt;tests.live.conftest.Live object at 0x000001AE00CBEB50&gt;
+
+&gt;   ???
+
+tests\live\test_aws_e2e.py:184: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+check = &lt;function test_processing_interruption_buffers_then_catches_up.&lt;locals&gt;.&lt;lambda&gt; at 0x000001AE00BD8860&gt;
+timeout = 240, interval = 3
+
+    def wait_for(check, timeout=120, interval=3):
+        deadline = time.monotonic() + timeout
+        while time.monotonic() &lt; deadline:
+            result = check()
+            if result:
+                return result
+            time.sleep(interval)
+&gt;       raise AssertionError(f"Condition did not become true within {timeout} seconds")
+E       AssertionError: Condition did not become true within 240 seconds
+
+tests\live\conftest.py:57: AssertionError</failure></testcase></testsuite></testsuites>

@@ -25,6 +25,8 @@ python scripts/aws_cli.py --purpose 'Inspect platform health' -- cloudformation 
 
 After deployment, `docs/ccproj-deployment.json` and `.runtime/deployment.json` contain resource identifiers and URLs, with no tokens or credentials. `docs/API.md` gives the frontend integration contract. `PROGRESS.md` records actual verification and pending external actions.
 
+The deployed AWS acceptance report is `docs/AWS_ACCEPTANCE.md`: 64 local tests and 14 distinct real AWS scenarios passed, both fault emails reached the confirmed recipient, and the platform was left online with healthy motors. Raw and consolidated test evidence are under `docs/`.
+
 Publish the completed React build separately with `.venv\Scripts\python.exe -m scripts.publish_frontend path\to\dist`. It uploads to private S3 and waits for CloudFront invalidation. Keep deployment-owned `config.json` out of the build; infrastructure updates preserve an existing application entry point. The current entry point is a deployment status page until the React stage is implemented.
 
 ## Validation

@@ -1,0 +1,111 @@
+{
+  "generatedAt": "2026-10-14T17:27:00.241158+00:00",
+  "passed": 14,
+  "total": 14,
+  "note": "Latest result per scenario across multiple real AWS runs. Raw initial failures remain in source XML files.",
+  "cases": [
+    {
+      "name": "test_bounded_athena_reports_and_private_https_hosting",
+      "status": "passed",
+      "source": "live-core-results.xml",
+      "seconds": 17.112,
+      "measurements": {}
+    },
+    {
+      "name": "test_ec2_normal_operation_and_controls_fault_recovery",
+      "status": "passed",
+      "source": "live-core-results.xml",
+      "seconds": 217.158,
+      "measurements": {}
+    },
+    {
+      "name": "test_poison_message_isolated_and_corrected_then_redriven",
+      "status": "passed",
+      "source": "live-core-results.xml",
+      "seconds": 595.977,
+      "measurements": {}
+    },
+    {
+      "name": "test_processing_interruption_buffers_then_catches_up",
+      "status": "passed",
+      "source": "live-final-results.xml",
+      "seconds": 73.052,
+      "measurements": {}
+    },
+    {
+      "name": "test_real_authentication_roles_and_direct_api_rejections",
+      "status": "passed",
+      "source": "live-auth-results.xml",
+      "seconds": 35.002,
+      "measurements": {}
+    },
+    {
+      "name": "test_real_pipeline_deduplication_ordering_and_archive",
+      "status": "passed",
+      "source": "live-final-results.xml",
+      "seconds": 55.392,
+      "measurements": {
+        "telemetry_latency_seconds": "5.063"
+      }
+    },
+    {
+      "name": "test_bounded_burst_and_reporting_stopped_motor",
+      "status": "passed",
+      "source": "live-final-results.xml",
+      "seconds": 37.679,
+      "measurements": {}
+    },
+    {
+      "name": "test_confirmed_fault_notification_acceptance_and_retry_suppression",
+      "status": "passed",
+      "source": "live-final-results.xml",
+      "seconds": 7.17,
+      "measurements": {}
+    },
+    {
+      "name": "test_initial_accounts_and_operator_user_management",
+      "status": "passed",
+      "source": "live-management-results.xml",
+      "seconds": 50.798,
+      "measurements": {}
+    },
+    {
+      "name": "test_real_hosted_login_authorization_code_pkce",
+      "status": "passed",
+      "source": "live-auth-results.xml",
+      "seconds": 9.988,
+      "measurements": {}
+    },
+    {
+      "name": "test_real_version_restore_and_separate_state_reconstruction",
+      "status": "passed",
+      "source": "live-final-results.xml",
+      "seconds": 137.105,
+      "measurements": {
+        "recovery_table": "ccproj-recovery-5e33c38f-State-2CEZOOTB3FI4",
+        "recovery_seconds": "70.641"
+      }
+    },
+    {
+      "name": "test_athena_results_match_known_new_measurements",
+      "status": "passed",
+      "source": "live-final-results.xml",
+      "seconds": 26.637,
+      "measurements": {}
+    },
+    {
+      "name": "test_cloudfront_cache_and_deliberate_update_visibility",
+      "status": "passed",
+      "source": "live-cache-input-results.xml",
+      "seconds": 41.22,
+      "measurements": {}
+    },
+    {
+      "name": "test_signed_invalid_telemetry_is_rejected_before_queueing",
+      "status": "passed",
+      "source": "live-cache-input-results.xml",
+      "seconds": 19.47,
+      "measurements": {}
+    }
+  ]
+}
