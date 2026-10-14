@@ -32,7 +32,6 @@ import {
   Heading,
   Loading,
   MotorCard,
-  MotorDrawing,
   PanelHead,
   RecentCharts,
   deviceCondition,
@@ -126,7 +125,7 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
       <Heading
         eyebrow="FACTORY / LIVE OPERATIONS"
         title="Plant overview"
-        description="A clear view of your equipment, from reading to response."
+        description="Current readings and fault status for all three motors."
         action={
           operator ? (
             <ResetAll refresh={refresh} />
@@ -238,7 +237,7 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
             <Loading />
           ) : !alerts.data.alerts.length ? (
             <Empty
-              title="All quiet on the floor"
+              title="No alerts in the last 24 hours"
               text="New fault episodes will appear here after three breached readings."
             />
           ) : (
@@ -777,7 +776,7 @@ export function Reports() {
       <Heading
         eyebrow="FACTORY / HISTORICAL INSIGHTS"
         title="Historical reports"
-        description="Turn archived readings into a daily picture of your plant."
+        description="Query archived readings by date and motor."
       />
       <form
         onSubmit={(event) => void submit(event)}
@@ -905,7 +904,7 @@ export function Reports() {
           <div className="report-placeholder-icon">
             <Activity size={32} />
           </div>
-          <h3>A longer view of your equipment</h3>
+          <h3>No report generated</h3>
           <p>
             Choose a report above to compare temperatures, count vibration
             breaches, or inspect running power.
@@ -1189,90 +1188,45 @@ export function Welcome({
   busy: boolean;
 }) {
   return (
-    <div className="welcome">
-      <div className="welcome-brand">
-        <div className="brand-mark">F</div>
-        <span>
-          forge<span className="brand-period">.</span>
+    <div className="entry-page">
+      <header className="entry-header">
+        <span className="entry-logo" aria-hidden="true">
+          <Activity size={21} />
         </span>
-        <small>EQUIPMENT INTELLIGENCE</small>
-      </div>
-      <main className="welcome-grid">
-        <section className="welcome-copy">
-          <div className="eyebrow">FACTORY MONITORING / DEMONSTRATION</div>
-          <h1>
-            Every reading.
-            <br />A clearer picture.
-          </h1>
-          <p>
-            Keep an eye on your motors, see faults as they develop, and
-            understand the story behind your equipment.
-          </p>
-          <div className="welcome-tags">
-            <span>
-              <Radio size={15} />
-              Live telemetry
-            </span>
-            <span>
-              <Bell size={15} />
-              Fault detection
-            </span>
-            <span>
-              <Activity size={15} />
-              Historical insights
-            </span>
+        <span>Motor monitor</span>
+      </header>
+      <main className="entry-main">
+        <section className="entry-card" aria-labelledby="entry-title">
+          <div className="entry-card-top">
+            <span>FACTORY WORKSPACE</span>
+            <span>03 MOTORS</span>
           </div>
-          <div className="login-panel">
-            <h2>Your plant, in view.</h2>
-            <p>Sign in with your invited team account to open the dashboard.</p>
-            <button
-              className="button primary"
-              onClick={onSignIn}
-              disabled={busy}
-            >
-              {busy ? "Opening sign-in…" : "Sign in to your dashboard"}
+          <div className="entry-card-body">
+            <h1 id="entry-title">Equipment monitoring</h1>
+            <p>Sign in to view motor readings, alerts and reports.</p>
+            <button className="entry-signin" onClick={onSignIn} disabled={busy}>
+              <span>{busy ? "Opening sign-in…" : "Sign in"}</span>
               <ArrowRight size={18} />
             </button>
             {error && <ErrorNotice message={error} />}
-            <div className="login-note">
-              <ShieldCheck size={14} />
-              Secure sign-in with Amazon Cognito
-            </div>
+            <details className="entry-help">
+              <summary>First sign-in or password trouble?</summary>
+              <p>
+                For a new account, use the temporary password in your invitation
+                email. You’ll choose your own password after signing in.
+              </p>
+              <p>
+                Once your account is set up and your email verified, use “Forgot
+                password” on the sign-in screen to request a reset code.
+              </p>
+            </details>
           </div>
-        </section>
-        <section
-          className="welcome-art"
-          aria-label="Illustration of the three monitored motors"
-        >
-          <div className="art-grid" />
-          <div className="art-heading">
-            <span className="eyebrow">CONNECTED EQUIPMENT</span>
-            <Badge tone="success">One factory gateway</Badge>
-          </div>
-          <div className="art-motor">
-            <MotorDrawing />
-            <span className="art-motor-id">MOTOR 01</span>
-          </div>
-          <div className="art-secondary">
-            <div>
-              <MotorDrawing small />
-              <span>MOTOR 02</span>
-            </div>
-            <div>
-              <MotorDrawing small />
-              <span>MOTOR 03</span>
-            </div>
-          </div>
-          <div className="art-caption">
-            <span>Observe. Understand. Respond.</span>
-            <Radio size={20} />
+          <div className="entry-card-bottom">
+            <ShieldCheck size={14} />
+            <span>Invited accounts only</span>
           </div>
         </section>
       </main>
-      <footer className="welcome-footer">
-        <span>Cloud-based industrial equipment monitoring</span>
-        <span>Three simulated motors · Shared factory environment</span>
-      </footer>
     </div>
   );
 }

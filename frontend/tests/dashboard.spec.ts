@@ -2,6 +2,46 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { mockApp, config, makeReading } from "./fixtures";
 
+test("sign-in page is concise, responsive and explains initial password setup", async ({
+  page,
+}) => {
+  await mockApp(page, ["viewer"], false);
+  await page.goto("/");
+  await expect(
+    page.getByRole("heading", { name: "Equipment monitoring", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("button", { name: "Sign in", exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText("Every reading.", { exact: false })).toHaveCount(
+    0,
+  );
+  await page.getByText("First sign-in or password trouble?").click();
+  await expect(
+    page.getByText("For a new account, use the temporary password", {
+      exact: false,
+    }),
+  ).toBeVisible();
+  const accessibility = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa"])
+    .analyze();
+  expect(accessibility.violations).toEqual([]);
+  await page.screenshot({
+    path: "../docs/ui-login-desktop.png",
+    fullPage: true,
+  });
+  await page.setViewportSize({ width: 390, height: 844 });
+  expect(
+    await page.evaluate(
+      () => document.documentElement.scrollWidth <= innerWidth,
+    ),
+  ).toBe(true);
+  await page.screenshot({
+    path: "../docs/ui-login-mobile.png",
+    fullPage: true,
+  });
+});
+
 test("overview shows three healthy motors and current units", async ({
   page,
 }) => {
@@ -295,7 +335,7 @@ test("hosted sign-in uses authorization code with PKCE and random state", async 
     });
   });
   await page.goto("/");
-  await page.getByRole("button", { name: "Sign in to your dashboard" }).click();
+  await page.getByRole("button", { name: "Sign in" }).click();
   await expect(
     page.getByRole("heading", { name: "Hosted sign-in" }),
   ).toBeVisible();
@@ -328,9 +368,7 @@ test("session rejection and refresh failure return to sign-in", async ({
     route.fulfill({ status: 400, json: { error: "invalid_grant" } }),
   );
   await page.goto("/");
-  await expect(
-    page.getByRole("button", { name: "Sign in to your dashboard" }),
-  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Sign in" })).toBeVisible();
   await expect(page.getByRole("alert")).toContainText("session has expired");
 });
 

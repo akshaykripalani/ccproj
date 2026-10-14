@@ -2,7 +2,7 @@ import { expect, test, type Page } from "@playwright/test";
 
 async function login(page: Page, role: "OPERATOR" | "VIEWER") {
   await page.goto("/");
-  await page.getByRole("button", { name: "Sign in to your dashboard" }).click();
+  await page.getByRole("button", { name: "Sign in" }).click();
   await page.waitForURL(/amazoncognito.com/);
   await page
     .locator('input[name="password"]:visible')
@@ -277,7 +277,5 @@ test("operator browser lists existing users and persists role assignment", async
     ).toBeDisabled();
   }
   await page.getByRole("button", { name: "Sign out" }).click();
-  await expect(
-    page.getByRole("button", { name: "Sign in to your dashboard" }),
-  ).toBeVisible();
+  await expect(page.getByRole("button", { name: "Sign in" })).toBeVisible();
 });

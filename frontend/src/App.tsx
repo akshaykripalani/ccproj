@@ -30,6 +30,7 @@ import {
 } from "./pages";
 import type { DeviceResponse } from "./types";
 import "./styles.css";
+import "./entry.css";
 
 const navigation = [
   { route: "overview", title: "Overview", icon: LayoutDashboard },
