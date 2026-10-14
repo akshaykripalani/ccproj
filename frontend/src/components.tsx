@@ -1,19 +1,8 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { CircleAlert, LoaderCircle } from "lucide-react";
 import {
-  Activity,
-  ArrowRight,
-  Check,
-  CircleAlert,
-  Clock3,
-  LoaderCircle,
-  RotateCcw,
-  Thermometer,
-  Unplug,
-  Zap,
-} from "lucide-react";
-import {
-  Area,
-  AreaChart,
+  Line,
+  LineChart,
   CartesianGrid,
   ReferenceLine,
   ResponsiveContainer,
@@ -35,7 +24,6 @@ export function Badge({
 }) {
   return (
     <span className={`badge ${tone}`}>
-      <span className="badge-dot" />
       {children}
     </span>
   );
@@ -62,7 +50,6 @@ export function ErrorNotice({
 export function Empty({ title, text }: { title: string; text?: string }) {
   return (
     <div className="empty">
-      <Activity size={26} />
       <h3>{title}</h3>
       {text && <p>{text}</p>}
     </div>
@@ -112,134 +99,48 @@ export function PanelHead({
   );
 }
 
-export function MotorDrawing({
-  active = true,
-  small = false,
-}: {
-  active?: boolean;
-  small?: boolean;
-}) {
-  return (
-    <svg
-      className={`motor-drawing ${small ? "small" : ""} ${active ? "running" : ""}`}
-      viewBox="0 0 220 100"
-      fill="none"
-      aria-hidden="true"
-    >
-      <path
-        d="M26 84H191"
-        stroke="currentColor"
-        strokeOpacity=".16"
-        strokeWidth="2"
-      />
-      <path
-        d="M53 70V82H79V71M128 70V82H154V71"
-        fill="currentColor"
-        fillOpacity=".2"
-      />
-      <rect
-        x="45"
-        y="26"
-        width="113"
-        height="47"
-        rx="8"
-        fill="currentColor"
-        fillOpacity=".12"
-        stroke="currentColor"
-        strokeOpacity=".4"
-      />
-      <rect
-        x="78"
-        y="12"
-        width="36"
-        height="14"
-        rx="3"
-        fill="currentColor"
-        fillOpacity=".18"
-        stroke="currentColor"
-        strokeOpacity=".4"
-      />
-      <path
-        d="M72 33V65M82 33V65M92 33V65M102 33V65M112 33V65M122 33V65M132 33V65"
-        stroke="currentColor"
-        strokeOpacity=".32"
-        strokeWidth="3"
-      />
-      <rect
-        x="150"
-        y="35"
-        width="20"
-        height="29"
-        rx="3"
-        fill="currentColor"
-        fillOpacity=".22"
-        stroke="currentColor"
-        strokeOpacity=".4"
-      />
-      <path d="M170 49H193" stroke="currentColor" strokeWidth="8" />
-      <circle
-        cx="54"
-        cy="49"
-        r="16"
-        fill="var(--card)"
-        stroke="currentColor"
-        strokeOpacity=".5"
-      />
-      <g className="rotor">
-        <path
-          d="M54 38V60M43 49H65"
-          stroke="currentColor"
-          strokeOpacity=".5"
-          strokeWidth="3"
-        />
-        <circle cx="54" cy="49" r="4" fill="currentColor" />
-      </g>
-      <path
-        d="M188 40V58"
-        stroke="currentColor"
-        strokeOpacity=".3"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
 export function deviceCondition(device: Device) {
   if (!device.online) return { label: "Offline", tone: "neutral" };
-  if (Object.values(device.latest?.rules ?? {}).some((rule) => rule.active))
-    return { label: "Fault active", tone: "danger" };
-  if (Object.values(device.latest?.rules ?? {}).some((rule) => rule.above > 0))
-    return { label: "Threshold breach", tone: "warning" };
+  const temperature =
+    device.latest &&
+    device.latest.temperatureC > (device.thresholds.temperature?.value ?? 75);
+  const vibration =
+    device.latest &&
+    device.latest.vibrationMmS > (device.thresholds.vibration?.value ?? 4.5);
+  const active = Object.values(device.latest?.rules ?? {}).some(
+    (rule) => rule.active,
+  );
+  if (temperature && vibration)
+    return { label: "Temperature + vibration", tone: "danger" };
+  if (temperature)
+    return { label: "Over temperature", tone: active ? "danger" : "warning" };
+  if (vibration)
+    return { label: "High vibration", tone: active ? "danger" : "warning" };
+  if (active) return { label: "Recovering", tone: "danger" };
   if (device.latest?.operatingState === "stopped")
     return { label: "Stopped", tone: "neutral" };
-  return { label: "Healthy", tone: "success" };
+  return {
+    label: device.latest ? "Running" : "Awaiting data",
+    tone: "neutral",
+  };
 }
 
 export function ControlStatus({ control }: { control: Control }) {
   return (
     <div className={`control-status ${control.status}`}>
-      {control.status === "pending" ? (
-        <Clock3 size={15} />
-      ) : control.status === "failed" ? (
-        <CircleAlert size={15} />
-      ) : (
-        <Check size={15} />
-      )}
-      <div>
-        <span>
-          Requested: <strong>{modeName(control.requestedMode)}</strong>
-        </span>
-        <span>
-          Applied: <strong>{modeName(control.appliedMode)}</strong>
-        </span>
-        <small>
-          {control.status === "pending"
-            ? "Applying change…"
-            : control.status === "failed"
-              ? "Change not confirmed. Try again."
-              : `Applied ${when(control.appliedAt)}`}
-        </small>
-      </div>
+      <span>
+        Requested: <strong>{modeName(control.requestedMode)}</strong>
+      </span>
+      <span>
+        Applied: <strong>{modeName(control.appliedMode)}</strong>
+      </span>
+      <small>
+        {control.status === "pending"
+          ? "Applying change…"
+          : control.status === "failed"
+            ? "Change not confirmed. Try again."
+            : `Applied ${when(control.appliedAt)}`}
+      </small>
     </div>
   );
 }
@@ -297,7 +198,6 @@ export function Controls({
             disabled={busy}
             className="control-button"
           >
-            <Thermometer size={15} />
             Overheat
           </button>
           <button
@@ -305,7 +205,6 @@ export function Controls({
             disabled={busy}
             className="control-button"
           >
-            <Activity size={15} />
             Vibration fault
           </button>
           <button
@@ -313,7 +212,6 @@ export function Controls({
             disabled={busy}
             className="control-button"
           >
-            <Unplug size={15} />
             Disconnect
           </button>
           <button
@@ -321,7 +219,6 @@ export function Controls({
             disabled={busy}
             className="control-button reset"
           >
-            <RotateCcw size={15} />
             Reset
           </button>
         </div>
@@ -331,7 +228,37 @@ export function Controls({
   );
 }
 
-export function MotorCard({
+function Gauge({
+  value,
+  unit,
+  limit,
+  scale,
+}: {
+  value?: number;
+  unit: string;
+  limit: number;
+  scale: number;
+}) {
+  const maximum = Math.max(scale, value ?? 0);
+  const breached = value !== undefined && value > limit;
+  return (
+    <div className={`gauge ${breached ? "problem" : ""}`}>
+      <strong>
+        {number(value, unit === "mm/s" ? 2 : 1)} <small>{unit}</small>
+      </strong>
+      <div className="gauge-track" aria-hidden="true">
+        <span
+          style={{
+            width: `${Math.max(0, Math.min(100, ((value ?? 0) / maximum) * 100))}%`,
+          }}
+        />
+        <i style={{ left: `${(limit / maximum) * 100}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function MotorRow({
   device,
   now,
   operator,
@@ -342,65 +269,179 @@ export function MotorCard({
   operator: boolean;
   refresh: () => void;
 }) {
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
   const condition = deviceCondition(device);
+  const attention = condition.tone === "danger" || condition.tone === "warning";
+  async function reset() {
+    setBusy(true);
+    setError("");
+    try {
+      await api(`/controls/${device.deviceId}`, {
+        method: "POST",
+        body: { mode: "normal" },
+      });
+      refresh();
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Reset could not be requested.",
+      );
+    } finally {
+      setBusy(false);
+    }
+  }
   return (
-    <article
-      className={`motor-card panel ${condition.tone}`}
-      data-testid={device.deviceId}
-    >
-      <div className="motor-card-head">
-        <div>
-          <h2>
-            <a href={`#/devices/${device.deviceId}`}>
-              {motorName(device.deviceId)} <ArrowRight size={16} />
-            </a>
-          </h2>
-        </div>
-        <Badge tone={condition.tone}>{condition.label}</Badge>
-      </div>
-      <div className="motor-visual">
-        <MotorDrawing
-          active={device.online && device.latest?.operatingState === "running"}
+    <tr data-testid={device.deviceId} className={attention ? "fault-row" : ""}>
+      <th scope="row">
+        <a href={`#/devices/${device.deviceId}`}>
+          {motorName(device.deviceId)}
+        </a>
+      </th>
+      <td>
+        <span className={`equipment-state ${attention ? "problem" : ""}`}>
+          <i aria-hidden="true" />
+          {condition.label}
+        </span>
+        {(device.control.status !== "applied" ||
+          device.control.appliedMode !== "normal") && (
+          <ControlStatus control={device.control} />
+        )}
+        {error && <ErrorNotice message={error} />}
+      </td>
+      <td>
+        <Gauge
+          value={device.latest?.temperatureC}
+          unit="°C"
+          limit={device.thresholds.temperature?.value ?? 75}
+          scale={90}
         />
-        <span className="motor-subtitle">
-          {device.latest?.operatingState ?? "Awaiting data"}
-        </span>
-      </div>
-      <div className="motor-metrics">
-        <div>
-          <Thermometer size={15} />
-          <span>Temperature</span>
-          <strong>
-            {number(device.latest?.temperatureC)}
-            <small> °C</small>
-          </strong>
+      </td>
+      <td>
+        <Gauge
+          value={device.latest?.vibrationMmS}
+          unit="mm/s"
+          limit={device.thresholds.vibration?.value ?? 4.5}
+          scale={6}
+        />
+      </td>
+      <td className="numeric">
+        {number(device.latest?.powerWatts, 0)} <small>W</small>
+      </td>
+      <td
+        className="numeric seen"
+        title={`Last received ${when(device.lastSeen)}`}
+      >
+        {ago(device.lastSeen, now)}
+      </td>
+      <td>
+        <div className="row-actions">
+          {operator &&
+            (attention ||
+              !device.online ||
+              device.control.requestedMode !== "normal") && (
+              <button
+                className="button signal"
+                disabled={busy}
+                onClick={() => void reset()}
+              >
+                {busy ? "Resetting…" : "Reset"}
+              </button>
+            )}
+          <a
+            href={`#/devices/${device.deviceId}`}
+            aria-label={`${motorName(device.deviceId)} details`}
+          >
+            Details
+          </a>
         </div>
-        <div>
-          <Activity size={15} />
-          <span>Vibration</span>
-          <strong>
-            {number(device.latest?.vibrationMmS, 2)}
-            <small> mm/s</small>
-          </strong>
-        </div>
-        <div>
-          <Zap size={15} />
-          <span>Power</span>
-          <strong>
-            {number(device.latest?.powerWatts, 0)}
-            <small> W</small>
-          </strong>
-        </div>
+      </td>
+    </tr>
+  );
+}
+
+export function MotorTable({
+  devices,
+  now,
+  operator,
+  refresh,
+}: {
+  devices: Device[];
+  now: number;
+  operator: boolean;
+  refresh: () => void;
+}) {
+  return (
+    <section className="panel motor-table" aria-label="Motors">
+      <div className="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>Motor</th>
+              <th>State</th>
+              <th>Temp · limit 75 °C</th>
+              <th>Vibration · limit 4.5 mm/s</th>
+              <th>Power</th>
+              <th>Seen</th>
+              <th>
+                <span className="sr-only">Actions</span>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {devices.map((device) => (
+              <MotorRow
+                key={device.deviceId}
+                device={device}
+                now={now}
+                operator={operator}
+                refresh={refresh}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
-      <div className="freshness">
-        <span className={`status-dot ${device.online ? "online" : ""}`} />
-        Last received {ago(device.lastSeen, now)}
-        <span title={when(device.latest?.observedAt)}>
-          Observed {ago(device.latest?.observedAt, now)}
-        </span>
+    </section>
+  );
+}
+
+export function DemoControls({
+  devices,
+  refresh,
+}: {
+  devices: Device[];
+  refresh: () => void;
+}) {
+  const [selected, setSelected] = useState(devices[0]?.deviceId ?? "motor-01");
+  const device =
+    devices.find((item) => item.deviceId === selected) ?? devices[0];
+  if (!device) return null;
+  return (
+    <details className="demo-controls">
+      <summary>
+        Fault simulation <small>demo only</small>
+      </summary>
+      <div className="demo-content">
+        <label>
+          Motor
+          <select
+            value={device.deviceId}
+            onChange={(event) => setSelected(event.target.value)}
+          >
+            {devices.map((item) => (
+              <option value={item.deviceId} key={item.deviceId}>
+                {motorName(item.deviceId)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <Controls
+          key={device.deviceId}
+          device={device}
+          operator
+          refresh={refresh}
+        />
       </div>
-      <Controls device={device} operator={operator} refresh={refresh} />
-    </article>
+    </details>
   );
 }
 
@@ -408,19 +449,19 @@ export const metrics = {
   temperatureC: {
     title: "Temperature",
     unit: "°C",
-    color: "#237b68",
+    color: "#14181b",
     threshold: 75,
   },
   vibrationMmS: {
     title: "Vibration",
     unit: "mm/s",
-    color: "#bf7840",
+    color: "#5e686d",
     threshold: 4.5,
   },
   powerWatts: {
     title: "Power draw",
     unit: "W",
-    color: "#6478b2",
+    color: "#8c969b",
     threshold: undefined,
   },
 };
@@ -428,12 +469,10 @@ export const metrics = {
 export function TelemetryChart({
   readings,
   field,
-  id,
   threshold = true,
 }: {
   readings: Reading[];
   field: keyof typeof metrics;
-  id: string;
   threshold?: boolean;
 }) {
   const metric = metrics[field];
@@ -472,25 +511,13 @@ export function TelemetryChart({
       aria-label={`${metric.title} chart with ${readings.length} readings in ${metric.unit}`}
     >
       <ResponsiveContainer width="100%" height="100%" minWidth={0}>
-        <AreaChart
+        <LineChart
           data={points}
           margin={{ top: 18, right: 12, bottom: 0, left: -20 }}
           accessibilityLayer
         >
-          <defs>
-            <linearGradient
-              id={`fill-${id}-${field}`}
-              x1="0"
-              y1="0"
-              x2="0"
-              y2="1"
-            >
-              <stop offset="0%" stopColor={metric.color} stopOpacity={0.2} />
-              <stop offset="100%" stopColor={metric.color} stopOpacity={0.01} />
-            </linearGradient>
-          </defs>
           <CartesianGrid
-            stroke="#e8ebe5"
+            stroke="#d5d9db"
             vertical={false}
             strokeDasharray="3 4"
           />
@@ -504,14 +531,14 @@ export function TelemetryChart({
                 minute: "2-digit",
               })
             }
-            tick={{ fontSize: 11, fill: "#78847c" }}
+            tick={{ fontSize: 13, fill: "#4a5459" }}
             axisLine={false}
             tickLine={false}
             minTickGap={45}
           />
           <YAxis
             domain={["auto", "auto"]}
-            tick={{ fontSize: 11, fill: "#78847c" }}
+            tick={{ fontSize: 13, fill: "#4a5459" }}
             axisLine={false}
             tickLine={false}
           />
@@ -526,27 +553,31 @@ export function TelemetryChart({
             <ReferenceLine
               y={metric.threshold}
               ifOverflow="extendDomain"
-              stroke="#c0775c"
+              stroke="#14181b"
               strokeDasharray="4 4"
               label={{
                 value: `Limit ${metric.threshold}`,
                 position: "insideTopRight",
-                fill: "#a8614b",
-                fontSize: 11,
+                fill: "#14181b",
+                fontSize: 13,
               }}
             />
           )}
-          <Area
+          <Line
             type="monotone"
             dataKey={field}
-            stroke={metric.color}
+            stroke={
+              metric.threshold !== undefined &&
+              Number(ordered.at(-1)?.[field]) > metric.threshold
+                ? "#a8340a"
+                : metric.color
+            }
             strokeWidth={2}
-            fill={`url(#fill-${id}-${field})`}
             isAnimationActive={false}
             dot={false}
             connectNulls={false}
           />
-        </AreaChart>
+        </LineChart>
       </ResponsiveContainer>
     </div>
   );
@@ -560,51 +591,7 @@ export function RecentCharts({
   compact?: boolean;
 }) {
   const [hours, setHours] = useState("1");
-  const retained = useRef<{ key: string; readings: Reading[] }>({
-    key: "",
-    readings: [],
-  });
-  const recent = usePoll(
-    async (signal) => {
-      const now = Date.now();
-      const key = deviceId + hours;
-      const prior =
-        retained.current.key === key ? retained.current.readings : [];
-      const windowStart = now - Number(hours) * 3600000 + 10000;
-      const latest = Math.max(
-        0,
-        ...prior.map((reading) => Date.parse(reading.observedAt)),
-      );
-      // Initial window is fully paginated; subsequent refreshes read only a short overlap.
-      const from = prior.length
-        ? Math.max(windowStart, latest - 30000)
-        : windowStart;
-      const params = new URLSearchParams({
-        from: new Date(from).toISOString(),
-        to: new Date(now).toISOString(),
-        limit: "1000",
-      });
-      const values: Reading[] = [];
-      let cursor: string | null = null;
-      // Pagination retains all 24h readings. Requests abort on navigation/range changes.
-      do {
-        if (cursor) params.set("cursor", cursor);
-        const page: { readings: Reading[]; nextCursor: string | null } =
-          await api(`/devices/${deviceId}/readings?${params}`, { signal });
-        values.push(...page.readings);
-        cursor = page.nextCursor;
-      } while (cursor && values.length < 10000);
-      const merged = [
-        ...new Map(
-          [...prior, ...values].map((reading) => [reading.eventId, reading]),
-        ).values(),
-      ].filter((reading) => Date.parse(reading.observedAt) >= windowStart);
-      if (!signal.aborted) retained.current = { key, readings: merged };
-      return merged;
-    },
-    10000,
-    deviceId + hours,
-  );
+  const recent = useReadingHistory([deviceId], hours);
   const fields: (keyof typeof metrics)[] = compact
     ? ["temperatureC"]
     : ["temperatureC", "vibrationMmS", "powerWatts"];
@@ -647,15 +634,255 @@ export function RecentCharts({
                   <span>{metrics[field].unit}</span>
                 </div>
               )}
-              <TelemetryChart
-                readings={recent.data!}
-                field={field}
-                id={deviceId}
-              />
+              <TelemetryChart readings={recent.data!} field={field} />
             </div>
           ))}
         </div>
       )}
+    </section>
+  );
+}
+
+function useReadingHistory(deviceIds: string[], hours: string) {
+  const key = deviceIds.join(",") + ":" + hours;
+  const retained = useRef<{ key: string; readings: Reading[] }>({
+    key: "",
+    readings: [],
+  });
+  return usePoll(
+    async (signal) => {
+      const now = Date.now();
+      const windowStart = now - Number(hours) * 3600000 + 10000;
+      const prior =
+        retained.current.key === key ? retained.current.readings : [];
+      const batches = await Promise.all(
+        deviceIds.map(async (id) => {
+          const old = prior.filter((reading) => reading.deviceId === id);
+          const latest = Math.max(
+            0,
+            ...old.map((reading) => Date.parse(reading.observedAt)),
+          );
+          const params = new URLSearchParams({
+            from: new Date(
+              old.length ? Math.max(windowStart, latest - 30000) : windowStart,
+            ).toISOString(),
+            to: new Date(now).toISOString(),
+            limit: "1000",
+          });
+          const values: Reading[] = [];
+          let cursor: string | null = null;
+          do {
+            if (cursor) params.set("cursor", cursor);
+            const page: { readings: Reading[]; nextCursor: string | null } =
+              await api(`/devices/${id}/readings?${params}`, { signal });
+            values.push(...page.readings);
+            cursor = page.nextCursor;
+          } while (cursor && values.length < 10000);
+          return values;
+        }),
+      );
+      const merged = [
+        ...new Map(
+          [...prior, ...batches.flat()].map((reading) => [
+            reading.eventId,
+            reading,
+          ]),
+        ).values(),
+      ].filter((reading) => Date.parse(reading.observedAt) >= windowStart);
+      if (!signal.aborted) retained.current = { key, readings: merged };
+      return merged;
+    },
+    10000,
+    key,
+  );
+}
+
+export function AllMotorTrend({
+  devices,
+  now,
+}: {
+  devices: Device[];
+  now: number;
+}) {
+  const [hours, setHours] = useState("1");
+  const history = useReadingHistory(
+    devices.map((device) => device.deviceId),
+    hours,
+  );
+  const container = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(640);
+  useEffect(() => {
+    if (!container.current) return;
+    const observer = new ResizeObserver(([entry]) =>
+      setWidth(Math.max(260, entry.contentRect.width)),
+    );
+    observer.observe(container.current);
+    return () => observer.disconnect();
+  }, []);
+  const values = history.data ?? [];
+  const minimum =
+    Math.floor(
+      Math.min(50, ...values.map((reading) => reading.temperatureC)) / 10,
+    ) * 10;
+  const maximum =
+    Math.ceil(
+      Math.max(90, ...values.map((reading) => reading.temperatureC)) / 10,
+    ) * 10;
+  const left = 36,
+    right = width - 115,
+    top = 24,
+    bottom = 230;
+  const from = now - Number(hours) * 3600000;
+  const x = (time: number) =>
+    left +
+    (right - left) * Math.max(0, Math.min(1, (time - from) / (now - from)));
+  const y = (value: number) =>
+    bottom - ((value - minimum) / (maximum - minimum)) * (bottom - top);
+  const series = devices.map((device, index) => {
+    const readings = values
+      .filter((reading) => reading.deviceId === device.deviceId)
+      .sort((a, b) => a.observedAt.localeCompare(b.observedAt));
+    const last = readings.at(-1);
+    const condition = deviceCondition(device);
+    const color =
+      condition.tone === "danger" || condition.tone === "warning"
+        ? "#a8340a"
+        : ["#14181b", "#5e686d", "#8c969b"][index % 3];
+    const path = readings
+      .map(
+        (reading, i) =>
+          `${!i || Date.parse(reading.observedAt) - Date.parse(readings[i - 1].observedAt) > 25000 ? "M" : "L"}${x(Date.parse(reading.observedAt)).toFixed(1)},${y(reading.temperatureC).toFixed(1)}`,
+      )
+      .join(" ");
+    return {
+      id: device.deviceId,
+      readings,
+      last,
+      color,
+      path,
+      labelY: last ? y(last.temperatureC) : bottom,
+    };
+  });
+  const labels = series
+    .filter((item) => item.last)
+    .sort((a, b) => a.labelY - b.labelY);
+  for (let i = 0; i < labels.length; i++)
+    labels[i].labelY = Math.max(
+      top + 8,
+      labels[i].labelY,
+      i ? labels[i - 1].labelY + 18 : top + 8,
+    );
+  const overflow = Math.max(0, (labels.at(-1)?.labelY ?? 0) - bottom);
+  for (const label of labels) label.labelY -= overflow;
+  return (
+    <section className="panel comparison-panel">
+      <PanelHead
+        title="Temperature, all motors"
+        action={
+          <label className="range-picker">
+            <span className="sr-only">Chart time range</span>
+            <select
+              aria-label="Chart time range"
+              value={hours}
+              onChange={(event) => setHours(event.target.value)}
+            >
+              <option value="1">Last hour</option>
+              <option value="6">Last 6 hours</option>
+              <option value="24">Last 24 hours</option>
+            </select>
+          </label>
+        }
+      />
+      {history.error && (
+        <ErrorNotice
+          message={history.error + " Chart may show older data."}
+          retry={history.refresh}
+        />
+      )}
+      <div className="comparison-chart" ref={container}>
+        {!history.data ? (
+          <Loading label="Loading recent readings…" />
+        ) : !values.length ? (
+          <Empty title="No readings in this window" />
+        ) : (
+          <svg
+            viewBox={`0 0 ${width} 270`}
+            role="img"
+            aria-label={`Temperature chart with ${values.length} readings across all motors in °C`}
+          >
+            {[0, 1, 2, 3, 4].map((index) => {
+              const value = minimum + ((maximum - minimum) * index) / 4;
+              return (
+                <g key={index}>
+                  <line
+                    x1={left}
+                    x2={right}
+                    y1={y(value)}
+                    y2={y(value)}
+                    stroke="#d5d9db"
+                  />
+                  <text x={left - 9} y={y(value) + 4} textAnchor="end">
+                    {number(value, 0)}
+                  </text>
+                </g>
+              );
+            })}
+            <line
+              x1={left}
+              x2={right}
+              y1={y(75)}
+              y2={y(75)}
+              stroke="#14181b"
+              strokeDasharray="5 4"
+            />
+            <text x={left + 3} y={y(75) - 7} className="limit-label">
+              Limit 75 °C
+            </text>
+            {series.map((item) => (
+              <path
+                key={item.id}
+                d={item.path}
+                fill="none"
+                stroke={item.color}
+                strokeWidth={item.color === "#a8340a" ? 2.8 : 1.8}
+              />
+            ))}
+            {labels.map((item) => (
+              <g
+                key={item.id}
+                fill={item.color === "#a8340a" ? "#a8340a" : "#4a5459"}
+              >
+                <circle
+                  cx={x(Date.parse(item.last!.observedAt))}
+                  cy={y(item.last!.temperatureC)}
+                  r="3"
+                >
+                  <title>
+                    {motorName(item.id)} · {number(item.last!.temperatureC)} °C
+                    · {when(item.last!.observedAt)}
+                  </title>
+                </circle>
+                <text x={right + 10} y={item.labelY + 4}>
+                  {motorName(item.id)} {number(item.last!.temperatureC)}
+                </text>
+              </g>
+            ))}
+            {[0, 0.5, 1].map((fraction) => (
+              <text
+                key={fraction}
+                x={left + (right - left) * fraction}
+                y="260"
+                textAnchor="middle"
+              >
+                {new Date(from + (now - from) * fraction).toLocaleTimeString(
+                  undefined,
+                  { hour: "2-digit", minute: "2-digit" },
+                )}
+              </text>
+            ))}
+          </svg>
+        )}
+      </div>
     </section>
   );
 }

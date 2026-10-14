@@ -49,9 +49,9 @@ test("overview shows three healthy motors and current units", async ({
   await mockApp(page);
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: "Plant overview" }),
+    page.getByRole("region", { name: "Plant overview" }),
   ).toBeVisible();
-  await expect(page.getByText("Healthy", { exact: true })).toHaveCount(3);
+  await expect(page.getByText("Running", { exact: true })).toHaveCount(3);
   for (const id of ["motor-01", "motor-02", "motor-03"]) {
     const card = page.getByTestId(id);
     await expect(card.getByText("55.0")).toBeVisible();
@@ -59,7 +59,7 @@ test("overview shows three healthy motors and current units", async ({
     await expect(card.getByText("425")).toBeVisible();
   }
   await expect(
-    page.getByRole("img", { name: /Temperature chart with 20 readings/ }),
+    page.getByRole("img", { name: /Temperature chart with 60 readings/ }),
   ).toBeVisible();
   await page.screenshot({
     path: "test-results/overview-desktop.png",
@@ -73,7 +73,8 @@ test("controls show requested and applied states separately", async ({
   const state = await mockApp(page);
   await page.goto("/");
   const card = page.getByTestId("motor-01");
-  await card.getByRole("button", { name: "Overheat", exact: true }).click();
+  await page.locator(".demo-controls > summary").click();
+  await page.getByRole("button", { name: "Overheat", exact: true }).click();
   await expect(card.getByText("Applying change…")).toBeVisible();
   await expect(card.getByText("Applied:")).toContainText("Normal");
   expect(
@@ -89,8 +90,8 @@ test("controls show requested and applied states separately", async ({
   await expect(card.getByText("Applied:")).toContainText("Overheat");
   await expect(card.getByText(/^Applied \w/)).toBeVisible();
   await expect(
-    page.getByTestId("motor-02").getByText("Applied:"),
-  ).toContainText("Normal");
+    page.getByTestId("motor-02").getByText("Running", { exact: true }),
+  ).toBeVisible();
   await page.getByRole("button", { name: "Reset all motors" }).click();
   await expect(page.getByText("Reset requested for all motors.")).toBeVisible();
 });
@@ -104,9 +105,7 @@ test("viewers cannot see controls or request user management", async ({
   await expect(
     page.getByRole("button", { name: "Overheat", exact: true }),
   ).toHaveCount(0);
-  await expect(
-    page.getByRole("link", { name: "Team & permissions" }),
-  ).toHaveCount(0);
+  await expect(page.getByRole("link", { name: "Team" })).toHaveCount(0);
   await page.goto("/#/users");
   await expect(
     page.getByRole("heading", { name: "Operator access required" }),
@@ -127,7 +126,9 @@ test("reset-all polls pending controls quickly and returns to normal cadence aft
   await page.goto("/");
   await expect(page.getByTestId("motor-03")).toBeVisible();
   await page.getByRole("button", { name: "Reset all motors" }).click();
-  await expect(page.getByText("Applying change…")).toHaveCount(3);
+  await expect(
+    page.getByRole("table").getByText("Applying change…"),
+  ).toHaveCount(3);
   const pendingReads = reads();
   await page.clock.fastForward(1000);
   await expect.poll(reads).toBe(pendingReads + 1);
@@ -144,7 +145,9 @@ test("reset-all polls pending controls quickly and returns to normal cadence aft
       appliedAt: new Date().toISOString(),
     };
   await page.clock.fastForward(1000);
-  await expect(page.getByText("Applying change…")).toHaveCount(0);
+  await expect(
+    page.getByRole("table").getByText("Applying change…"),
+  ).toHaveCount(0);
   const appliedReads = reads();
   await page.clock.fastForward(5000);
   expect(reads()).toBe(appliedReads);
@@ -162,7 +165,8 @@ test("failed refreshes cannot keep a stale command on fast polling indefinitely"
     state.requests.filter((request) => request.path === "/devices").length;
   await page.goto("/");
   const card = page.getByTestId("motor-01");
-  await card.getByRole("button", { name: "Overheat", exact: true }).click();
+  await page.locator(".demo-controls > summary").click();
+  await page.getByRole("button", { name: "Overheat", exact: true }).click();
   await expect(card.getByText("Applying change…")).toBeVisible();
   // Finish the immediate post-command refresh before introducing the outage.
   await expect.poll(reads).toBe(2);
@@ -213,7 +217,7 @@ test("device detail loads all charts and pagination for 24h", async ({
   state.readingPages = true;
   await page.goto("/#/devices/motor-02");
   await expect(
-    page.getByRole("heading", { name: "Equipment details" }),
+    page.getByText("Equipment details", { exact: true }),
   ).toBeVisible();
   await page.getByLabel("Chart time range").selectOption("24");
   await expect(
@@ -435,11 +439,8 @@ test("mobile navigation and dashboard have no horizontal overflow", async ({
   await mockApp(page);
   await page.goto("/");
   await expect(page.getByTestId("motor-03")).toBeVisible();
-  await page.getByRole("button", { name: "Open navigation" }).click();
-  await page.getByRole("link", { name: "Historical reports" }).click();
-  await expect(
-    page.getByRole("heading", { name: "Historical reports" }),
-  ).toBeVisible();
+  await page.getByRole("link", { name: "Reports" }).click();
+  await expect(page.getByRole("heading", { name: "Reports" })).toBeVisible();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
@@ -469,9 +470,7 @@ test("dashboard and report form have accessible controls and landmarks", async (
     })),
   ).toEqual([]);
   await page.goto("/#/reports");
-  await expect(
-    page.getByRole("heading", { name: "Historical reports" }),
-  ).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Reports" })).toBeVisible();
   const report = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa"])
     .analyze();
@@ -490,7 +489,7 @@ test("clock advancement makes old live responses visibly stale and motors offlin
   const state = await mockApp(page);
   await page.goto("/");
   await expect(
-    page.getByTestId("motor-01").getByText("Healthy", { exact: true }),
+    page.getByTestId("motor-01").getByText("Running", { exact: true }),
   ).toBeVisible();
   state.failDevices = true;
   await page.clock.fastForward(65000);
@@ -525,7 +524,7 @@ test("refresh token renewal replaces the access token after a read rejection", a
   );
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: "Plant overview" }),
+    page.getByRole("region", { name: "Plant overview" }),
   ).toBeVisible();
   await expect(page.getByTestId("motor-01")).toBeVisible();
   expect(reads).toBeGreaterThanOrEqual(2);

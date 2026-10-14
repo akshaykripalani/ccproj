@@ -40,7 +40,7 @@ async function login(page: Page, role: "OPERATOR" | "VIEWER") {
     .first()
     .click();
   await expect(
-    page.getByRole("heading", { name: "Plant overview" }),
+    page.getByRole("region", { name: "Plant overview" }),
   ).toBeVisible();
   expect(page.url()).not.toContain("code=");
 }
@@ -61,7 +61,7 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
     });
   });
   await login(page, "OPERATOR");
-  await expect(page.getByText("Healthy", { exact: true })).toHaveCount(3);
+  await expect(page.getByText("Running", { exact: true })).toHaveCount(3);
   await page.getByRole("link", { name: "Equipment", exact: true }).click();
   await page.getByRole("link", { name: "Motor 01", exact: true }).click();
   await expect(
@@ -91,7 +91,7 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
   expect(csp).toEqual([]);
   await page.getByRole("link", { name: "Overview", exact: true }).click();
   await expect(
-    page.getByRole("heading", { name: "Plant overview" }),
+    page.getByRole("region", { name: "Plant overview" }),
   ).toBeVisible();
   await expect(
     page.getByRole("img", { name: /Temperature chart with [1-9]\d* readings/ }),
@@ -129,8 +129,7 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
         () => document.documentElement.scrollWidth <= innerWidth,
       ),
     ).toBe(true);
-    await viewer.getByRole("button", { name: "Open navigation" }).click();
-    await viewer.getByRole("link", { name: "Alerts & events" }).click();
+    await viewer.getByRole("link", { name: "Alerts" }).click();
     await expect(
       viewer.getByRole("heading", { name: "Alerts & events" }),
     ).toBeVisible();
@@ -147,21 +146,23 @@ test("browser fault controls receive acknowledgement, produce alerts, and reset 
   const first = page.getByTestId("motor-01");
   const second = page.getByTestId("motor-02");
   try {
-    await first.getByRole("button", { name: "Overheat", exact: true }).click();
+    await page.locator(".demo-controls > summary").click();
+    await page.getByRole("button", { name: "Overheat", exact: true }).click();
     await expect(first.getByText("Requested:")).toContainText("Overheat");
     await expect(first.getByText("Applied:")).toContainText("Overheat");
     await expect(
-      first.getByText("Fault active", { exact: true }),
+      first.getByText("Over temperature", { exact: true }),
     ).toBeVisible();
-    await expect(second.getByText("Healthy", { exact: true })).toBeVisible();
-    await second
-      .getByRole("button", { name: "Vibration fault", exact: true })
-      .click();
+    await expect(page.locator(".plant-summary")).toContainText("1 active fault");
+    await expect(second.getByText("Running", { exact: true })).toBeVisible();
+    await page.getByLabel("Motor", { exact: true }).selectOption("motor-02");
+    await page.getByRole("button", { name: "Vibration fault", exact: true }).click();
     await expect(second.getByText("Applied:")).toContainText("Vibration fault");
     await expect(
-      second.getByText("Fault active", { exact: true }),
+      second.getByText("High vibration", { exact: true }),
     ).toBeVisible();
-    await page.getByRole("link", { name: "Alerts & events" }).click();
+    await expect(page.locator(".plant-summary")).toContainText("2 active faults");
+    await page.getByRole("link", { name: "Alerts" }).click();
     await expect(
       page
         .getByRole("row")
@@ -183,14 +184,13 @@ test("browser fault controls receive acknowledgement, produce alerts, and reset 
     await page.getByRole("link", { name: "Overview", exact: true }).click();
     await first.getByRole("button", { name: "Reset", exact: true }).click();
     await second.getByRole("button", { name: "Reset", exact: true }).click();
-    await expect(first.getByText("Healthy", { exact: true })).toBeVisible();
-    await expect(second.getByText("Healthy", { exact: true })).toBeVisible();
-    await first
-      .getByRole("button", { name: "Disconnect", exact: true })
-      .click();
+    await expect(first.getByText("Running", { exact: true })).toBeVisible();
+    await expect(second.getByText("Running", { exact: true })).toBeVisible();
+    await page.locator(".demo-controls > summary").click();
+    await page.getByRole("button", { name: "Disconnect", exact: true }).click();
     await expect(first.getByText("Applied:")).toContainText("Disconnected");
     await expect(first.getByText("Offline", { exact: true })).toBeVisible();
-    await expect(second.getByText("Healthy", { exact: true })).toBeVisible();
+    await expect(second.getByText("Running", { exact: true })).toBeVisible();
   } finally {
     // A separate browser request restores the shared motors even after a UI assertion fails.
     await page.evaluate(async () => {
@@ -209,7 +209,7 @@ test("browser fault controls receive acknowledgement, produce alerts, and reset 
     });
   }
   await page.getByRole("button", { name: "Refresh telemetry" }).click();
-  await expect(page.getByText("Healthy", { exact: true })).toHaveCount(3);
+  await expect(page.getByText("Running", { exact: true })).toHaveCount(3);
   await page.screenshot({
     path: "../docs/ui-overview-desktop.png",
     fullPage: true,
@@ -220,7 +220,7 @@ test("three deployed Athena reports render results and CSV downloads", async ({
   page,
 }) => {
   await login(page, "OPERATOR");
-  await page.getByRole("link", { name: "Historical reports" }).click();
+  await page.getByRole("link", { name: "Reports" }).click();
   for (const kind of ["temperature", "vibration", "power"]) {
     await page.locator(`input[value="${kind}"]`).check();
     await page.getByRole("button", { name: "Generate report" }).click();
@@ -245,7 +245,7 @@ test("operator browser lists existing users and persists role assignment", async
   page,
 }) => {
   await login(page, "OPERATOR");
-  await page.getByRole("link", { name: "Team & permissions" }).click();
+  await page.getByRole("link", { name: "Team" }).click();
   await expect(
     page.getByText("akshay.kripalani74@nmims.in", { exact: true }),
   ).toBeVisible();

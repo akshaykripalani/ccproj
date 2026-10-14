@@ -1,19 +1,5 @@
 import { useEffect, useState } from "react";
-import {
-  Activity,
-  ArrowDownToLine,
-  ArrowRight,
-  Bell,
-  Check,
-  CircleAlert,
-  Download,
-  Plus,
-  Radio,
-  RotateCcw,
-  ShieldCheck,
-  Thermometer,
-  Zap,
-} from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import {
   Bar,
   BarChart,
@@ -31,12 +17,14 @@ import {
   ErrorNotice,
   Heading,
   Loading,
-  MotorCard,
+  MotorTable,
+  DemoControls,
+  AllMotorTrend,
   PanelHead,
   RecentCharts,
   deviceCondition,
 } from "./components";
-import { motorName, number, utcDate, when } from "./format";
+import { modeName, motorName, number, utcDate, when } from "./format";
 import { usePoll } from "./hooks";
 import type {
   Account,
@@ -83,7 +71,6 @@ function ResetAll({ refresh }: { refresh: () => void }) {
         disabled={busy}
         onClick={() => void reset()}
       >
-        <RotateCcw size={16} />
         Reset all motors
       </button>
       {message && (
@@ -96,10 +83,137 @@ function ResetAll({ refresh }: { refresh: () => void }) {
   );
 }
 
-export function Overview({ devices, operator, now, refresh }: LiveProps) {
+function statusHeadline(devices: Device[]) {
+  const attention = devices.filter((device) =>
+    ["danger", "warning"].includes(deviceCondition(device).tone),
+  );
+  const offline = devices.filter((device) => !device.online);
+  const stopped = devices.filter(
+    (device) => device.online && device.latest?.operatingState === "stopped",
+  );
+  if (attention.length > 1)
+    return {
+      title: `${attention.length} motors need attention`,
+      detail:
+        attention
+          .map(
+            (device) =>
+              `${motorName(device.deviceId)}: ${deviceCondition(device).label.toLowerCase()}`,
+          )
+          .join(". ") + ".",
+    };
+  if (attention.length) {
+    const device = attention[0],
+      state = deviceCondition(device).label;
+    const temperature =
+      device.latest!.temperatureC >
+      (device.thresholds.temperature?.value ?? 75);
+    const vibration =
+      device.latest!.vibrationMmS > (device.thresholds.vibration?.value ?? 4.5);
+    return {
+      title:
+        state === "Recovering"
+          ? `${motorName(device.deviceId)} is recovering`
+          : temperature && vibration
+            ? `${motorName(device.deviceId)} is over its temperature and vibration limits`
+            : `${motorName(device.deviceId)} is over its ${temperature ? "temperature" : "vibration"} limit`,
+      detail:
+        state === "Recovering"
+          ? "Readings have returned below the limit. Waiting for recovery confirmation."
+          : `${number(temperature ? device.latest!.temperatureC : device.latest!.vibrationMmS, temperature ? 1 : 2)} ${temperature ? "°C" : "mm/s"} against a ${temperature ? (device.thresholds.temperature?.value ?? 75) : (device.thresholds.vibration?.value ?? 4.5)} ${temperature ? "°C" : "mm/s"} limit.`,
+    };
+  }
+  if (offline.length)
+    return {
+      title:
+        offline.length === 1
+          ? `${motorName(offline[0].deviceId)} is not reporting`
+          : `${offline.length} motors are not reporting`,
+      detail: "Check the last-seen times below.",
+    };
+  if (stopped.length)
+    return {
+      title:
+        stopped.length === 1
+          ? `${motorName(stopped[0].deviceId)} is stopped`
+          : `${stopped.length} motors are stopped`,
+      detail: "Equipment is still reporting.",
+    };
+  if (!devices.length || devices.some((device) => !device.latest))
+    return { title: "Waiting for equipment readings", detail: "" };
+  return {
+    title: "All motors are running normally",
+    detail: "Temperature and vibration are within limits.",
+  };
+}
+
+function Events({ devices }: { devices: Device[] }) {
   const alerts = usePoll((signal) => api<AlertResponse>("/alerts", { signal }));
-  const [selected, setSelected] = useState("motor-01");
-  const online = devices.filter((device) => device.online).length;
+  const events: {
+    id: string;
+    time: string;
+    title: string;
+    problem?: boolean;
+  }[] = [];
+  for (const alert of alerts.data?.alerts ?? []) {
+    events.push({
+      id: `${alert.alertId}:active`,
+      time: alert.activatedAt,
+      title: `${motorName(alert.pk)} ${alert.rule === "temperature" ? "over temperature" : "high vibration"}. Alert activated.`,
+      problem: alert.state === "active",
+    });
+    if (alert.resolvedAt)
+      events.push({
+        id: `${alert.alertId}:resolved`,
+        time: alert.resolvedAt,
+        title: `${motorName(alert.pk)} ${alert.rule} fault resolved.`,
+      });
+  }
+  for (const device of devices) {
+    const control = device.control;
+    if (control.appliedAt)
+      events.push({
+        id: `${device.deviceId}:applied:${control.appliedAt}`,
+        time: control.appliedAt,
+        title: `${motorName(device.deviceId)} ${modeName(control.appliedMode).toLowerCase()} mode applied.`,
+      });
+    if (control.status === "pending" && control.requestedAt)
+      events.push({
+        id: `${device.deviceId}:request:${control.requestId}`,
+        time: control.requestedAt,
+        title: `${motorName(device.deviceId)} ${modeName(control.requestedMode).toLowerCase()} requested.`,
+      });
+  }
+  events.sort((a, b) => b.time.localeCompare(a.time));
+  return (
+    <section className="panel events-panel">
+      <PanelHead title="Events" action={<a href="#/alerts">View all</a>} />
+      {alerts.error && (
+        <ErrorNotice message={alerts.error} retry={alerts.refresh} />
+      )}
+      {!alerts.data && !events.length ? (
+        <Loading />
+      ) : events.length ? (
+        <ol className="event-log">
+          {events.slice(0, 6).map((event) => (
+            <li key={event.id}>
+              <time dateTime={event.time}>{when(event.time)}</time>
+              <span className={event.problem ? "problem" : ""}>
+                {event.title}
+              </span>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <Empty title="No events in the last 24 hours" />
+      )}
+    </section>
+  );
+}
+
+export function Overview({ devices, operator, now, refresh }: LiveProps) {
+  const headline = statusHeadline(devices);
+  const reporting = devices.filter((device) => device.online && device.latest);
   const active = devices.reduce(
     (sum, device) =>
       sum +
@@ -107,139 +221,39 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
         .length,
     0,
   );
-  const reporting = devices.filter((device) => device.online && device.latest);
   const power = reporting.reduce(
     (sum, device) => sum + (device.latest?.powerWatts ?? 0),
     0,
   );
-  const mean = reporting.length
-    ? reporting.reduce(
-        (sum, device) => sum + (device.latest?.temperatureC ?? 0),
-        0,
-      ) / reporting.length
-    : undefined;
   return (
-    <>
-      <Heading
-        title="Plant overview"
-        action={
-          operator ? (
-            <ResetAll refresh={refresh} />
-          ) : (
-            <Badge>Viewer access</Badge>
-          )
-        }
-      />
-      <div className="summary-grid">
-        <div className="summary-card">
-          <div className="summary-icon">
-            <Radio size={20} />
-          </div>
-          <span>Motors online</span>
-          <strong>
-            {online}
-            <small> / {devices.length}</small>
-          </strong>
-        </div>
-        <div className="summary-card">
-          <div className={`summary-icon ${active ? "orange" : ""}`}>
-            <Bell size={20} />
-          </div>
-          <span>Active faults</span>
-          <strong>{active.toString().padStart(2, "0")}</strong>
-        </div>
-        <div className="summary-card">
-          <div className="summary-icon">
-            <Zap size={20} />
-          </div>
-          <span>Live power draw</span>
-          <strong>
-            {reporting.length ? number(power / 1000, 2) : "—"}
-            <small> kW</small>
-          </strong>
-        </div>
-        <div className="summary-card">
-          <div className="summary-icon">
-            <Thermometer size={20} />
-          </div>
-          <span>Average temperature</span>
-          <strong>
-            {number(mean)}
-            <small> °C</small>
-          </strong>
-        </div>
-      </div>
-      <div className="section-title">
-        <h2>
-          Your equipment <span className="count-pill">03</span>
-        </h2>
-      </div>
-      <div className="motor-grid">
-        {devices.map((device) => (
-          <MotorCard
-            key={device.deviceId}
-            device={device}
-            operator={operator}
-            now={now}
-            refresh={refresh}
-          />
-        ))}
-      </div>
-      <div className="overview-bottom">
+    <section aria-label="Plant overview">
+      <div className="overview-heading">
         <div>
-          <div className="trend-tabs" role="group" aria-label="Trend motor">
-            {devices.map((device) => (
-              <button
-                key={device.deviceId}
-                className={selected === device.deviceId ? "selected" : ""}
-                onClick={() => setSelected(device.deviceId)}
-              >
-                {motorName(device.deviceId)}
-              </button>
-            ))}
-          </div>
-          <RecentCharts deviceId={selected} compact />
+          <h1>{headline.title}</h1>
+          {headline.detail && <p>{headline.detail}</p>}
+          <p className="plant-summary">
+            {devices.filter((device) => device.online).length} /{" "}
+            {devices.length} online <span>·</span> {active} active{" "}
+            {active === 1 ? "fault" : "faults"} <span>·</span>{" "}
+            {reporting.length
+              ? `${number(power / 1000, 2)} kW total draw`
+              : "Power unavailable"}
+          </p>
         </div>
-        <section className="panel activity-panel">
-          <PanelHead
-            title="Recent alerts"
-            action={
-              <a className="text-link" href="#/alerts">
-                View all <ArrowRight size={14} />
-              </a>
-            }
-          />
-          {alerts.error && (
-            <ErrorNotice message={alerts.error} retry={alerts.refresh} />
-          )}
-          {!alerts.data ? (
-            <Loading />
-          ) : !alerts.data.alerts.length ? (
-            <Empty title="No alerts in the last 24 hours" />
-          ) : (
-            <div className="activity-list">
-              {alerts.data.alerts.slice(0, 4).map((alert) => (
-                <div className="activity-item" key={alert.alertId}>
-                  <span className={`activity-symbol ${alert.state}`}>
-                    <CircleAlert size={17} />
-                  </span>
-                  <div>
-                    <strong>
-                      {motorName(alert.pk)} ·{" "}
-                      {alert.rule === "temperature" ? "Overheat" : "Vibration"}
-                    </strong>
-                    <p>{when(alert.activatedAt)}</p>
-                  </div>
-                  <Badge tone={alert.state === "active" ? "danger" : "success"}>
-                    {alert.state}
-                  </Badge>
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
+        {operator && <ResetAll refresh={refresh} />}
       </div>
-    </>
+      <MotorTable
+        devices={devices}
+        operator={operator}
+        now={now}
+        refresh={refresh}
+      />
+      {operator && <DemoControls devices={devices} refresh={refresh} />}
+      <div className="overview-bottom">
+        <AllMotorTrend devices={devices} now={now} />
+        <Events devices={devices} />
+      </div>
+    </section>
   );
 }
 
@@ -251,11 +265,10 @@ export function Equipment(props: LiveProps & { deviceId?: string }) {
           title="Equipment"
           action={props.operator && <ResetAll refresh={props.refresh} />}
         />
-        <div className="motor-grid">
-          {props.devices.map((device) => (
-            <MotorCard key={device.deviceId} device={device} {...props} />
-          ))}
-        </div>
+        <MotorTable {...props} />
+        {props.operator && (
+          <DemoControls devices={props.devices} refresh={props.refresh} />
+        )}
       </>
     );
   const device = props.devices.find((item) => item.deviceId === props.deviceId);
@@ -266,48 +279,45 @@ export function Equipment(props: LiveProps & { deviceId?: string }) {
         text="Choose a motor from Equipment."
       />
     );
-  const condition = deviceCondition(device);
   return (
     <>
       <a href="#/devices" className="breadcrumb">
-        Equipment / {motorName(device.deviceId)}
+        ← Equipment
       </a>
-      <Heading
-        title={motorName(device.deviceId)}
-        action={<Badge tone={condition.tone}>{condition.label}</Badge>}
-      />
-      <div className="detail-top">
-        <MotorCard device={device} {...props} />
-        <section className="panel metadata-panel">
-          <PanelHead title="Equipment details" />
-          <dl>
-            <div>
-              <dt>Device identifier</dt>
-              <dd>{device.deviceId}</dd>
-            </div>
-            <div>
-              <dt>Last received</dt>
-              <dd>{when(device.lastSeen)}</dd>
-            </div>
-            <div>
-              <dt>Observed at</dt>
-              <dd>{when(device.latest?.observedAt)}</dd>
-            </div>
-            <div>
-              <dt>Temperature limit</dt>
-              <dd>&gt; {device.thresholds.temperature?.value ?? 75} °C</dd>
-            </div>
-            <div>
-              <dt>Vibration limit</dt>
-              <dd>&gt; {device.thresholds.vibration?.value ?? 4.5} mm/s</dd>
-            </div>
-            <div>
-              <dt>Recent history</dt>
-              <dd>24 hours</dd>
-            </div>
-          </dl>
-        </section>
-      </div>
+      <Heading title={motorName(device.deviceId)} />
+      <MotorTable {...props} devices={[device]} />
+      {props.operator && (
+        <DemoControls devices={[device]} refresh={props.refresh} />
+      )}
+      <details className="equipment-details panel">
+        <summary>Equipment details</summary>
+        <dl>
+          <div>
+            <dt>Device identifier</dt>
+            <dd>{device.deviceId}</dd>
+          </div>
+          <div>
+            <dt>Last received</dt>
+            <dd>{when(device.lastSeen)}</dd>
+          </div>
+          <div>
+            <dt>Observed at</dt>
+            <dd>{when(device.latest?.observedAt)}</dd>
+          </div>
+          <div>
+            <dt>Temperature limit</dt>
+            <dd>&gt; {device.thresholds.temperature?.value ?? 75} °C</dd>
+          </div>
+          <div>
+            <dt>Vibration limit</dt>
+            <dd>&gt; {device.thresholds.vibration?.value ?? 4.5} mm/s</dd>
+          </div>
+          <div>
+            <dt>Recent history</dt>
+            <dd>24 hours</dd>
+          </div>
+        </dl>
+      </details>
       <RecentCharts deviceId={device.deviceId} />
     </>
   );
@@ -416,7 +426,12 @@ export function Alerts() {
                   </thead>
                   <tbody>
                     {alerts.data.alerts.map((alert) => (
-                      <tr key={alert.alertId}>
+                      <tr
+                        key={alert.alertId}
+                        className={
+                          alert.state === "active" ? "fault-row" : undefined
+                        }
+                      >
                         <td>
                           <a
                             className="table-primary"
@@ -481,17 +496,14 @@ const reportDescriptions = {
   temperature: {
     title: "Temperature",
     description: "Daily average, peak & reading count",
-    icon: Thermometer,
   },
   vibration: {
     title: "Vibration",
     description: "Readings above the 4.5 mm/s threshold",
-    icon: Activity,
   },
   power: {
     title: "Power usage",
     description: "Average power while the motor runs",
-    icon: Zap,
   },
 };
 const columnLabels: Record<string, string> = {
@@ -547,7 +559,6 @@ function ReportResults({ result, kind }: { result: Report; kind: ReportKind }) {
         action={
           rows.length > 0 && (
             <button className="button secondary" onClick={exportCsv}>
-              <Download size={15} />
               Export CSV
             </button>
           )
@@ -571,22 +582,26 @@ function ReportResults({ result, kind }: { result: Report; kind: ReportKind }) {
                 margin={{ top: 20, right: 20, bottom: 10, left: 0 }}
                 accessibilityLayer
               >
-                <CartesianGrid vertical={false} stroke="#e8ebe5" />
+                <CartesianGrid vertical={false} stroke="#d5d9db" />
                 <XAxis
                   dataKey="label"
-                  tick={{ fontSize: 11 }}
+                  tick={{ fontSize: 13 }}
                   interval="preserveStartEnd"
                 />
-                <YAxis tick={{ fontSize: 11 }} />
+                <YAxis tick={{ fontSize: 13 }} />
                 <Tooltip />
-                <Legend />
+                <Legend
+                  formatter={(value) => (
+                    <span className="legend-label">{value}</span>
+                  )}
+                />
                 {keys.map((key, index) => (
                   <Bar
                     key={key}
                     dataKey={key}
                     name={columnLabels[key]}
-                    fill={index === 0 ? "#237b68" : "#b4d5a8"}
-                    radius={[4, 4, 0, 0]}
+                    fill={index === 0 ? "#14181b" : "#8c969b"}
+                    radius={[1, 1, 0, 0]}
                   />
                 ))}
               </BarChart>
@@ -707,7 +722,7 @@ export function Reports() {
   }
   return (
     <>
-      <Heading title="Historical reports" />
+      <Heading title="Reports" />
       <form
         onSubmit={(event) => void submit(event)}
         className="panel report-form"
@@ -732,12 +747,9 @@ export function Reports() {
                   checked={kind === key}
                   onChange={() => setKind(key)}
                 />
-                <item.icon size={21} />
+
                 <strong>{item.title}</strong>
                 <span>{item.description}</span>
-                <span className="radio-mark">
-                  <Check size={12} />
-                </span>
               </label>
             );
           })}
@@ -784,7 +796,6 @@ export function Reports() {
             disabled={busy || running}
             type="submit"
           >
-            <ArrowDownToLine size={16} />
             {busy ? "Starting…" : "Generate report"}
           </button>
         </div>
@@ -823,9 +834,6 @@ export function Reports() {
       )}
       {!report && !busy && (
         <div className="report-placeholder">
-          <div className="report-placeholder-icon">
-            <Activity size={32} />
-          </div>
           <h3>No report generated</h3>
         </div>
       )}
@@ -970,7 +978,7 @@ function UserManagementContent({ username }: { username: string }) {
   }
   return (
     <>
-      <Heading title="Team & permissions" />
+      <Heading title="Team" />
       <form
         className="panel invite-form"
         onSubmit={(event) => void invite(event)}
@@ -1008,7 +1016,6 @@ function UserManagementContent({ username }: { username: string }) {
             ))}
           </fieldset>
           <button className="button primary" disabled={busy || !roles.length}>
-            <Plus size={16} />
             {busy ? "Inviting…" : "Send invitation"}
           </button>
         </div>
@@ -1081,17 +1088,10 @@ export function Welcome({
   return (
     <div className="entry-page">
       <header className="entry-header">
-        <span className="entry-logo" aria-hidden="true">
-          <Activity size={21} />
-        </span>
-        <span>Motor monitor</span>
+        <span>Forge</span>
       </header>
       <main className="entry-main">
         <section className="entry-card" aria-labelledby="entry-title">
-          <div className="entry-card-top">
-            <span>FACTORY WORKSPACE</span>
-            <span>03 MOTORS</span>
-          </div>
           <div className="entry-card-body">
             <h1 id="entry-title">Equipment monitoring</h1>
             <p>Sign in to view motor readings, alerts and reports.</p>
@@ -1113,7 +1113,6 @@ export function Welcome({
             </details>
           </div>
           <div className="entry-card-bottom">
-            <ShieldCheck size={14} />
             <span>Invited accounts only</span>
           </div>
         </section>

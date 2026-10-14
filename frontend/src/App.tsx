@@ -1,19 +1,9 @@
 import { useEffect, useState } from "react";
 import type { User } from "oidc-client-ts";
-import {
-  Activity,
-  Bell,
-  ChevronRight,
-  LayoutDashboard,
-  LogOut,
-  Menu,
-  RefreshCw,
-  Settings2,
-  Users,
-} from "lucide-react";
+import { RefreshCw } from "lucide-react";
 import { api } from "./api";
 import { auth, finishSignIn, rolesFromToken, signIn, signOut } from "./auth";
-import { Badge, ErrorNotice, Loading } from "./components";
+import { ErrorNotice, Loading } from "./components";
 import { useClock, usePoll, useRoute } from "./hooks";
 import {
   Alerts,
@@ -28,11 +18,11 @@ import "./styles.css";
 import "./entry.css";
 
 const navigation = [
-  { route: "overview", title: "Overview", icon: LayoutDashboard },
-  { route: "devices", title: "Equipment", icon: Settings2 },
-  { route: "alerts", title: "Alerts & events", icon: Bell },
-  { route: "reports", title: "Historical reports", icon: Activity },
-  { route: "users", title: "Team & permissions", icon: Users },
+  { route: "overview", title: "Overview" },
+  { route: "devices", title: "Equipment" },
+  { route: "alerts", title: "Alerts" },
+  { route: "reports", title: "Reports" },
+  { route: "users", title: "Team" },
 ];
 
 export default function App() {
@@ -115,7 +105,7 @@ export default function App() {
   if (loading)
     return (
       <div className="boot">
-        <div className="brand-mark">F</div>
+        <div className="brand-mark">Forge</div>
         <Loading label="Opening your dashboard…" />
       </div>
     );
@@ -127,7 +117,6 @@ export default function App() {
 function Dashboard({ user }: { user: User }) {
   const route = useRoute();
   const now = useClock();
-  const [open, setOpen] = useState(false);
   const [logoutError, setLogoutError] = useState("");
   const roles = rolesFromToken(user.access_token);
   const operator = roles.includes("operator");
@@ -175,7 +164,6 @@ function Dashboard({ user }: { user: User }) {
   );
   const props = { devices, operator, now: serverNow, refresh: live.refresh };
   useEffect(() => {
-    setOpen(false);
     document.title = `${title} — Forge`;
     window.scrollTo(0, 0);
   }, [route, title]);
@@ -188,6 +176,9 @@ function Dashboard({ user }: { user: User }) {
       );
     }
   }
+  const delayed = Boolean(
+    live.error || (live.updatedAt && now - live.updatedAt > 30000),
+  );
   return (
     <div className="app-shell">
       <a
@@ -200,150 +191,82 @@ function Dashboard({ user }: { user: User }) {
       >
         Skip to content
       </a>
-      {open && (
-        <button
-          className="sidebar-scrim"
-          aria-label="Close navigation"
-          onClick={() => setOpen(false)}
-        />
-      )}
-      <aside className={`sidebar ${open ? "open" : ""}`}>
+      <header className="app-header">
         <a className="brand" href="#/overview">
-          <div className="brand-mark">F</div>
-          <span>
-            forge<span className="brand-period">.</span>
-          </span>
+          Forge
         </a>
-        <div className="workspace">
-          <span className="workspace-icon">
-            <Settings2 size={19} />
-          </span>
-          <div>
-            <strong>Factory workspace</strong>
-          </div>
-          <ChevronRight size={15} />
-        </div>
-        <div className="nav-label">WORKSPACE</div>
         <nav aria-label="Main navigation">
           {navigation
             .filter((item) => operator || item.route !== "users")
             .map((item) => (
               <a
                 key={item.route}
-                className={section === item.route ? "active" : ""}
                 href={`#/${item.route}`}
                 aria-current={section === item.route ? "page" : undefined}
               >
-                <item.icon size={18} />
-                <span>{item.title}</span>
+                {item.title}
                 {item.route === "alerts" && active > 0 && (
                   <span className="nav-count">{active}</span>
                 )}
               </a>
             ))}
         </nav>
-        <div className="sidebar-bottom">
-          <div className="sidebar-user">
-            <span className="avatar">
-              {String(email).slice(0, 1).toUpperCase()}
-            </span>
-            <div>
-              <strong title={String(email)}>{email}</strong>
-              <span>
-                {operator
-                  ? roles.includes("viewer")
-                    ? "Operator & viewer"
-                    : "Operator"
-                  : "Viewer"}
-              </span>
-            </div>
-            <button
-              aria-label="Sign out"
-              title="Sign out"
-              onClick={() => void logout()}
-            >
-              <LogOut size={17} />
-            </button>
-          </div>
-        </div>
-      </aside>
-      <div className="main-shell">
-        <header className="topbar">
-          <div>
-            <button
-              className="mobile-menu"
-              aria-label="Open navigation"
-              onClick={() => setOpen(true)}
-            >
-              <Menu size={21} />
-            </button>
-            <span>Workspace</span>
-            <ChevronRight size={14} />
-            <strong>{title}</strong>
-          </div>
-          <div>
-            <span className="header-date">
-              {new Date(now).toLocaleDateString(undefined, {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </span>
-            <Badge
-              tone={
-                live.error || (live.updatedAt && now - live.updatedAt > 30000)
-                  ? "warning"
-                  : "success"
-              }
-            >
-              {live.error
-                ? "Connection interrupted"
+        <div className="account-bar">
+          <span
+            className={`connection ${delayed ? "problem" : ""}`}
+            role="status"
+          >
+            {live.error
+              ? "Connection interrupted"
+              : delayed
+                ? "Updates delayed"
                 : live.updatedAt
-                  ? now - live.updatedAt > 30000
-                    ? "Updates delayed"
-                    : "Live connection"
-                  : "Connecting"}
-            </Badge>
-            <button
-              className="icon-button"
-              aria-label="Refresh telemetry"
-              onClick={live.refresh}
-            >
-              <RefreshCw size={17} className={live.loading ? "spin" : ""} />
-            </button>
+                  ? `Live · updated ${Math.max(0, Math.round((now - live.updatedAt) / 1000))}s ago`
+                  : "Connecting…"}
+          </span>
+          <button
+            className="icon-button"
+            aria-label="Refresh telemetry"
+            onClick={live.refresh}
+          >
+            <RefreshCw size={17} className={live.loading ? "spin" : ""} />
+          </button>
+          <span className="account-email" title={email}>
+            {email}
+          </span>
+          <button className="text-button" onClick={() => void logout()}>
+            Sign out
+          </button>
+        </div>
+      </header>
+      <main id="main" tabIndex={-1}>
+        {logoutError && <ErrorNotice message={logoutError} />}
+        {live.error && (
+          <ErrorNotice
+            message={`${live.error} ${live.data ? "Showing the last available readings." : ""}`}
+            retry={live.refresh}
+          />
+        )}
+        {live.updatedAt > 0 && now - live.updatedAt > 30000 && !live.error && (
+          <div className="notice warning" role="status">
+            Updates delayed. Last refreshed{" "}
+            {Math.round((now - live.updatedAt) / 1000)} seconds ago.
           </div>
-        </header>
-        <main id="main" tabIndex={-1}>
-          {logoutError && <ErrorNotice message={logoutError} />}
-          {live.error && (
-            <ErrorNotice
-              message={`${live.error} ${live.data ? "Showing the last available readings." : ""}`}
-              retry={live.refresh}
-            />
-          )}
-          {live.updatedAt > 0 &&
-            now - live.updatedAt > 30000 &&
-            !live.error && (
-              <div className="notice warning" role="status">
-                Updates delayed. Last refreshed{" "}
-                {Math.round((now - live.updatedAt) / 1000)} seconds ago.
-              </div>
-            )}
-          {section === "alerts" ? (
-            <Alerts />
-          ) : section === "reports" ? (
-            <Reports />
-          ) : section === "users" ? (
-            <UserManagement operator={operator} username={username} />
-          ) : !live.data ? (
-            <Loading />
-          ) : section === "devices" ? (
-            <Equipment {...props} deviceId={route.split("/")[1]} />
-          ) : (
-            <Overview {...props} />
-          )}
-        </main>
-      </div>
+        )}
+        {section === "alerts" ? (
+          <Alerts />
+        ) : section === "reports" ? (
+          <Reports />
+        ) : section === "users" ? (
+          <UserManagement operator={operator} username={username} />
+        ) : !live.data ? (
+          <Loading />
+        ) : section === "devices" ? (
+          <Equipment {...props} deviceId={route.split("/")[1]} />
+        ) : (
+          <Overview {...props} />
+        )}
+      </main>
     </div>
   );
 }
