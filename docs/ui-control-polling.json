@@ -1,0 +1,224 @@
+{
+  "recordedAt": "2026-10-14T21:11:43.297949+00:00",
+  "sourceCommit": "506ac72",
+  "change": "Current device state polls one second after completed responses while a command is pending; returns to ten seconds after acknowledgement or sixty-second expiry. No simulator or fault-rule timing changes.",
+  "controlledBrowserStats": {
+    "startTime": "2026-10-14T21:10:36.334Z",
+    "duration": 22439.071,
+    "expected": 25,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "scenarios": [
+    {
+      "name": "sign-in page is concise, responsive and explains initial password setup",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "overview shows three healthy motors and current units",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "controls show requested and applied states separately",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "viewers cannot see controls or request user management",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "reset-all polls pending controls quickly and returns to normal cadence after acknowledgement",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "failed refreshes cannot keep a stale command on fast polling indefinitely",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "offline differs from a stopped reporting motor and timeout is visible",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "device detail loads all charts and pagination for 24h",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "alerts filter by device and state with truthful email statuses",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "temperature report shows asynchronous result chart and CSV",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "vibration report shows asynchronous result chart and CSV",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "power report shows asynchronous result chart and CSV",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "reports show empty results and query failures without false success",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "report date window is validated before query starts",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "operators invite accounts and update roles while protecting self",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "API failures preserve visible readings and support retry",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "hosted sign-in uses authorization code with PKCE and random state",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "callback rejects a missing OAuth state and clears code from URL",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "session rejection and refresh failure return to sign-in",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "mobile navigation and dashboard have no horizontal overflow",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "dashboard and report form have accessible controls and landmarks",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "clock advancement makes old live responses visibly stale and motors offline",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "refresh token renewal replaces the access token after a read rejection",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "sign-out clears local tokens and requests the hosted logout URL",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    },
+    {
+      "name": "alert history, team roles and report results pass accessibility checks",
+      "ok": true,
+      "results": [
+        "passed"
+      ]
+    }
+  ],
+  "verificationScope": "Controlled Chromium journeys, including timed automatic acknowledgement, reset-all cadence and bounded refresh failures; no real motor faults or account mutations performed for this release.",
+  "dashboardUrl": "https://d1idggpc663p7f.cloudfront.net",
+  "publicReleaseMatchesBuild": true,
+  "publicVerificationAt": "2026-10-14T21:12:15.498747+00:00",
+  "assets": [
+    {
+      "path": "assets/charts-DME9z0Gk.js",
+      "sha256": "29ca10ab9cb4df4563be176eadf99040124c06e07d5b20fccc31bcb3365b9552"
+    },
+    {
+      "path": "assets/index-CkNy-Fzx.js",
+      "sha256": "99c2f2a78e7c0103177c988e6694901ecff2b7311b616a898ded746097bf8e3d"
+    },
+    {
+      "path": "assets/index-DYzd1lKl.css",
+      "sha256": "e386039c8cbea11e890e00f166f323098aa234a83bd7d8a4ea6899ee6d06ea36"
+    },
+    {
+      "path": "assets/rolldown-runtime-XKyaHtl9.js",
+      "sha256": "548d1dbf321e7d2ae804fcc158b588706a7c52f8ca175de1490c6ccb4dbe55b7"
+    },
+    {
+      "path": "assets/vendor-DQjG21sr.js",
+      "sha256": "5987165f7377271f10d6dcf905dc74783aaef63fe0a8dafa930c50fd760ffad0"
+    },
+    {
+      "path": "favicon.svg",
+      "sha256": "b884228a71aa0e78d554c6a50400df9dd02178a8b4dac2eef73dcf9b8d11f30c"
+    },
+    {
+      "path": "index.html",
+      "sha256": "6e5a58b7f10edacc4f6e9ac1cff8ad74b0b0585496e18801c1289f6637397b42"
+    }
+  ]
+}
