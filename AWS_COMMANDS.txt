@@ -513,3 +513,39 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T16:29:14.908191+00:00] 7be9e5613236 EXIT 0
 [2026-10-14T16:29:15.098834+00:00] 67346f4fa108 EXIT 0
 [2026-10-14T16:29:15.607516+00:00] 5720648f6715 EXIT 0
+[2026-10-14T16:29:45.465788+00:00] ad1b8d894b7d EXIT 0
+
+[2026-10-14T16:29:45.486820+00:00] 342fc706e4ac Read deployed stack outputs
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj-artifacts", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:29:47.707897+00:00] 342fc706e4ac EXIT 0
+
+[2026-10-14T16:29:47.730814+00:00] 19ae327ceb33 Upload content-addressed release package
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip", "s3://ccproj-artifacts-artifacts-bllhfj9fhpbr/releases/8adaf6ae149f95bb07db7d868cf6ad5bf0c2879b5c4a9342ac8cc76b14ee8e30/backend.zip", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:29:54.780790+00:00] 19ae327ceb33 EXIT 0
+
+[2026-10-14T16:29:54.809805+00:00] 01b0dadd1b41 Upload content-addressed release package
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\build\\simulator.tar.gz", "s3://ccproj-artifacts-artifacts-bllhfj9fhpbr/releases/e8648eb46933bc057f2e58ed1f9c11645dc19335c773fff13a049440a866c99c/simulator.tar.gz", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:30:00.640072+00:00] 2751fd175bc3 Inspect current CloudFormation deployment state without changing resources
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj-artifacts", "--query", "Stacks[0].{Status:StackStatus,Outputs:Outputs}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:30:01.714841+00:00] 01b0dadd1b41 EXIT 0
+
+[2026-10-14T16:30:01.731952+00:00] 20b3314a92a0 Deploy CloudFormation stack ccproj
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "deploy", "--stack-name", "ccproj", "--template-file", "C:\\Akshay\\Projects-2\\ccproj\\infra\\platform.json", "--capabilities", "CAPABILITY_IAM", "--no-fail-on-empty-changeset", "--tags", "Project=ccproj", "--s3-bucket", "ccproj-artifacts-artifacts-bllhfj9fhpbr", "--s3-prefix", "templates", "--parameter-overrides", "ArtifactBucket=ccproj-artifacts-artifacts-bllhfj9fhpbr", "BackendKey=releases/8adaf6ae149f95bb07db7d868cf6ad5bf0c2879b5c4a9342ac8cc76b14ee8e30/backend.zip", "BudgetStart=1791995401", "BudgetEnd=1805155200", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:30:02.928094+00:00] 2751fd175bc3 EXIT 0
+
+[2026-10-14T16:30:44.261459+00:00] 4ca01eb4fd2d Read current platform stack creation progress
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--query", "Stacks[0].{Status:StackStatus,Reason:StackStatusReason}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:30:46.441070+00:00] 4ca01eb4fd2d EXIT 0
+
+[2026-10-14T16:30:46.982110+00:00] 3ce310056304 Read CloudFormation validation and provisioning events for the platform
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-events", "--stack-name", "ccproj", "--query", "OperationEvents[?EventType==`VALIDATION_ERROR` || ResourceStatus==`CREATE_FAILED`]", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:30:50.689097+00:00] 3ce310056304 EXIT 0
+
+[2026-10-14T16:32:41.915100+00:00] 96228f81293a Check platform resources reaching deployed state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "list-stack-resources", "--stack-name", "ccproj", "--query", "StackResourceSummaries[?ResourceStatus!=`CREATE_COMPLETE`].[LogicalResourceId,ResourceType,ResourceStatus]", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:32:44.512528+00:00] 96228f81293a EXIT 0
+
+[2026-10-14T16:32:45.181005+00:00] ce6fc3c0f6c7 Read any failed resource events during deployment
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-events", "--stack-name", "ccproj", "--query", "OperationEvents[?ResourceStatus==`CREATE_FAILED` || EventType==`VALIDATION_ERROR`]", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:32:49.304045+00:00] ce6fc3c0f6c7 EXIT 0
