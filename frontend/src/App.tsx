@@ -131,7 +131,22 @@ function Dashboard({ user }: { user: User }) {
   const [logoutError, setLogoutError] = useState("");
   const roles = rolesFromToken(user.access_token);
   const operator = roles.includes("operator");
-  const live = usePoll((signal) => api<DeviceResponse>("/devices", { signal }));
+  const live = usePoll(
+    (signal) => api<DeviceResponse>("/devices", { signal }),
+    (response, receivedAt) => {
+      if (!response) return 10000;
+      const serverNow =
+        Date.parse(response.serverTime) + Date.now() - receivedAt;
+      // Use server time, and bound fast retries even if later refreshes fail.
+      const pending = response.devices.some(
+        ({ control }) =>
+          control.status === "pending" &&
+          control.requestedAt &&
+          serverNow - Date.parse(control.requestedAt) < 60000,
+      );
+      return pending ? 1000 : 10000;
+    },
+  );
   const serverOffset = live.data
     ? Date.parse(live.data.serverTime) - live.updatedAt
     : 0;

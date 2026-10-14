@@ -2,7 +2,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 export function usePoll<T>(
   load: (signal: AbortSignal) => Promise<T>,
-  interval = 10000,
+  interval:
+    number | ((data: T | undefined, receivedAt: number) => number) = 10000,
   key = "",
 ) {
   const [data, setData] = useState<T>();
@@ -12,8 +13,14 @@ export function usePoll<T>(
   const [revision, setRevision] = useState(0);
   const ref = useRef(load);
   ref.current = load;
+  const intervalRef = useRef(interval);
+  intervalRef.current = interval;
+  const latest = useRef<{ data?: T; receivedAt: number }>({ receivedAt: 0 });
+  // Callback identity changes on render; only a fixed interval change restarts a request.
+  const fixedInterval = typeof interval === "number" ? interval : undefined;
   const refresh = useCallback(() => setRevision((value) => value + 1), []);
   useEffect(() => {
+    latest.current = { receivedAt: 0 };
     setData(undefined);
     setError("");
     setLoading(true);
@@ -22,9 +29,16 @@ export function usePoll<T>(
     let disposed = false;
     let timer: ReturnType<typeof setTimeout>;
     let request: AbortController;
+    function schedule() {
+      const delay =
+        typeof intervalRef.current === "number"
+          ? intervalRef.current
+          : intervalRef.current(latest.current.data, latest.current.receivedAt);
+      if (delay > 0) timer = setTimeout(run, delay);
+    }
     async function run() {
       if (document.hidden) {
-        if (interval > 0) timer = setTimeout(run, interval);
+        schedule();
         return;
       }
       request?.abort();
@@ -34,9 +48,11 @@ export function usePoll<T>(
       try {
         const result = await ref.current(current.signal);
         if (!disposed && current === request) {
+          const receivedAt = Date.now();
+          latest.current = { data: result, receivedAt };
           setData(result);
           setError("");
-          setUpdatedAt(Date.now());
+          setUpdatedAt(receivedAt);
         }
       } catch (err) {
         if (!disposed && current === request && !current.signal.aborted)
@@ -44,7 +60,7 @@ export function usePoll<T>(
       } finally {
         if (!disposed && current === request) {
           setLoading(false);
-          if (interval > 0) timer = setTimeout(run, interval);
+          schedule();
         }
       }
     }
@@ -62,7 +78,7 @@ export function usePoll<T>(
       request?.abort();
       document.removeEventListener("visibilitychange", visible);
     };
-  }, [interval, revision, key]);
+  }, [fixedInterval, revision, key]);
   return { data, error, loading, updatedAt, refresh };
 }
 

@@ -86,7 +86,6 @@ test("controls show requested and applied states separately", async ({
     status: "applied",
     appliedAt: new Date().toISOString(),
   };
-  await page.getByRole("button", { name: "Refresh telemetry" }).click();
   await expect(card.getByText("Applied:")).toContainText("Overheat");
   await expect(card.getByText(/^Applied \w/)).toBeVisible();
   await expect(
@@ -115,6 +114,71 @@ test("viewers cannot see controls or request user management", async ({
   expect(state.requests.some((request) => request.path === "/users")).toBe(
     false,
   );
+});
+
+test("reset-all polls pending controls quickly and returns to normal cadence after acknowledgement", async ({
+  page,
+}) => {
+  await page.clock.install();
+  await page.clock.pauseAt(new Date(Date.now() + 1000));
+  const state = await mockApp(page);
+  const reads = () =>
+    state.requests.filter((request) => request.path === "/devices").length;
+  await page.goto("/");
+  await expect(page.getByTestId("motor-03")).toBeVisible();
+  await page.getByRole("button", { name: "Reset all motors" }).click();
+  await expect(page.getByText("Applying change…")).toHaveCount(3);
+  const pendingReads = reads();
+  await page.clock.fastForward(1000);
+  await expect.poll(reads).toBe(pendingReads + 1);
+  // Wait for the response to finish before advancing the paused clock again.
+  await expect(
+    page.getByRole("button", { name: "Refresh telemetry" }).locator("svg"),
+  ).not.toHaveClass(/spin/);
+
+  for (const device of state.devices.devices)
+    device.control = {
+      ...device.control,
+      status: "applied",
+      appliedMode: "normal",
+      appliedAt: new Date().toISOString(),
+    };
+  await page.clock.fastForward(1000);
+  await expect(page.getByText("Applying change…")).toHaveCount(0);
+  const appliedReads = reads();
+  await page.clock.fastForward(5000);
+  expect(reads()).toBe(appliedReads);
+  await page.clock.fastForward(5000);
+  await expect.poll(reads).toBe(appliedReads + 1);
+});
+
+test("failed refreshes cannot keep a stale command on fast polling indefinitely", async ({
+  page,
+}) => {
+  await page.clock.install();
+  await page.clock.pauseAt(new Date(Date.now() + 1000));
+  const state = await mockApp(page);
+  const reads = () =>
+    state.requests.filter((request) => request.path === "/devices").length;
+  await page.goto("/");
+  const card = page.getByTestId("motor-01");
+  await card.getByRole("button", { name: "Overheat", exact: true }).click();
+  await expect(card.getByText("Applying change…")).toBeVisible();
+  // Finish the immediate post-command refresh before introducing the outage.
+  await expect.poll(reads).toBe(2);
+  state.failDevices = true;
+  await page.clock.fastForward(1000);
+  await expect(page.getByRole("alert")).toContainText(
+    "last available readings",
+  );
+  const previousReads = reads();
+  await page.clock.fastForward(65000);
+  await expect.poll(reads).toBeGreaterThan(previousReads);
+  const expiredReads = reads();
+  await page.clock.fastForward(1000);
+  expect(reads()).toBe(expiredReads);
+  await page.clock.fastForward(9000);
+  await expect.poll(reads).toBe(expiredReads + 1);
 });
 
 test("offline differs from a stopped reporting motor and timeout is visible", async ({
