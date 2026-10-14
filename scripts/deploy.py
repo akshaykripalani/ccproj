@@ -149,6 +149,13 @@ def main():
     }
     config = runtime / "config.json"
     config.write_text(json.dumps(web_config, indent=2) + "\n")
+    existing_page = run(
+        ["s3api", "head-object", "--bucket", platform["FrontendBucket"], "--key", "index.html"],
+        "Check whether hosting already contains an application",
+        check=False,
+    )
+    if existing_page.returncode and "(404)" not in existing_page.stderr:
+        raise RuntimeError(existing_page.stderr.strip())
     run(
         [
             "s3",
@@ -164,21 +171,22 @@ def main():
         ],
         "Publish non-secret frontend integration configuration",
     )
-    run(
-        [
-            "s3",
-            "cp",
-            str(ROOT / "hosting" / "index.html"),
-            f"s3://{platform['FrontendBucket']}/index.html",
-            "--content-type",
-            "text/html",
-            "--cache-control",
-            "no-cache",
-            "--sse",
-            "AES256",
-        ],
-        "Publish AWS deployment landing page for later React integration",
-    )
+    if existing_page.returncode:
+        run(
+            [
+                "s3",
+                "cp",
+                str(ROOT / "hosting" / "index.html"),
+                f"s3://{platform['FrontendBucket']}/index.html",
+                "--content-type",
+                "text/html",
+                "--cache-control",
+                "no-cache",
+                "--sse",
+                "AES256",
+            ],
+            "Seed empty hosting with the AWS deployment landing page",
+        )
     api_id = platform["ApiUrl"].split("//")[1].split(".")[0]
     simulator = deploy_stack(
         args.stack + "-simulator",
