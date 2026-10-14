@@ -2,7 +2,7 @@
 
 ## Cloud-Based Industrial Equipment Monitoring and Fault Detection
 
-**Status:** Draft for scope and implementation planning  
+**Status:** AWS implementation deployed; React application stage remains  
 **Date:** 14 October 2026  
 **Context:** Academic Cloud Computing course project  
 **Budget ceiling:** USD $50 of total AWS service usage, before credit offsets  
@@ -17,7 +17,7 @@ There is no physical hardware requirement. One software simulator will represent
 
 This is a working academic demonstration with a limited operating period. It is not intended to provide production industrial monitoring or safety-critical decisions.
 
-The scope below records the proposed design discussed so far. No application or infrastructure has been implemented or deployed. Requirements and numerical targets are subject to validation during implementation; any material scope changes should be recorded in this document.
+The AWS layer is deployed in Sydney: the EC2 simulator, telemetry pipeline, protected application/control/user-management APIs, fault detection and notifications, reporting, monitoring, and private frontend hosting. The current CloudFront entry point is a deployment status page; the React dashboard remains the subsequent application stage. Deployed evidence and acceptance results are recorded in `docs/AWS_ACCEPTANCE.md`. The original product scope below remains in force.
 
 ## 2. Goals and success criteria
 
@@ -66,7 +66,7 @@ Initial dashboard accounts:
 | `akshay.kripalani74@nmims.in` | Viewer and operator |
 | `collegeproject@akshaykripalani.com` | Viewer and operator |
 
-These are required accounts to create during implementation; they have not yet been created in AWS. Login account addresses do not automatically establish SNS alert recipients or confirm email subscriptions.
+Both accounts have been created and invited through Cognito, and their viewer/operator groups were verified by live tests. Login account addresses do not automatically establish SNS alert recipients or confirm email subscriptions. The current SNS subscription for collegeproject@akshaykripalani.com was confirmed by the user and verified in AWS; both demonstration fault episodes have SNS acceptance records.
 
 ### Project operator
 
@@ -338,7 +338,7 @@ The platform may remain deployed while simulation is paused. Controlled load tes
 | Development/testing contingency | $20 |
 | **Total ceiling** | **$50** |
 
-These are spending allocations for the original short demonstration, not a completed AWS Pricing Calculator estimate or a guarantee of indefinite hosting within $50. Development usage also counts toward the ceiling. Validate Mumbai costs, feature-plan selection, taxes, and credit eligibility before deployment. The user must decide whether to pause simulation, stop resources, or revise the budget if spending approaches the ceiling. No option is assumed approved. Account credits and Free Plan expiry also limit continued operation; the observed expiry is 16 March 2027. An account-plan upgrade is not part of this scope.
+These are spending allocations for the original short demonstration. The implemented conservative Sydney model is $26.93 per 730-hour month before credits and free allowances, including a $5 variable-service allowance; see `docs/budget-model.json` and the captured public rates. This is an estimate, not a guarantee of indefinite hosting within $50. Development usage also counts toward the ceiling. Notify at $20/$30/$40 and ask the user before stopping any resource for spending reasons. Account credits and Free Plan expiry also limit continued operation; the observed expiry is 16 March 2027. An account-plan upgrade is not part of this scope.
 
 Mumbai Athena on-demand SQL is listed at $5 per TB scanned. For illustration, 100 queries each scanning 2.4 GiB would cost approximately $1.17 in Athena query charges, excluding storage, requests, catalog usage, taxes, and credit offsets. Actual scanned bytes depend on file layout and queries. An initial Athena query allowance of $1–3 should be validated against report frequency.
 
@@ -405,7 +405,7 @@ Keep the deployed project online until the user requests shutdown, subject to an
 - Exact synthetic normal ranges and fault thresholds, chosen during implementation. Three-reading activation/recovery, one email per fault episode, and dashboard-only outage detection are the agreed defaults.
 - Partial-failure/retry behavior across state updates, archive writes, and notifications.
 - Exact course-module mapping and final cost estimate. The user confirmed no additional college requirements and no fixed shutdown date.
-- Behaviour near the $50 spending ceiling during extended hosting remains a later decision. The user expects to return after a short absence, not after a week; this does not authorize extra spending or change the $50 ceiling.
+- Budget behaviour was resolved: notify at $20/$30/$40 before credits, and ask before stopping anything. There is no automatic shutdown authorization or hard cap. Continued operation does not change the $50 ceiling.
 - The user accepted the product defaults: shared motors, one fault per motor, gradual recovery toward normal within about 30 seconds, configuration-only thresholds, retained resolved alerts, 24-hour recent charts, and 30-day historical telemetry. These are requirements, not unanswered questions.
 
 ## 16. References
