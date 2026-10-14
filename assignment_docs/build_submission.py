@@ -1146,6 +1146,9 @@ def main():
             f"[PNG](diagrams/{f.slug}.png) | [Editable Mermaid](diagrams/{f.slug}.mmd)\n",
         ]
     (ROOT / "Diagrams.md").write_text("\n".join(index), encoding="utf-8")
+    # Preserve checksums across Windows authoring and Git checkouts with LF text rules.
+    for text_path in [ROOT / "Diagrams.md", *DIAGRAMS.glob("*.mmd"), *DIAGRAMS.glob("*.svg")]:
+        text_path.write_bytes(text_path.read_bytes().replace(b"\r\n", b"\n"))
     build_pdf(figs)
     missing = []
     for path in ROOT.glob("*.md"):

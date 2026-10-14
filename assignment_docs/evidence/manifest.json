@@ -48,136 +48,136 @@
       "sha256": "5a1cbcf6b28cfb64708d1fa1a025a6311289d66140a7f3bfbb9f22d721c76b75"
     },
     "build_submission.py": {
-      "bytes": 41540,
-      "sha256": "0aad1fd23a82c0df9c3b1c083a75e84fc788513cdbbe55975f31a6c4090572f7"
+      "bytes": 41801,
+      "sha256": "29b9b82992c80e82ff5efe5071205809f9cf2ecd89334d8f6c6ff0534640ec7b"
     },
     "Design_and_Implementation.md": {
       "bytes": 30767,
       "sha256": "e34deca9e5080e7c0ff943eb8a90f3625d39e7645a1d5994b78d8f4bb573e550"
     },
     "diagrams/01-system-context.mmd": {
-      "bytes": 608,
-      "sha256": "80d0139c39b3c4925f425ab641cb84af7825a536bad30eecfdb25937d295073d"
+      "bytes": 596,
+      "sha256": "6f2f216fbb3addb7e1048e91f16d3b6437942023a88980b2e50595cf523211c1"
     },
     "diagrams/01-system-context.png": {
       "bytes": 116103,
       "sha256": "b3c5cf2d2726015b702076a841f562c62d9fb9a82e50232020da1dd553ad8054"
     },
     "diagrams/01-system-context.svg": {
-      "bytes": 8659,
-      "sha256": "b9b1c6a77485d3522e21e0123d9e5132af7ba7459c42acaf6e39e6ad9aee1d42"
+      "bytes": 8600,
+      "sha256": "66ab2117260c94f57e9dc87a63a15834b6cc55c04bb9c6e989188f7467208889"
     },
     "diagrams/02-aws-components.mmd": {
-      "bytes": 1313,
-      "sha256": "9f426650af094b572049ae596afc9492800d417e074cb48768d09759abbe3330"
+      "bytes": 1278,
+      "sha256": "55539924375ef01821a961e0d3f140dda0bd59df74541f9f3017a04b8154285b"
     },
     "diagrams/02-aws-components.png": {
       "bytes": 199747,
       "sha256": "a5e834574918aee8c33be6d02e86b6cd592242eb55b31379def5bf35ed8c4bc3"
     },
     "diagrams/02-aws-components.svg": {
-      "bytes": 22257,
-      "sha256": "b98f91258687d1a12eec0e2df306708df7583facbfb72fc607c3626d2c8a5e3a"
+      "bytes": 22120,
+      "sha256": "b814472a3a05a0bf924172a86aae112ae2fb0f9e13847fdf09ae02b3e0fb15ec"
     },
     "diagrams/03-network-deployment.mmd": {
-      "bytes": 413,
-      "sha256": "8259d378520a37959ebf41f3fe7357b52b402c727bcb4c9621f1631c68d9959b"
+      "bytes": 407,
+      "sha256": "e6c8a2835776fb17b92fb1088ea582a2e7517324bfb355f62ef200f98c848496"
     },
     "diagrams/03-network-deployment.png": {
       "bytes": 124432,
       "sha256": "0c63365d179d4737e56f930aa32ad76b055f1f11c45128dc0a5f29d38d4ae422"
     },
     "diagrams/03-network-deployment.svg": {
-      "bytes": 5882,
-      "sha256": "11fa057bdd5e9196d8cb5c93935c496a7fce54ebcacec7b7896d636c8e2f5fa4"
+      "bytes": 5839,
+      "sha256": "8810bb1545576108a230765e0bca7723fb6ed4e3b44a9ddc7234cf0da862da7a"
     },
     "diagrams/04-telemetry-sequence.mmd": {
-      "bytes": 617,
-      "sha256": "33eb86d8c6c2f079bfbd7e7c76f087d6a964c5ef4a86cd6acaeb476dbbc0f3c0"
+      "bytes": 603,
+      "sha256": "366bf3ed25c05bd212df8fed9bf5f37ceed12a2c647cbf4879bfa488e1034075"
     },
     "diagrams/04-telemetry-sequence.png": {
       "bytes": 100566,
       "sha256": "2515752f35e3e8b32210094914c491376ba312b9d9d3645fd2748fabb87e685c"
     },
     "diagrams/04-telemetry-sequence.svg": {
-      "bytes": 9741,
-      "sha256": "c796644f5bd0c89768d8d60b012d6932c31b8356082b5a88a06552c42a92d4d0"
+      "bytes": 9675,
+      "sha256": "5a23f7cf72c50e8a8d8de567fecaff41c549870e8d954be6574283f7627287e1"
     },
     "diagrams/05-data-model.mmd": {
-      "bytes": 883,
-      "sha256": "8a9371d89c58f13f4ce25bde9e75c4ae45929b9fd37018b91d1bdc8b270146fa"
+      "bytes": 870,
+      "sha256": "ca8c4b78b087204fd9b7c9b73ac48a6b9770c304343e8127efc7923cac6645fa"
     },
     "diagrams/05-data-model.png": {
       "bytes": 188572,
       "sha256": "7baf7d8567d2227dae1503fd392053c5a76d3f649c7b39a86d81d3a293a6ed33"
     },
     "diagrams/05-data-model.svg": {
-      "bytes": 10581,
-      "sha256": "d02d6a442895ca0117119a2394f20f408b379202bec40ca27f3dfe6f4254fefb"
+      "bytes": 10513,
+      "sha256": "3a6114ae6ce29116daf59729892356699b5febc15609f9617af8078a8820fc4f"
     },
     "diagrams/06-auth-sequence.mmd": {
-      "bytes": 667,
-      "sha256": "24fd586bb7828b00c1b0b33f2fa1e298c4c66d0b4586a5290de527edc97a0c9a"
+      "bytes": 653,
+      "sha256": "7949ed63d0d189638482f3381db3b89ede644854231ecfef5c5c2dd88ec4f36e"
     },
     "diagrams/06-auth-sequence.png": {
       "bytes": 107227,
       "sha256": "b14303a4b0bff7fe4de914e703b2569f0d0816d5bbbf160ac931db3a5073eacd"
     },
     "diagrams/06-auth-sequence.svg": {
-      "bytes": 9882,
-      "sha256": "d4f2a57377c06c0b0e65d9706ab31c91e35d4afc5a43ca6c0e619c13c693a777"
+      "bytes": 9815,
+      "sha256": "5a499edf814e229840ebf5c7e7e8e9512ae4f1dd1a3022de0a9df22a1d6fdaf9"
     },
     "diagrams/07-control-fault-state.mmd": {
-      "bytes": 699,
-      "sha256": "835d26dc2dcfd656b66dd122fdd6d9fe08b21371e2a0bda467c896ea8c6813ee"
+      "bytes": 687,
+      "sha256": "681ab8a235679af23115c5050e720b7b0210e51ec3e78573d462fe1262a31aad"
     },
     "diagrams/07-control-fault-state.png": {
       "bytes": 150476,
       "sha256": "3c223515c5deeaf40f23285aa3ab8cd4793cad004d6091a98412948f590d9d13"
     },
     "diagrams/07-control-fault-state.svg": {
-      "bytes": 9650,
-      "sha256": "251cda5280678b85a5306213f790bfbeff227c2f9f752bdfd9f8e5df5deb6034"
+      "bytes": 9586,
+      "sha256": "9ca5e540dd0378d34dd8e0e95f864e4d9803ff42fc7a007c1c0a8bf11b6af951"
     },
     "diagrams/08-reports-recovery.mmd": {
-      "bytes": 863,
-      "sha256": "38773fba951a6598f98413f3b0a344b3706e6f8cd9b50728dcf9221a04508826"
+      "bytes": 846,
+      "sha256": "ecf997422567853be41691f240a5a07c09c1e7dc076b128639a910d6c39ab3cd"
     },
     "diagrams/08-reports-recovery.png": {
       "bytes": 140094,
       "sha256": "007463b2fd6333e652fb09c0d512e0241b493780e8a177d0b4f1d44b90214600"
     },
     "diagrams/08-reports-recovery.svg": {
-      "bytes": 10916,
-      "sha256": "04be40b9a91439101ef17c32698d30ce431d3e0f0316cdbc57ea8d9cc5a8c46c"
+      "bytes": 10844,
+      "sha256": "e9abc46f0717afa15eb3229448359bb326858a7c475bceff4f2ff243b904ae12"
     },
     "diagrams/09-frontend-structure.mmd": {
-      "bytes": 688,
-      "sha256": "c9320ad36363c2beccef7a0426a8c577e4edb8fe6b12dbce09633c12c10e8aab"
+      "bytes": 672,
+      "sha256": "5d05f396bc5a2956414daefe71d3c6140588d5d6ebe6e7510ea350c5476546a8"
     },
     "diagrams/09-frontend-structure.png": {
       "bytes": 95387,
       "sha256": "ecba5bc554ee4777e2ffcd7a5fa0a6542c904a5d5d85a40b4ce5b130b52ad3d1"
     },
     "diagrams/09-frontend-structure.svg": {
-      "bytes": 9735,
-      "sha256": "7e5e86716c738c17fc573ab3f94309c19c3df54375a4f0ade8f035eb78573744"
+      "bytes": 9669,
+      "sha256": "36caa91d2c969107864c85c0ea02b65b79841fc5e65834d4786252f4d3f30aa9"
     },
     "diagrams/10-deployment-lifecycle.mmd": {
-      "bytes": 994,
-      "sha256": "458371d879ef08b66e199a1d0f043dd70d6a5931630109d2b31ee929791cfceb"
+      "bytes": 978,
+      "sha256": "6fbbec33b94a70f74a71130c3f096f56ca6798e9ff5994629c5393c51b1ab176"
     },
     "diagrams/10-deployment-lifecycle.png": {
       "bytes": 153094,
       "sha256": "4ee810cf5e10d3b26b42dc0453db13aa8adf7b592ba472bd0ca130ffb438c0b0"
     },
     "diagrams/10-deployment-lifecycle.svg": {
-      "bytes": 10943,
-      "sha256": "12474f0fa29257f77a3dbf64f0911f3c66fe2fb759e1a35bc4dd559d1e999917"
+      "bytes": 10871,
+      "sha256": "63544e7a72708c8889b4b3f2af79011fccfdf5110991bbebc28f3ea010618af3"
     },
     "Diagrams.md": {
-      "bytes": 4382,
-      "sha256": "cfa4fff0c6e8b6a6848cfdb7792eba77498f6f02e63e529a1ba2009aafdd27d4"
+      "bytes": 4299,
+      "sha256": "062fbd5b3c1ed0e9701ae932bd419dfeffd578e12896f1dec1602527596d1079"
     },
     "evidence/budget-model.json": {
       "bytes": 1496,
