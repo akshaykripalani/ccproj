@@ -1222,3 +1222,463 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T17:01:01.599007+00:00] 93ec0d3f71ed Inspect buffer depth during live failure exercises
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-14T17:01:03.797448+00:00] 93ec0d3f71ed EXIT 0
+
+[2026-10-14T17:01:11.252354+00:00] 3962ddf0f6b0 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:01:13.376566+00:00] 3962ddf0f6b0 EXIT 0
+
+[2026-10-14T17:01:33.413465+00:00] 6e22cbdfbaa4 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:01:35.595508+00:00] 6e22cbdfbaa4 EXIT 0
+
+[2026-10-14T17:01:55.628196+00:00] 0f87bf829a24 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:01:57.818256+00:00] 0f87bf829a24 EXIT 0
+
+[2026-10-14T17:02:17.853417+00:00] 38c6c935141d Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:02:19.942215+00:00] 38c6c935141d EXIT 0
+
+[2026-10-14T17:02:38.495419+00:00] e469d3fe1088 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:02:39.972728+00:00] 4d35f379696e Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:02:40.768596+00:00] e469d3fe1088 EXIT 0
+
+[2026-10-14T17:02:40.855449+00:00] ce925378e5a0 Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-_30cx8r2\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:02:42.192408+00:00] 4d35f379696e EXIT 0
+[2026-10-14T17:02:43.633467+00:00] ce925378e5a0 EXIT 0 (private response withheld)
+
+[2026-10-14T17:02:43.669714+00:00] 79df195a67c7 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-97yit0c6\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:02:46.148054+00:00] 79df195a67c7 EXIT 0 (private response withheld)
+
+[2026-10-14T17:02:46.169365+00:00] 7307acae2d31 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-289c8f6cc50f@example.invalid", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:02:48.516447+00:00] 7307acae2d31 EXIT 0
+
+[2026-10-14T17:02:48.553802+00:00] 5306c3c2b060 Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-k10_moit\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:02:51.070866+00:00] 5306c3c2b060 EXIT 0 (private response withheld)
+
+[2026-10-14T17:02:51.109626+00:00] a9b61caef3f4 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-d28u43k0\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:02:53.564987+00:00] a9b61caef3f4 EXIT 0 (private response withheld)
+
+[2026-10-14T17:02:53.588414+00:00] 6533cad3fc24 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-289c8f6cc50f@example.invalid", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:02:55.929771+00:00] 6533cad3fc24 EXIT 0
+
+[2026-10-14T17:02:57.970793+00:00] bd3e0cc76c93 Upload owned CloudFront cache test asset
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\e2e-cache-14e2030a58af794f.txt", "s3://ccproj-frontend-ipu2nmzptkhj/e2e-cache-14e2030a58af794f.txt", "--cache-control", "public,max-age=3600", "--content-type", "text/plain", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:03:00.013747+00:00] bd3e0cc76c93 EXIT 0
+
+[2026-10-14T17:03:01.441318+00:00] b48a4a418c61 Update only owned test asset at the private origin
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\e2e-cache-14e2030a58af794f.txt", "s3://ccproj-frontend-ipu2nmzptkhj/e2e-cache-14e2030a58af794f.txt", "--cache-control", "public,max-age=3600", "--content-type", "text/plain", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:03:02.218048+00:00] 86c3522953ed Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:03:03.441187+00:00] b48a4a418c61 EXIT 0
+
+[2026-10-14T17:03:03.701419+00:00] cd05c3bac7d5 Invalidate only owned cache exercise asset
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudfront", "create-invalidation", "--distribution-id", "E2QMBAOSKXNVMX", "--paths", "/e2e-cache-14e2030a58af794f.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:03:04.475724+00:00] 86c3522953ed EXIT 0
+[2026-10-14T17:03:05.848623+00:00] cd05c3bac7d5 EXIT 0
+
+[2026-10-14T17:03:05.866367+00:00] 68e8abe71d60 Wait for deliberate cache update
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudfront", "wait", "invalidation-completed", "--distribution-id", "E2QMBAOSKXNVMX", "--id", "ICZHKDYPHCKUCGWNU3GE0T7E62", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:03:24.499392+00:00] 652f37448184 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:03:26.616826+00:00] 652f37448184 EXIT 0
+[2026-10-14T17:03:28.774349+00:00] 68e8abe71d60 EXIT 0
+
+[2026-10-14T17:03:29.887160+00:00] d5de96ee6eed Inspect only owned cache test object versions
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-object-versions", "--bucket", "ccproj-frontend-ipu2nmzptkhj", "--prefix", "e2e-cache-14e2030a58af794f.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:03:32.117273+00:00] d5de96ee6eed EXIT 0
+
+[2026-10-14T17:03:32.141117+00:00] 8a36f6f0a540 Remove only owned cache exercise versions
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "delete-objects", "--bucket", "ccproj-frontend-ipu2nmzptkhj", "--delete", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\e2e-cache-14e2030a58af794f.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:03:34.425107+00:00] 8a36f6f0a540 EXIT 0
+
+[2026-10-14T17:03:34.448627+00:00] 883a02f3f5f2 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-289c8f6cc50f@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:03:36.826051+00:00] 883a02f3f5f2 EXIT 0
+
+[2026-10-14T17:03:36.846011+00:00] 2ea78b0eb89c Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-289c8f6cc50f@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:03:39.164693+00:00] 2ea78b0eb89c EXIT 0
+
+[2026-10-14T17:03:46.638626+00:00] f457d5656ba8 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:03:48.764877+00:00] f457d5656ba8 EXIT 0
+
+[2026-10-14T17:04:08.789170+00:00] a274bb295b78 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:04:10.993811+00:00] a274bb295b78 EXIT 0
+
+[2026-10-14T17:04:19.431328+00:00] 6319f263034b Check visible and in-flight messages retained during the failure exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "VisibilityTimeout", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:04:21.560087+00:00] 6319f263034b EXIT 0
+
+[2026-10-14T17:04:31.015999+00:00] c050dc19ed7b Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:04:33.138466+00:00] c050dc19ed7b EXIT 0
+
+[2026-10-14T17:04:53.162463+00:00] ccb30e443336 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:04:55.290372+00:00] ccb30e443336 EXIT 0
+
+[2026-10-14T17:05:15.313469+00:00] 08e7b9d3da5f Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:05:17.433570+00:00] 08e7b9d3da5f EXIT 0
+
+[2026-10-14T17:05:37.457921+00:00] 923da7dc2640 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:05:39.585303+00:00] 923da7dc2640 EXIT 0
+
+[2026-10-14T17:05:59.617052+00:00] 6c37135352f7 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:06:01.752666+00:00] 6c37135352f7 EXIT 0
+
+[2026-10-14T17:06:21.778503+00:00] 887b2fc4d41a Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:06:23.087076+00:00] d8663b60f3e9 Read processor log freshness during the DLQ retry exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "describe-log-streams", "--log-group-name", "/aws/lambda/ccproj-Processor", "--order-by", "LastEventTime", "--descending", "--limit", "2", "--query", "logStreams[].{Stream:logStreamName,Last:lastEventTimestamp}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:06:24.732513+00:00] 887b2fc4d41a EXIT 0
+[2026-10-14T17:06:25.262511+00:00] d8663b60f3e9 EXIT 0
+
+[2026-10-14T17:06:25.815686+00:00] 5c8516c9603c Check both visible and in-flight dead-letter counts
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:06:28.007650+00:00] 5c8516c9603c EXIT 0
+
+[2026-10-14T17:06:44.754897+00:00] b4c38c84cc99 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:06:46.887582+00:00] b4c38c84cc99 EXIT 0
+
+[2026-10-14T17:06:46.911767+00:00] 0fcb7447f093 Place corrected test envelope in DLQ for recovery
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "send-message", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--message-body", "{\"batchId\":\"baadb11bbb2de86894aa2fe2e7aaaac0028c2d8ed8151ba5c0121c3a62e51378\",\"readings\":[{\"deviceId\":\"motor-01\",\"eventId\":\"live-test:f6974b7e13ae1864f5ddc955\",\"observedAt\":\"2026-10-14T17:06:46.911Z\",\"operatingState\":\"running\",\"powerWatts\":420,\"schemaVersion\":1,\"temperatureC\":52,\"vibrationMmS\":1.5}],\"receivedAt\":\"2026-10-14T17:06:46.911Z\"}", "--message-group-id", "factory", "--message-deduplication-id", "live-test:f6974b7e13ae1864f5ddc955", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:06:49.013060+00:00] 0fcb7447f093 EXIT 0
+
+[2026-10-14T17:06:49.039252+00:00] 01298d97b2ba Inspect isolated live-test envelopes
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "receive-message", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--max-number-of-messages", "10", "--visibility-timeout", "5", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:06:51.140912+00:00] 01298d97b2ba EXIT 0
+
+[2026-10-14T17:06:51.163172+00:00] c521a25dfa1b Remove known invalid test envelope after inspection
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "delete-message", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--receipt-handle", "AQEBlKBqUjJ5JqEfo6ewG7iqJ+6s12yczoG6/49eY5ebmtIEftdSFDb7nrQkOPw1crnZ8DbL9kHxPa852EhEhFqmwGxWC/qObT4r5pw/CS1nGklldfO7MNyB+zMMTWq1W44QozifVK5fOZdX/lcC/uBtbDg1YYj+o0Id92CxqHfaMDBOMR72vuad8yZzzZoW106+hhkSa20k5forLj5f6YcEAJ7fkAk7fEGV3KXczUbNU9zx7xmT57a2Io74v8j939vBssZp8YOD/cLlLvWNeBRKjZmHRJao3L03PDUimuzXvLa3OGfpjsmYUpwuXiKR7dm0", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:06:53.268330+00:00] c521a25dfa1b EXIT 0
+
+[2026-10-14T17:06:53.290404+00:00] 13c4a22373ee Live E2E: redrive corrected test envelope
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "start-message-move-task", "--source-arn", "arn:aws:sqs:ap-southeast-2:039379078306:ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--destination-arn", "arn:aws:sqs:ap-southeast-2:039379078306:ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--max-number-of-messages-per-second", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:06:55.410324+00:00] 13c4a22373ee EXIT 0
+
+[2026-10-14T17:06:55.452347+00:00] 5816bfb76411 Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-p6f9qx2r\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:06:57.828477+00:00] 5816bfb76411 EXIT 0 (private response withheld)
+
+[2026-10-14T17:07:00.906112+00:00] 8316413531c1 Live test: temporarily start simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:03.128075+00:00] 8316413531c1 EXIT 0
+
+[2026-10-14T17:07:03.150631+00:00] 0e7215aa23d2 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "e28cf5f9-fb80-4148-8a51-9c9e0ce927fc", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:05.282919+00:00] 0e7215aa23d2 EXIT 0
+
+[2026-10-14T17:07:08.108996+00:00] 218f68b78744 Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-aerwbjvw\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:10.499146+00:00] 218f68b78744 EXIT 0 (private response withheld)
+
+[2026-10-14T17:07:22.424078+00:00] 5e73066ddcc0 Live test: temporarily stop simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:24.642467+00:00] 5e73066ddcc0 EXIT 0
+
+[2026-10-14T17:07:24.666369+00:00] 4eccd3950a0d Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "892f111e-163a-4853-8e1e-95f4f90bcdd5", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:26.799031+00:00] 4eccd3950a0d EXIT 0
+
+[2026-10-14T17:07:38.822470+00:00] 1649b78355cb Live E2E: store owned version-recovery test object
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "put-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "recovery/e2e-2e6f36ded6221124.txt", "--body", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery-proof-2e6f36ded6221124.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:41.347954+00:00] 1649b78355cb EXIT 0
+
+[2026-10-14T17:07:41.369017+00:00] ecfecf3d1916 Live E2E: overwrite owned version test object
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "put-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "recovery/e2e-2e6f36ded6221124.txt", "--body", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery-proof-2e6f36ded6221124.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:43.828194+00:00] ecfecf3d1916 EXIT 0
+
+[2026-10-14T17:07:43.848704+00:00] 28715899ace9 Live E2E: create a delete marker on owned test object
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "delete-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "recovery/e2e-2e6f36ded6221124.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:46.024764+00:00] 28715899ace9 EXIT 0
+
+[2026-10-14T17:07:46.046278+00:00] 6ba6750ae57e Live E2E: restore original test object version
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "copy-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "recovery/e2e-2e6f36ded6221124.txt", "--copy-source", "ccproj-archive-mx5crrke5wcd/recovery/e2e-2e6f36ded6221124.txt?versionId=Ur6AYXWpj3nANTsHTCfu4oH1CUO1z4if", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:48.209342+00:00] 6ba6750ae57e EXIT 0
+
+[2026-10-14T17:07:48.232809+00:00] 20895b61437d Read restored test object
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "get-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "recovery/e2e-2e6f36ded6221124.txt", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery-proof-2e6f36ded6221124.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:50.372780+00:00] 20895b61437d EXIT 0
+
+[2026-10-14T17:07:51.346150+00:00] ff8fd9f2fa40 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:53.785943+00:00] ff8fd9f2fa40 EXIT 0
+
+[2026-10-14T17:07:56.808658+00:00] 978c25246db6 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:07:59.003985+00:00] 978c25246db6 EXIT 0
+
+[2026-10-14T17:08:02.025053+00:00] b8a31ca9347b Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:08:02.131446+00:00] 249213b78969 Inspect full consumer configuration after pause and resume
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--query", "{State:State,Function:FunctionArn,Source:EventSourceArn,Batch:BatchSize,Responses:FunctionResponseTypes,LastModified:LastModified}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:08:05.035085+00:00] b8a31ca9347b EXIT 0
+[2026-10-14T17:08:05.132089+00:00] 249213b78969 EXIT 0
+
+[2026-10-14T17:08:05.963550+00:00] 90bcffdc2bfb Read recent processor invocation events for retry diagnostics
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "filter-log-events", "--log-group-name", "/aws/lambda/ccproj-Processor", "--start-time", "1791996900000", "--limit", "30", "--query", "events[].message", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:08:08.080209+00:00] 9cb426e0a7e5 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:08:08.881368+00:00] 90bcffdc2bfb EXIT 0
+[2026-10-14T17:08:10.865235+00:00] 9cb426e0a7e5 EXIT 0
+
+[2026-10-14T17:08:13.892145+00:00] 1bc6347b0489 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:08:16.342341+00:00] 1bc6347b0489 EXIT 0
+
+[2026-10-14T17:08:19.386947+00:00] 6da749442ee8 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:08:21.838016+00:00] 6da749442ee8 EXIT 0
+
+[2026-10-14T17:08:24.884635+00:00] 700f796e6416 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:08:27.715307+00:00] 700f796e6416 EXIT 0
+
+[2026-10-14T17:08:30.755711+00:00] 34ad49f509fd Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:08:33.219568+00:00] 34ad49f509fd EXIT 0
+
+[2026-10-14T17:08:36.260223+00:00] b7edbf043ce1 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:08:38.762431+00:00] b7edbf043ce1 EXIT 0
+
+[2026-10-14T17:08:41.799029+00:00] 8711b593a62c Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:08:44.198735+00:00] 8711b593a62c EXIT 0
+
+[2026-10-14T17:08:47.242402+00:00] 6a71ae14d9bb Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:08:49.642198+00:00] 6a71ae14d9bb EXIT 0
+
+[2026-10-14T17:08:52.675055+00:00] 77ed3a8b5d0a Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:08:55.030478+00:00] 77ed3a8b5d0a EXIT 0
+
+[2026-10-14T17:08:58.045174+00:00] e54099fc713c Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:00.511527+00:00] e54099fc713c EXIT 0
+
+[2026-10-14T17:09:03.542718+00:00] 816d45f96a25 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:05.983730+00:00] 816d45f96a25 EXIT 0
+
+[2026-10-14T17:09:09.005022+00:00] fdcb5994336a Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:11.292819+00:00] fdcb5994336a EXIT 0
+
+[2026-10-14T17:09:14.311909+00:00] 136d743ecc70 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:16.532970+00:00] 136d743ecc70 EXIT 0
+
+[2026-10-14T17:09:19.557130+00:00] d26a26d91305 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:22.091173+00:00] d26a26d91305 EXIT 0
+
+[2026-10-14T17:09:25.114285+00:00] c60297417a32 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:27.337640+00:00] c60297417a32 EXIT 0
+
+[2026-10-14T17:09:30.355646+00:00] 7dfb028c66c8 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:32.541584+00:00] 7dfb028c66c8 EXIT 0
+
+[2026-10-14T17:09:35.563521+00:00] 0ff467a80cd2 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:37.922831+00:00] 0ff467a80cd2 EXIT 0
+
+[2026-10-14T17:09:40.296246+00:00] b77c6c9d0ac7 Verify user-confirmed live SNS subscription
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--query", "Subscriptions[].{Endpoint:Endpoint,Status:SubscriptionArn}", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:09:40.945734+00:00] 287831148c0c Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:42.432143+00:00] b77c6c9d0ac7 EXIT 0
+
+[2026-10-14T17:09:43.145234+00:00] 5c4e7f2981c3 Drain queued equipment notifications after recipient confirmation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "invoke", "--function-name", "ccproj-Notifier", "--payload", "{}", "--cli-binary-format", "raw-in-base64-out", ".runtime/notification-drain.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:43.280478+00:00] 287831148c0c EXIT 0
+[2026-10-14T17:09:45.878596+00:00] 5c4e7f2981c3 EXIT 0
+
+[2026-10-14T17:09:46.299378+00:00] 7c9e3d04aa10 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/e8b39de928351e90bcff8cfa8ffa1c7e1f81eec3e1226cec6c717cb875f86020.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:48.675578+00:00] 7c9e3d04aa10 EXIT 0
+
+[2026-10-14T17:09:51.704784+00:00] 026924a1b035 Live test: temporarily start simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:54.046810+00:00] 026924a1b035 EXIT 0
+
+[2026-10-14T17:09:54.079343+00:00] e92ba8b20c03 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "3554813d-546e-49be-b23a-eb74155cc583", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:56.494092+00:00] e92ba8b20c03 EXIT 0
+
+[2026-10-14T17:09:56.514241+00:00] 1be0750892a4 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-0190851935dc@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:09:58.822854+00:00] 1be0750892a4 EXIT 0
+
+[2026-10-14T17:09:58.841655+00:00] b25f91b11d39 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-0190851935dc@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:10:01.101479+00:00] b25f91b11d39 EXIT 0
+
+[2026-10-14T17:12:23.159526+00:00] 71431c717226 Verify current alert confirmation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:12:25.333440+00:00] 71431c717226 EXIT 0
+
+[2026-10-14T17:12:36.136944+00:00] 26d1fdcf6183 Inspect current queue visibility and failures
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "VisibilityTimeout", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:12:38.214918+00:00] 26d1fdcf6183 EXIT 0
+
+[2026-10-14T17:12:38.330230+00:00] fe6882e16edf Request confirmation for the current deployed alert topic
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "subscribe", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--protocol", "email", "--notification-endpoint", "collegeproject@akshaykripalani.com", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:12:40.399717+00:00] fe6882e16edf EXIT 0
+
+[2026-10-14T17:12:52.703230+00:00] 4230bc34db30 Read archive timeout root causes from processor logs
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "filter-log-events", "--log-group-name", "/aws/lambda/ccproj-Processor", "--filter-pattern", "ERROR", "--limit", "20", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:12:55.030069+00:00] 4230bc34db30 EXIT 0
+
+[2026-10-14T17:13:27.441915+00:00] 145684ef80e0 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:13:29.556607+00:00] 145684ef80e0 EXIT 0
+
+[2026-10-14T17:13:29.629078+00:00] ed354bbf05c0 Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-_cwyiuwg\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:13:32.095249+00:00] ed354bbf05c0 EXIT 0 (private response withheld)
+
+[2026-10-14T17:13:32.131902+00:00] a61faa9507a4 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-d50mgp8h\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:13:34.506681+00:00] a61faa9507a4 EXIT 0 (private response withheld)
+
+[2026-10-14T17:13:34.529738+00:00] fbd43b08d770 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-c29087beee9f@example.invalid", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:13:36.759214+00:00] fbd43b08d770 EXIT 0
+
+[2026-10-14T17:13:36.795401+00:00] 57e991483a6f Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-m6ei92rc\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:13:39.246137+00:00] 57e991483a6f EXIT 0 (private response withheld)
+
+[2026-10-14T17:13:39.286253+00:00] 23a27970cdca Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-a6o9smd4\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:13:41.643044+00:00] 23a27970cdca EXIT 0 (private response withheld)
+
+[2026-10-14T17:13:41.663984+00:00] c126ddf85683 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-c29087beee9f@example.invalid", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:13:43.923755+00:00] c126ddf85683 EXIT 0
+
+[2026-10-14T17:13:43.948299+00:00] dc9701452eb0 Live test: temporarily stop simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:13:46.064986+00:00] dc9701452eb0 EXIT 0
+
+[2026-10-14T17:13:46.084972+00:00] d4703fa3efd2 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "7d0cca95-176b-4307-a3bb-bdb145399dac", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:13:48.214238+00:00] d4703fa3efd2 EXIT 0
+
+[2026-10-14T17:14:00.238464+00:00] 99e765929cfe Live E2E: pause processing mapping
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "update-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--no-enabled", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:02.434424+00:00] 99e765929cfe EXIT 0
+
+[2026-10-14T17:14:02.452955+00:00] f2027669a299 Check paused processing state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:04.547232+00:00] f2027669a299 EXIT 0
+
+[2026-10-14T17:14:07.583374+00:00] a14ab9a37bb9 Check paused processing state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:09.684382+00:00] a14ab9a37bb9 EXIT 0
+
+[2026-10-14T17:14:10.792330+00:00] 02aadd5d1a1e Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:12.836940+00:00] 02aadd5d1a1e EXIT 0
+
+[2026-10-14T17:14:15.867574+00:00] 30183bd30059 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:17.920203+00:00] 30183bd30059 EXIT 0
+
+[2026-10-14T17:14:20.511261+00:00] b92d1cd5fd35 Inspect buffering test consumer state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--query", "State", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:14:20.958844+00:00] 17711e8000bc Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:22.766026+00:00] b92d1cd5fd35 EXIT 0
+
+[2026-10-14T17:14:22.888871+00:00] 98c56679a901 Inspect buffering test queue counts
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:23.159666+00:00] 17711e8000bc EXIT 0
+[2026-10-14T17:14:24.961445+00:00] 98c56679a901 EXIT 0
+
+[2026-10-14T17:14:26.196875+00:00] 04713079e67c Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:28.265236+00:00] 04713079e67c EXIT 0
+
+[2026-10-14T17:14:31.297775+00:00] 2f76c999c798 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:33.357512+00:00] 2f76c999c798 EXIT 0
+
+[2026-10-14T17:14:34.134274+00:00] 109f1f102f1c Verify ingestion targets intended buffering queue
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-function-configuration", "--function-name", "ccproj-Ingestion", "--query", "Environment.Variables", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:36.320233+00:00] 109f1f102f1c EXIT 0
+
+[2026-10-14T17:14:36.393382+00:00] 7ea8298f4915 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:14:36.450519+00:00] 6e53f5d6a154 Check all consumers of telemetry queue
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "list-event-source-mappings", "--event-source-arn", "arn:aws:sqs:ap-southeast-2:039379078306:ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:38.690729+00:00] 7ea8298f4915 EXIT 0
+[2026-10-14T17:14:38.730822+00:00] 6e53f5d6a154 EXIT 0
+
+[2026-10-14T17:14:41.726850+00:00] 26b50cc3daf7 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:43.754384+00:00] 26b50cc3daf7 EXIT 0
+
+[2026-10-14T17:14:44.469573+00:00] d82819977f68 Inspect recent accepted batch identities
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "filter-log-events", "--log-group-name", "/aws/lambda/ccproj-Ingestion", "--start-time", "1791997484469", "--limit", "25", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:46.785562+00:00] d82819977f68 EXIT 0
+
+[2026-10-14T17:14:46.790078+00:00] 8b8bc26b145b Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:49.932307+00:00] 8b8bc26b145b EXIT 0
+
+[2026-10-14T17:14:52.689045+00:00] fb1055280b5e Inspect ingestion during disabled mapping
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "filter-log-events", "--log-group-name", "/aws/lambda/ccproj-Ingestion", "--start-time", "1791997852689", "--filter-pattern", "Queued", "--limit", "50", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:14:52.954751+00:00] 348df75076f9 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:14:55.035511+00:00] fb1055280b5e EXIT 0
+[2026-10-14T17:14:55.173385+00:00] 348df75076f9 EXIT 0
+
+[2026-10-14T17:14:58.196834+00:00] 27235eaed7ae Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:15:00.512809+00:00] 27235eaed7ae EXIT 0
+
+[2026-10-14T17:15:03.534526+00:00] 1e92d640b745 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:15:11.585209+00:00] 69a413929f9e Determine whether an existing consumer poll completed after disable
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "filter-log-events", "--log-group-name", "/aws/lambda/ccproj-Processor", "--start-time", "1791997881585", "--limit", "20", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:15:13.821581+00:00] 69a413929f9e EXIT 0
+
+[2026-10-14T17:15:21.007563+00:00] 5c6ef4966dd9 Inspect invocations after confirmed mapping disable
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "filter-log-events", "--log-group-name", "/aws/lambda/ccproj-Processor", "--start-time", "1791998042000", "--limit", "20", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:15:23.185828+00:00] 5c6ef4966dd9 EXIT 0
+[2026-10-14T17:15:26.977740+00:00] 1e92d640b745 EXIT 0
+
+[2026-10-14T17:15:30.002254+00:00] 85dce1525f67 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:15:32.042008+00:00] 85dce1525f67 EXIT 0

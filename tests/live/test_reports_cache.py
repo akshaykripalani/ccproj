@@ -6,7 +6,7 @@ import urllib.error
 import pytest
 import requests
 
-from backend.domain import digest, timestamp, utcnow
+from backend.domain import timestamp, utcnow
 from scripts.aws_cli import call, run
 from tests.live.conftest import PROJECT, wait_for
 from tests.live.test_aws_e2e import measurement
@@ -51,23 +51,21 @@ def test_athena_results_match_known_new_measurements(live):
     readings[0].update(powerWatts=200)
     readings[1].update(powerWatts=300, vibrationMmS=8)
     readings[2].update(powerWatts=0, operatingState="stopped")
-    assert live.send(readings)[0] == 202
-    key = f"telemetry/day={day}/{digest(readings)}.json.gz"
+    status, accepted = live.send(readings)
+    assert status == 202
+    key = f"telemetry/day={day}/{accepted['batchId']}.json.gz"
     wait_for(
-        lambda: (
-            call(
-                [
-                    "s3api",
-                    "list-objects-v2",
-                    "--bucket",
-                    live.platform["ArchiveBucket"],
-                    "--prefix",
-                    key,
-                ],
-                "Wait for known-data report archive",
-            ).get("KeyCount")
-            == 1
-        )
+        lambda: call(
+            [
+                "s3api",
+                "list-objects-v2",
+                "--bucket",
+                live.platform["ArchiveBucket"],
+                "--prefix",
+                key,
+            ],
+            "Wait for known-data report archive",
+        ).get("Contents", [])
     )
     after = {kind: report(live, kind, day) for kind in ("temperature", "vibration", "power")}
     count = int(before["temperature"].get("reading_count", 0))

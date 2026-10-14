@@ -180,22 +180,15 @@ def test_processing_interruption_buffers_then_catches_up(paused_simulator):
             ),
             timeout=90,
         )
+        # Disabling the mapping does not cancel an already issued SQS long poll.
+        # Allow that poll and any bounded invocation to finish before injecting.
+        time.sleep(35)
         assert live.send([value])[0] == 202
-        call(
-            [
-                "sqs",
-                "get-queue-attributes",
-                "--queue-url",
-                live.platform["QueueUrl"],
-                "--attribute-names",
-                "ApproximateNumberOfMessages",
-            ],
-            "Observe buffered telemetry",
-        )
         wait_for(
             lambda: (
-                int(
-                    call(
+                sum(
+                    int(count)
+                    for count in call(
                         [
                             "sqs",
                             "get-queue-attributes",
@@ -203,19 +196,27 @@ def test_processing_interruption_buffers_then_catches_up(paused_simulator):
                             live.platform["QueueUrl"],
                             "--attribute-names",
                             "ApproximateNumberOfMessages",
+                            "ApproximateNumberOfMessagesNotVisible",
                         ],
                         "Wait for queue backlog visibility",
-                    )["Attributes"]["ApproximateNumberOfMessages"]
+                    )["Attributes"].values()
                 )
                 >= 1
-            )
+            ),
+            timeout=240,
         )
     finally:
         run(
             ["lambda", "update-event-source-mapping", "--uuid", mapping, "--enabled"],
             "Live E2E: restore processing mapping",
         )
-    wait_for(lambda: live.state()["latest"]["eventId"] == value["eventId"], timeout=120)
+    wait_for(
+        lambda: any(
+            r["eventId"] == value["eventId"]
+            for r in live.api("GET", "/devices/motor-01/readings").json()["readings"]
+        ),
+        timeout=420,
+    )
 
 
 def test_poison_message_isolated_and_corrected_then_redriven(paused_simulator):

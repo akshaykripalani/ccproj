@@ -9,7 +9,7 @@ from urllib.parse import parse_qs, urlencode, urljoin, urlparse
 import pytest
 import requests
 
-from backend.domain import digest, timestamp, utcnow
+from backend.domain import timestamp, utcnow
 from scripts.aws_cli import call, run
 from scripts.recovery import recover
 from tests.live.conftest import PROJECT, wait_for
@@ -56,7 +56,9 @@ def test_real_hosted_login_authorization_code_pkce(live):
         assert page.status_code == 200
         form = LoginForm()
         form.feed(page.text)
-        assert form.action is not None and form.hidden, "Hosted login form and CSRF fields were not found"
+        assert form.action is not None and form.hidden, (
+            "Hosted login form and CSRF fields were not found"
+        )
         target = urljoin(page.url, form.action)
         assert urlparse(target).hostname == urlparse(live.platform["LoginDomain"]).hostname
         email, password = live.users["operator"]
@@ -143,15 +145,15 @@ def test_real_version_restore_and_separate_state_reconstruction(paused_simulator
         measurement(device=f"motor-0{i}", observed=observed, temperature=50 + i)
         for i in range(1, 4)
     ]
-    assert live.send(readings)[0] == 202
-    archive_key = f"telemetry/day={observed[:10]}/{digest(readings)}.json.gz"
+    status, accepted = live.send(readings)
+    assert status == 202
+    archive_key = f"telemetry/day={observed[:10]}/{accepted['batchId']}.json.gz"
     wait_for(
         lambda: (
             call(
                 ["s3api", "list-objects-v2", "--bucket", bucket, "--prefix", archive_key],
                 "Wait for owned recovery telemetry archive",
-            ).get("KeyCount", 0)
-            == 1
+            ).get("Contents", [])
         )
     )
     recovered = recover(live.deployment, archive_key)
