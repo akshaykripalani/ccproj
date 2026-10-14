@@ -1,12 +1,12 @@
 """Content-addressed releases; bundle pure-Python SDK wheels for Lambda and EC2."""
+
 import hashlib
 import json
-from pathlib import Path
-import shutil
 import subprocess
 import sys
 import tarfile
 import zipfile
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -15,7 +15,28 @@ def package():
     build = ROOT / "build"
     wheels = build / "wheels"
     wheels.mkdir(parents=True, exist_ok=True)
-    subprocess.run([sys.executable, "-m", "pip", "download", "--index-url", "https://pypi.org/simple", "--timeout", "120", "--only-binary=:all:", "--python-version", "3.12", "--platform", "manylinux2014_aarch64", "--dest", str(wheels), "-r", str(ROOT / "requirements-runtime.txt")], check=True)
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "download",
+            "--index-url",
+            "https://pypi.org/simple",
+            "--timeout",
+            "120",
+            "--only-binary=:all:",
+            "--python-version",
+            "3.12",
+            "--platform",
+            "manylinux2014_aarch64",
+            "--dest",
+            str(wheels),
+            "-r",
+            str(ROOT / "requirements-runtime.txt"),
+        ],
+        check=True,
+    )
     backend = build / "backend.zip"
     with zipfile.ZipFile(backend, "w", zipfile.ZIP_DEFLATED) as bundle:
         for path in sorted((ROOT / "backend").glob("*.py")):
@@ -36,7 +57,11 @@ def package():
     result = {}
     for name, path in (("backend", backend), ("simulator", simulator)):
         digest = hashlib.sha256(path.read_bytes()).hexdigest()
-        result[name] = {"path": str(path), "key": f"releases/{digest}/{path.name}", "sha256": digest}
+        result[name] = {
+            "path": str(path),
+            "key": f"releases/{digest}/{path.name}",
+            "sha256": digest,
+        }
     (build / "release.json").write_text(json.dumps(result, indent=2) + "\n")
     return result
 

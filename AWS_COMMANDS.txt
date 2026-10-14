@@ -161,3 +161,39 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T15:52:29.901087+00:00] b03f9590aa2a Read current Mumbai Linux t4g.micro on-demand pricing
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--service-code", "AmazonEC2", "--filters", "Type=TERM_MATCH,Field=instanceType,Value=t4g.micro", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)", "Type=TERM_MATCH,Field=operatingSystem,Value=Linux", "Type=TERM_MATCH,Field=tenancy,Value=Shared", "Type=TERM_MATCH,Field=preInstalledSw,Value=NA", "Type=TERM_MATCH,Field=capacitystatus,Value=Used", "--region", "us-east-1", "--no-cli-pager"]
 [2026-10-14T15:52:32.018204+00:00] b03f9590aa2a EXIT 0
+
+[2026-10-14T16:01:26.936061+00:00] f5eebb658744 Read current Mumbai gp3 storage rate
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--service-code", "AmazonEC2", "--region", "us-east-1", "--filters", "Type=TERM_MATCH,Field=volumeApiName,Value=gp3", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)", "--query", "PriceList", "--no-cli-pager"]
+[2026-10-14T16:01:29.242773+00:00] f5eebb658744 EXIT 0
+
+[2026-10-14T16:11:03.250530+00:00] 58c8b31f7deb Capture current Mumbai pricing: AmazonDynamoDB
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonDynamoDB", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)", "--no-cli-pager"]
+
+[2026-10-14T16:11:03.251528+00:00] ba4af13ac397 Capture current Mumbai pricing: AmazonSQS
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonSQS", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)", "--no-cli-pager"]
+
+[2026-10-14T16:11:03.251528+00:00] 3441c33dc080 Capture current Mumbai pricing: AmazonSNS
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonSNS", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)", "--no-cli-pager"]
+
+[2026-10-14T16:11:03.251528+00:00] 22bea2092bc5 Capture current Mumbai pricing: AmazonVPC
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonVPC", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)", "--no-cli-pager"]
+[2026-10-14T16:11:05.960262+00:00] ba4af13ac397 EXIT 0
+
+[2026-10-14T16:11:05.981228+00:00] c917b42106a6 Capture current Mumbai pricing: AWSLambda
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AWSLambda", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)", "--no-cli-pager"]
+[2026-10-14T16:11:06.189426+00:00] 3441c33dc080 EXIT 0
+[2026-10-14T16:11:06.204413+00:00] 58c8b31f7deb EXIT 0
+
+[2026-10-14T16:11:06.210412+00:00] 9637fe6eb1d2 Capture current Mumbai pricing: awskms
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "awskms", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)", "--no-cli-pager"]
+
+[2026-10-14T16:11:06.229412+00:00] 6e80749236c6 Capture current Mumbai pricing: AmazonCloudWatch
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonCloudWatch", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)", "--no-cli-pager"]
+[2026-10-14T16:11:06.431569+00:00] 22bea2092bc5 EXIT 0
+
+[2026-10-14T16:11:06.450974+00:00] 4bc65c0b394b Capture current Mumbai pricing: AmazonS3
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonS3", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)", "--no-cli-pager"]
+[2026-10-14T16:11:08.659552+00:00] 9637fe6eb1d2 EXIT 0
+[2026-10-14T16:11:09.439896+00:00] 6e80749236c6 EXIT 0
+[2026-10-14T16:11:09.801752+00:00] 4bc65c0b394b EXIT 0
+[2026-10-14T16:11:10.465118+00:00] c917b42106a6 EXIT 0

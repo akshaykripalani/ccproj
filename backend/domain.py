@@ -1,4 +1,5 @@
 """Telemetry validation and deterministic equipment rules, independent of AWS."""
+
 import datetime as dt
 import hashlib
 import json
@@ -16,7 +17,9 @@ def utcnow():
 
 
 def timestamp(value):
-    return value.astimezone(dt.timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+    return (
+        value.astimezone(dt.timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
+    )
 
 
 def parse_time(value):
@@ -32,7 +35,13 @@ def parse_time(value):
 
 
 def canonical(value):
-    return json.dumps(value, sort_keys=True, separators=(",", ":"), default=lambda x: float(x) if isinstance(x, Decimal) else str(x), allow_nan=False)
+    return json.dumps(
+        value,
+        sort_keys=True,
+        separators=(",", ":"),
+        default=lambda x: float(x) if isinstance(x, Decimal) else str(x),
+        allow_nan=False,
+    )
 
 
 def digest(value):
@@ -48,21 +57,43 @@ def validate_reading(reading, now=None):
     now = now or utcnow()
     if not isinstance(reading, dict):
         raise ValueError("Each reading must be an object")
-    required = {"schemaVersion", "eventId", "deviceId", "observedAt", "temperatureC", "vibrationMmS", "powerWatts", "operatingState"}
+    required = {
+        "schemaVersion",
+        "eventId",
+        "deviceId",
+        "observedAt",
+        "temperatureC",
+        "vibrationMmS",
+        "powerWatts",
+        "operatingState",
+    }
     if set(reading) != required:
         raise ValueError("Reading must contain exactly the documented telemetry fields")
     if type(reading["schemaVersion"]) is not int or reading["schemaVersion"] != 1:
         raise ValueError("schemaVersion must be 1")
     if reading["deviceId"] not in DEVICES:
         raise ValueError("Unregistered deviceId")
-    if not isinstance(reading["eventId"], str) or not re.fullmatch(r"[A-Za-z0-9:_.-]{1,160}", reading["eventId"]):
+    if not isinstance(reading["eventId"], str) or not re.fullmatch(
+        r"[A-Za-z0-9:_.-]{1,160}", reading["eventId"]
+    ):
         raise ValueError("eventId must be 1-160 safe identifier characters")
     observed = parse_time(reading["observedAt"])
     if observed > now + dt.timedelta(seconds=60) or observed < now - dt.timedelta(hours=24):
-        raise ValueError("observedAt must be within the last 24 hours, allowing 60 seconds clock skew")
-    for field, lower, upper in (("temperatureC", -40, 200), ("vibrationMmS", 0, 100), ("powerWatts", 0, 100000)):
+        raise ValueError(
+            "observedAt must be within the last 24 hours, allowing 60 seconds clock skew"
+        )
+    for field, lower, upper in (
+        ("temperatureC", -40, 200),
+        ("vibrationMmS", 0, 100),
+        ("powerWatts", 0, 100000),
+    ):
         value = reading[field]
-        if isinstance(value, bool) or not isinstance(value, (int, float, Decimal)) or not math.isfinite(float(value)) or not lower <= value <= upper:
+        if (
+            isinstance(value, bool)
+            or not isinstance(value, (int, float, Decimal))
+            or not math.isfinite(float(value))
+            or not lower <= value <= upper
+        ):
             raise ValueError(f"{field} must be a finite number between {lower} and {upper}")
     if reading["operatingState"] not in ("running", "stopped"):
         raise ValueError("operatingState must be running or stopped")
@@ -98,7 +129,9 @@ def evolve(previous, reading, received_at):
         status["above"] = min(status["above"], 3)
         status["healthy"] = min(status["healthy"], 3)
         if not status["active"] and status["above"] >= 3:
-            status.update(active=True, alertId=f"{reading['observedAt']}#{rule}#{reading['eventId']}")
+            status.update(
+                active=True, alertId=f"{reading['observedAt']}#{rule}#{reading['eventId']}"
+            )
             changes.append({"kind": "activated", "rule": rule, "alertId": status["alertId"]})
         elif status["active"] and status["healthy"] >= 3:
             status["active"] = False
@@ -112,7 +145,12 @@ def report_sql(report, start, end, device, database):
     """Bounded predefined SQL; identifiers and values never accept arbitrary SQL."""
     start_day, end_day = dt.date.fromisoformat(start), dt.date.fromisoformat(end)
     today = utcnow().date()
-    if start_day > end_day or end_day > today or start_day < today - dt.timedelta(days=29) or (end_day - start_day).days > 6:
+    if (
+        start_day > end_day
+        or end_day > today
+        or start_day < today - dt.timedelta(days=29)
+        or (end_day - start_day).days > 6
+    ):
         raise ValueError("Report date range must be 1-7 days within the last 30 days")
     if device is not None and device not in DEVICES:
         raise ValueError("Unregistered deviceId")

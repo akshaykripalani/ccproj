@@ -17,8 +17,18 @@ def handler(event, context):
     # envelope keeps its own archive identity even beyond SQS's deduplication window.
     envelope["batchId"] = digest(readings)
     result = client("sqs").send_message(
-        QueueUrl=os.environ["QUEUE_URL"], MessageBody=canonical(envelope),
-        MessageGroupId="factory", MessageDeduplicationId=envelope["batchId"],
+        QueueUrl=os.environ["QUEUE_URL"],
+        MessageBody=canonical(envelope),
+        MessageGroupId="factory",
+        MessageDeduplicationId=envelope["batchId"],
     )
     log.info("Queued batch=%s readings=%s", envelope["batchId"], len(readings))
-    return response(202, {"status": "queued", "accepted": len(readings), "batchId": envelope["batchId"], "messageId": result["MessageId"]})
+    return response(
+        202,
+        {
+            "status": "queued",
+            "accepted": len(readings),
+            "batchId": envelope["batchId"],
+            "messageId": result["MessageId"],
+        },
+    )

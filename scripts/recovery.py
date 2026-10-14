@@ -1,9 +1,10 @@
 """CLI-driven recovery into a separate disposable state table; no SNS publication."""
+
 import argparse
 import gzip
 import json
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from boto3.dynamodb.types import TypeSerializer
 
@@ -19,14 +20,52 @@ def recover(deployment, prefix):
     name = deployment["stack"] + "-recovery"
     runtime = ROOT / ".runtime" / "recovery"
     runtime.mkdir(parents=True, exist_ok=True)
-    template = {"AWSTemplateFormatVersion": "2010-09-09", "Description": "Separate recovery exercise state table; live monitoring data remains untouched", "Resources": {"State": {"Type": "AWS::DynamoDB::Table", "Properties": {"BillingMode": "PAY_PER_REQUEST", "AttributeDefinitions": [{"AttributeName": "pk", "AttributeType": "S"}, {"AttributeName": "sk", "AttributeType": "S"}], "KeySchema": [{"AttributeName": "pk", "KeyType": "HASH"}, {"AttributeName": "sk", "KeyType": "RANGE"}], "SSESpecification": {"SSEEnabled": True}}}}, "Outputs": {"Table": {"Value": {"Ref": "State"}}}}
+    template = {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "Separate recovery exercise state table; live monitoring data remains untouched",
+        "Resources": {
+            "State": {
+                "Type": "AWS::DynamoDB::Table",
+                "Properties": {
+                    "BillingMode": "PAY_PER_REQUEST",
+                    "AttributeDefinitions": [
+                        {"AttributeName": "pk", "AttributeType": "S"},
+                        {"AttributeName": "sk", "AttributeType": "S"},
+                    ],
+                    "KeySchema": [
+                        {"AttributeName": "pk", "KeyType": "HASH"},
+                        {"AttributeName": "sk", "KeyType": "RANGE"},
+                    ],
+                    "SSESpecification": {"SSEEnabled": True},
+                },
+            }
+        },
+        "Outputs": {"Table": {"Value": {"Ref": "State"}}},
+    }
     template_file = runtime / "template.json"
     template_file.write_text(json.dumps(template))
-    run(["cloudformation", "deploy", "--stack-name", name, "--template-file", str(template_file), "--no-fail-on-empty-changeset"], "Provision separate recovery exercise state table")
-    table_name = call(["cloudformation", "describe-stacks", "--stack-name", name], "Read recovery table identifier")["Stacks"][0]["Outputs"][0]["OutputValue"]
+    run(
+        [
+            "cloudformation",
+            "deploy",
+            "--stack-name",
+            name,
+            "--template-file",
+            str(template_file),
+            "--no-fail-on-empty-changeset",
+        ],
+        "Provision separate recovery exercise state table",
+    )
+    table_name = call(
+        ["cloudformation", "describe-stacks", "--stack-name", name],
+        "Read recovery table identifier",
+    )["Stacks"][0]["Outputs"][0]["OutputValue"]
     if table_name == platform["DataTable"]:
         raise RuntimeError("Recovery must never target the live data table")
-    objects = call(["s3api", "list-objects-v2", "--bucket", platform["ArchiveBucket"], "--prefix", prefix], "Enumerate archived recovery readings").get("Contents", [])
+    objects = call(
+        ["s3api", "list-objects-v2", "--bucket", platform["ArchiveBucket"], "--prefix", prefix],
+        "Enumerate archived recovery readings",
+    ).get("Contents", [])
     if len(objects) > 10000:
         raise ValueError("Recovery exercise is bounded to 10,000 archive objects")
     readings = {}
@@ -34,12 +73,25 @@ def recover(deployment, prefix):
         if not item["Key"].endswith(".json.gz"):
             continue
         file = runtime / f"archive-{index}.json.gz"
-        run(["s3api", "get-object", "--bucket", platform["ArchiveBucket"], "--key", item["Key"], str(file)], "Read archived recovery batch")
+        run(
+            [
+                "s3api",
+                "get-object",
+                "--bucket",
+                platform["ArchiveBucket"],
+                "--key",
+                item["Key"],
+                str(file),
+            ],
+            "Read archived recovery batch",
+        )
         for line in gzip.decompress(file.read_bytes()).splitlines():
             value = json.loads(line)
             readings.setdefault(value["eventId"], value)
     states = {}
-    for reading in sorted(readings.values(), key=lambda value: (value["observedAt"], value["eventId"])):
+    for reading in sorted(
+        readings.values(), key=lambda value: (value["observedAt"], value["eventId"])
+    ):
         device = reading["deviceId"]
         measurement = {key: value for key, value in reading.items() if key != "receivedAt"}
         states[device], _ = evolve(states.get(device), measurement, reading["receivedAt"])
@@ -47,9 +99,20 @@ def recover(deployment, prefix):
     for device, state in states.items():
         state.update(pk=device, sk="STATE")
         file = runtime / f"{device}.json"
-        file.write_text(json.dumps({key: serializer.serialize(value) for key, value in native(state).items()}))
-        call(["dynamodb", "put-item", "--table-name", table_name, "--item", "file://" + str(file)], "Rebuild test device state without notifications")
-    return {"table": table_name, "stack": name, "uniqueEvents": len(readings), "devices": len(states), "notifications": "suppressed; this script never calls SNS"}
+        file.write_text(
+            json.dumps({key: serializer.serialize(value) for key, value in native(state).items()})
+        )
+        call(
+            ["dynamodb", "put-item", "--table-name", table_name, "--item", "file://" + str(file)],
+            "Rebuild test device state without notifications",
+        )
+    return {
+        "table": table_name,
+        "stack": name,
+        "uniqueEvents": len(readings),
+        "devices": len(states),
+        "notifications": "suppressed; this script never calls SNS",
+    }
 
 
 def main():

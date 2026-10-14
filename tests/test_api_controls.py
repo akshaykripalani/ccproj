@@ -1,17 +1,83 @@
 import datetime as dt
-import json
 import random
 from unittest.mock import patch
 
 import boto3
 import pytest
 
-from backend import api, processor
+from backend import api
 from backend.aws_support import get_item
-from backend.domain import DEVICES, report_sql, timestamp, utcnow
+from backend.domain import DEVICES, report_sql, utcnow
 from simulator.main import Gateway, Motor
 from tests.conftest import api_event
 from tests.test_pipeline import process
+
+
+def create_directory(monkeypatch):
+    from backend.aws_support import client
+
+    cognito = client("cognito-idp")
+    pool = cognito.create_user_pool(PoolName="test-directory")["UserPool"]["Id"]
+    monkeypatch.setenv("USER_POOL", pool)
+    for group in ("viewer", "operator"):
+        cognito.create_group(UserPoolId=pool, GroupName=group)
+    cognito.admin_create_user(
+        UserPoolId=pool,
+        Username="test@example.com",
+        MessageAction="SUPPRESS",
+        UserAttributes=[{"Name": "email", "Value": "test@example.com"}],
+    )
+    cognito.admin_add_user_to_group(
+        UserPoolId=pool, Username="test@example.com", GroupName="operator"
+    )
+    return cognito, pool
+
+
+def test_operator_creates_and_assigns_login_user_and_roles(aws, monkeypatch):
+    cognito, pool = create_directory(monkeypatch)
+    event = api_event(
+        "POST", "/users", "operator", {"email": "new@example.com", "roles": ["viewer", "operator"]}
+    )
+    result = api.handler(event, None)
+    assert result["statusCode"] == 201
+    assert {
+        group["GroupName"]
+        for group in cognito.admin_list_groups_for_user(
+            UserPoolId=pool, Username="new@example.com"
+        )["Groups"]
+    } == {"viewer", "operator"}
+    result = api.handler(
+        api_event("PUT", "/users", "operator", {"email": "new@example.com", "roles": ["viewer"]}),
+        None,
+    )
+    assert result["statusCode"] == 200
+    assert [
+        group["GroupName"]
+        for group in cognito.admin_list_groups_for_user(
+            UserPoolId=pool, Username="new@example.com"
+        )["Groups"]
+    ] == ["viewer"]
+    assert api.handler(api_event("GET", "/users", "operator"), None)["statusCode"] == 200
+
+
+def test_operator_cannot_remove_own_privileged_role(aws, monkeypatch):
+    create_directory(monkeypatch)
+    result = api.handler(
+        api_event("PUT", "/users", "operator", {"email": "test@example.com", "roles": ["viewer"]}),
+        None,
+    )
+    assert result["statusCode"] == 400
+
+
+def test_invalid_roles_do_not_create_user(aws, monkeypatch):
+    cognito, pool = create_directory(monkeypatch)
+    result = api.handler(
+        api_event("POST", "/users", "operator", {"email": "new@example.com", "roles": ["admin"]}),
+        None,
+    )
+    assert result["statusCode"] == 400
+    with pytest.raises(cognito.exceptions.UserNotFoundException):
+        cognito.admin_get_user(UserPoolId=pool, Username="new@example.com")
 
 
 def test_unauthenticated_and_id_tokens_are_rejected(aws):
@@ -23,14 +89,30 @@ def test_unauthenticated_and_id_tokens_are_rejected(aws):
     assert api.handler(event, None)["statusCode"] == 403
 
 
-@pytest.mark.parametrize("method,path,payload", [("POST", "/controls/motor-01", {"mode": "overheat"}), ("POST", "/controls/reset-all", {}), ("GET", "/users", {}), ("POST", "/users", {"email": "test@example.com", "roles": ["operator"]}), ("PUT", "/users", {"email": "test@example.com", "roles": ["operator"]})])
+@pytest.mark.parametrize(
+    "method,path,payload",
+    [
+        ("POST", "/controls/motor-01", {"mode": "overheat"}),
+        ("POST", "/controls/reset-all", {}),
+        ("GET", "/users", {}),
+        ("POST", "/users", {"email": "test@example.com", "roles": ["operator"]}),
+        ("PUT", "/users", {"email": "test@example.com", "roles": ["operator"]}),
+    ],
+)
 def test_viewers_cannot_control_or_manage_users_directly(aws, method, path, payload):
     assert api.handler(api_event(method, path, payload=payload), None)["statusCode"] == 403
 
 
 def test_role_revocation_is_enforced_even_with_stale_operator_token(aws):
-    with patch.object(api.client("cognito-idp"), "admin_list_groups_for_user", return_value={"Groups": []}):
-        assert api.handler(api_event("POST", "/controls/motor-01", "operator", {"mode": "overheat"}), None)["statusCode"] == 403
+    with patch.object(
+        api.client("cognito-idp"), "admin_list_groups_for_user", return_value={"Groups": []}
+    ):
+        assert (
+            api.handler(
+                api_event("POST", "/controls/motor-01", "operator", {"mode": "overheat"}), None
+            )["statusCode"]
+            == 403
+        )
 
 
 def test_control_is_pending_until_ack_and_stale_ack_does_not_supersede(aws):
@@ -94,7 +176,7 @@ def test_stopped_reporting_remains_online_and_disconnected_becomes_offline(aws, 
 
 
 def test_control_timeout_display_is_failed_without_false_ack(aws):
-    control = api.request_control("motor-01", "overheat", {"sub": "operator"})
+    api.request_control("motor-01", "overheat", {"sub": "operator"})
     with patch("backend.api.utcnow", return_value=utcnow() + dt.timedelta(seconds=61)):
         assert api.device_view("motor-01")["control"]["status"] == "failed"
     assert get_item(aws["controls"], "motor-01", "CONTROL")["status"] == "pending"
@@ -102,7 +184,12 @@ def test_control_timeout_display_is_failed_without_false_ack(aws):
 
 def test_reading_cursor_cannot_read_another_partition(aws):
     cursor = api.cursor_encode({"pk": "NOTIFY", "sk": "META"})
-    assert api.handler(api_event("GET", "/devices/motor-01/readings", params={"cursor": cursor}), None)["statusCode"] == 400
+    assert (
+        api.handler(
+            api_event("GET", "/devices/motor-01/readings", params={"cursor": cursor}), None
+        )["statusCode"]
+        == 400
+    )
 
 
 def test_report_ownership_prevents_cross_user_result_access(aws, monkeypatch):
@@ -123,12 +210,27 @@ def test_predefined_report_sql_deduplicates_and_bounds_partitions(report):
     assert "deviceid = 'motor-01'" in sql
 
 
-@pytest.mark.parametrize("params", [("arbitrary SQL", 0, 0, None), ("temperature", 40, 0, None), ("temperature", 9, 0, None), ("temperature", 0, -1, None), ("temperature", 0, 0, "motor-01'; DROP TABLE telemetry")])
+@pytest.mark.parametrize(
+    "params",
+    [
+        ("arbitrary SQL", 0, 0, None),
+        ("temperature", 40, 0, None),
+        ("temperature", 9, 0, None),
+        ("temperature", 0, -1, None),
+        ("temperature", 0, 0, "motor-01'; DROP TABLE telemetry"),
+    ],
+)
 def test_reports_reject_sql_injection_and_unbounded_dates(params):
     report, start_offset, end_offset, device = params
     today = utcnow().date()
     with pytest.raises(ValueError):
-        report_sql(report, str(today - dt.timedelta(days=start_offset)), str(today - dt.timedelta(days=end_offset)), device, "ccproj")
+        report_sql(
+            report,
+            str(today - dt.timedelta(days=start_offset)),
+            str(today - dt.timedelta(days=end_offset)),
+            device,
+            "ccproj",
+        )
 
 
 def test_daily_report_quota_is_enforced_before_athena(aws):
@@ -136,5 +238,7 @@ def test_daily_report_quota_is_enforced_before_athena(aws):
     aws["data"].put_item(Item={"pk": f"QUOTA#{today}", "sk": "REPORTS", "used": 100})
     with patch.object(api.client("athena"), "start_query_execution") as start:
         with pytest.raises(ValueError, match="limit"):
-            api.start_report({"report": "temperature", "start": today, "end": today}, {"sub": "user"})
+            api.start_report(
+                {"report": "temperature", "start": today, "end": today}, {"sub": "user"}
+            )
         start.assert_not_called()

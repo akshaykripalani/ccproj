@@ -983,7 +983,8 @@
           "http://localhost:5173/"
         ],
         "ExplicitAuthFlows": [
-          "ALLOW_REFRESH_TOKEN_AUTH"
+          "ALLOW_REFRESH_TOKEN_AUTH",
+          "ALLOW_ADMIN_USER_PASSWORD_AUTH"
         ],
         "AccessTokenValidity": 10,
         "IdTokenValidity": 10,
@@ -998,9 +999,9 @@
       },
       "Metadata": {
         "com.aws.cloudformation.Context": {
-          "why": "Public PKCE browser client; token scope prevents ID-token API use",
+          "why": "Public PKCE browser client; IAM-protected admin auth supports automated live tests",
           "must": [
-            "No browser secret; authorization code only"
+            "No browser secret; browser uses authorization code with PKCE"
           ]
         }
       }
@@ -1362,8 +1363,7 @@
                   "Action": [
                     "dynamodb:GetItem",
                     "dynamodb:PutItem",
-                    "dynamodb:UpdateItem",
-                    "dynamodb:TransactWriteItems"
+                    "dynamodb:UpdateItem"
                   ],
                   "Resource": {
                     "Fn::GetAtt": [
@@ -1715,6 +1715,7 @@
                 {
                   "Effect": "Allow",
                   "Action": [
+                    "cognito-idp:AdminGetUser",
                     "cognito-idp:AdminListGroupsForUser",
                     "cognito-idp:ListUsers",
                     "cognito-idp:AdminCreateUser",
@@ -1937,55 +1938,114 @@
         }
       }
     },
-    "NotificationSchedule": {
-      "Type": "AWS::Events::Rule",
+    "ScheduleGroup": {
+      "Type": "AWS::Scheduler::ScheduleGroup",
       "Properties": {
-        "ScheduleExpression": "rate(1 minute)",
-        "State": "ENABLED",
-        "Targets": [
+        "Name": {
+          "Fn::Sub": "${AWS::StackName}-jobs"
+        }
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Scope scheduled notification jobs",
+          "must": []
+        }
+      }
+    },
+    "ScheduleRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "scheduler.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole",
+              "Condition": {
+                "StringEquals": {
+                  "aws:SourceAccount": {
+                    "Ref": "AWS::AccountId"
+                  },
+                  "aws:SourceArn": {
+                    "Fn::GetAtt": [
+                      "ScheduleGroup",
+                      "Arn"
+                    ]
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "Policies": [
           {
-            "Arn": {
-              "Fn::GetAtt": [
-                "Notifier",
-                "Arn"
+            "PolicyName": "ScopedAccess",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "lambda:InvokeFunction"
+                  ],
+                  "Resource": {
+                    "Fn::GetAtt": [
+                      "Notifier",
+                      "Arn"
+                    ]
+                  }
+                }
               ]
-            },
-            "Id": "notify",
-            "RetryPolicy": {
-              "MaximumRetryAttempts": 2,
-              "MaximumEventAgeInSeconds": 120
             }
           }
         ]
       },
       "Metadata": {
         "com.aws.cloudformation.Context": {
-          "why": "Periodic durable outbox drain; no continual polling compute",
-          "must": []
+          "why": "Only notification invocation from this schedule group",
+          "must": [
+            "Only enumerated application access; no user access keys"
+          ]
         }
       }
     },
-    "NotifyPermission": {
-      "Type": "AWS::Lambda::Permission",
+    "NotificationSchedule": {
+      "Type": "AWS::Scheduler::Schedule",
       "Properties": {
-        "FunctionName": {
-          "Ref": "Notifier"
+        "GroupName": {
+          "Ref": "ScheduleGroup"
         },
-        "Action": "lambda:InvokeFunction",
-        "Principal": "events.amazonaws.com",
-        "SourceArn": {
-          "Fn::GetAtt": [
-            "NotificationSchedule",
-            "Arn"
-          ]
+        "FlexibleTimeWindow": {
+          "Mode": "OFF"
         },
-        "SourceAccount": {
-          "Ref": "AWS::AccountId"
+        "ScheduleExpression": "rate(1 minute)",
+        "State": "ENABLED",
+        "Target": {
+          "Arn": {
+            "Fn::GetAtt": [
+              "Notifier",
+              "Arn"
+            ]
+          },
+          "RoleArn": {
+            "Fn::GetAtt": [
+              "ScheduleRole",
+              "Arn"
+            ]
+          },
+          "Input": "{}",
+          "RetryPolicy": {
+            "MaximumRetryAttempts": 2,
+            "MaximumEventAgeInSeconds": 120
+          }
         }
       },
       "Metadata": {
         "com.aws.cloudformation.Context": {
-          "why": "Scope scheduled invocation",
+          "why": "Periodic durable outbox drain through EventBridge Scheduler",
           "must": []
         }
       }
@@ -2216,7 +2276,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2226,7 +2287,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2243,7 +2304,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2253,7 +2315,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2270,7 +2332,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2280,7 +2343,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2297,7 +2360,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2307,7 +2371,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2324,7 +2388,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2334,7 +2399,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2351,7 +2416,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2361,7 +2427,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2378,7 +2444,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2388,7 +2455,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2405,7 +2472,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2415,7 +2483,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2432,7 +2500,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2442,7 +2511,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2459,7 +2528,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2469,7 +2539,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2486,7 +2556,8 @@
           "Ref": "Jwt"
         },
         "AuthorizationScopes": [
-          "openid"
+          "openid",
+          "aws.cognito.signin.user.admin"
         ],
         "Target": {
           "Fn::Sub": "integrations/${DashboardIntegration}"
@@ -2496,7 +2567,7 @@
         "com.aws.cloudformation.Context": {
           "why": "Protected application endpoint",
           "must": [
-            "Backend enforces viewer/operator roles"
+            "Access-token scopes required; backend enforces viewer/operator roles"
           ]
         }
       }
@@ -2883,11 +2954,6 @@
             "IncludeRefund": false,
             "IncludeTax": true,
             "UseBlended": false
-          },
-          "CostFilters": {
-            "TagKeyValue": [
-              "user:Project$ccproj"
-            ]
           }
         },
         "NotificationsWithSubscribers": [
@@ -2943,10 +3009,10 @@
       },
       "Metadata": {
         "com.aws.cloudformation.Context": {
-          "why": "Fixed project spending ceiling before credits; notify at user-selected amounts",
+          "why": "Conservative account-wide spending budget for project period before credits; notify at user-selected amounts",
           "must": [
             "No automatic stop or teardown",
-            "Activate Project cost allocation tag; budget alerts are delayed"
+            "Account-wide budget also counts teammate usage; avoids omissions from unactivated tags; alerts are delayed"
           ]
         }
       }

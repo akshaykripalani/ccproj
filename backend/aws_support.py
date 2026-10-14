@@ -1,5 +1,7 @@
 """Reusable clients with bounded retries; AWS roles supply all credentials."""
+
 import json
+import logging
 import os
 from functools import lru_cache
 
@@ -8,7 +10,10 @@ from botocore.config import Config
 
 from backend.domain import canonical
 
-CONFIG = Config(retries={"mode": "standard", "total_max_attempts": 3}, connect_timeout=3, read_timeout=10)
+CONFIG = Config(
+    retries={"mode": "standard", "total_max_attempts": 3}, connect_timeout=3, read_timeout=10
+)
+logging.getLogger().setLevel(logging.INFO)
 
 
 @lru_cache
@@ -26,11 +31,16 @@ def table(variable="DATA_TABLE"):
 
 
 def response(code, body):
-    return {"statusCode": code, "headers": {"Content-Type": "application/json", "Cache-Control": "no-store"}, "body": canonical(body)}
+    return {
+        "statusCode": code,
+        "headers": {"Content-Type": "application/json", "Cache-Control": "no-store"},
+        "body": canonical(body),
+    }
 
 
 def body(event):
     import base64
+
     value = event.get("body") or "{}"
     if event.get("isBase64Encoded"):
         value = base64.b64decode(value).decode()
@@ -45,6 +55,10 @@ def get_item(target, pk, sk):
 
 def query_items(target, condition, **kwargs):
     # Resource client paginators retain native type serialization.
-    return [item for page in target.meta.client.get_paginator("query").paginate(
-        TableName=target.name, KeyConditionExpression=condition, **kwargs
-    ) for item in page["Items"]]
+    return [
+        item
+        for page in target.meta.client.get_paginator("query").paginate(
+            TableName=target.name, KeyConditionExpression=condition, **kwargs
+        )
+        for item in page["Items"]
+    ]
