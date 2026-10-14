@@ -1002,3 +1002,223 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T16:54:07.246057+00:00] 752651f62ad3 EXIT 0
 [2026-10-14T16:54:07.879989+00:00] 1260b6204c1c EXIT 0
 [2026-10-14T16:54:08.161437+00:00] 56667b6aee74 EXIT 0
+
+[2026-10-14T16:54:12.665232+00:00] 5b27e7068bdc Exercise DynamoDB deduplication independently of SQS's five-minute dedup window
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "send-message", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--message-body", "{\"batchId\":\"9fcb61dc484b770ac68ba8b8c311495a6d2ed0ae9c7d86fd88b95824ba244006\",\"readings\":[{\"deviceId\":\"motor-01\",\"eventId\":\"live-test:918211c801eb5769d397e03f\",\"observedAt\":\"2026-10-14T16:54:07.067Z\",\"operatingState\":\"running\",\"powerWatts\":420,\"schemaVersion\":1,\"temperatureC\":52,\"vibrationMmS\":1.5}],\"receivedAt\":\"2026-10-14T16:54:12.665Z\"}", "--message-group-id", "factory", "--message-deduplication-id", "forced-retry-65f70e732f24b484", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:14.853008+00:00] 5b27e7068bdc EXIT 0
+
+[2026-10-14T16:54:14.877012+00:00] f225dcb4fe9d Wait for forced duplicate processing
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:17.998544+00:00] f225dcb4fe9d EXIT 0
+
+[2026-10-14T16:54:20.644297+00:00] 7f343aef3e87 Verify real archive objects
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-14/", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:22.836196+00:00] 7f343aef3e87 EXIT 0
+
+[2026-10-14T16:54:22.855048+00:00] f7a84b1625eb Live test: temporarily start simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:25.052094+00:00] f7a84b1625eb EXIT 0
+
+[2026-10-14T16:54:25.075096+00:00] cd05af3574c0 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "d6095086-9190-47c5-af9a-a389a13dc0c4", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:28.211422+00:00] cd05af3574c0 EXIT 0
+
+[2026-10-14T16:54:28.238181+00:00] 139ab1aa5235 Live test: temporarily stop simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:30.405561+00:00] 139ab1aa5235 EXIT 0
+
+[2026-10-14T16:54:30.426691+00:00] 403fa610d6ef Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "477874d5-6ff2-44a2-975c-708263575aab", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:32.607059+00:00] 403fa610d6ef EXIT 0
+
+[2026-10-14T16:54:44.628800+00:00] 54b8d66c137c Live E2E: pause processing mapping
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "update-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--no-enabled", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:46.929457+00:00] 54b8d66c137c EXIT 0
+
+[2026-10-14T16:54:46.955780+00:00] 98f3bb646100 Check paused processing state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:49.163076+00:00] 98f3bb646100 EXIT 0
+
+[2026-10-14T16:54:52.192724+00:00] 3bcaa4f04db4 Check paused processing state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:54:53.772693+00:00] 596306078227 Read the first measured Lambda processing duration after live motor tests
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudwatch", "get-metric-statistics", "--namespace", "AWS/Lambda", "--metric-name", "Duration", "--dimensions", "Name=FunctionName,Value=ccproj-Processor", "--start-time", "2026-10-14T16:45:00Z", "--end-time", "2026-10-14T17:00:00Z", "--period", "60", "--statistics", "Average", "Maximum", "--query", "Datapoints[].{Time:Timestamp,AverageMs:Average,MaximumMs:Maximum}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:54.494409+00:00] 3bcaa4f04db4 EXIT 0
+
+[2026-10-14T16:54:55.477911+00:00] 790a21ba7204 Observe buffered telemetry
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:56.022356+00:00] 596306078227 EXIT 0
+[2026-10-14T16:54:57.599199+00:00] 790a21ba7204 EXIT 0
+
+[2026-10-14T16:54:57.635487+00:00] fa365ff9719d Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:54:59.743816+00:00] fa365ff9719d EXIT 0
+
+[2026-10-14T16:55:02.774809+00:00] 14de624833e4 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:55:04.870095+00:00] 14de624833e4 EXIT 0
+
+[2026-10-14T16:55:07.903338+00:00] 5547be23a9cc Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:55:10.029330+00:00] 5547be23a9cc EXIT 0
+
+[2026-10-14T16:55:13.059990+00:00] f16f6016f0a9 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:55:15.513793+00:00] f16f6016f0a9 EXIT 0
+
+[2026-10-14T16:55:18.544619+00:00] 37980b6a006b Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:55:20.684084+00:00] 37980b6a006b EXIT 0
+
+[2026-10-14T16:55:23.716961+00:00] 42a35d833651 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:55:25.836015+00:00] 42a35d833651 EXIT 0
+
+[2026-10-14T16:55:28.865985+00:00] 8a701f45208c Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:55:30.958391+00:00] 8a701f45208c EXIT 0
+
+[2026-10-14T16:55:33.985365+00:00] cc5d4d2e1a02 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:55:36.215417+00:00] cc5d4d2e1a02 EXIT 0
+
+[2026-10-14T16:55:39.240711+00:00] b13494aaa650 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:55:41.418080+00:00] b13494aaa650 EXIT 0
+
+[2026-10-14T16:55:44.442576+00:00] 74e2c8a55b4c Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:55:46.570051+00:00] 74e2c8a55b4c EXIT 0
+
+[2026-10-14T16:55:49.595719+00:00] 414ccb6d43a5 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:55:53.853524+00:00] 414ccb6d43a5 EXIT 0
+
+[2026-10-14T16:55:56.877920+00:00] d85fc23326fb Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:02.333926+00:00] d85fc23326fb EXIT 0
+
+[2026-10-14T16:56:05.354264+00:00] 7fa22488d69d Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:07.506797+00:00] 7fa22488d69d EXIT 0
+
+[2026-10-14T16:56:10.527514+00:00] c46072b7f9f7 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:12.613496+00:00] c46072b7f9f7 EXIT 0
+
+[2026-10-14T16:56:15.637312+00:00] 0daffe838b7a Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:17.716152+00:00] 0daffe838b7a EXIT 0
+
+[2026-10-14T16:56:20.740857+00:00] a03f1133fad7 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:22.826632+00:00] a03f1133fad7 EXIT 0
+
+[2026-10-14T16:56:24.810998+00:00] f7cad52c0087 Verify original alert history and pending email state after recovery
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "query", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--key-condition-expression", "pk = :key", "--expression-attribute-values", "{\":key\":{\"S\":\"NOTIFY\"}}", "--query", "Items[].{Device:deviceId,Rule:rule,Delivery:delivery}", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:56:25.853783+00:00] 0159fc712b74 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:26.982406+00:00] f7cad52c0087 EXIT 0
+[2026-10-14T16:56:28.050627+00:00] 0159fc712b74 EXIT 0
+
+[2026-10-14T16:56:31.075264+00:00] 0e77b0f90d84 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:33.307130+00:00] 0e77b0f90d84 EXIT 0
+
+[2026-10-14T16:56:36.332348+00:00] ef46d554f885 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:38.448243+00:00] ef46d554f885 EXIT 0
+
+[2026-10-14T16:56:41.471630+00:00] eaa48d379b67 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:43.570983+00:00] eaa48d379b67 EXIT 0
+
+[2026-10-14T16:56:46.594394+00:00] d5254650385a Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:48.703704+00:00] d5254650385a EXIT 0
+
+[2026-10-14T16:56:51.723775+00:00] 28b5ab280126 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:53.914754+00:00] 28b5ab280126 EXIT 0
+
+[2026-10-14T16:56:56.935645+00:00] 1575e9631a2f Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:56:59.044706+00:00] 1575e9631a2f EXIT 0
+
+[2026-10-14T16:57:02.067714+00:00] 6421635afeaa Live E2E: restore processing mapping
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "update-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--enabled", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:57:04.352060+00:00] 6421635afeaa EXIT 0
+
+[2026-10-14T16:57:04.493724+00:00] e05cac767fd7 Live test: temporarily start simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:57:06.751796+00:00] e05cac767fd7 EXIT 0
+
+[2026-10-14T16:57:06.774768+00:00] caae0d53a3a5 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "1b85dade-10b2-4194-bba8-cbdfc80c3f99", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:57:09.306599+00:00] caae0d53a3a5 EXIT 0
+
+[2026-10-14T16:57:09.332086+00:00] 62a36be779e4 Live test: temporarily stop simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:57:13.197697+00:00] 62a36be779e4 EXIT 0
+
+[2026-10-14T16:57:13.216954+00:00] 13d067faa894 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "07000c1c-13b6-460a-a077-7e24d642ee70", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:57:15.347177+00:00] 13d067faa894 EXIT 0
+
+[2026-10-14T16:57:27.363344+00:00] 2aa93c5a7172 Live E2E: inject isolated poison envelope
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "send-message", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--message-body", "{\"invalid\":true}", "--message-group-id", "factory", "--message-deduplication-id", "poison-cf6543b6df2b26d1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:57:29.534652+00:00] 2aa93c5a7172 EXIT 0
+
+[2026-10-14T16:57:29.555130+00:00] 5cacb5dc303c Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:57:31.688185+00:00] 5cacb5dc303c EXIT 0
+
+[2026-10-14T16:57:51.713599+00:00] 10c15f93e5e4 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:57:54.086181+00:00] 10c15f93e5e4 EXIT 0
+
+[2026-10-14T16:58:14.107057+00:00] 5d321088aa9e Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:58:16.210804+00:00] 5d321088aa9e EXIT 0
+
+[2026-10-14T16:58:36.235967+00:00] 8e6e0034cdf6 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:58:38.351895+00:00] 8e6e0034cdf6 EXIT 0
+
+[2026-10-14T16:58:58.376256+00:00] 6405821a4df2 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:59:00.461953+00:00] 6405821a4df2 EXIT 0
+
+[2026-10-14T16:59:20.488508+00:00] d77905b0ca45 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:59:22.592441+00:00] d77905b0ca45 EXIT 0
+
+[2026-10-14T16:59:42.617612+00:00] 3f87adefa0d6 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:59:44.797553+00:00] 3f87adefa0d6 EXIT 0
+
+[2026-10-14T17:00:04.818261+00:00] 8c335f5654d0 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:00:06.927823+00:00] 8c335f5654d0 EXIT 0
+
+[2026-10-14T17:00:26.950915+00:00] 2a0139e07b5d Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:00:29.059433+00:00] 2a0139e07b5d EXIT 0
+
+[2026-10-14T17:00:49.085439+00:00] 9052d5f57cf1 Observe poison message dead-letter isolation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:00:51.227722+00:00] 9052d5f57cf1 EXIT 0
+
+[2026-10-14T17:00:55.800687+00:00] e6d9e521b053 Inspect processing mapping after buffering test failure
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--query", "{State:State,Result:LastProcessingResult,Reason:StateTransitionReason}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:00:58.010538+00:00] e6d9e521b053 EXIT 0
+
+[2026-10-14T17:00:58.554985+00:00] bc21e84fbafa Inspect processor errors during live failure exercises
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "filter-log-events", "--log-group-name", "/aws/lambda/ccproj-Processor", "--filter-pattern", "ERROR", "--limit", "8", "--query", "events[].message", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:01:01.040016+00:00] bc21e84fbafa EXIT 0
+
+[2026-10-14T17:01:01.599007+00:00] 93ec0d3f71ed Inspect buffer depth during live failure exercises
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:01:03.797448+00:00] 93ec0d3f71ed EXIT 0
