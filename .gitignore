@@ -8,3 +8,7 @@ build/
 node_modules/
 .env
 *.pem
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+frontend/*.tsbuildinfo
