@@ -2610,3 +2610,15 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T19:01:42.985409+00:00] b161f2a9bdce Remove only disposable live-test user
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-e1c284a87c9d@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-14T19:01:45.272927+00:00] b161f2a9bdce EXIT 0
+
+[2026-10-14T19:58:53.347669+00:00] ebe973aa7c21 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T19:58:55.509316+00:00] ebe973aa7c21 EXIT 0
+
+[2026-10-14T19:58:55.531793+00:00] 7758d024598f Diagnose reported password rejection after initial account setup
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-get-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "collegeproject@akshaykripalani.com", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T19:58:57.736976+00:00] 7758d024598f EXIT 0 (private response withheld)
+
+[2026-10-14T19:58:57.757588+00:00] 25b4d2996c1d Check password recovery and required password rules
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "describe-user-pool", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T19:58:59.935241+00:00] 25b4d2996c1d EXIT 0
