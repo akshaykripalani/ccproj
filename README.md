@@ -27,6 +27,8 @@ After deployment, `docs/ccproj-deployment.json` and `.runtime/deployment.json` c
 
 The deployed AWS acceptance report is `docs/AWS_ACCEPTANCE.md`: 64 local tests and 14 distinct real AWS scenarios passed, both fault emails reached the confirmed recipient, and the platform was left online with healthy motors. Raw and consolidated test evidence are under `docs/`.
 
+The main Markdown handoff is a small set: `PRD.md` for scope, `PROGRESS.md` for the completed state and next work, and `docs/AWS_ACCEPTANCE.md` for results, measurements and limitations. This README supplies build/deployment/operation commands. `docs/API.md` and `docs/SHUTDOWN.md` are the focused frontend contract and later cleanup references; `IMPLEMENTATION_PLAN.md` preserves the original phased plan with the updated implementation boundary.
+
 Publish the completed React build separately with `.venv\Scripts\python.exe -m scripts.publish_frontend path\to\dist`. It uploads to private S3 and waits for CloudFront invalidation. Keep deployment-owned `config.json` out of the build; infrastructure updates preserve an existing application entry point. The current entry point is a deployment status page until the React stage is implemented.
 
 ## Validation

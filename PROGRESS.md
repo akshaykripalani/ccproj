@@ -17,3 +17,9 @@ Original goal: deploy the complete AWS portion of PRD.md, add extensive deployed
 - Budget notifications at $20/$30/$40 were verified through AWS. Conservative 730-hour model is $26.93/month before credits/free allowances; see docs/budget-model.json. This is an estimate; actual usage still needs measuring.
 - EC2 release updates now wait for cloud-init, fixing a first-start race. EC2 telemetry is running through the deployed signed pipeline.
 - AWS implementation and verification are complete. Final evidence shows all three motors running/healthy, Enabled consumer, empty telemetry/DLQ counts, Online managed EC2 and ten OK alarms. The project is left online. docs/AWS_ACCEPTANCE.md documents evidence, measurements and limitations. React remains the later application stage as planned. docs/SHUTDOWN.md records future user-requested shutdown; no live teardown has been run.
+
+## Next chat
+
+Read AGENTS.md, PRD.md, this file, docs/AWS_ACCEPTANCE.md and docs/API.md. Implement the React application against the existing Sydney deployment: hosted Cognito PKCE login/callback/sign-out, shared motor overview and recent charts, operator fault/reset controls with acknowledgements, alerts/history, user management, and asynchronous historical report views. Include loading/error/session-expiry/stale-data states and real browser E2E acceptance checks. Publish the finished build using scripts.publish_frontend. The current CloudFront entry point is only the AWS status page. Inspect existing resources before changing them; reuse the deployed APIs/EC2 and append any additional AWS CLI commands through scripts.aws_cli. Preserve the Free Plan, budget notifications, and continued operation.
+
+The later confirmation-link error was checked against AWS: the current subscription remained active with PendingConfirmation=false. No resubscription was needed. That verification is committed with the command log.

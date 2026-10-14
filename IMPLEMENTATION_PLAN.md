@@ -2,6 +2,8 @@
 
 This plan groups the full scope in PRD.md into three implementation chats. PRD.md and AGENTS.md remain authoritative. Each part must leave working code, validation results, and a written handoff for the next chat.
 
+Implementation update, 14 October 2026: the user subsequently requested the **entire AWS portion** together. Its work across all three original parts is now deployed and tested, including EC2 operation, Cognito, protected control/user-management/report APIs, hosting, SNS delivery and recovery demonstrations. Do not restart the infrastructure or replace the live EC2 simulator with a local process. The remaining application work is the React dashboard and its browser acceptance journeys. Use PROGRESS.md, docs/AWS_ACCEPTANCE.md and docs/API.md as the current handoff; the part boundaries below preserve the original planning context.
+
 ## Part 1: Infrastructure and telemetry core
 
 - Establish append-only AWS command logging before the first AWS CLI invocation. Check the active account is 039379078306 and use ap-southeast-2.
