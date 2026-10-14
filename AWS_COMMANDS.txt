@@ -1,0 +1,31 @@
+AWS CLI command record — append only
+Project account: 039379078306
+Project region: ap-south-1
+
+No AWS CLI commands have been run in this planning chat.
+For subsequent commands, append timestamp, purpose, sanitized command, and outcome.
+Never include credentials, passwords, tokens, or other secret values.
+
+[2026-10-14T15:32:21.732854+00:00] e455c33635f5 Verify authorized project identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:32:24.747828+00:00] e455c33635f5 EXIT 0
+
+[2026-10-14T15:32:51.110973+00:00] 0f33c0db650b Inspect existing project stacks before provisioning
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "list-stacks", "--query", "StackSummaries[?StackStatus!='DELETE_COMPLETE'].[StackName,StackStatus]", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:32:52.536640+00:00] 0f33c0db650b EXIT 254
+
+[2026-10-14T15:32:53.096028+00:00] fd0350d79203 Check EC2 availability in Mumbai
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ec2", "describe-instance-type-offerings", "--location-type", "region", "--filters", "Name=instance-type,Values=t3.micro,t4g.micro", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:32:54.717090+00:00] fd0350d79203 EXIT 254
+
+[2026-10-14T15:32:55.256177+00:00] c1764d24d83b Read available Amazon Linux ARM AMI
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "get-parameter", "--name", "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64", "--query", "Parameter.Value", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:32:56.690821+00:00] c1764d24d83b EXIT 254
+
+[2026-10-14T15:32:57.217557+00:00] a51a50e3671c Check account plan and credit state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "freetier", "get-account-plan-state", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:32:59.375520+00:00] a51a50e3671c EXIT 0
+
+[2026-10-14T15:32:59.898045+00:00] a6a02d15c62c Inspect CloudTrail audit configuration
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudtrail", "describe-trails", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:33:01.298152+00:00] a6a02d15c62c EXIT 254
