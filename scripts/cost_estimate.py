@@ -46,7 +46,7 @@ def pricing(service):
 def main():
     services = [
         "AmazonDynamoDB",
-        "AmazonSQS",
+        "AWSQueueService",
         "AmazonSNS",
         "AmazonVPC",
         "AWSLambda",

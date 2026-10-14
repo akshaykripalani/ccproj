@@ -921,3 +921,84 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 
 [2026-10-14T16:48:59.934337+00:00] 48f5d7a12675 Wait for supervised simulator release update
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "42886e80-b5d0-4e8f-b611-59607e920ab3", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:49:07.468393+00:00] 48f5d7a12675 EXIT 0
+
+[2026-10-14T16:50:11.509690+00:00] 9f5c34809e96 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:50:13.758846+00:00] 9f5c34809e96 EXIT 0
+
+[2026-10-14T16:50:13.832419+00:00] b0186a866fbe Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-u1yfs4av\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:50:16.327183+00:00] b0186a866fbe EXIT 0 (private response withheld)
+
+[2026-10-14T16:50:16.365035+00:00] 87867c786a42 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-i3yil5x_\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:50:18.830102+00:00] 87867c786a42 EXIT 0 (private response withheld)
+
+[2026-10-14T16:50:18.849102+00:00] f81a965ed190 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-0190851935dc@example.invalid", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:50:21.102214+00:00] f81a965ed190 EXIT 0
+
+[2026-10-14T16:50:21.139699+00:00] 08a40d21f978 Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-hsdldksm\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:50:23.581791+00:00] 08a40d21f978 EXIT 0 (private response withheld)
+
+[2026-10-14T16:50:23.624363+00:00] 85f76f1fc5bb Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-h_ml3k0z\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:50:26.110489+00:00] 85f76f1fc5bb EXIT 0 (private response withheld)
+
+[2026-10-14T16:50:26.133328+00:00] 5cad368954d2 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-0190851935dc@example.invalid", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:50:28.407319+00:00] 5cad368954d2 EXIT 0
+
+[2026-10-14T16:50:28.443496+00:00] fae50959e000 Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-11c19xha\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:50:30.863041+00:00] fae50959e000 EXIT 0 (private response withheld)
+
+[2026-10-14T16:50:55.206487+00:00] c9da2f947cef Observe live fault transition during EC2 acceptance test
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--key", "{\"pk\": {\"S\": \"motor-01\"}, \"sk\": {\"S\": \"STATE\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:50:57.410987+00:00] c9da2f947cef EXIT 0
+
+[2026-10-14T16:52:21.072220+00:00] 8a31feaa73e8 Verify the deployed pre-credit budget and requested notification thresholds
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "budgets", "describe-notifications-for-budget", "--account-id", "039379078306", "--budget-name", "ccproj-total-ceiling", "--region", "us-east-1", "--no-cli-pager"]
+[2026-10-14T16:52:23.285414+00:00] 8a31feaa73e8 EXIT 0
+
+[2026-10-14T16:53:48.672559+00:00] 0e19a14379f1 Live test: temporarily stop simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:53:50.956996+00:00] 0e19a14379f1 EXIT 0
+
+[2026-10-14T16:53:50.987567+00:00] 2015acd67bee Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "b9c02d09-45a8-4ef2-839a-667d98f8701d", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:53:55.031324+00:00] 2015acd67bee EXIT 0
+
+[2026-10-14T16:54:00.628315+00:00] 92e953bf4fe9 Capture current Sydney pricing: AmazonDynamoDB
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonDynamoDB", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+
+[2026-10-14T16:54:00.629318+00:00] e1b45e1f68e9 Capture current Sydney pricing: AWSQueueService
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AWSQueueService", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+
+[2026-10-14T16:54:00.629318+00:00] 0cfc23544079 Capture current Sydney pricing: AmazonSNS
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonSNS", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+
+[2026-10-14T16:54:00.629318+00:00] 4f45298948a1 Capture current Sydney pricing: AmazonVPC
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonVPC", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+[2026-10-14T16:54:03.195063+00:00] e1b45e1f68e9 EXIT 0
+
+[2026-10-14T16:54:03.232169+00:00] 56667b6aee74 Capture current Sydney pricing: AWSLambda
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AWSLambda", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+[2026-10-14T16:54:03.460305+00:00] 92e953bf4fe9 EXIT 0
+
+[2026-10-14T16:54:03.491201+00:00] 3b24b9374794 Capture current Sydney pricing: awskms
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "awskms", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+[2026-10-14T16:54:03.715396+00:00] 0cfc23544079 EXIT 0
+
+[2026-10-14T16:54:03.741470+00:00] 752651f62ad3 Capture current Sydney pricing: AmazonCloudWatch
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonCloudWatch", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+[2026-10-14T16:54:03.835374+00:00] 4f45298948a1 EXIT 0
+
+[2026-10-14T16:54:03.856373+00:00] 1260b6204c1c Capture current Sydney pricing: AmazonS3
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonS3", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+[2026-10-14T16:54:05.968444+00:00] 3b24b9374794 EXIT 0
+[2026-10-14T16:54:07.246057+00:00] 752651f62ad3 EXIT 0
+[2026-10-14T16:54:07.879989+00:00] 1260b6204c1c EXIT 0
+[2026-10-14T16:54:08.161437+00:00] 56667b6aee74 EXIT 0

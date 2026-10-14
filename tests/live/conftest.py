@@ -19,6 +19,7 @@ PROJECT = Path(__file__).resolve().parents[2]
 
 
 def private_call(service, operation, payload, purpose):
+    __tracebackhide__ = True
     # Sensitive inputs live only in a restrictive OS temp directory outside the repo.
     with tempfile.TemporaryDirectory(prefix="ccproj-auth-") as directory:
         location = Path(directory).resolve()
