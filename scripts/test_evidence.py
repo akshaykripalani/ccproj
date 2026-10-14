@@ -10,7 +10,13 @@ ROOT = Path(__file__).resolve().parents[1]
 
 def consolidate():
     latest = {}
-    sources = sorted((ROOT / "docs").glob("live-*-results.xml"), key=lambda p: p.stat().st_mtime)
+    # Git checkout/copy changes filesystem mtimes. Use recorded run timestamps
+    # so an old failing retry cannot replace a later passing result after checkout.
+    def run_time(path):
+        suites = ET.parse(path).getroot().iter("testsuite")
+        return min((suite.get("timestamp", "") for suite in suites), default=""), path.name
+
+    sources = sorted((ROOT / "docs").glob("live-*-results.xml"), key=run_time)
     for source in sources:
         for case in ET.parse(source).getroot().iter("testcase"):
             latest[(case.get("classname"), case.get("name"))] = (source.name, case)
