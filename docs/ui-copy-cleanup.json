@@ -1,0 +1,50 @@
+{
+  "recordedAt": "2026-10-14T20:59:58.854811+00:00",
+  "dashboardUrl": "https://d1idggpc663p7f.cloudfront.net",
+  "change": "Removed implementation provenance and filler from monitoring, equipment, charts, alerts, reports, team and navigation. Existing palette and behavior preserved.",
+  "controlledFullRun": {
+    "passed": 23,
+    "failed": 0,
+    "seconds": 20.0,
+    "command": "npm test"
+  },
+  "targetedScreenshotRun": {
+    "passed": 2,
+    "failed": 0,
+    "seconds": 8.9
+  },
+  "productionBuild": "TypeScript and Vite passed",
+  "cloudFrontInvalidation": "Completed through logged publishing script",
+  "publicReleaseMatchesBuild": true,
+  "assets": [
+    {
+      "path": "assets/charts-DME9z0Gk.js",
+      "sha256": "29ca10ab9cb4df4563be176eadf99040124c06e07d5b20fccc31bcb3365b9552"
+    },
+    {
+      "path": "assets/index-C9cFiDz4.js",
+      "sha256": "348c33ed03e56d66902778a0fc41f42ba3e8e090871621a10599bd22bb5eb088"
+    },
+    {
+      "path": "assets/index-DYzd1lKl.css",
+      "sha256": "e386039c8cbea11e890e00f166f323098aa234a83bd7d8a4ea6899ee6d06ea36"
+    },
+    {
+      "path": "assets/rolldown-runtime-XKyaHtl9.js",
+      "sha256": "548d1dbf321e7d2ae804fcc158b588706a7c52f8ca175de1490c6ccb4dbe55b7"
+    },
+    {
+      "path": "assets/vendor-DQjG21sr.js",
+      "sha256": "5987165f7377271f10d6dcf905dc74783aaef63fe0a8dafa930c50fd760ffad0"
+    },
+    {
+      "path": "favicon.svg",
+      "sha256": "b884228a71aa0e78d554c6a50400df9dd02178a8b4dac2eef73dcf9b8d11f30c"
+    },
+    {
+      "path": "index.html",
+      "sha256": "3e66481320683ba4e388ce1e8fe76ecda0c3ef3f430308ec27d37b546c36cc2a"
+    }
+  ],
+  "limits": "Controlled UI tests and public asset integrity checks only for this release; existing live AWS acceptance remains historical. Actual initial-account recovery remains open."
+}

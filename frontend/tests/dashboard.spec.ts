@@ -384,6 +384,7 @@ test("mobile navigation and dashboard have no horizontal overflow", async ({
   await page.screenshot({
     path: "test-results/reports-mobile.png",
     fullPage: true,
+    animations: "disabled",
   });
 });
 
@@ -527,5 +528,10 @@ test("alert history, team roles and report results pass accessibility checks", a
         targets: item.nodes.map((node) => node.target),
       })),
     ).toEqual([]);
+    await page.screenshot({
+      path: `test-results/copy-${route}.png`,
+      fullPage: true,
+      animations: "disabled",
+    });
   }
 });
