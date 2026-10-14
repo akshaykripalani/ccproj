@@ -1977,3 +1977,228 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 
 [2026-10-14T17:19:43.016184+00:00] 02067081c0ad Grant disposable test role
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-fa733669f96d@example.invalid", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:19:45.341840+00:00] 02067081c0ad EXIT 0
+
+[2026-10-14T17:19:45.374384+00:00] 5baabdbb994b Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-984dtbp0\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:19:47.814163+00:00] 5baabdbb994b EXIT 0 (private response withheld)
+
+[2026-10-14T17:19:47.854165+00:00] c1099b11e380 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-ae49iir5\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:19:50.278912+00:00] c1099b11e380 EXIT 0 (private response withheld)
+
+[2026-10-14T17:19:50.300120+00:00] cefd2b896229 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-fa733669f96d@example.invalid", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:19:52.582085+00:00] cefd2b896229 EXIT 0
+
+[2026-10-14T17:19:52.599684+00:00] 5aed25979500 Live test: temporarily stop simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:19:54.830356+00:00] 5aed25979500 EXIT 0
+
+[2026-10-14T17:19:54.856930+00:00] 0a3165ab5a8d Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "9128260b-f671-4fa3-900a-04662390487c", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:19:56.998633+00:00] 0a3165ab5a8d EXIT 0
+
+[2026-10-14T17:20:10.084689+00:00] d27f029917b7 Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-3r4__bve\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:20:12.433701+00:00] d27f029917b7 EXIT 0 (private response withheld)
+
+[2026-10-14T17:20:17.505202+00:00] 9f98ed2fd2dc Exercise DynamoDB deduplication independently of SQS's five-minute dedup window
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "send-message", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--message-body", "{\"batchId\":\"8fdebfde7483774308fe004176f46ecf9a1c31aa8b63d9260e3a062003438bb4\",\"readings\":[{\"deviceId\":\"motor-01\",\"eventId\":\"live-test:19960f8ce251b1472c456492\",\"observedAt\":\"2026-10-14T17:20:09.024Z\",\"operatingState\":\"running\",\"powerWatts\":420,\"schemaVersion\":1,\"temperatureC\":52,\"vibrationMmS\":1.5}],\"receivedAt\":\"2026-10-14T17:20:17.504Z\"}", "--message-group-id", "factory", "--message-deduplication-id", "forced-retry-1363743427f14619", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:20:19.557396+00:00] 9f98ed2fd2dc EXIT 0
+
+[2026-10-14T17:20:19.578183+00:00] 770232b4a9d6 Wait for forced duplicate processing
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:20:21.651240+00:00] 770232b4a9d6 EXIT 0
+
+[2026-10-14T17:20:24.351503+00:00] 51f12d6babb7 Verify real archive objects
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-14/", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:20:26.802474+00:00] 51f12d6babb7 EXIT 0
+
+[2026-10-14T17:20:26.827775+00:00] f20ad11107aa Live test: temporarily start simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:20:29.105189+00:00] f20ad11107aa EXIT 0
+
+[2026-10-14T17:20:29.124664+00:00] 2f9fa8e3ebc2 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "6202393d-6fd7-4e04-b737-716075d42ddc", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:20:31.240899+00:00] 2f9fa8e3ebc2 EXIT 0
+
+[2026-10-14T17:20:31.266017+00:00] 8b461c989df0 Live test: temporarily stop simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:20:33.470981+00:00] 8b461c989df0 EXIT 0
+
+[2026-10-14T17:20:33.494746+00:00] 98ab9f972d49 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "a05b9072-6d22-4f2a-a08d-b805571e25c9", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:20:35.706281+00:00] 98ab9f972d49 EXIT 0
+
+[2026-10-14T17:20:47.727392+00:00] 672a70d84668 Live E2E: pause processing mapping
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "update-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--no-enabled", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:20:49.979027+00:00] 672a70d84668 EXIT 0
+
+[2026-10-14T17:20:50.004162+00:00] 103047d61934 Check paused processing state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:20:52.155934+00:00] 103047d61934 EXIT 0
+
+[2026-10-14T17:21:28.303644+00:00] 21e943e8ccf2 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:21:30.447814+00:00] 21e943e8ccf2 EXIT 0
+
+[2026-10-14T17:21:30.550793+00:00] da14339a2786 Live E2E: restore processing mapping
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "update-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--enabled", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:21:33.533642+00:00] da14339a2786 EXIT 0
+
+[2026-10-14T17:21:39.625610+00:00] 0b7e5c7c3869 Live test: temporarily start simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:21:41.865386+00:00] 0b7e5c7c3869 EXIT 0
+
+[2026-10-14T17:21:41.976427+00:00] 7b7b81a19c8a Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "6cb54a0a-090d-44f7-9422-2ad54528ff84", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:21:44.202703+00:00] 7b7b81a19c8a EXIT 0
+
+[2026-10-14T17:21:44.318829+00:00] 9e344791fd9b Verify confirmed fault-notification recipient
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:21:46.582935+00:00] 9e344791fd9b EXIT 0
+
+[2026-10-14T17:21:46.683601+00:00] 88e60cc74589 Verify real fault episodes were accepted by SNS
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "query", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--consistent-read", "--key-condition-expression", "pk = :p", "--expression-attribute-values", "{\":p\": {\"S\": \"NOTIFY\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:21:48.922338+00:00] 88e60cc74589 EXIT 0
+
+[2026-10-14T17:21:49.035602+00:00] efcc02598bc5 Verify notification retry does not republish completed episodes
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "invoke", "--function-name", "ccproj-Notifier", "--cli-binary-format", "raw-in-base64-out", "--payload", "{}", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\notification-retry-test.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:21:51.387209+00:00] efcc02598bc5 EXIT 0
+
+[2026-10-14T17:21:51.489736+00:00] ff2fc3cdc09d Live test: temporarily stop simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:21:53.809116+00:00] ff2fc3cdc09d EXIT 0
+
+[2026-10-14T17:21:53.937549+00:00] ca9cb2368d21 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "15d41046-b823-467c-b16c-3d74e69f8398", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:21:56.206411+00:00] ca9cb2368d21 EXIT 0
+
+[2026-10-14T17:22:18.624895+00:00] baf84c6a7a94 Record retained notification key for eventual shutdown
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "list-stack-resources", "--stack-name", "ccproj", "--query", "StackResourceSummaries[?ResourceType==AWS::KMS::Key].PhysicalResourceId", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:19.419525+00:00] baf84c6a7a94 EXIT 252
+
+[2026-10-14T17:22:22.703859+00:00] 54712c5174b1 Verify bounded burst consumer catch-up
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:24.811815+00:00] 54712c5174b1 EXIT 0
+
+[2026-10-14T17:22:24.834012+00:00] debe4a7016d4 Live test: temporarily start simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:26.952816+00:00] debe4a7016d4 EXIT 0
+
+[2026-10-14T17:22:26.975858+00:00] 1fd7977629e7 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "61ee64dd-0e1c-41ee-9236-c70990de8e71", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:22:28.226858+00:00] a2dcd39a9e65 Record resource ownership before eventual shutdown
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "list-stack-resources", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:29.146579+00:00] 1fd7977629e7 EXIT 0
+
+[2026-10-14T17:22:29.170412+00:00] 966207488faa Live test: temporarily stop simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:30.794642+00:00] a2dcd39a9e65 EXIT 0
+[2026-10-14T17:22:31.351704+00:00] 966207488faa EXIT 0
+
+[2026-10-14T17:22:31.373319+00:00] bfe65c0f0f8f Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "f9de6c06-acac-4f53-bc8e-0eb1d72b0274", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:33.495424+00:00] bfe65c0f0f8f EXIT 0
+
+[2026-10-14T17:22:45.520176+00:00] b27c937a1f61 Live E2E: store owned version-recovery test object
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "put-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "recovery/e2e-2e15075e5be0a18d.txt", "--body", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery-proof-2e15075e5be0a18d.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:47.997494+00:00] b27c937a1f61 EXIT 0
+
+[2026-10-14T17:22:48.018004+00:00] bbe395debe8f Live E2E: overwrite owned version test object
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "put-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "recovery/e2e-2e15075e5be0a18d.txt", "--body", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery-proof-2e15075e5be0a18d.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:50.444441+00:00] bbe395debe8f EXIT 0
+
+[2026-10-14T17:22:50.464945+00:00] 19ac5d9b43bf Live E2E: create a delete marker on owned test object
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "delete-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "recovery/e2e-2e15075e5be0a18d.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:52.579818+00:00] 19ac5d9b43bf EXIT 0
+
+[2026-10-14T17:22:52.604704+00:00] d965ba437a85 Live E2E: restore original test object version
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "copy-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "recovery/e2e-2e15075e5be0a18d.txt", "--copy-source", "ccproj-archive-mx5crrke5wcd/recovery/e2e-2e15075e5be0a18d.txt?versionId=cPX6qPIf3RWtXPCgBrImBYoC5.Pt6tW3", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:54.789758+00:00] d965ba437a85 EXIT 0
+
+[2026-10-14T17:22:54.809512+00:00] 80828a77447b Read restored test object
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "get-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "recovery/e2e-2e15075e5be0a18d.txt", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery-proof-2e15075e5be0a18d.txt", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:22:56.977137+00:00] 80828a77447b EXIT 0
+
+[2026-10-14T17:22:57.985269+00:00] 3f52d3404f32 Wait for owned recovery telemetry archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/0e5c2f1547562a1a9cbc9e46ffbf3d79ca3fa4f847375bf9912b1a5e73945c0b.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:23:00.197406+00:00] 3f52d3404f32 EXIT 0
+
+[2026-10-14T17:23:00.219898+00:00] a7ac4e4af830 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:23:02.264445+00:00] a7ac4e4af830 EXIT 0
+
+[2026-10-14T17:23:02.286365+00:00] 0af29c1ae5a1 Provision separate recovery exercise state table
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "deploy", "--stack-name", "ccproj-recovery-5e33c38f", "--template-file", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery\\template.json", "--no-fail-on-empty-changeset", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:23:42.107433+00:00] 0af29c1ae5a1 EXIT 0
+
+[2026-10-14T17:23:42.127845+00:00] 1c1bdf32a168 Read recovery table identifier
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj-recovery-5e33c38f", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:23:44.625126+00:00] 1c1bdf32a168 EXIT 0
+
+[2026-10-14T17:23:44.644503+00:00] 226ee12215da Enumerate archived recovery readings
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/0e5c2f1547562a1a9cbc9e46ffbf3d79ca3fa4f847375bf9912b1a5e73945c0b.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:23:46.924428+00:00] 226ee12215da EXIT 0
+
+[2026-10-14T17:23:46.947708+00:00] 848dfc1ff959 Read archived recovery batch
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "get-object", "--bucket", "ccproj-archive-mx5crrke5wcd", "--key", "telemetry/day=2026-10-13/0e5c2f1547562a1a9cbc9e46ffbf3d79ca3fa4f847375bf9912b1a5e73945c0b.json.gz", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery\\archive-0.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:23:49.694700+00:00] 848dfc1ff959 EXIT 0
+
+[2026-10-14T17:23:49.717599+00:00] c6fc8fb51947 Rebuild test device state without notifications
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "put-item", "--table-name", "ccproj-recovery-5e33c38f-State-2CEZOOTB3FI4", "--item", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery\\motor-01.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:23:51.850900+00:00] c6fc8fb51947 EXIT 0
+
+[2026-10-14T17:23:51.873985+00:00] 4915fa427c09 Rebuild test device state without notifications
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "put-item", "--table-name", "ccproj-recovery-5e33c38f-State-2CEZOOTB3FI4", "--item", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery\\motor-02.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:23:53.981794+00:00] 4915fa427c09 EXIT 0
+
+[2026-10-14T17:23:54.003373+00:00] 6c76cfa2a05e Rebuild test device state without notifications
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "put-item", "--table-name", "ccproj-recovery-5e33c38f-State-2CEZOOTB3FI4", "--item", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\recovery\\motor-03.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:23:56.133030+00:00] 6c76cfa2a05e EXIT 0
+
+[2026-10-14T17:23:56.165861+00:00] 9ab4c8efd38a Verify rebuilt isolated device state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-recovery-5e33c38f-State-2CEZOOTB3FI4", "--key", "{\"pk\": {\"S\": \"motor-01\"}, \"sk\": {\"S\": \"STATE\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:23:58.324945+00:00] 9ab4c8efd38a EXIT 0
+
+[2026-10-14T17:23:58.453151+00:00] 56e69f6be6d1 Verify rebuilt isolated device state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-recovery-5e33c38f-State-2CEZOOTB3FI4", "--key", "{\"pk\": {\"S\": \"motor-02\"}, \"sk\": {\"S\": \"STATE\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:24:00.789929+00:00] 56e69f6be6d1 EXIT 0
+
+[2026-10-14T17:24:00.906091+00:00] e6dceeb1e48c Verify rebuilt isolated device state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-recovery-5e33c38f-State-2CEZOOTB3FI4", "--key", "{\"pk\": {\"S\": \"motor-03\"}, \"sk\": {\"S\": \"STATE\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:24:03.293413+00:00] e6dceeb1e48c EXIT 0
+
+[2026-10-14T17:24:03.423406+00:00] 7c361db6dffc Remove only the disposable recovery exercise stack
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "delete-stack", "--stack-name", "ccproj-recovery-5e33c38f", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:24:07.974509+00:00] 7c361db6dffc EXIT 0
+
+[2026-10-14T17:24:08.097853+00:00] d91ad27b7cf5 Wait for disposable recovery table cleanup
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "wait", "stack-delete-complete", "--stack-name", "ccproj-recovery-5e33c38f", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:24:41.390978+00:00] d91ad27b7cf5 EXIT 0
+
+[2026-10-14T17:24:41.502584+00:00] 6bdbb05ad0f0 Live test: temporarily start simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:24:43.785329+00:00] 6bdbb05ad0f0 EXIT 0
+
+[2026-10-14T17:24:43.787806+00:00] cfd1d3142f34 Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "c9726d32-a505-4965-ba28-06a7be4fce48", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:24:46.167849+00:00] cfd1d3142f34 EXIT 0
+
+[2026-10-14T17:24:46.296812+00:00] c5dbd1db5283 Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-_3erppgv\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:24:48.847553+00:00] c5dbd1db5283 EXIT 0 (private response withheld)
+
+[2026-10-14T17:24:58.014203+00:00] e12f732eefb9 Wait for known-data report archive
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-objects-v2", "--bucket", "ccproj-archive-mx5crrke5wcd", "--prefix", "telemetry/day=2026-10-13/71089fc8b2525a673290b9a38b7dd75e308504ae626c32fba86cc54709480f29.json.gz", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:25:00.251951+00:00] e12f732eefb9 EXIT 0
+
+[2026-10-14T17:25:07.998697+00:00] 45ebf0160a79 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-fa733669f96d@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:25:10.309030+00:00] 45ebf0160a79 EXIT 0
+
+[2026-10-14T17:25:10.423831+00:00] 399d169971f7 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-fa733669f96d@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:25:12.796164+00:00] 399d169971f7 EXIT 0

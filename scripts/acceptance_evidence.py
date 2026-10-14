@@ -24,6 +24,18 @@ def capture():
         ],
         "subscriptions": ["sns", "list-subscriptions-by-topic", "--topic-arn", p["AlertTopicArn"]],
         "consumer": ["lambda", "get-event-source-mapping", "--uuid", p["ProcessingMapping"]],
+        "intentionalFailureLogs": [
+            "logs",
+            "filter-log-events",
+            "--log-group-name",
+            "/aws/lambda/ccproj-Processor",
+            "--start-time",
+            "1791996900000",
+            "--end-time",
+            "1791997500000",
+            "--filter-pattern",
+            '"Processing failed"',
+        ],
         "alarms": ["cloudwatch", "describe-alarms", "--alarm-name-prefix", "ccproj-"],
         "budget": [
             "budgets",
