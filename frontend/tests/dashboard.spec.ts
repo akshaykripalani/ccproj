@@ -76,7 +76,9 @@ test("controls show requested and applied states separately", async ({
   await page.locator(".demo-controls > summary").click();
   await page.getByRole("button", { name: "Overheat", exact: true }).click();
   await expect(card.getByText("Applying change…")).toBeVisible();
-  await expect(card.getByText("Applied:")).toContainText("Normal");
+  await expect(
+    page.locator(".demo-controls .control-status").getByText("Applied:"),
+  ).toContainText("Normal");
   expect(
     state.requests.find((request) => request.path === "/controls/motor-01")
       ?.body,
@@ -87,8 +89,12 @@ test("controls show requested and applied states separately", async ({
     status: "applied",
     appliedAt: new Date().toISOString(),
   };
-  await expect(card.getByText("Applied:")).toContainText("Overheat");
-  await expect(card.getByText(/^Applied \w/)).toBeVisible();
+  await expect(
+    page.locator(".demo-controls .control-status").getByText("Applied:"),
+  ).toContainText("Overheat");
+  await expect(
+    page.locator(".demo-controls .control-status").getByText(/^Applied \w/),
+  ).toBeVisible();
   await expect(
     page.getByTestId("motor-02").getByText("Running", { exact: true }),
   ).toBeVisible();
@@ -547,6 +553,162 @@ test("sign-out clears local tokens and requests the hosted logout URL", async ({
   expect(new URL(page.url()).searchParams.get("logout_uri")).toBe(
     config.logoutUrl,
   );
+});
+
+test("reference overview derives the fault headline, comparison lines and row reset from live responses", async ({
+  page,
+}) => {
+  const state = await mockApp(page);
+  const motor = state.devices.devices[1];
+  motor.latest!.temperatureC = 81;
+  motor.latest!.rules!.temperature.active = true;
+  motor.control.appliedMode = "overheat";
+  motor.control.requestedMode = "overheat";
+  state.alerts.alerts = [
+    {
+      alertId: "fault-reference",
+      pk: motor.deviceId,
+      rule: "temperature",
+      state: "active",
+      activatedAt: new Date(Date.now() - 30000).toISOString(),
+      reading: { ...makeReading(motor.deviceId), temperatureC: 81 },
+      emailStatus: "sns_accepted",
+    },
+  ];
+  await page.route("https://api.example.test/devices/*/readings*", (route) => {
+    const id = new URL(route.request().url()).pathname.split("/")[2];
+    const readings = Array.from({ length: 360 }, (_, index) => ({
+      ...makeReading(id, index),
+      observedAt: new Date(Date.now() - (359 - index) * 10000).toISOString(),
+      temperatureC:
+        id === "motor-02"
+          ? 56 + 25 * Math.max(0, (index - 260) / 99)
+          : id === "motor-01"
+            ? 55
+            : 57,
+    }));
+    return route.fulfill({ json: { readings, nextCursor: null } });
+  });
+  await page.goto("/");
+  await expect(
+    page.getByRole("heading", {
+      name: "Motor 02 is over its temperature limit",
+      exact: true,
+    }),
+  ).toBeVisible();
+  await expect(page.locator(".plant-summary")).toContainText("1 active fault");
+  const chart = page.getByRole("img", {
+    name: /Temperature chart with 1080 readings across all motors/,
+  });
+  await expect(chart).toBeVisible();
+  await expect(chart.locator('path[d*="L"]')).toHaveCount(3);
+  for (const id of ["Motor 01", "Motor 02", "Motor 03"])
+    await expect(chart.locator("text").filter({ hasText: id })).toHaveCount(1);
+  await expect(page.getByTestId("motor-02")).toHaveClass("fault-row");
+  await expect(page.getByTestId("motor-01")).not.toHaveClass("fault-row");
+  await expect(
+    page.getByRole("button", { name: "Overheat", exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    page.getByRole("navigation", { name: "Main navigation" }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: "test-results/redesign-overview-fault-desktop.png",
+    fullPage: true,
+    animations: "disabled",
+  });
+  const accessibility = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa"])
+    .analyze();
+  expect(accessibility.violations).toEqual([]);
+  await page
+    .getByTestId("motor-02")
+    .getByRole("button", { name: "Reset", exact: true })
+    .click();
+  expect(
+    state.requests.find((request) => request.path === "/controls/motor-02")
+      ?.body,
+  ).toEqual({ mode: "normal" });
+  motor.latest!.temperatureC = 55;
+  motor.latest!.rules!.temperature.active = false;
+  motor.control = {
+    ...motor.control,
+    status: "applied",
+    appliedMode: "normal",
+  };
+  await page.getByRole("button", { name: "Refresh telemetry" }).click();
+  await expect(
+    page.getByRole("heading", {
+      name: "All motors are running normally",
+      exact: true,
+    }),
+  ).toBeVisible();
+});
+
+test("reference styling and self-hosted fonts remain usable across desktop and mobile views", async ({
+  page,
+}) => {
+  await mockApp(page);
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  for (const [label, width, height] of [
+    ["desktop", 1440, 1000],
+    ["mobile", 390, 844],
+  ] as const) {
+    await page.setViewportSize({ width, height });
+    for (const route of [
+      "overview",
+      "devices/motor-01",
+      "alerts",
+      "reports",
+      "users",
+    ]) {
+      await page.goto(`/#/${route}`);
+      await expect(page.locator("h1")).toBeVisible();
+      if (route.startsWith("devices"))
+        await expect(
+          page.getByRole("img", { name: /Temperature chart with 20 readings/ }),
+        ).toBeVisible();
+      if (route === "overview")
+        await expect(page.getByTestId("motor-03")).toBeVisible();
+      if (route === "users")
+        await expect(
+          page.getByText("operator@example.test", { exact: true }).last(),
+        ).toBeVisible();
+      await page.evaluate(() => document.fonts.ready);
+      expect(
+        await page.evaluate(
+          () =>
+            document.fonts.check('15px "IBM Plex Sans"') &&
+            document.fonts.check('13px "IBM Plex Mono"'),
+        ),
+      ).toBe(true);
+      await page.screenshot({
+        path: `test-results/redesign-${route.replace("/", "-")}-${label}.png`,
+        fullPage: true,
+        animations: "disabled",
+      });
+      const layout = await page.evaluate(() => ({
+        fits: document.documentElement.scrollWidth <= innerWidth,
+        viewport: innerWidth,
+        document: document.documentElement.scrollWidth,
+        outside: [...document.querySelectorAll("body *")]
+          .filter(
+            (element) =>
+              !element.closest(".table-scroll") &&
+              element.getBoundingClientRect().right > innerWidth + 1,
+          )
+          .slice(0, 8)
+          .map((element) => ({
+            name: element.tagName,
+            classes: element.className,
+            right: element.getBoundingClientRect().right,
+          })),
+      }));
+      expect(layout.fits, `${route}/${label}: ${JSON.stringify(layout)}`).toBe(
+        true,
+      );
+    }
+  }
 });
 
 test("alert history, team roles and report results pass accessibility checks", async ({

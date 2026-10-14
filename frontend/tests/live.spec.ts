@@ -148,20 +148,32 @@ test("browser fault controls receive acknowledgement, produce alerts, and reset 
   try {
     await page.locator(".demo-controls > summary").click();
     await page.getByRole("button", { name: "Overheat", exact: true }).click();
-    await expect(first.getByText("Requested:")).toContainText("Overheat");
-    await expect(first.getByText("Applied:")).toContainText("Overheat");
+    await expect(
+      page.locator(".demo-controls .control-status").getByText("Requested:"),
+    ).toContainText("Overheat");
+    await expect(
+      page.locator(".demo-controls .control-status").getByText("Applied:"),
+    ).toContainText("Overheat");
     await expect(
       first.getByText("Over temperature", { exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".plant-summary")).toContainText("1 active fault");
+    await expect(page.locator(".plant-summary")).toContainText(
+      "1 active fault",
+    );
     await expect(second.getByText("Running", { exact: true })).toBeVisible();
     await page.getByLabel("Motor", { exact: true }).selectOption("motor-02");
-    await page.getByRole("button", { name: "Vibration fault", exact: true }).click();
-    await expect(second.getByText("Applied:")).toContainText("Vibration fault");
+    await page
+      .getByRole("button", { name: "Vibration fault", exact: true })
+      .click();
+    await expect(
+      page.locator(".demo-controls .control-status").getByText("Applied:"),
+    ).toContainText("Vibration fault");
     await expect(
       second.getByText("High vibration", { exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".plant-summary")).toContainText("2 active faults");
+    await expect(page.locator(".plant-summary")).toContainText(
+      "2 active faults",
+    );
     await page.getByRole("link", { name: "Alerts" }).click();
     await expect(
       page
@@ -188,7 +200,9 @@ test("browser fault controls receive acknowledgement, produce alerts, and reset 
     await expect(second.getByText("Running", { exact: true })).toBeVisible();
     await page.locator(".demo-controls > summary").click();
     await page.getByRole("button", { name: "Disconnect", exact: true }).click();
-    await expect(first.getByText("Applied:")).toContainText("Disconnected");
+    await expect(
+      page.locator(".demo-controls .control-status").getByText("Applied:"),
+    ).toContainText("Disconnected");
     await expect(first.getByText("Offline", { exact: true })).toBeVisible();
     await expect(second.getByText("Running", { exact: true })).toBeVisible();
   } finally {

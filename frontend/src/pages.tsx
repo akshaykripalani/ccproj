@@ -285,7 +285,7 @@ export function Equipment(props: LiveProps & { deviceId?: string }) {
         ← Equipment
       </a>
       <Heading title={motorName(device.deviceId)} />
-      <MotorTable {...props} devices={[device]} />
+      <MotorTable {...props} devices={[device]} links={false} />
       {props.operator && (
         <DemoControls devices={[device]} refresh={props.refresh} />
       )}

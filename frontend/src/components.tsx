@@ -22,11 +22,7 @@ export function Badge({
   children: React.ReactNode;
   tone?: string;
 }) {
-  return (
-    <span className={`badge ${tone}`}>
-      {children}
-    </span>
-  );
+  return <span className={`badge ${tone}`}>{children}</span>;
 }
 export function ErrorNotice({
   message,
@@ -263,11 +259,13 @@ function MotorRow({
   now,
   operator,
   refresh,
+  links,
 }: {
   device: Device;
   now: number;
   operator: boolean;
   refresh: () => void;
+  links: boolean;
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -293,18 +291,28 @@ function MotorRow({
   return (
     <tr data-testid={device.deviceId} className={attention ? "fault-row" : ""}>
       <th scope="row">
-        <a href={`#/devices/${device.deviceId}`}>
-          {motorName(device.deviceId)}
-        </a>
+        {links ? (
+          <a href={`#/devices/${device.deviceId}`}>
+            {motorName(device.deviceId)}
+          </a>
+        ) : (
+          motorName(device.deviceId)
+        )}
       </th>
       <td>
         <span className={`equipment-state ${attention ? "problem" : ""}`}>
           <i aria-hidden="true" />
           {condition.label}
         </span>
-        {(device.control.status !== "applied" ||
-          device.control.appliedMode !== "normal") && (
-          <ControlStatus control={device.control} />
+        {device.control.status !== "applied" && (
+          <small
+            className={`row-command ${device.control.status}`}
+            role="status"
+          >
+            {device.control.status === "pending"
+              ? "Applying change…"
+              : "Change not confirmed. Try again."}
+          </small>
         )}
         {error && <ErrorNotice message={error} />}
       </td>
@@ -347,12 +355,14 @@ function MotorRow({
                 {busy ? "Resetting…" : "Reset"}
               </button>
             )}
-          <a
-            href={`#/devices/${device.deviceId}`}
-            aria-label={`${motorName(device.deviceId)} details`}
-          >
-            Details
-          </a>
+          {links && (
+            <a
+              href={`#/devices/${device.deviceId}`}
+              aria-label={`${motorName(device.deviceId)} details`}
+            >
+              Details
+            </a>
+          )}
         </div>
       </td>
     </tr>
@@ -364,15 +374,22 @@ export function MotorTable({
   now,
   operator,
   refresh,
+  links = true,
 }: {
   devices: Device[];
   now: number;
   operator: boolean;
   refresh: () => void;
+  links?: boolean;
 }) {
   return (
     <section className="panel motor-table" aria-label="Motors">
-      <div className="table-scroll">
+      <div
+        className="table-scroll"
+        tabIndex={0}
+        role="region"
+        aria-label="Motor readings"
+      >
         <table>
           <thead>
             <tr>
@@ -395,6 +412,7 @@ export function MotorTable({
                 now={now}
                 operator={operator}
                 refresh={refresh}
+                links={links}
               />
             ))}
           </tbody>

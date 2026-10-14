@@ -294,6 +294,7 @@ main:focus {
   font-size: 14px;
 }
 .table-scroll {
+  position: relative;
   overflow-x: auto;
   width: 100%;
 }
@@ -509,6 +510,15 @@ summary small {
 }
 .motor-table .control-status {
   margin-top: 8px;
+}
+.row-command {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+.row-command.failed {
+  color: var(--accent);
 }
 .overview-bottom {
   margin-top: 24px;
