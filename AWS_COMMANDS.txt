@@ -29,3 +29,43 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T15:32:59.898045+00:00] a6a02d15c62c Inspect CloudTrail audit configuration
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudtrail", "describe-trails", "--region", "ap-south-1", "--no-cli-pager"]
 [2026-10-14T15:33:01.298152+00:00] a6a02d15c62c EXIT 254
+
+[2026-10-14T15:33:40.062360+00:00] 21d6631053f7 Validate required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "list-functions", "--max-items", "1", "--region", "ap-south-1", "--no-cli-pager"]
+
+[2026-10-14T15:33:40.062360+00:00] 92105a1123ab Validate required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "apigatewayv2", "get-apis", "--max-results", "1", "--region", "ap-south-1", "--no-cli-pager"]
+
+[2026-10-14T15:33:40.062360+00:00] c28273e00069 Validate required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "list-queues", "--max-results", "1", "--region", "ap-south-1", "--no-cli-pager"]
+
+[2026-10-14T15:33:40.063346+00:00] 804f65fdfd60 Validate required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "list-tables", "--limit", "1", "--region", "ap-south-1", "--no-cli-pager"]
+
+[2026-10-14T15:33:40.064547+00:00] bd862f21e036 Validate required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-buckets", "--query", "Buckets[].Name", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:33:42.303001+00:00] c28273e00069 EXIT 254
+
+[2026-10-14T15:33:42.304013+00:00] 785c1757a718 Validate required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "list-user-pools", "--max-results", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:33:42.353496+00:00] 804f65fdfd60 EXIT 254
+
+[2026-10-14T15:33:42.354494+00:00] bb3710fe733a Validate required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "athena", "list-work-groups", "--max-results", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:33:42.373955+00:00] 21d6631053f7 EXIT 254
+
+[2026-10-14T15:33:42.374953+00:00] fb87e80b5726 Validate required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "glue", "get-databases", "--max-results", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:33:42.405480+00:00] bd862f21e036 EXIT 254
+
+[2026-10-14T15:33:42.405480+00:00] 029814daaf7f Validate required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-topics", "--max-items", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:33:42.459482+00:00] 92105a1123ab EXIT 254
+
+[2026-10-14T15:33:42.459482+00:00] 411d391b853e Validate required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "describe-log-groups", "--limit", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T15:33:44.566564+00:00] 029814daaf7f EXIT 254
+[2026-10-14T15:33:44.566564+00:00] 785c1757a718 EXIT 254
+[2026-10-14T15:33:44.588673+00:00] bb3710fe733a EXIT 254
+[2026-10-14T15:33:44.609283+00:00] 411d391b853e EXIT 254
+[2026-10-14T15:33:44.639276+00:00] fb87e80b5726 EXIT 254
