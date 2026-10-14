@@ -9,6 +9,7 @@ from pathlib import Path
 from scripts.aws_cli import call, run
 from scripts.package import package
 from scripts.preflight import preflight
+from scripts.update_simulator import update_simulator
 from scripts.validate import validate
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -116,7 +117,7 @@ def main():
         )
     runtime = ROOT / ".runtime"
     runtime.mkdir(exist_ok=True)
-    budget_file = runtime / "budget-period.json"
+    budget_file = ROOT / "docs" / (args.stack + "-budget-period.json")
     if budget_file.exists():
         budget = json.loads(budget_file.read_text())
     else:
@@ -144,7 +145,7 @@ def main():
         "loginDomain": platform["LoginDomain"],
         "callbackUrl": platform["DashboardUrl"] + "/callback",
         "logoutUrl": platform["DashboardUrl"] + "/",
-        "region": "ap-south-1",
+        "region": "ap-southeast-2",
     }
     config = runtime / "config.json"
     config.write_text(json.dumps(web_config, indent=2) + "\n")
@@ -200,6 +201,10 @@ def main():
         "budgetPeriod": budget,
     }
     (runtime / "deployment.json").write_text(json.dumps(record, indent=2) + "\n")
+    (ROOT / "docs" / (args.stack + "-deployment.json")).write_text(
+        json.dumps(record, indent=2) + "\n"
+    )
+    update_simulator(simulator["InstanceId"], artifacts, release["simulator"]["key"])
     print("Deployment completed. Run live E2E tests and confirm the SNS email subscription.")
     print(platform["DashboardUrl"])
     return 0

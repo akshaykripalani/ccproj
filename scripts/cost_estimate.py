@@ -1,4 +1,4 @@
-"""Capture public Mumbai price evidence and calculate a conservative workload model."""
+"""Capture public Sydney price evidence and calculate a conservative workload model."""
 
 import concurrent.futures
 import datetime as dt
@@ -20,9 +20,9 @@ def pricing(service):
             "--service-code",
             service,
             "--filters",
-            "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Mumbai)",
+            "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)",
         ],
-        "Capture current Mumbai pricing: " + service,
+        "Capture current Sydney pricing: " + service,
     )
     dimensions = []
     for value in result["PriceList"]:
@@ -61,7 +61,7 @@ def main():
         json.dumps(
             {
                 "checkedAt": dt.datetime.now(dt.timezone.utc).isoformat(),
-                "region": "ap-south-1",
+                "region": "ap-southeast-2",
                 "source": "AWS Price List API; public on-demand rates before credits",
                 "prices": snapshot,
             },

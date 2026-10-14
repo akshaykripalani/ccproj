@@ -54,7 +54,7 @@ def preflight():
     report = {
         "account": active["Account"],
         "identity": active["Arn"],
-        "region": "ap-south-1",
+        "region": "ap-southeast-2",
         "results": results,
         "note": "Successful reads do not prove create/pass-role permission. CloudFormation change sets and live tests still required.",
     }

@@ -18,7 +18,9 @@ def validate():
         str(ROOT / "infra" / f"{name}.json") for name in ("bootstrap", "platform", "simulator")
     ]
     subprocess.run(
-        [str(executable), "--regions", "ap-south-1", "--template", *templates], check=True, cwd=ROOT
+        [str(executable), "--regions", "ap-southeast-2", "--template", *templates],
+        check=True,
+        cwd=ROOT,
     )
     guard = os.environ.get("CCPROJ_GUARD") or shutil.which("cfn-guard")
     if not guard:

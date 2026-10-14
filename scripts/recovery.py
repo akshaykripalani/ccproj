@@ -4,6 +4,7 @@ import argparse
 import gzip
 import json
 import sys
+import uuid
 from pathlib import Path
 
 from boto3.dynamodb.types import TypeSerializer
@@ -17,15 +18,25 @@ ROOT = Path(__file__).resolve().parents[1]
 def recover(deployment, prefix):
     identity()
     platform = deployment["platform"]
-    name = deployment["stack"] + "-recovery"
+    name = deployment["stack"] + "-recovery-" + uuid.uuid4().hex[:8]
     runtime = ROOT / ".runtime" / "recovery"
     runtime.mkdir(parents=True, exist_ok=True)
     template = {
         "AWSTemplateFormatVersion": "2010-09-09",
+        "Metadata": {"AWSToolsMetrics": {"AWSAgentToolkit": "aws-cloudformation@3"}},
         "Description": "Separate recovery exercise state table; live monitoring data remains untouched",
         "Resources": {
             "State": {
                 "Type": "AWS::DynamoDB::Table",
+                "Metadata": {
+                    "com.aws.cloudformation.Context": {
+                        "why": "Disposable copy of recovered state for measured exercise",
+                        "must": [
+                            "Never replace or write to the live device table",
+                            "Exercise cleanup deletes only this test stack",
+                        ],
+                    }
+                },
                 "Properties": {
                     "BillingMode": "PAY_PER_REQUEST",
                     "AttributeDefinitions": [

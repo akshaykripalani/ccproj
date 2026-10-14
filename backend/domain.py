@@ -155,9 +155,9 @@ def report_sql(report, start, end, device, database):
     if device is not None and device not in DEVICES:
         raise ValueError("Unregistered deviceId")
     expressions = {
-        "temperature": "avg(temperaturec) AS average_temperature_c, max(temperaturec) AS maximum_temperature_c",
+        "temperature": "avg(temperaturec) AS average_temperature_c, max(temperaturec) AS maximum_temperature_c, count(*) AS reading_count",
         "vibration": "sum(CASE WHEN vibrationmms > 4.5 THEN 1 ELSE 0 END) AS breached_readings",
-        "power": "avg(CASE WHEN operatingstate = 'running' THEN powerwatts END) AS average_running_power_watts",
+        "power": "avg(CASE WHEN operatingstate = 'running' THEN powerwatts END) AS average_running_power_watts, count(CASE WHEN operatingstate = 'running' THEN 1 END) AS running_reading_count",
     }
     if report not in expressions:
         raise ValueError("report must be temperature, vibration, or power")

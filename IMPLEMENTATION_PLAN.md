@@ -4,8 +4,8 @@ This plan groups the full scope in PRD.md into three implementation chats. PRD.m
 
 ## Part 1: Infrastructure and telemetry core
 
-- Establish append-only AWS command logging before the first AWS CLI invocation. Check the active account is 039379078306 and use ap-south-1.
-- Validate service access, relevant quotas, deployment permissions, and current Mumbai costs. Choose resource sizes, set cost controls, and resolve the budget-limit rule before unattended operation. The $50 ceiling applies before credit offsets; keep the project online until shutdown is requested.
+- Establish append-only AWS command logging before the first AWS CLI invocation. Check the active account is 039379078306 and use ap-southeast-2.
+- Validate service access, relevant quotas, deployment permissions, and current Sydney costs. Choose resource sizes, set cost controls, and resolve the budget-limit rule before unattended operation. The $50 ceiling applies before credit offsets; keep the project online until shutdown is requested.
 - Define telemetry schemas, DynamoDB access patterns, thresholds, archive layout, retention, API contracts, and simulator control/acknowledgement contracts.
 - Implement CloudFormation infrastructure, scoped IAM roles, API Gateway, ingestion Lambda, SQS/DLQ, processing Lambda, DynamoDB, private versioned S3 archive, SNS, and bounded CloudWatch logging/alarms. Protect each deployed route appropriately from the outset; Cognito infrastructure can be established here for later dashboard routes.
 - Build the local Python simulator with three initially healthy motors, stable retry identities, plausible measurements, and fault/test modes.

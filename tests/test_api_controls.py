@@ -116,7 +116,7 @@ def test_role_revocation_is_enforced_even_with_stale_operator_token(aws):
 
 
 def test_control_is_pending_until_ack_and_stale_ack_does_not_supersede(aws):
-    gateway = Gateway(aws["controls"], boto3.Session(region_name="ap-south-1"))
+    gateway = Gateway(aws["controls"], boto3.Session(region_name="ap-southeast-2"))
     gateway.initialize()
     user = {"sub": "operator", "username": "operator@example.com"}
     first = api.request_control("motor-01", "overheat", user)
@@ -132,7 +132,7 @@ def test_control_is_pending_until_ack_and_stale_ack_does_not_supersede(aws):
 
 
 def test_disconnect_silences_only_one_motor_and_remote_reset_resumes(aws):
-    gateway = Gateway(aws["controls"], boto3.Session(region_name="ap-south-1"))
+    gateway = Gateway(aws["controls"], boto3.Session(region_name="ap-southeast-2"))
     gateway.initialize()
     user = {"sub": "operator"}
     assert gateway.apply(api.request_control("motor-02", "disconnect", user))
@@ -142,7 +142,7 @@ def test_disconnect_silences_only_one_motor_and_remote_reset_resumes(aws):
 
 
 def test_new_simulator_run_resets_stale_faults_and_old_run_ack_is_rejected(aws):
-    session = boto3.Session(region_name="ap-south-1")
+    session = boto3.Session(region_name="ap-southeast-2")
     first = Gateway(aws["controls"], session)
     first.initialize()
     old = api.request_control("motor-01", "overheat", {"sub": "operator"})

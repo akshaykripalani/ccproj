@@ -223,7 +223,9 @@
                 {
                   "Effect": "Allow",
                   "Action": [
+                    "logs:CreateLogGroup",
                     "logs:CreateLogStream",
+                    "logs:DescribeLogStreams",
                     "logs:PutLogEvents"
                   ],
                   "Resource": {

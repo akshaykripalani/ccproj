@@ -269,3 +269,247 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T16:21:37.406921+00:00] 5e88596193f8 Check CLI support for browser login after team invitation
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "--version", "--region", "ap-south-1", "--no-cli-pager"]
 [2026-10-14T16:21:38.082249+00:00] 5e88596193f8 EXIT 0
+
+[2026-10-14T16:23:34.409652+00:00] b44e176edc98 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:23:35.859535+00:00] b44e176edc98 EXIT 0
+
+[2026-10-14T16:23:35.880353+00:00] c4f68686c971 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "list-functions", "--max-items", "1", "--region", "ap-south-1", "--no-cli-pager"]
+
+[2026-10-14T16:23:35.881354+00:00] 0466cb04e52b Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "apigatewayv2", "get-apis", "--max-results", "1", "--region", "ap-south-1", "--no-cli-pager"]
+
+[2026-10-14T16:23:35.881354+00:00] 2730def60858 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "list-tables", "--limit", "1", "--region", "ap-south-1", "--no-cli-pager"]
+
+[2026-10-14T16:23:35.881354+00:00] 4e4d0865c9a7 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "list-user-pools", "--max-results", "1", "--region", "ap-south-1", "--no-cli-pager"]
+
+[2026-10-14T16:23:35.882358+00:00] 484a9332295f Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "athena", "list-work-groups", "--max-results", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:23:38.228497+00:00] c4f68686c971 EXIT 254
+
+[2026-10-14T16:23:38.250531+00:00] 2f076d6f7dd3 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "glue", "get-databases", "--max-results", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:23:38.317143+00:00] 2730def60858 EXIT 254
+
+[2026-10-14T16:23:38.337278+00:00] 2c47186fa61f Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-topics", "--max-items", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:23:38.364575+00:00] 4e4d0865c9a7 EXIT 254
+
+[2026-10-14T16:23:38.384359+00:00] 1d3ece65f481 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "get-parameter", "--name", "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64", "--query", "Parameter.Value", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:23:38.614264+00:00] 484a9332295f EXIT 254
+
+[2026-10-14T16:23:38.636310+00:00] 8509c226e5d5 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "describe-log-groups", "--limit", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:23:39.422590+00:00] 0466cb04e52b EXIT 254
+
+[2026-10-14T16:23:39.439158+00:00] 95feaccf5aa7 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "scheduler", "list-schedules", "--max-results", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:23:40.456713+00:00] 2c47186fa61f EXIT 254
+
+[2026-10-14T16:23:40.479755+00:00] 21fce8d5e3ba Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "kms", "list-keys", "--limit", "1", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:23:40.521637+00:00] 2f076d6f7dd3 EXIT 254
+
+[2026-10-14T16:23:40.539615+00:00] 7de48ad3d952 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "list-functions", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:40.544612+00:00] 1d3ece65f481 EXIT 254
+
+[2026-10-14T16:23:40.573644+00:00] b88e9665c9e6 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "apigatewayv2", "get-apis", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:40.879521+00:00] 8509c226e5d5 EXIT 254
+
+[2026-10-14T16:23:40.896561+00:00] 011cc858749b Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "list-tables", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:41.664003+00:00] 95feaccf5aa7 EXIT 254
+
+[2026-10-14T16:23:41.683044+00:00] 76f28e1c2759 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "list-user-pools", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:43.343260+00:00] 21fce8d5e3ba EXIT 254
+
+[2026-10-14T16:23:43.370046+00:00] 8f24b44190e9 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "athena", "list-work-groups", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:44.311077+00:00] 7de48ad3d952 EXIT 0
+
+[2026-10-14T16:23:44.324772+00:00] d9e5a613264e Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "glue", "get-databases", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:44.373176+00:00] b88e9665c9e6 EXIT 0
+
+[2026-10-14T16:23:44.391660+00:00] 34479a68ed8d Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-topics", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:44.717166+00:00] 011cc858749b EXIT 0
+
+[2026-10-14T16:23:44.737174+00:00] fcdd01cf4513 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "get-parameter", "--name", "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64", "--query", "Parameter.Value", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:45.269383+00:00] 76f28e1c2759 EXIT 0
+
+[2026-10-14T16:23:45.285184+00:00] a6189ce5b850 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "describe-log-groups", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:46.637069+00:00] 8f24b44190e9 EXIT 0
+
+[2026-10-14T16:23:46.653965+00:00] c47e0e677b22 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "scheduler", "list-schedules", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:47.372875+00:00] 34479a68ed8d EXIT 0
+
+[2026-10-14T16:23:47.393121+00:00] 67875cf22ea8 Compare required service access by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "kms", "list-keys", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:23:47.393121+00:00] d9e5a613264e EXIT 0
+[2026-10-14T16:23:47.716420+00:00] fcdd01cf4513 EXIT 0
+[2026-10-14T16:23:48.022966+00:00] a6189ce5b850 EXIT 0
+[2026-10-14T16:23:49.061952+00:00] c47e0e677b22 EXIT 0
+[2026-10-14T16:23:49.788113+00:00] 67875cf22ea8 EXIT 0
+
+[2026-10-14T16:24:20.358575+00:00] 9ac03ecdc058 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:24:21.623666+00:00] 9ac03ecdc058 EXIT 0
+
+[2026-10-14T16:24:21.641861+00:00] 77899238f625 Test temporary SQS queue creation by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "create-queue", "--queue-name", "ccproj-permission-probe-530b12471ce4", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:24:23.064269+00:00] 77899238f625 EXIT 254
+
+[2026-10-14T16:24:23.082364+00:00] a9c8785d22fc Test temporary SQS queue creation by region
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "create-queue", "--queue-name", "ccproj-permission-probe-530b12471ce4", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:24:25.302885+00:00] a9c8785d22fc EXIT 0
+
+[2026-10-14T16:24:25.321579+00:00] caa31010186b Remove only the temporary permission-test queue
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "delete-queue", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-permission-probe-530b12471ce4", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:24:27.471804+00:00] caa31010186b EXIT 0
+
+[2026-10-14T16:26:15.751726+00:00] e823adb570dd Verify active account after user configured Sydney
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:26:17.978130+00:00] e823adb570dd EXIT 0
+
+[2026-10-14T16:26:18.502050+00:00] 9d480140b5cc Read configured CLI region after user authorized Sydney
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "configure", "get", "region", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:26:19.177775+00:00] 9d480140b5cc EXIT 0
+
+[2026-10-14T16:26:19.761250+00:00] dd3b4d0f90ca Inspect existing Sydney project stacks before resuming deployment
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "list-stacks", "--region", "ap-southeast-2", "--query", "StackSummaries[?StackStatus!='DELETE_COMPLETE'].[StackName,StackStatus]", "--no-cli-pager"]
+[2026-10-14T16:26:21.983666+00:00] dd3b4d0f90ca EXIT 0
+
+[2026-10-14T16:26:54.391608+00:00] 2afafda77ed2 Check EC2 launch authorization in user-approved Sydney without creating an instance
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ec2", "run-instances", "--region", "ap-southeast-2", "--dry-run", "--image-id", "ami-0ee3117be51432f2a", "--instance-type", "t4g.micro", "--count", "1", "--no-cli-pager"]
+[2026-10-14T16:26:57.177011+00:00] 2afafda77ed2 EXIT 254
+
+[2026-10-14T16:26:57.733371+00:00] e7bc565c90a2 Reconfirm remaining credits before deployment
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "freetier", "get-account-plan-state", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:26:59.816712+00:00] e7bc565c90a2 EXIT 0
+REGION CHANGE: user authorized ap-southeast-2 (Sydney) for the resumed original goal on 14 October 2026. Earlier entries retain their original regions.
+
+[2026-10-14T16:28:42.004486+00:00] d3c2d15b0125 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:44.327355+00:00] d3c2d15b0125 EXIT 0
+
+[2026-10-14T16:28:44.352816+00:00] e59998da72a6 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "scheduler", "list-schedules", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:28:44.352816+00:00] 37a5de791f31 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "list-stacks", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:28:44.353816+00:00] 49e8fc9e01ce Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ec2", "describe-instance-type-offerings", "--filters", "Name=instance-type,Values=t4g.micro", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:28:44.353816+00:00] 64160edac0e8 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "get-parameter", "--name", "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64", "--query", "Parameter.Value", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:47.062932+00:00] e59998da72a6 EXIT 0
+
+[2026-10-14T16:28:47.083937+00:00] dd0131abf32e Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "list-functions", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:47.155943+00:00] 37a5de791f31 EXIT 0
+
+[2026-10-14T16:28:47.174247+00:00] 5e76a8c75f88 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "apigatewayv2", "get-apis", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:47.175249+00:00] 64160edac0e8 EXIT 0
+
+[2026-10-14T16:28:47.213251+00:00] 40ee3c8fc9c0 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "list-queues", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:47.219345+00:00] 49e8fc9e01ce EXIT 0
+
+[2026-10-14T16:28:47.249500+00:00] af95bc75d2ee Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "list-tables", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:50.034459+00:00] dd0131abf32e EXIT 0
+
+[2026-10-14T16:28:50.057506+00:00] edd6904d6e22 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-buckets", "--query", "Buckets[].Name", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:50.097982+00:00] af95bc75d2ee EXIT 0
+
+[2026-10-14T16:28:50.115990+00:00] d439c2fe5042 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "list-user-pools", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:50.119317+00:00] 40ee3c8fc9c0 EXIT 0
+[2026-10-14T16:28:50.134318+00:00] 5e76a8c75f88 EXIT 0
+
+[2026-10-14T16:28:50.151638+00:00] d3a1790bdc53 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "athena", "list-work-groups", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:28:50.170668+00:00] 0f045ccc425d Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "glue", "get-databases", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:52.748285+00:00] edd6904d6e22 EXIT 0
+
+[2026-10-14T16:28:52.768550+00:00] b76afd0be63b Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-topics", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:52.842565+00:00] d439c2fe5042 EXIT 0
+
+[2026-10-14T16:28:52.862479+00:00] 01b03f790532 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "describe-log-groups", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:52.929717+00:00] d3a1790bdc53 EXIT 0
+[2026-10-14T16:28:52.946752+00:00] 0f045ccc425d EXIT 0
+
+[2026-10-14T16:28:52.949753+00:00] 3bca51fbd974 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudfront", "list-distributions", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:28:52.968715+00:00] dbf2eddc2265 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "iam", "list-roles", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:55.556687+00:00] b76afd0be63b EXIT 0
+
+[2026-10-14T16:28:55.581688+00:00] fd9790be0613 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudtrail", "describe-trails", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:55.585686+00:00] 3bca51fbd974 EXIT 0
+[2026-10-14T16:28:55.592684+00:00] dbf2eddc2265 EXIT 0
+[2026-10-14T16:28:55.598929+00:00] 01b03f790532 EXIT 0
+
+[2026-10-14T16:28:55.620475+00:00] 2db344657829 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "budgets", "describe-budgets", "--account-id", "039379078306", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:28:55.640454+00:00] 18aeab02f2e3 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "kms", "list-keys", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:28:58.085275+00:00] fd9790be0613 EXIT 0
+[2026-10-14T16:28:58.111486+00:00] 2db344657829 EXIT 0
+[2026-10-14T16:28:58.155662+00:00] 18aeab02f2e3 EXIT 0
+
+[2026-10-14T16:29:05.533879+00:00] ad1b8d894b7d Deploy CloudFormation stack ccproj-artifacts
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "deploy", "--stack-name", "ccproj-artifacts", "--template-file", "C:\\Akshay\\Projects-2\\ccproj\\infra\\bootstrap.json", "--capabilities", "CAPABILITY_IAM", "--no-fail-on-empty-changeset", "--tags", "Project=ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:29:07.570229+00:00] 587f6fb4f37b Capture current Sydney pricing: AmazonDynamoDB
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonDynamoDB", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+
+[2026-10-14T16:29:07.570229+00:00] cc0b047fb8ae Capture current Sydney pricing: AmazonSQS
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonSQS", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+
+[2026-10-14T16:29:07.570229+00:00] bd6076383d7c Capture current Sydney pricing: AmazonSNS
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonSNS", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+
+[2026-10-14T16:29:07.570229+00:00] b88f6042b25c Capture current Sydney pricing: AmazonVPC
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonVPC", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+[2026-10-14T16:29:10.413355+00:00] cc0b047fb8ae EXIT 0
+
+[2026-10-14T16:29:10.429469+00:00] 67346f4fa108 Capture current Sydney pricing: AWSLambda
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AWSLambda", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+[2026-10-14T16:29:10.647402+00:00] 587f6fb4f37b EXIT 0
+
+[2026-10-14T16:29:10.668401+00:00] 971566f13450 Capture current Sydney pricing: awskms
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "awskms", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+[2026-10-14T16:29:11.137266+00:00] b88f6042b25c EXIT 0
+
+[2026-10-14T16:29:11.154790+00:00] 7be9e5613236 Capture current Sydney pricing: AmazonCloudWatch
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonCloudWatch", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+[2026-10-14T16:29:11.999190+00:00] bd6076383d7c EXIT 0
+
+[2026-10-14T16:29:12.016185+00:00] 5720648f6715 Capture current Sydney pricing: AmazonS3
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--region", "us-east-1", "--service-code", "AmazonS3", "--filters", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "--no-cli-pager"]
+[2026-10-14T16:29:13.412943+00:00] 971566f13450 EXIT 0
+[2026-10-14T16:29:14.908191+00:00] 7be9e5613236 EXIT 0
+[2026-10-14T16:29:15.098834+00:00] 67346f4fa108 EXIT 0
+[2026-10-14T16:29:15.607516+00:00] 5720648f6715 EXIT 0

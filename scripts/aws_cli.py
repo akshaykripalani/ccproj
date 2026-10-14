@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 AWS = os.environ.get(
     "CCPROJ_AWS_CLI", r"C:\Users\aksha\AppData\Local\Programs\Amazon\AWSCLIV2\aws.exe"
 )
-REGION = "ap-south-1"
+REGION = "ap-southeast-2"
 ACCOUNT = "039379078306"
 _LOG_LOCK = threading.Lock()
 SENSITIVE = {

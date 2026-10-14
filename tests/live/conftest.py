@@ -60,7 +60,7 @@ class Live:
     def __init__(self, deployment):
         self.deployment = deployment
         self.platform = deployment["platform"]
-        self.session = boto3.Session(region_name="ap-south-1")
+        self.session = boto3.Session(region_name="ap-southeast-2")
         self.users = {}
         self.tokens = {}
 

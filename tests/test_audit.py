@@ -16,7 +16,7 @@ def test_command_log_appends_before_execution_and_never_copies_private_responses
 
     def execute(args, **kwargs):
         assert "COMMAND argv" in record.read_text()
-        assert "ap-south-1" in args
+        assert "ap-southeast-2" in args
         return subprocess.CompletedProcess(args, 0, '{"token":"sensitive-response"}', "")
 
     with patch.object(aws_cli.subprocess, "run", side_effect=execute):

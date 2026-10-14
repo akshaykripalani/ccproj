@@ -21,7 +21,7 @@ from backend.domain import DEVICES, canonical, timestamp, utcnow
 log = logging.getLogger("simulator")
 
 
-def signed_request(url, payload, session, region="ap-south-1"):
+def signed_request(url, payload, session, region="ap-southeast-2"):
     data = canonical(payload).encode()
     request = AWSRequest(
         method="POST", url=url, data=data, headers={"Content-Type": "application/json"}
@@ -166,7 +166,7 @@ def main():
         default=os.environ.get("CONTROL_TABLE"),
         required=not os.environ.get("CONTROL_TABLE"),
     )
-    parser.add_argument("--region", default="ap-south-1")
+    parser.add_argument("--region", default="ap-southeast-2")
     parser.add_argument("--interval", type=float, default=10)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--test-scenario", choices=("stopped", "duplicate", "invalid", "burst"))

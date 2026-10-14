@@ -15,7 +15,7 @@ def aws(monkeypatch):
     for name, value in {
         "AWS_ACCESS_KEY_ID": "testing",
         "AWS_SECRET_ACCESS_KEY": "testing",
-        "AWS_DEFAULT_REGION": "ap-south-1",
+        "AWS_DEFAULT_REGION": "ap-southeast-2",
         "DATA_TABLE": "test-data",
         "CONTROL_TABLE": "test-controls",
         "ARCHIVE_BUCKET": "ccproj-test-archive",
@@ -27,7 +27,7 @@ def aws(monkeypatch):
     aws_support.client.cache_clear()
     aws_support.dynamodb.cache_clear()
     with mock_aws():
-        db = boto3.resource("dynamodb", region_name="ap-south-1")
+        db = boto3.resource("dynamodb", region_name="ap-southeast-2")
         for name in ("test-data", "test-controls"):
             props = {
                 "TableName": name,
@@ -60,7 +60,7 @@ def aws(monkeypatch):
         s3 = aws_support.client("s3")
         s3.create_bucket(
             Bucket="ccproj-test-archive",
-            CreateBucketConfiguration={"LocationConstraint": "ap-south-1"},
+            CreateBucketConfiguration={"LocationConstraint": "ap-southeast-2"},
         )
         s3.put_bucket_versioning(
             Bucket="ccproj-test-archive", VersioningConfiguration={"Status": "Enabled"}

@@ -1163,7 +1163,12 @@ def build():
                 "*",
             ),
             statement(
-                ["logs:CreateLogStream", "logs:PutLogEvents"],
+                [
+                    "logs:CreateLogGroup",
+                    "logs:CreateLogStream",
+                    "logs:DescribeLogStreams",
+                    "logs:PutLogEvents",
+                ],
                 sub(
                     "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:${AWS::StackName}-simulator:*"
                 ),

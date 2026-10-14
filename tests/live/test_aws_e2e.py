@@ -302,7 +302,7 @@ def test_bounded_athena_reports_and_private_https_hosting(live):
     config = requests.get(live.platform["DashboardUrl"] + "/config.json", timeout=20)
     assert config.status_code == 200 and config.json()["apiUrl"] == live.platform["ApiUrl"]
     private = requests.get(
-        f"https://{live.platform['FrontendBucket']}.s3.ap-south-1.amazonaws.com/index.html",
+        f"https://{live.platform['FrontendBucket']}.s3.ap-southeast-2.amazonaws.com/index.html",
         timeout=20,
     )
     assert private.status_code == 403

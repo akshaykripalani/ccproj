@@ -1,7 +1,7 @@
 # AWS Project Notes
 
 - Read `PRD.md` for the full project scope.
-- Use the AWS CLI. Use Mumbai: `ap-south-1`.
+- Use the AWS CLI. Use Sydney: `ap-southeast-2` (user authorized the region change on 14 October 2026).
 - AWS account: `039379078306`. CLI user: `Akshay`. A teammate manages the account.
 - The account uses the Free Plan. It had $100 in credits on 14 October 2026. The project budget is $50.
 - Keep the project online until the user requests shutdown.

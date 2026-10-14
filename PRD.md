@@ -7,7 +7,7 @@
 **Context:** Academic Cloud Computing course project  
 **Budget ceiling:** USD $50 of total AWS service usage, before credit offsets  
 **Deployment window:** Keep online until the user requests shutdown; no scheduled teardown date  
-**Intended region:** Asia Pacific (Mumbai), `ap-south-1`
+**Deployment region:** Asia Pacific (Sydney), `ap-southeast-2`. The user approved this change on 14 October 2026 after confirming the account's managed project restrictions block Mumbai.
 
 ## 1. Project overview
 
@@ -32,6 +32,8 @@ The scope below records the proposed design discussed so far. No application or 
 Success means that the acceptance scenarios in section 12 can be demonstrated and supported by logs, screenshots, query results, or a short recording.
 
 ## 3. Confirmed constraints
+
+Implementation update, 14 October 2026: deploy the original architecture and features in Sydney. The account remains on the Free Plan; no paid-plan upgrade or advanced-feature activation is authorized. Mumbai results below are historical planning checks, not deployment guarantees. Sydney EC2 launch authorization passed a dry-run; required service reads and CloudFormation validation passed. Budget notifications are requested at $20, $30, and $40 before credits, with user approval required before stopping resources. Equipment and operational SNS subscription recipient: `collegeproject@akshaykripalani.com`; email delivery remains pending until confirmation.
 
 Read-only AWS CLI checks performed on 14 October 2026 confirmed:
 
