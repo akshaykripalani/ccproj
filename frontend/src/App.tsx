@@ -2,19 +2,14 @@ import { useEffect, useState } from "react";
 import type { User } from "oidc-client-ts";
 import {
   Activity,
-  ArrowUpRight,
   Bell,
   ChevronRight,
-  CircleHelp,
   LayoutDashboard,
   LogOut,
   Menu,
-  Radio,
   RefreshCw,
   Settings2,
-  ShieldCheck,
   Users,
-  X,
 } from "lucide-react";
 import { api } from "./api";
 import { auth, finishSignIn, rolesFromToken, signIn, signOut } from "./auth";
@@ -133,7 +128,6 @@ function Dashboard({ user }: { user: User }) {
   const route = useRoute();
   const now = useClock();
   const [open, setOpen] = useState(false);
-  const [help, setHelp] = useState(false);
   const [logoutError, setLogoutError] = useState("");
   const roles = rolesFromToken(user.access_token);
   const operator = roles.includes("operator");
@@ -203,7 +197,6 @@ function Dashboard({ user }: { user: User }) {
           <div className="brand-mark">F</div>
           <span>
             forge<span className="brand-period">.</span>
-            <small>EQUIPMENT INTELLIGENCE</small>
           </span>
         </a>
         <div className="workspace">
@@ -212,7 +205,6 @@ function Dashboard({ user }: { user: User }) {
           </span>
           <div>
             <strong>Factory workspace</strong>
-            <span>Shared demonstration</span>
           </div>
           <ChevronRight size={15} />
         </div>
@@ -236,22 +228,6 @@ function Dashboard({ user }: { user: User }) {
             ))}
         </nav>
         <div className="sidebar-bottom">
-          <div className="system-card">
-            <Radio size={17} />
-            <div>
-              <strong>AWS environment</strong>
-              <span>Sydney · ap-southeast-2</span>
-            </div>
-            <span className="status-dot online" />
-          </div>
-          <button
-            className="sidebar-help"
-            onClick={() => setHelp((value) => !value)}
-          >
-            <CircleHelp size={18} />
-            <span>How the demo works</span>
-            <ArrowUpRight size={15} />
-          </button>
           <div className="sidebar-user">
             <span className="avatar">
               {String(email).slice(0, 1).toUpperCase()}
@@ -309,7 +285,7 @@ function Dashboard({ user }: { user: User }) {
                 ? "Connection interrupted"
                 : live.updatedAt
                   ? now - live.updatedAt > 30000
-                    ? "Telemetry response stale"
+                    ? "Updates delayed"
                     : "Live connection"
                   : "Connecting"}
             </Badge>
@@ -324,32 +300,9 @@ function Dashboard({ user }: { user: User }) {
         </header>
         <main id="main" tabIndex={-1}>
           {logoutError && <ErrorNotice message={logoutError} />}
-          {help && (
-            <section className="notice help-notice">
-              <ShieldCheck size={21} />
-              <div>
-                <strong>A shared, live equipment demonstration</strong>
-                <p>
-                  All three motors normally run healthy. Operators can trigger a
-                  fault or disconnect one motor; other users see the same
-                  changes. Faults activate after three breached readings and
-                  resolve after three healthy readings. Reset requests normal
-                  operation and waits for simulator acknowledgement. The charts
-                  retain 24 hours; reports analyze 30 days of archived data.
-                </p>
-              </div>
-              <button
-                className="icon-button"
-                aria-label="Close demo help"
-                onClick={() => setHelp(false)}
-              >
-                <X size={17} />
-              </button>
-            </section>
-          )}
           {live.error && (
             <ErrorNotice
-              message={`${live.error} ${live.data ? "Showing the last successful response; check freshness before relying on these readings." : ""}`}
+              message={`${live.error} ${live.data ? "Showing the last available readings." : ""}`}
               retry={live.refresh}
             />
           )}
@@ -357,7 +310,7 @@ function Dashboard({ user }: { user: User }) {
             now - live.updatedAt > 30000 &&
             !live.error && (
               <div className="notice warning" role="status">
-                Telemetry response is stale. Last refreshed{" "}
+                Updates delayed. Last refreshed{" "}
                 {Math.round((now - live.updatedAt) / 1000)} seconds ago.
               </div>
             )}
@@ -375,10 +328,6 @@ function Dashboard({ user }: { user: User }) {
             <Overview {...props} />
           )}
         </main>
-        <footer className="app-footer">
-          <span>Forge · Industrial equipment monitoring</span>
-          <span>Near-real-time polling · Shared simulated equipment</span>
-        </footer>
       </div>
     </div>
   );

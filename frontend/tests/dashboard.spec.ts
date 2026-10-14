@@ -74,9 +74,7 @@ test("controls show requested and applied states separately", async ({
   await page.goto("/");
   const card = page.getByTestId("motor-01");
   await card.getByRole("button", { name: "Overheat", exact: true }).click();
-  await expect(
-    card.getByText("Waiting for simulator acknowledgement"),
-  ).toBeVisible();
+  await expect(card.getByText("Applying change…")).toBeVisible();
   await expect(card.getByText("Applied:")).toContainText("Normal");
   expect(
     state.requests.find((request) => request.path === "/controls/motor-01")
@@ -90,14 +88,12 @@ test("controls show requested and applied states separately", async ({
   };
   await page.getByRole("button", { name: "Refresh telemetry" }).click();
   await expect(card.getByText("Applied:")).toContainText("Overheat");
-  await expect(card.getByText(/Acknowledged/)).toBeVisible();
+  await expect(card.getByText(/^Applied \w/)).toBeVisible();
   await expect(
     page.getByTestId("motor-02").getByText("Applied:"),
   ).toContainText("Normal");
   await page.getByRole("button", { name: "Reset all motors" }).click();
-  await expect(
-    page.getByText("Normal mode requested for all motors."),
-  ).toBeVisible();
+  await expect(page.getByText("Reset requested for all motors.")).toBeVisible();
 });
 
 test("viewers cannot see controls or request user management", async ({
@@ -142,9 +138,7 @@ test("offline differs from a stopped reporting motor and timeout is visible", as
     page.getByTestId("motor-02").getByText("Stopped", { exact: true }),
   ).toBeVisible();
   await expect(
-    page
-      .getByTestId("motor-03")
-      .getByText("Simulator acknowledgement timed out"),
+    page.getByTestId("motor-03").getByText("Change not confirmed. Try again."),
   ).toBeVisible();
 });
 
@@ -202,12 +196,13 @@ test("alerts filter by device and state with truthful email statuses", async ({
   await expect(
     page.getByText("Confirmation pending", { exact: true }),
   ).toBeVisible();
+  await expect(page.getByText("Email accepted", { exact: true })).toBeVisible();
   await expect(
-    page.getByText("Accepted by SNS", { exact: true }),
-  ).toBeVisible();
-  await expect(
-    page.getByText("SNS acceptance does not confirm inbox delivery."),
-  ).toBeVisible();
+    page.getByText("Email accepted", { exact: true }),
+  ).toHaveAttribute(
+    "title",
+    "Accepted for sending; inbox delivery is not confirmed.",
+  );
   await page
     .getByRole("combobox", { name: "Equipment", exact: true })
     .selectOption("motor-02");
@@ -221,9 +216,7 @@ test("alerts filter by device and state with truthful email statuses", async ({
   await page
     .getByRole("combobox", { name: "Time window", exact: true })
     .selectOption("30");
-  await expect(
-    page.getByText("Accepted by SNS", { exact: true }),
-  ).toBeVisible();
+  await expect(page.getByText("Email accepted", { exact: true })).toBeVisible();
 });
 
 for (const kind of ["temperature", "vibration", "power"] as const)
@@ -255,9 +248,7 @@ test("reports show empty results and query failures without false success", asyn
   state.reports = "empty";
   await page.goto("/#/reports");
   await page.getByRole("button", { name: "Generate report" }).click();
-  await expect(
-    page.getByText("No archived readings in this range"),
-  ).toBeVisible();
+  await expect(page.getByText("No readings in this range")).toBeVisible();
   state.reports = "failed";
   await page.getByRole("button", { name: "Generate report" }).click();
   await expect(page.getByRole("alert")).toContainText(
@@ -274,7 +265,7 @@ test("report date window is validated before query starts", async ({
     .getByLabel("Start date (UTC)")
     .fill(new Date(Date.now() - 10 * 86400000).toISOString().slice(0, 10));
   await page.getByRole("button", { name: "Generate report" }).click();
-  await expect(page.getByRole("alert")).toContainText("Choose 1–7 dates");
+  await expect(page.getByRole("alert")).toContainText("Choose up to 7 days");
   expect(state.requests.some((request) => request.path === "/reports")).toBe(
     false,
   );
@@ -315,7 +306,7 @@ test("API failures preserve visible readings and support retry", async ({
   state.failDevices = true;
   await page.getByRole("button", { name: "Refresh telemetry" }).click();
   await expect(page.getByRole("alert")).toContainText(
-    "Showing the last successful response",
+    "Showing the last available readings",
   );
   await expect(page.getByTestId("motor-01")).toBeVisible();
   state.failDevices = false;
@@ -442,7 +433,7 @@ test("clock advancement makes old live responses visibly stale and motors offlin
     page.getByTestId("motor-01").getByText("Offline", { exact: true }),
   ).toBeVisible();
   await expect(page.getByRole("alert")).toContainText(
-    "last successful response",
+    "last available readings",
   );
 });
 
@@ -515,7 +506,7 @@ test("alert history, team roles and report results pass accessibility checks", a
     await page.goto(`/#/${route}`);
     if (route === "alerts")
       await expect(
-        page.getByRole("cell", { name: "Accepted by SNS" }),
+        page.getByRole("cell", { name: "Email accepted" }),
       ).toBeVisible();
     if (route === "users")
       await expect(

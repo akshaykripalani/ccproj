@@ -68,9 +68,7 @@ function ResetAll({ refresh }: { refresh: () => void }) {
       await api<{ controls: Control[] }>("/controls/reset-all", {
         method: "POST",
       });
-      setMessage(
-        "Normal mode requested for all motors. Waiting for acknowledgements.",
-      );
+      setMessage("Reset requested for all motors.");
       refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not send reset.");
@@ -123,9 +121,7 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
   return (
     <>
       <Heading
-        eyebrow="FACTORY / LIVE OPERATIONS"
         title="Plant overview"
-        description="Current readings and fault status for all three motors."
         action={
           operator ? (
             <ResetAll refresh={refresh} />
@@ -144,11 +140,6 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
             {online}
             <small> / {devices.length}</small>
           </strong>
-          <p>
-            {online === 3
-              ? "All equipment is reporting"
-              : `${devices.length - online} motor(s) awaiting telemetry`}
-          </p>
         </div>
         <div className="summary-card">
           <div className={`summary-icon ${active ? "orange" : ""}`}>
@@ -156,11 +147,6 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
           </div>
           <span>Active faults</span>
           <strong>{active.toString().padStart(2, "0")}</strong>
-          <p>
-            {active
-              ? "Equipment needs attention"
-              : "No active threshold alerts"}
-          </p>
         </div>
         <div className="summary-card">
           <div className="summary-icon">
@@ -171,7 +157,6 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
             {reporting.length ? number(power / 1000, 2) : "—"}
             <small> kW</small>
           </strong>
-          <p>Across currently reporting motors</p>
         </div>
         <div className="summary-card">
           <div className="summary-icon">
@@ -182,17 +167,12 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
             {number(mean)}
             <small> °C</small>
           </strong>
-          <p>Fault threshold above 75 °C</p>
         </div>
       </div>
       <div className="section-title">
         <h2>
           Your equipment <span className="count-pill">03</span>
         </h2>
-        <span>
-          <span className="status-dot online" />
-          Live telemetry · 10s refresh
-        </span>
       </div>
       <div className="motor-grid">
         {devices.map((device) => (
@@ -223,7 +203,6 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
         <section className="panel activity-panel">
           <PanelHead
             title="Recent alerts"
-            subtitle="Fault episodes in the last 24 hours"
             action={
               <a className="text-link" href="#/alerts">
                 View all <ArrowRight size={14} />
@@ -236,10 +215,7 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
           {!alerts.data ? (
             <Loading />
           ) : !alerts.data.alerts.length ? (
-            <Empty
-              title="No alerts in the last 24 hours"
-              text="New fault episodes will appear here after three breached readings."
-            />
+            <Empty title="No alerts in the last 24 hours" />
           ) : (
             <div className="activity-list">
               {alerts.data.alerts.slice(0, 4).map((alert) => (
@@ -261,10 +237,6 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
               ))}
             </div>
           )}
-          <div className="panel-foot">
-            <ShieldCheck size={14} />
-            <span>Three readings to activate or resolve a fault</span>
-          </div>
         </section>
       </div>
     </>
@@ -276,22 +248,13 @@ export function Equipment(props: LiveProps & { deviceId?: string }) {
     return (
       <>
         <Heading
-          eyebrow="FACTORY / EQUIPMENT"
           title="Equipment"
-          description="Three motors. One shared gateway. Independent controls."
           action={props.operator && <ResetAll refresh={props.refresh} />}
         />
         <div className="motor-grid">
           {props.devices.map((device) => (
             <MotorCard key={device.deviceId} device={device} {...props} />
           ))}
-        </div>
-        <div className="notice">
-          <Radio size={18} />
-          <span>
-            A motor is offline after 60 seconds without a valid processed
-            reading. A stopped motor can still be online.
-          </span>
         </div>
       </>
     );
@@ -300,7 +263,7 @@ export function Equipment(props: LiveProps & { deviceId?: string }) {
     return (
       <Empty
         title="Equipment not found"
-        text="Choose one of the three registered motors from the equipment page."
+        text="Choose a motor from Equipment."
       />
     );
   const condition = deviceCondition(device);
@@ -310,26 +273,17 @@ export function Equipment(props: LiveProps & { deviceId?: string }) {
         Equipment / {motorName(device.deviceId)}
       </a>
       <Heading
-        eyebrow={`FACTORY / ${device.deviceId.toUpperCase()}`}
         title={motorName(device.deviceId)}
-        description="Inspect recent measurements and control this motor independently."
         action={<Badge tone={condition.tone}>{condition.label}</Badge>}
       />
       <div className="detail-top">
         <MotorCard device={device} {...props} />
         <section className="panel metadata-panel">
-          <PanelHead
-            title="Equipment details"
-            subtitle="Configured thresholds and data freshness"
-          />
+          <PanelHead title="Equipment details" />
           <dl>
             <div>
               <dt>Device identifier</dt>
               <dd>{device.deviceId}</dd>
-            </div>
-            <div>
-              <dt>Gateway</dt>
-              <dd>Shared factory gateway</dd>
             </div>
             <div>
               <dt>Last received</dt>
@@ -348,18 +302,10 @@ export function Equipment(props: LiveProps & { deviceId?: string }) {
               <dd>&gt; {device.thresholds.vibration?.value ?? 4.5} mm/s</dd>
             </div>
             <div>
-              <dt>Fault activation / recovery</dt>
-              <dd>3 consecutive readings</dd>
-            </div>
-            <div>
               <dt>Recent history</dt>
               <dd>24 hours</dd>
             </div>
           </dl>
-          <p className="tiny muted">
-            Reset approaches normal readings gradually. Active faults resolve
-            after three healthy readings; their history is preserved.
-          </p>
         </section>
       </div>
       <RecentCharts deviceId={device.deviceId} />
@@ -373,8 +319,8 @@ function emailLabel(status: string) {
       {
         pending: "Notification pending",
         pending_confirmation: "Confirmation pending",
-        sns_accepted: "Accepted by SNS",
-        suppressed_replay: "Suppressed during replay",
+        sns_accepted: "Email accepted",
+        suppressed_replay: "Not sent",
       } as Record<string, string>
     )[status] ?? status
   );
@@ -401,11 +347,7 @@ export function Alerts() {
   );
   return (
     <>
-      <Heading
-        eyebrow="FACTORY / EVENT HISTORY"
-        title="Alerts & events"
-        description="Follow every fault from threshold breach to recovery."
-      />
+      <Heading title="Alerts & events" />
       <section className="panel">
         <div className="filters">
           <label>
@@ -455,21 +397,10 @@ export function Alerts() {
           <Loading />
         ) : (
           <>
-            <div className="subscription-strip">
-              <ShieldCheck size={16} />
-              <span>
-                {alerts.data.subscriptions.confirmed} confirmed email
-                subscription(s)
-                {alerts.data.subscriptions.pending
-                  ? ` · ${alerts.data.subscriptions.pending} awaiting confirmation`
-                  : ""}
-              </span>
-              <small>SNS acceptance does not confirm inbox delivery.</small>
-            </div>
             {!alerts.data.alerts.length ? (
               <Empty
                 title="No alerts match these filters"
-                text="Try a wider time window or trigger a motor fault from the overview."
+                text="Try a wider time window."
               />
             ) : (
               <div className="table-scroll">
@@ -518,11 +449,18 @@ export function Alerts() {
                           <span className="cell-sub">
                             {alert.resolvedAt
                               ? `Resolved ${when(alert.resolvedAt)}`
-                              : "Awaiting three healthy readings"}
+                              : "Ongoing"}
                           </span>
                         </td>
                         <td>
-                          <span className="email-status">
+                          <span
+                            className="email-status"
+                            title={
+                              alert.emailStatus === "sns_accepted"
+                                ? "Accepted for sending; inbox delivery is not confirmed."
+                                : undefined
+                            }
+                          >
                             {emailLabel(alert.emailStatus)}
                           </span>
                         </td>
@@ -535,10 +473,6 @@ export function Alerts() {
           </>
         )}
       </section>
-      <p className="page-note">
-        Alerts remain in history after reset. Notifications are sent once per
-        fault episode; retries after a partial failure may duplicate an email.
-      </p>
     </>
   );
 }
@@ -609,7 +543,7 @@ function ReportResults({ result, kind }: { result: Report; kind: ReportKind }) {
     <section className="panel report-results">
       <PanelHead
         title="Report results"
-        subtitle={`${result.parameters?.start} — ${result.parameters?.end} · ${rows.length} motor/day rows · ${number((result.bytesScanned ?? 0) / 1024, 1)} KiB scanned`}
+        subtitle={`${result.parameters?.start} — ${result.parameters?.end}`}
         action={
           rows.length > 0 && (
             <button className="button secondary" onClick={exportCsv}>
@@ -621,7 +555,7 @@ function ReportResults({ result, kind }: { result: Report; kind: ReportKind }) {
       />
       {!rows.length ? (
         <Empty
-          title="No archived readings in this range"
+          title="No readings in this range"
           text="Choose dates when the motors were reporting, or include all motors."
         />
       ) : (
@@ -747,7 +681,7 @@ export function Reports() {
       start < utcDate(-29) ||
       end > utcDate()
     ) {
-      setError("Choose 1–7 dates within the last 30 days (UTC).");
+      setError("Choose up to 7 days within the last 30 days.");
       return;
     }
     setBusy(true);
@@ -773,19 +707,12 @@ export function Reports() {
   }
   return (
     <>
-      <Heading
-        eyebrow="FACTORY / HISTORICAL INSIGHTS"
-        title="Historical reports"
-        description="Query archived readings by date and motor."
-      />
+      <Heading title="Historical reports" />
       <form
         onSubmit={(event) => void submit(event)}
         className="panel report-form"
       >
-        <PanelHead
-          title="Build a report"
-          subtitle="Up to 7 UTC dates from the last 30 days"
-        />
+        <PanelHead title="Build a report" />
         <div
           className="report-options"
           role="radiogroup"
@@ -861,10 +788,6 @@ export function Reports() {
             {busy ? "Starting…" : "Generate report"}
           </button>
         </div>
-        <p className="tiny muted">
-          Reports run on demand. The project limits scans to 10 MiB per query
-          and 100 report starts per UTC day.
-        </p>
       </form>
       {error && (
         <ErrorNotice
@@ -882,10 +805,9 @@ export function Reports() {
             label={
               report.status === "QUEUED"
                 ? "Your report is queued…"
-                : "Analyzing archived telemetry…"
+                : "Generating report…"
             }
           />
-          <p>You can leave this tab open. Results will appear automatically.</p>
         </section>
       )}
       {report?.status === "SUCCEEDED" && (
@@ -905,10 +827,6 @@ export function Reports() {
             <Activity size={32} />
           </div>
           <h3>No report generated</h3>
-          <p>
-            Choose a report above to compare temperatures, count vibration
-            breaches, or inspect running power.
-          </p>
         </div>
       )}
     </>
@@ -1016,17 +934,7 @@ export function UserManagement({
   if (!operator)
     return (
       <>
-        <Heading
-          eyebrow="FACTORY / ACCESS"
-          title="Operator access required"
-          description="An operator can invite users and manage their roles."
-        />
-        <div className="notice">
-          <ShieldCheck size={20} />
-          <span>
-            Your viewer account can access equipment, alerts, and reports.
-          </span>
-        </div>
+        <Heading title="Operator access required" />
       </>
     );
   return <UserManagementContent username={username} />;
@@ -1051,9 +959,7 @@ function UserManagementContent({ username }: { username: string }) {
         method: "POST",
         body: { email: email.trim(), roles },
       });
-      setSuccess(
-        `Invitation sent to ${email.trim()}. They can set their password through Cognito sign-in.`,
-      );
+      setSuccess(`Invitation sent to ${email.trim()}.`);
       setEmail("");
       accounts.refresh();
     } catch (err) {
@@ -1064,19 +970,12 @@ function UserManagementContent({ username }: { username: string }) {
   }
   return (
     <>
-      <Heading
-        eyebrow="FACTORY / TEAM ACCESS"
-        title="Team & permissions"
-        description="Invite your team and give each person the access they need."
-      />
+      <Heading title="Team & permissions" />
       <form
         className="panel invite-form"
         onSubmit={(event) => void invite(event)}
       >
-        <PanelHead
-          title="Invite a team member"
-          subtitle="Cognito sends the invitation directly to their inbox"
-        />
+        <PanelHead title="Invite a team member" />
         <div className="invite-fields">
           <label>
             Email address
@@ -1113,10 +1012,6 @@ function UserManagementContent({ username }: { username: string }) {
             {busy ? "Inviting…" : "Send invitation"}
           </button>
         </div>
-        <p className="tiny muted">
-          Viewers read equipment and reports. Operators can also change motor
-          modes, invite users, and assign roles.
-        </p>
         {error && <ErrorNotice message={error} />}
         {success && (
           <div className="notice success" role="status">
@@ -1170,10 +1065,6 @@ function UserManagementContent({ username }: { username: string }) {
           </div>
         )}
       </section>
-      <p className="page-note">
-        You cannot remove your own operator role. Role changes are enforced by
-        the backend on privileged requests.
-      </p>
     </>
   );
 }

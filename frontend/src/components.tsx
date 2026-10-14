@@ -59,12 +59,12 @@ export function ErrorNotice({
     </div>
   );
 }
-export function Empty({ title, text }: { title: string; text: string }) {
+export function Empty({ title, text }: { title: string; text?: string }) {
   return (
     <div className="empty">
       <Activity size={26} />
       <h3>{title}</h3>
-      <p>{text}</p>
+      {text && <p>{text}</p>}
     </div>
   );
 }
@@ -77,22 +77,16 @@ export function Loading({ label = "Loading live data…" }: { label?: string }) 
   );
 }
 export function Heading({
-  eyebrow,
   title,
-  description,
   action,
 }: {
-  eyebrow: string;
   title: string;
-  description: string;
   action?: React.ReactNode;
 }) {
   return (
     <div className="page-heading">
       <div>
-        <div className="eyebrow">{eyebrow}</div>
         <h1>{title}</h1>
-        <p>{description}</p>
       </div>
       {action}
     </div>
@@ -240,10 +234,10 @@ export function ControlStatus({ control }: { control: Control }) {
         </span>
         <small>
           {control.status === "pending"
-            ? "Waiting for simulator acknowledgement"
+            ? "Applying change…"
             : control.status === "failed"
-              ? control.reason || "Acknowledgement timed out"
-              : `Acknowledged ${when(control.appliedAt)}`}
+              ? "Change not confirmed. Try again."
+              : `Applied ${when(control.appliedAt)}`}
         </small>
       </div>
     </div>
@@ -331,11 +325,7 @@ export function Controls({
             Reset
           </button>
         </div>
-      ) : (
-        <p className="muted tiny">
-          Viewer access · An operator can change motor modes.
-        </p>
-      )}
+      ) : null}
       {error && <ErrorNotice message={error} />}
     </div>
   );
@@ -360,9 +350,6 @@ export function MotorCard({
     >
       <div className="motor-card-head">
         <div>
-          <span className="eyebrow">
-            EQUIPMENT / {device.deviceId.slice(-2)}
-          </span>
           <h2>
             <a href={`#/devices/${device.deviceId}`}>
               {motorName(device.deviceId)} <ArrowRight size={16} />
@@ -376,7 +363,7 @@ export function MotorCard({
           active={device.online && device.latest?.operatingState === "running"}
         />
         <span className="motor-subtitle">
-          Factory gateway · {device.latest?.operatingState ?? "Awaiting data"}
+          {device.latest?.operatingState ?? "Awaiting data"}
         </span>
       </div>
       <div className="motor-metrics">
@@ -475,7 +462,7 @@ export function TelemetryChart({
     return (
       <Empty
         title="No readings in this window"
-        text="Readings appear here as the motor reports. Try a wider time range."
+        text="Try a wider time range."
       />
     );
   return (
@@ -625,7 +612,7 @@ export function RecentCharts({
     <section className={`panel recent-panel ${compact ? "compact" : ""}`}>
       <PanelHead
         title={compact ? "Temperature trend" : "Recent telemetry"}
-        subtitle={`${motorName(deviceId)} · ${recent.data?.length ?? 0} readings · times in your timezone`}
+        subtitle={compact ? motorName(deviceId) : undefined}
         action={
           <label className="sr-only-label">
             <span>Chart time range</span>
@@ -669,15 +656,6 @@ export function RecentCharts({
           ))}
         </div>
       )}
-      <div className="panel-foot">
-        <span>
-          <span className="status-dot online" />
-          Refreshes every 10 seconds
-        </span>
-        <span>
-          Recorded measurements · no interpolation across missing data
-        </span>
-      </div>
     </section>
   );
 }
