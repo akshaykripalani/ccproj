@@ -29,19 +29,20 @@ export function usePoll<T>(
       }
       request?.abort();
       request = new AbortController();
+      const current = request;
       setLoading(true);
       try {
-        const result = await ref.current(request.signal);
-        if (!disposed) {
+        const result = await ref.current(current.signal);
+        if (!disposed && current === request) {
           setData(result);
           setError("");
           setUpdatedAt(Date.now());
         }
       } catch (err) {
-        if (!disposed && !request.signal.aborted)
+        if (!disposed && current === request && !current.signal.aborted)
           setError(err instanceof Error ? err.message : "Could not load data.");
       } finally {
-        if (!disposed) {
+        if (!disposed && current === request) {
           setLoading(false);
           if (interval > 0) timer = setTimeout(run, interval);
         }

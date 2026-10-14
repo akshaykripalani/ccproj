@@ -1,3 +1,4 @@
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 import { mockApp, config, makeReading } from "./fixtures";
 
@@ -166,13 +167,19 @@ test("alerts filter by device and state with truthful email statuses", async ({
   await expect(
     page.getByText("SNS acceptance does not confirm inbox delivery."),
   ).toBeVisible();
-  await page.getByLabel("Equipment", { exact: true }).selectOption("motor-02");
-  await page.getByLabel("State", { exact: true }).selectOption("resolved");
+  await page
+    .getByRole("combobox", { name: "Equipment", exact: true })
+    .selectOption("motor-02");
+  await page
+    .getByRole("combobox", { name: "State", exact: true })
+    .selectOption("resolved");
   await expect(page.getByText("1 episodes")).toBeVisible();
   await expect(
     page.getByText("Confirmation pending", { exact: true }),
   ).toHaveCount(0);
-  await page.getByLabel("Time window").selectOption("30");
+  await page
+    .getByRole("combobox", { name: "Time window", exact: true })
+    .selectOption("30");
   await expect(
     page.getByText("Accepted by SNS", { exact: true }),
   ).toBeVisible();
@@ -348,4 +355,102 @@ test("mobile navigation and dashboard have no horizontal overflow", async ({
     path: "test-results/reports-mobile.png",
     fullPage: true,
   });
+});
+
+test("dashboard and report form have accessible controls and landmarks", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await mockApp(page);
+  await page.goto("/");
+  await expect(page.getByTestId("motor-01")).toBeVisible();
+  const overview = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa"])
+    .analyze();
+  expect(
+    overview.violations.map((item) => ({
+      id: item.id,
+      targets: item.nodes.map((node) => node.target),
+    })),
+  ).toEqual([]);
+  await page.goto("/#/reports");
+  await expect(
+    page.getByRole("heading", { name: "Historical reports" }),
+  ).toBeVisible();
+  const report = await new AxeBuilder({ page })
+    .withTags(["wcag2a", "wcag2aa"])
+    .analyze();
+  expect(
+    report.violations.map((item) => ({
+      id: item.id,
+      targets: item.nodes.map((node) => node.target),
+    })),
+  ).toEqual([]);
+});
+
+test("clock advancement makes old live responses visibly stale and motors offline", async ({
+  page,
+}) => {
+  await page.clock.install();
+  const state = await mockApp(page);
+  await page.goto("/");
+  await expect(
+    page.getByTestId("motor-01").getByText("Healthy", { exact: true }),
+  ).toBeVisible();
+  state.failDevices = true;
+  await page.clock.fastForward(65000);
+  await expect(
+    page.getByTestId("motor-01").getByText("Offline", { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByRole("alert")).toContainText(
+    "last successful response",
+  );
+});
+
+test("refresh token renewal replaces the access token after a read rejection", async ({
+  page,
+}) => {
+  await mockApp(page);
+  let reads = 0;
+  await page.route("https://api.example.test/devices", async (route) => {
+    reads += 1;
+    if (reads === 1)
+      await route.fulfill({ status: 401, json: { error: "Expired" } });
+    else await route.fallback();
+  });
+  await page.route(`${config.loginDomain}/oauth2/token`, (route) =>
+    route.fulfill({
+      json: {
+        access_token: "renewed-token",
+        token_type: "Bearer",
+        expires_in: 600,
+        scope: "openid email profile",
+      },
+    }),
+  );
+  await page.goto("/");
+  await expect(
+    page.getByRole("heading", { name: "Plant overview" }),
+  ).toBeVisible();
+  await expect(page.getByTestId("motor-01")).toBeVisible();
+  expect(reads).toBeGreaterThanOrEqual(2);
+});
+
+test("sign-out clears local tokens and requests the hosted logout URL", async ({
+  page,
+}) => {
+  await mockApp(page);
+  await page.route(`${config.loginDomain}/oauth2/revoke`, (route) =>
+    route.fulfill({ body: "" }),
+  );
+  await page.route(`${config.loginDomain}/logout**`, (route) =>
+    route.fulfill({ contentType: "text/html", body: "<h1>Signed out</h1>" }),
+  );
+  await page.goto("/");
+  await expect(page.getByTestId("motor-01")).toBeVisible();
+  await page.getByRole("button", { name: "Sign out" }).click();
+  await expect(page.getByRole("heading", { name: "Signed out" })).toBeVisible();
+  expect(new URL(page.url()).searchParams.get("logout_uri")).toBe(
+    config.logoutUrl,
+  );
 });

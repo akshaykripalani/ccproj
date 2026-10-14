@@ -318,7 +318,7 @@ p {
 .brand small {
   display: block;
   letter-spacing: 1.7px;
-  font-size: 7px;
+  font-size: 11px;
   margin-top: 7px;
   font-weight: 500;
   color: #a2b8ac;
@@ -350,7 +350,7 @@ p {
 }
 .workspace span:not(.workspace-icon) {
   display: block;
-  font-size: 9px;
+  font-size: 11px;
   color: #93ada0;
   margin-top: 5px;
 }
@@ -359,9 +359,9 @@ p {
   color: #8caa99;
 }
 .nav-label {
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 1.4px;
-  color: #88a392;
+  color: #b3c5b5;
   padding: 0 13px;
   margin-bottom: 13px;
 }
@@ -421,8 +421,8 @@ p {
 .system-card div span {
   display: block;
   margin-top: 4px;
-  font-size: 9px;
-  color: #8da897;
+  font-size: 11px;
+  color: #afc1b0;
 }
 .system-card > .status-dot {
   margin-left: auto;
@@ -485,7 +485,7 @@ p {
   display: block;
   margin-top: 4px;
   color: #91ad9c;
-  font-size: 9px;
+  font-size: 11px;
 }
 .sidebar-user button {
   margin-left: auto;
@@ -566,8 +566,8 @@ main#main {
   display: flex;
   justify-content: space-between;
   padding: 22px 32px;
-  color: #879186;
-  font-size: 9px;
+  color: #626f5c;
+  font-size: 11px;
   border-top: 1px solid var(--line);
   margin-top: 25px;
   gap: 10px;
@@ -597,7 +597,7 @@ main#main {
   justify-content: space-between;
   padding: 14px 22px;
   border-top: 1px solid var(--line);
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
 }
 .panel-foot > span:first-child {
@@ -671,7 +671,7 @@ main#main {
   letter-spacing: 0;
 }
 .summary-card p {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
   margin-top: 8px;
 }
@@ -695,9 +695,9 @@ main#main {
   color: var(--muted);
 }
 .count-pill {
-  font-size: 9px;
+  font-size: 11px;
   background: #e9ede4;
-  color: #7f8979;
+  color: #56674e;
   border-radius: 4px;
   padding: 4px 6px;
 }
@@ -725,7 +725,7 @@ main#main {
   gap: 8px;
 }
 .motor-card-head .eyebrow {
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 1.3px;
 }
 .motor-card-head h2 {
@@ -762,7 +762,7 @@ main#main {
   animation: spin 6s linear infinite;
 }
 .motor-subtitle {
-  font-size: 8px;
+  font-size: 10px;
   color: var(--muted);
   letter-spacing: 0.4px;
 }
@@ -789,7 +789,7 @@ main#main {
 }
 .motor-metrics span {
   display: block;
-  font-size: 8px;
+  font-size: 10px;
   color: var(--muted);
   margin-bottom: 6px;
 }
@@ -802,7 +802,7 @@ main#main {
   white-space: nowrap;
 }
 .motor-metrics small {
-  font-size: 9px;
+  font-size: 11px;
   font-weight: 450;
   letter-spacing: 0;
   color: var(--muted);
@@ -811,13 +811,13 @@ main#main {
   display: flex;
   gap: 5px;
   align-items: center;
-  font-size: 8px;
-  color: #788477;
+  font-size: 10px;
+  color: #5e6c5b;
   padding: 13px 0;
 }
 .freshness > span:last-child {
   margin-left: auto;
-  font-size: 8px;
+  font-size: 10px;
 }
 .control-status {
   display: flex;
@@ -826,7 +826,7 @@ main#main {
   padding: 9px 10px;
   background: #f4f5f0;
   border-radius: 5px;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
   min-height: 54px;
 }
@@ -858,7 +858,7 @@ main#main {
 }
 .control-status small {
   flex-basis: 100%;
-  font-size: 8px;
+  font-size: 10px;
   margin-top: 4px;
   line-height: 1.4;
 }
@@ -877,7 +877,7 @@ main#main {
   background: #fff;
   border-radius: 5px;
   padding: 9px 3px;
-  font-size: 9px;
+  font-size: 11px;
   color: #68725f;
   white-space: nowrap;
 }
@@ -887,7 +887,7 @@ main#main {
   color: #875d3b;
 }
 .control-button.reset {
-  color: #47805b;
+  color: #356446;
   background: #f2f6ef;
   border-color: #dbe5d3;
 }
@@ -971,13 +971,13 @@ main#main {
   font-weight: 550;
 }
 .activity-item p {
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
   margin-top: 4px;
 }
 .activity-item .badge {
   margin-left: auto;
-  font-size: 8px;
+  font-size: 10px;
 }
 .activity-panel .panel-foot {
   justify-content: flex-start;
@@ -1020,7 +1020,7 @@ main#main {
   max-width: 150px;
 }
 .recent-panel .panel-foot span:last-child {
-  font-size: 8px;
+  font-size: 10px;
 }
 .breadcrumb {
   display: block;
@@ -1112,7 +1112,7 @@ input[type="radio"] {
 }
 .subscription-strip small {
   margin-left: auto;
-  font-size: 9px;
+  font-size: 11px;
   color: var(--muted);
 }
 .table-scroll {
@@ -1125,7 +1125,7 @@ table {
   white-space: nowrap;
 }
 th {
-  font-size: 9px;
+  font-size: 11px;
   color: #87917e;
   font-weight: 500;
   background: #f9faf5;
@@ -1148,7 +1148,7 @@ tbody tr:last-child td {
 .cell-sub {
   display: block;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 11px;
   margin-top: 6px;
 }
 .email-status {
@@ -1377,7 +1377,7 @@ tbody tr:last-child td {
   color: #7da16d;
 }
 .welcome-brand > small {
-  font-size: 8px;
+  font-size: 10px;
   color: var(--muted);
   letter-spacing: 2px;
   margin-left: 18px;
@@ -1450,7 +1450,7 @@ tbody tr:last-child td {
   justify-content: center;
   gap: 6px;
   color: var(--muted);
-  font-size: 9px;
+  font-size: 11px;
   margin-top: 16px;
 }
 .welcome-art {
@@ -1481,7 +1481,7 @@ tbody tr:last-child td {
   z-index: 1;
 }
 .art-heading .eyebrow {
-  font-size: 8px;
+  font-size: 10px;
   color: #7f9371;
 }
 .art-motor {
@@ -1497,7 +1497,7 @@ tbody tr:last-child td {
   color: #4f7148;
 }
 .art-motor-id {
-  font-size: 9px;
+  font-size: 11px;
   letter-spacing: 2px;
   margin-top: 13px;
 }
@@ -1523,7 +1523,7 @@ tbody tr:last-child td {
   height: 62px;
 }
 .art-secondary span {
-  font-size: 8px;
+  font-size: 10px;
   letter-spacing: 1.5px;
   margin-top: 4px;
 }
@@ -1566,7 +1566,7 @@ tbody tr:last-child td {
     font-size: 10px;
   }
   .freshness > span:last-child {
-    font-size: 9px;
+    font-size: 11px;
   }
   .motor-visual {
     padding: 20px 0;
@@ -1579,7 +1579,7 @@ tbody tr:last-child td {
     font-size: 10px;
   }
   .control-status small {
-    font-size: 9px;
+    font-size: 11px;
   }
 }
 @media (max-width: 1200px) {
@@ -1641,14 +1641,14 @@ tbody tr:last-child td {
     padding-top: 15px;
   }
   .motor-card-head .badge {
-    font-size: 8px;
+    font-size: 10px;
     padding: 5px;
   }
   .motor-card-head h2 {
     font-size: 16px;
   }
   .motor-card-head .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
   }
   .motor-metrics strong {
     font-size: 18px;
@@ -1657,13 +1657,13 @@ tbody tr:last-child td {
     padding-left: 6px;
   }
   .motor-metrics small {
-    font-size: 8px;
+    font-size: 10px;
   }
   .freshness > span:last-child {
     display: none;
   }
   .control-button {
-    font-size: 8px;
+    font-size: 10px;
     gap: 3px;
   }
   .control-button svg {
@@ -1690,7 +1690,7 @@ tbody tr:last-child td {
     padding: 18px 15px;
   }
   .report-option > span:not(.radio-mark) {
-    font-size: 9px;
+    font-size: 11px;
   }
   .filters label {
     min-width: 130px;
@@ -1775,13 +1775,13 @@ tbody tr:last-child td {
     font-size: 20px;
   }
   .motor-card-head .eyebrow {
-    font-size: 8px;
+    font-size: 10px;
   }
   .motor-card-head .badge {
-    font-size: 9px;
+    font-size: 11px;
   }
   .control-button {
-    font-size: 9px;
+    font-size: 11px;
   }
   .overview-bottom {
     grid-template-columns: 1fr;
@@ -1829,25 +1829,25 @@ tbody tr:last-child td {
     padding: 28px 18px;
   }
   .art-heading .badge {
-    font-size: 8px;
+    font-size: 10px;
   }
   .art-heading .eyebrow {
-    font-size: 7px;
+    font-size: 11px;
   }
   .welcome-tags {
     gap: 12px;
   }
   .welcome-tags span {
-    font-size: 9px;
+    font-size: 11px;
   }
   .welcome-copy > h1 {
     font-size: 47px;
   }
   .welcome-copy > .eyebrow {
-    font-size: 8px;
+    font-size: 10px;
   }
   .welcome-brand > small {
-    font-size: 7px;
+    font-size: 11px;
   }
 }
 @media (max-width: 760px) {
@@ -1891,7 +1891,7 @@ tbody tr:last-child td {
     display: none;
   }
   .topbar .badge {
-    font-size: 9px;
+    font-size: 11px;
   }
   .topbar .icon-button {
     width: 29px;
@@ -1909,7 +1909,7 @@ tbody tr:last-child td {
     font-size: 28px;
   }
   .page-heading .eyebrow {
-    font-size: 8px;
+    font-size: 10px;
   }
   .page-heading p {
     font-size: 11px;
@@ -1923,10 +1923,10 @@ tbody tr:last-child td {
     padding: 8px 10px;
   }
   .reset-all p {
-    font-size: 9px;
+    font-size: 11px;
   }
   .section-title > span {
-    font-size: 8px;
+    font-size: 10px;
   }
   .filters {
     flex-wrap: wrap;
@@ -1944,15 +1944,15 @@ tbody tr:last-child td {
     padding: 20px 18px;
   }
   .panel-head p {
-    font-size: 9px;
+    font-size: 11px;
   }
   .panel-head select {
-    font-size: 9px;
+    font-size: 11px;
     max-width: 135px;
   }
   .panel-foot {
     padding: 13px 18px;
-    font-size: 8px;
+    font-size: 10px;
   }
   .report-options {
     padding: 0 18px 18px;
@@ -1988,7 +1988,7 @@ tbody tr:last-child td {
     align-items: flex-start;
   }
   .report-results .panel-head .button {
-    font-size: 9px;
+    font-size: 11px;
     padding: 8px;
   }
   .invite-fields {
@@ -1999,7 +1999,7 @@ tbody tr:last-child td {
     padding: 15px 18px 0;
   }
   .app-footer {
-    font-size: 8px;
+    font-size: 10px;
     gap: 15px;
     padding: 19px 18px;
   }
@@ -2022,7 +2022,7 @@ tbody tr:last-child td {
     max-width: 100%;
   }
   .welcome-copy > .eyebrow {
-    font-size: 8px;
+    font-size: 10px;
   }
   .welcome-art {
     min-height: 420px;
@@ -2040,7 +2040,7 @@ tbody tr:last-child td {
     font-size: 27px;
   }
   .welcome-footer {
-    font-size: 8px;
+    font-size: 10px;
     flex-wrap: wrap;
     gap: 8px;
   }
@@ -2082,17 +2082,17 @@ tbody tr:last-child td {
     font-size: 10px;
   }
   .motor-metrics span {
-    font-size: 9px;
+    font-size: 11px;
   }
   .motor-metrics > div:not(:first-child) {
     padding-left: 14px;
   }
   .freshness {
-    font-size: 9px;
+    font-size: 11px;
   }
   .freshness > span:last-child {
     display: inline;
-    font-size: 8px;
+    font-size: 10px;
   }
   .control-button {
     font-size: 11px;
@@ -2107,7 +2107,7 @@ tbody tr:last-child td {
     padding: 11px;
   }
   .control-status small {
-    font-size: 9px;
+    font-size: 11px;
   }
   .summary-grid {
     gap: 10px;
@@ -2119,7 +2119,7 @@ tbody tr:last-child td {
     font-size: 10px;
   }
   .summary-card p {
-    font-size: 8px;
+    font-size: 10px;
   }
   .summary-icon {
     padding: 4px;
@@ -2147,7 +2147,7 @@ tbody tr:last-child td {
     font-size: 16px;
   }
   .section-title > span {
-    font-size: 7px;
+    font-size: 11px;
   }
   .recent-panel .panel-head h2 {
     font-size: 14px;
@@ -2219,7 +2219,7 @@ tbody tr:last-child td {
     padding: 10px 8px 14px;
   }
   .welcome-tags span {
-    font-size: 9px;
+    font-size: 11px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

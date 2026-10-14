@@ -2290,3 +2290,19 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T17:29:42.829236+00:00] dab3fd02fc7c Verify current SNS subscription remains active
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "get-subscription-attributes", "--subscription-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1:924fc43d-dd83-4746-a097-fe7f0a651508", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-14T17:29:45.033954+00:00] dab3fd02fc7c EXIT 0
+
+[2026-10-14T18:11:14.255758+00:00] d8f5548b627f Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T18:11:16.710149+00:00] d8f5548b627f EXIT 0
+
+[2026-10-14T18:11:16.814100+00:00] be2b28a5809a Compare deployed platform with UI security-header update
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "get-template", "--stack-name", "ccproj", "--template-stage", "Original", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T18:11:19.653607+00:00] be2b28a5809a EXIT 0
+
+[2026-10-14T18:11:34.874568+00:00] 4b054fab00ac Deploy CloudFormation stack ccproj
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "deploy", "--stack-name", "ccproj", "--template-file", "C:\\Akshay\\Projects-2\\ccproj\\infra\\platform.json", "--capabilities", "CAPABILITY_IAM", "--no-fail-on-empty-changeset", "--tags", "Project=ccproj", "--s3-bucket", "ccproj-artifacts-artifacts-bllhfj9fhpbr", "--s3-prefix", "templates", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T18:12:28.877515+00:00] 4b054fab00ac EXIT 0
+
+[2026-10-14T18:12:28.983982+00:00] d856e61d9a0f Read deployed stack outputs
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T18:12:31.127141+00:00] d856e61d9a0f EXIT 0

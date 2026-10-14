@@ -179,7 +179,14 @@ function Dashboard({ user }: { user: User }) {
   }
   return (
     <div className="app-shell">
-      <a className="skip-link" href="#main">
+      <a
+        className="skip-link"
+        href="#main"
+        onClick={(event) => {
+          event.preventDefault();
+          document.getElementById("main")?.focus();
+        }}
+      >
         Skip to content
       </a>
       {open && (
@@ -230,7 +237,7 @@ function Dashboard({ user }: { user: User }) {
           <div className="system-card">
             <Radio size={17} />
             <div>
-              <strong>Connected to AWS</strong>
+              <strong>AWS environment</strong>
               <span>Sydney · ap-southeast-2</span>
             </div>
             <span className="status-dot online" />

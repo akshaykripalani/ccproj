@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Activity,
   ArrowRight,
@@ -450,9 +450,27 @@ export function TelemetryChart({
   threshold?: boolean;
 }) {
   const metric = metrics[field];
-  const points = [...readings]
-    .sort((a, b) => a.observedAt.localeCompare(b.observedAt))
-    .map((reading) => ({ ...reading, time: Date.parse(reading.observedAt) }));
+  const ordered = [...readings].sort((a, b) =>
+    a.observedAt.localeCompare(b.observedAt),
+  );
+  const points: {
+    time: number;
+    temperatureC: number | null;
+    vibrationMmS: number | null;
+    powerWatts: number | null;
+  }[] = [];
+  for (const [index, reading] of ordered.entries()) {
+    const time = Date.parse(reading.observedAt);
+    if (index && time - Date.parse(ordered[index - 1].observedAt) > 25000) {
+      points.push({
+        time: time - 1,
+        temperatureC: null,
+        vibrationMmS: null,
+        powerWatts: null,
+      });
+    }
+    points.push({ ...reading, time });
+  }
   if (!points.length)
     return (
       <Empty
@@ -464,7 +482,7 @@ export function TelemetryChart({
     <div
       className="chart"
       role="img"
-      aria-label={`${metric.title} chart with ${points.length} readings in ${metric.unit}`}
+      aria-label={`${metric.title} chart with ${readings.length} readings in ${metric.unit}`}
     >
       <ResponsiveContainer width="100%" height="100%" minWidth={0}>
         <AreaChart
@@ -520,6 +538,7 @@ export function TelemetryChart({
           {threshold && metric.threshold !== undefined && (
             <ReferenceLine
               y={metric.threshold}
+              ifOverflow="extendDomain"
               stroke="#c0775c"
               strokeDasharray="4 4"
               label={{
@@ -554,11 +573,27 @@ export function RecentCharts({
   compact?: boolean;
 }) {
   const [hours, setHours] = useState("1");
+  const retained = useRef<{ key: string; readings: Reading[] }>({
+    key: "",
+    readings: [],
+  });
   const recent = usePoll(
     async (signal) => {
       const now = Date.now();
+      const key = deviceId + hours;
+      const prior =
+        retained.current.key === key ? retained.current.readings : [];
+      const windowStart = now - Number(hours) * 3600000 + 10000;
+      const latest = Math.max(
+        0,
+        ...prior.map((reading) => Date.parse(reading.observedAt)),
+      );
+      // Initial window is fully paginated; subsequent refreshes read only a short overlap.
+      const from = prior.length
+        ? Math.max(windowStart, latest - 30000)
+        : windowStart;
       const params = new URLSearchParams({
-        from: new Date(now - Number(hours) * 3600000 + 10000).toISOString(),
+        from: new Date(from).toISOString(),
         to: new Date(now).toISOString(),
         limit: "1000",
       });
@@ -572,7 +607,13 @@ export function RecentCharts({
         values.push(...page.readings);
         cursor = page.nextCursor;
       } while (cursor && values.length < 10000);
-      return values;
+      const merged = [
+        ...new Map(
+          [...prior, ...values].map((reading) => [reading.eventId, reading]),
+        ).values(),
+      ].filter((reading) => Date.parse(reading.observedAt) >= windowStart);
+      if (!signal.aborted) retained.current = { key, readings: merged };
+      return merged;
     },
     10000,
     deviceId + hours,

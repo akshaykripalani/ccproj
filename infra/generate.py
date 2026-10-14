@@ -451,13 +451,14 @@ def build():
                         "Override": True,
                     },
                     "ContentSecurityPolicy": {
-                        "ContentSecurityPolicy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://*.amazonaws.com https://*.amazoncognito.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
+                        "ContentSecurityPolicy": "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://*.amazonaws.com https://*.amazoncognito.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
                         "Override": True,
                     },
                 },
             }
         },
-        "Security headers for eventual React deployment",
+        "React security headers; chart library needs inline layout attributes only, scripts and style elements stay self-hosted",
+        ["No inline scripts or external style elements", "Inline style attributes only for responsive chart layout"],
     )
     add(
         t,
