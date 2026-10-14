@@ -5,7 +5,7 @@ import time
 import pytest
 import requests
 
-from backend.domain import timestamp, utcnow
+from backend.domain import canonical, digest, timestamp, utcnow
 from scripts.aws_cli import call, run
 from tests.live.conftest import wait_for
 
@@ -102,7 +102,48 @@ def test_real_pipeline_deduplication_ordering_and_archive(paused_simulator):
     assert live.send([newer])[0] == 202
     older = measurement(observed=timestamp(utcnow() - dt.timedelta(minutes=2)), temperature=99)
     assert live.send([older])[0] == 202
-    wait_for(lambda: len(live.api("GET", "/devices/motor-01/readings").json()["readings"]) >= 2)
+    wait_for(
+        lambda: {newer["eventId"], older["eventId"]}.issubset(
+            {r["eventId"] for r in live.api("GET", "/devices/motor-01/readings").json()["readings"]}
+        )
+    )
+    envelope = canonical(
+        {"readings": [newer], "batchId": digest([newer]), "receivedAt": timestamp(utcnow())}
+    )
+    call(
+        [
+            "sqs",
+            "send-message",
+            "--queue-url",
+            live.platform["QueueUrl"],
+            "--message-body",
+            envelope,
+            "--message-group-id",
+            "factory",
+            "--message-deduplication-id",
+            "forced-retry-" + secrets.token_hex(8),
+        ],
+        "Exercise DynamoDB deduplication independently of SQS's five-minute dedup window",
+    )
+    wait_for(
+        lambda: (
+            int(
+                call(
+                    [
+                        "sqs",
+                        "get-queue-attributes",
+                        "--queue-url",
+                        live.platform["QueueUrl"],
+                        "--attribute-names",
+                        "ApproximateNumberOfMessages",
+                        "ApproximateNumberOfMessagesNotVisible",
+                    ],
+                    "Wait for forced duplicate processing",
+                )["Attributes"]["ApproximateNumberOfMessagesNotVisible"]
+            )
+            == 0
+        )
+    )
     assert live.state()["latest"]["eventId"] == newer["eventId"]
     readings = live.api("GET", "/devices/motor-01/readings").json()["readings"]
     assert sum(r["eventId"] == newer["eventId"] for r in readings) == 1
@@ -218,8 +259,6 @@ def test_poison_message_isolated_and_corrected_then_redriven(paused_simulator):
     # Test redrive is demonstrated with a valid envelope placed directly in the DLQ.
     # Do not repeatedly redrive the invalid body without correcting it.
     value = measurement()
-    from backend.domain import canonical, digest
-
     envelope = canonical(
         {"readings": [value], "batchId": digest([value]), "receivedAt": timestamp(utcnow())}
     )

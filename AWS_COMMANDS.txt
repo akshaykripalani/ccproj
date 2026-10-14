@@ -638,3 +638,202 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T16:36:53.356777+00:00] cf0075dee73d Wait before recreating corrected project stack
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "wait", "stack-delete-complete", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-14T16:36:55.526500+00:00] cf0075dee73d EXIT 0
+
+[2026-10-14T16:37:14.448140+00:00] 499e5a363a9a Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:16.615981+00:00] 499e5a363a9a EXIT 0
+
+[2026-10-14T16:37:16.643049+00:00] c0128b72b7fb Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "scheduler", "list-schedules", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:37:16.643049+00:00] 46a9ea362875 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "list-stacks", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:37:16.643049+00:00] 71ad41e9e16c Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ec2", "describe-instance-type-offerings", "--filters", "Name=instance-type,Values=t4g.micro", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:37:16.643049+00:00] 3ec0dde02c0e Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "get-parameter", "--name", "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64", "--query", "Parameter.Value", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:19.385446+00:00] c0128b72b7fb EXIT 0
+
+[2026-10-14T16:37:19.401962+00:00] bd1bd1f9765e Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "list-functions", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:19.485970+00:00] 46a9ea362875 EXIT 0
+
+[2026-10-14T16:37:19.508490+00:00] d303a1d31e73 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "apigatewayv2", "get-apis", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:19.529490+00:00] 3ec0dde02c0e EXIT 0
+
+[2026-10-14T16:37:19.548489+00:00] e8f9618f6931 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "list-queues", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:19.583551+00:00] 71ad41e9e16c EXIT 0
+
+[2026-10-14T16:37:19.600071+00:00] 3c6612735da4 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "list-tables", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:22.171489+00:00] bd1bd1f9765e EXIT 0
+
+[2026-10-14T16:37:22.197082+00:00] 6b508c56a92a Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-buckets", "--query", "Buckets[].Name", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:22.279543+00:00] d303a1d31e73 EXIT 0
+[2026-10-14T16:37:22.289547+00:00] 3c6612735da4 EXIT 0
+[2026-10-14T16:37:22.295567+00:00] e8f9618f6931 EXIT 0
+
+[2026-10-14T16:37:22.295567+00:00] 85344bc4d47c Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "list-user-pools", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:37:22.315082+00:00] 2250180d5a2c Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "athena", "list-work-groups", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:37:22.331083+00:00] de71802c74fe Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "glue", "get-databases", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:25.028536+00:00] 6b508c56a92a EXIT 0
+
+[2026-10-14T16:37:25.048545+00:00] 01a5026512a1 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-topics", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:25.174345+00:00] 85344bc4d47c EXIT 0
+
+[2026-10-14T16:37:25.194357+00:00] 1074017bdb08 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "logs", "describe-log-groups", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:25.208863+00:00] 2250180d5a2c EXIT 0
+
+[2026-10-14T16:37:25.230866+00:00] 46a3cc451f8e Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudfront", "list-distributions", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:25.283147+00:00] de71802c74fe EXIT 0
+
+[2026-10-14T16:37:25.305675+00:00] 6d8748ece94c Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "iam", "list-roles", "--max-items", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:27.766936+00:00] 01a5026512a1 EXIT 0
+
+[2026-10-14T16:37:27.790078+00:00] 76a4bc4da6ab Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudtrail", "describe-trails", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:27.868635+00:00] 6d8748ece94c EXIT 0
+[2026-10-14T16:37:27.888639+00:00] 46a3cc451f8e EXIT 0
+
+[2026-10-14T16:37:27.889638+00:00] ac720ce6ad91 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "budgets", "describe-budgets", "--account-id", "039379078306", "--max-results", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:27.900636+00:00] 1074017bdb08 EXIT 0
+
+[2026-10-14T16:37:27.908645+00:00] a4d7c9f803a7 Preflight: required service access
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "kms", "list-keys", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:30.492130+00:00] 76a4bc4da6ab EXIT 0
+[2026-10-14T16:37:30.543703+00:00] ac720ce6ad91 EXIT 0
+[2026-10-14T16:37:30.595375+00:00] a4d7c9f803a7 EXIT 0
+
+[2026-10-14T16:37:35.205271+00:00] d65069e82036 Deploy CloudFormation stack ccproj-artifacts
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "deploy", "--stack-name", "ccproj-artifacts", "--template-file", "C:\\Akshay\\Projects-2\\ccproj\\infra\\bootstrap.json", "--capabilities", "CAPABILITY_IAM", "--no-fail-on-empty-changeset", "--tags", "Project=ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:37:39.620885+00:00] 9dd28d08366f Observe corrected deployment state after cleanup
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--query", "Stacks[0].StackStatus", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:42.034833+00:00] 9dd28d08366f EXIT 254
+
+[2026-10-14T16:37:42.625871+00:00] 237f0a3da476 Look for actionable provisioning failures in corrected deployment
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-events", "--stack-name", "ccproj", "--query", "OperationEvents[?EventType==`PROVISIONING_ERROR`].[LogicalResourceId,ResourceStatusReason]", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:37:44.894863+00:00] 237f0a3da476 EXIT 254
+[2026-10-14T16:38:15.529823+00:00] d65069e82036 EXIT 0
+
+[2026-10-14T16:38:15.549491+00:00] 1e31af85c290 Read deployed stack outputs
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj-artifacts", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:38:17.703172+00:00] 1e31af85c290 EXIT 0
+
+[2026-10-14T16:38:17.723229+00:00] a5c36651649e Upload content-addressed release package
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip", "s3://ccproj-artifacts-artifacts-bllhfj9fhpbr/releases/fb39fe4732a20afe02033a0bcb1fede544dcbff686afff44f3a96b7f955f3b1d/backend.zip", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:38:27.109745+00:00] a5c36651649e EXIT 0
+
+[2026-10-14T16:38:27.130741+00:00] 78972065909e Upload content-addressed release package
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\build\\simulator.tar.gz", "s3://ccproj-artifacts-artifacts-bllhfj9fhpbr/releases/cad6d8d2adeea2c6d0f9afdd3243dbeae6509f2e8649fd9357b41c80302f001f/simulator.tar.gz", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:38:34.296771+00:00] 78972065909e EXIT 0
+
+[2026-10-14T16:38:34.334055+00:00] 2eaa940f6afb Deploy CloudFormation stack ccproj
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "deploy", "--stack-name", "ccproj", "--template-file", "C:\\Akshay\\Projects-2\\ccproj\\infra\\platform.json", "--capabilities", "CAPABILITY_IAM", "--no-fail-on-empty-changeset", "--tags", "Project=ccproj", "--s3-bucket", "ccproj-artifacts-artifacts-bllhfj9fhpbr", "--s3-prefix", "templates", "--parameter-overrides", "ArtifactBucket=ccproj-artifacts-artifacts-bllhfj9fhpbr", "BackendKey=releases/fb39fe4732a20afe02033a0bcb1fede544dcbff686afff44f3a96b7f955f3b1d/backend.zip", "BudgetStart=1791995401", "BudgetEnd=1805155200", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:38:49.812386+00:00] ffeadfd9d5df Read Sydney EC2 simulator hourly price
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--service-code", "AmazonEC2", "--region", "us-east-1", "--filters", "Type=TERM_MATCH,Field=instanceType,Value=t4g.micro", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "Type=TERM_MATCH,Field=operatingSystem,Value=Linux", "Type=TERM_MATCH,Field=tenancy,Value=Shared", "Type=TERM_MATCH,Field=preInstalledSw,Value=NA", "Type=TERM_MATCH,Field=capacitystatus,Value=Used", "--no-cli-pager"]
+[2026-10-14T16:38:51.833176+00:00] ffeadfd9d5df EXIT 0
+
+[2026-10-14T16:38:51.852344+00:00] d6dbf3957479 Read Sydney FIFO SQS request pricing
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--service-code", "AWSQueueService", "--region", "us-east-1", "--filters", "Type=TERM_MATCH,Field=regionCode,Value=ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:38:53.800358+00:00] d6dbf3957479 EXIT 0
+
+[2026-10-14T16:39:48.175526+00:00] 576d82f67c3f Read corrected project stack status
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--query", "Stacks[0].StackStatus", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:39:50.378322+00:00] 576d82f67c3f EXIT 0
+
+[2026-10-14T16:40:58.508144+00:00] 55a66bdbcd20 Read Sydney encrypted gp3 disk pricing for budget model
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "pricing", "get-products", "--service-code", "AmazonEC2", "--region", "us-east-1", "--filters", "Type=TERM_MATCH,Field=volumeApiName,Value=gp3", "Type=TERM_MATCH,Field=location,Value=Asia Pacific (Sydney)", "Type=TERM_MATCH,Field=productFamily,Value=Storage", "--query", "PriceList", "--no-cli-pager"]
+[2026-10-14T16:41:01.518065+00:00] 55a66bdbcd20 EXIT 0
+
+[2026-10-14T16:41:39.497801+00:00] c359c1a4d704 Read corrected platform creation outcome and any provisioning errors
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-events", "--stack-name", "ccproj", "--query", "OperationEvents[?EventType==`PROVISIONING_ERROR`].[LogicalResourceId,ResourceStatusReason]", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:41:43.038668+00:00] c359c1a4d704 EXIT 0
+
+[2026-10-14T16:41:43.594721+00:00] bd19fc8e7de4 Read current deployed platform status
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--query", "Stacks[0].StackStatus", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:41:45.820034+00:00] bd19fc8e7de4 EXIT 0
+
+[2026-10-14T16:42:55.469506+00:00] 49265a9467f2 Identify resources still stabilizing in corrected deployment
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "list-stack-resources", "--stack-name", "ccproj", "--query", "StackResourceSummaries[?ResourceStatus!=`CREATE_COMPLETE`].[LogicalResourceId,ResourceStatus]", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:42:58.042857+00:00] 49265a9467f2 EXIT 0
+[2026-10-14T16:42:59.580390+00:00] 2eaa940f6afb EXIT 0
+
+[2026-10-14T16:42:59.603970+00:00] 756a187768a1 Read deployed stack outputs
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:01.833915+00:00] 756a187768a1 EXIT 0
+
+[2026-10-14T16:43:01.852704+00:00] 59da7f973777 Inspect required initial account
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-get-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "akshay.kripalani74@nmims.in", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:04.094457+00:00] 59da7f973777 EXIT 254 (private response withheld)
+
+[2026-10-14T16:43:04.114842+00:00] e97f5477aee6 Create required invited dashboard account
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "akshay.kripalani74@nmims.in", "--user-attributes", "Name=email,Value=akshay.kripalani74@nmims.in", "--desired-delivery-mediums", "EMAIL", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:06.735754+00:00] e97f5477aee6 EXIT 0 (private response withheld)
+
+[2026-10-14T16:43:06.751859+00:00] b63717bcc9da Assign required initial application roles
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "akshay.kripalani74@nmims.in", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:09.026375+00:00] b63717bcc9da EXIT 0
+
+[2026-10-14T16:43:09.047604+00:00] 69eed7f879ea Assign required initial application roles
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "akshay.kripalani74@nmims.in", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:11.341235+00:00] 69eed7f879ea EXIT 0
+
+[2026-10-14T16:43:11.362177+00:00] 645cc41fa773 Inspect required initial account
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-get-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "collegeproject@akshaykripalani.com", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:13.578308+00:00] 645cc41fa773 EXIT 254 (private response withheld)
+
+[2026-10-14T16:43:13.597383+00:00] 9de5d4f41952 Create required invited dashboard account
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "collegeproject@akshaykripalani.com", "--user-attributes", "Name=email,Value=collegeproject@akshaykripalani.com", "--desired-delivery-mediums", "EMAIL", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:43:13.882761+00:00] 07a3d0cbc3d5 Record the platform outputs for live acceptance verification
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--query", "Stacks[0].Outputs", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:16.211449+00:00] 07a3d0cbc3d5 EXIT 0
+[2026-10-14T16:43:16.278900+00:00] 9de5d4f41952 EXIT 0 (private response withheld)
+
+[2026-10-14T16:43:16.294976+00:00] c26c81a6a32c Assign required initial application roles
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "collegeproject@akshaykripalani.com", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:18.725900+00:00] c26c81a6a32c EXIT 0
+
+[2026-10-14T16:43:18.747075+00:00] a508cb75ae95 Assign required initial application roles
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "collegeproject@akshaykripalani.com", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:21.045738+00:00] a508cb75ae95 EXIT 0
+
+[2026-10-14T16:43:21.066355+00:00] a3a12d9c215c Publish non-secret frontend integration configuration
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\config.json", "s3://ccproj-frontend-ipu2nmzptkhj/config.json", "--content-type", "application/json", "--cache-control", "no-store", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:23.141112+00:00] a3a12d9c215c EXIT 0
+
+[2026-10-14T16:43:23.159797+00:00] 3f5d1cadc6e5 Publish AWS deployment landing page for later React integration
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\hosting\\index.html", "s3://ccproj-frontend-ipu2nmzptkhj/index.html", "--content-type", "text/html", "--cache-control", "no-cache", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:25.144875+00:00] 3f5d1cadc6e5 EXIT 0
+
+[2026-10-14T16:43:25.168474+00:00] 1f7e77e600d4 Deploy CloudFormation stack ccproj-simulator
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "deploy", "--stack-name", "ccproj-simulator", "--template-file", "C:\\Akshay\\Projects-2\\ccproj\\infra\\simulator.json", "--capabilities", "CAPABILITY_IAM", "--no-fail-on-empty-changeset", "--tags", "Project=ccproj", "--s3-bucket", "ccproj-artifacts-artifacts-bllhfj9fhpbr", "--s3-prefix", "templates", "--parameter-overrides", "ArtifactBucket=ccproj-artifacts-artifacts-bllhfj9fhpbr", "SimulatorKey=releases/cad6d8d2adeea2c6d0f9afdd3243dbeae6509f2e8649fd9357b41c80302f001f/simulator.tar.gz", "ApiUrl=https://9ojy2mmg65.execute-api.ap-southeast-2.amazonaws.com", "ApiId=9ojy2mmg65", "ControlTable=ccproj-Controls-1SBLS2VLV34K5", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:43:51.091884+00:00] 23107e90fb53 Check the live SNS recipient confirmation state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--query", "Subscriptions[].{Protocol:Protocol,Endpoint:Endpoint,Status:SubscriptionArn}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:43:53.263394+00:00] 23107e90fb53 EXIT 0
+
+[2026-10-14T16:45:00.291109+00:00] 09578c69b4a8 Check EC2 simulator provisioning for actionable failures
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-events", "--stack-name", "ccproj-simulator", "--query", "OperationEvents[?EventType==`PROVISIONING_ERROR`].[LogicalResourceId,ResourceStatusReason]", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:45:02.763650+00:00] 09578c69b4a8 EXIT 0
+
+[2026-10-14T16:45:03.355099+00:00] 68b668a31279 Read simulator stack provisioning state
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj-simulator", "--query", "Stacks[0].StackStatus", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:45:05.686565+00:00] 68b668a31279 EXIT 0

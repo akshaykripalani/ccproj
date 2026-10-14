@@ -1,85 +1,91 @@
 {
   "account": "039379078306",
   "identity": "arn:aws:iam::039379078306:user/Akshay",
-  "region": "ap-south-1",
+  "region": "ap-southeast-2",
   "results": [
     {
+      "service": "scheduler",
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
+    },
+    {
       "service": "cloudformation",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDenied) when calling the ListStacks operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: cloudformation:ListStacks on resource: arn:aws:cloudformation:ap-south-1:039379078306:stack/*/* with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "ec2",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (UnauthorizedOperation) when calling the DescribeInstanceTypeOfferings operation: You are not authorized to perform this operation. User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: ec2:DescribeInstanceTypeOfferings with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "ssm",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the GetParameter operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: ssm:GetParameter on resource: arn:aws:ssm:ap-south-1::parameter/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64 with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "lambda",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the ListFunctions operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: lambda:ListFunctions on resource: * with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "apigatewayv2",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the GetApis operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: apigateway:GET on resource: arn:aws:apigateway:ap-south-1::/apis with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "sqs",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDenied) when calling the ListQueues operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: sqs:listqueues on resource: arn:aws:sqs:ap-south-1:039379078306: with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "dynamodb",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the ListTables operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: dynamodb:ListTables on resource: arn:aws:dynamodb:ap-south-1:039379078306:table/* with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "s3api",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDenied) when calling the ListBuckets operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: s3:ListAllMyBuckets with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "cognito-idp",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the ListUserPools operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: cognito-idp:ListUserPools on resource: * with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "athena",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the ListWorkGroups operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: athena:ListWorkGroups with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "glue",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the GetDatabases operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: glue:GetDatabases on resource: arn:aws:glue:ap-south-1:039379078306:catalog with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "sns",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AuthorizationError) when calling the ListTopics operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: SNS:ListTopics on resource: arn:aws:sns:ap-south-1:039379078306:* with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "logs",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the DescribeLogGroups operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: logs:DescribeLogGroups on resource: arn:aws:logs:ap-south-1:039379078306:log-group::log-stream: with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "cloudfront",
@@ -95,9 +101,9 @@
     },
     {
       "service": "cloudtrail",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the DescribeTrails operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: cloudtrail:DescribeTrails with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     },
     {
       "service": "budgets",
@@ -107,9 +113,9 @@
     },
     {
       "service": "kms",
-      "exitCode": 254,
-      "allowed": false,
-      "error": "aws: [ERROR]: An error occurred (AccessDeniedException) when calling the ListKeys operation: User: arn:aws:iam::039379078306:user/Akshay is not authorized to perform: kms:ListKeys on resource: * with an explicit deny in a service control policy: arn:aws:organizations::253291597648:policy/o-85ric6cjs2/service_control_policy/p-pc8wrnxt"
+      "exitCode": 0,
+      "allowed": true,
+      "error": null
     }
   ],
   "note": "Successful reads do not prove create/pass-role permission. CloudFormation change sets and live tests still required."

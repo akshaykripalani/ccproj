@@ -56,7 +56,7 @@ def test_real_hosted_login_authorization_code_pkce(live):
         assert page.status_code == 200
         form = LoginForm()
         form.feed(page.text)
-        assert form.action and form.hidden, "Hosted login form and CSRF fields were not found"
+        assert form.action is not None and form.hidden, "Hosted login form and CSRF fields were not found"
         target = urljoin(page.url, form.action)
         assert urlparse(target).hostname == urlparse(live.platform["LoginDomain"]).hostname
         email, password = live.users["operator"]
