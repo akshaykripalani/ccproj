@@ -1,0 +1,76 @@
+{
+  "stackId": "arn:aws:cloudformation:ap-southeast-2:039379078306:stack/ccproj/83e37fd0-c7ec-11f1-81de-06f8e2a85125",
+  "retainedResourcesCleaned": [
+    {
+      "LogicalResourceId": "Archive",
+      "PhysicalResourceId": "ccproj-archive-q7i3s7g9jsbx",
+      "ResourceType": "AWS::S3::Bucket",
+      "LastUpdatedTimestamp": "2026-10-14T16:32:46.675000+00:00",
+      "ResourceStatus": "DELETE_SKIPPED",
+      "DriftInformation": {
+        "StackResourceDriftStatus": "NOT_CHECKED"
+      }
+    },
+    {
+      "LogicalResourceId": "Controls",
+      "PhysicalResourceId": "ccproj-Controls-1MFLKF3C3TDBN",
+      "ResourceType": "AWS::DynamoDB::Table",
+      "LastUpdatedTimestamp": "2026-10-14T16:32:30.650000+00:00",
+      "ResourceStatus": "DELETE_SKIPPED",
+      "DriftInformation": {
+        "StackResourceDriftStatus": "NOT_CHECKED"
+      }
+    },
+    {
+      "LogicalResourceId": "Data",
+      "PhysicalResourceId": "ccproj-Data-1UYE06HJ7TXFR",
+      "ResourceType": "AWS::DynamoDB::Table",
+      "LastUpdatedTimestamp": "2026-10-14T16:32:46.481000+00:00",
+      "ResourceStatus": "DELETE_SKIPPED",
+      "DriftInformation": {
+        "StackResourceDriftStatus": "NOT_CHECKED"
+      }
+    },
+    {
+      "LogicalResourceId": "Frontend",
+      "PhysicalResourceId": "ccproj-frontend-2gqlbpolvopv",
+      "ResourceType": "AWS::S3::Bucket",
+      "LastUpdatedTimestamp": "2026-10-14T16:34:46.838000+00:00",
+      "ResourceStatus": "DELETE_SKIPPED",
+      "DriftInformation": {
+        "StackResourceDriftStatus": "NOT_CHECKED"
+      }
+    },
+    {
+      "LogicalResourceId": "NotificationKey",
+      "PhysicalResourceId": "8a3697d6-4f91-4921-a54f-4062755636c3",
+      "ResourceType": "AWS::KMS::Key",
+      "LastUpdatedTimestamp": "2026-10-14T16:33:20.594000+00:00",
+      "ResourceStatus": "DELETE_SKIPPED",
+      "DriftInformation": {
+        "StackResourceDriftStatus": "NOT_CHECKED"
+      }
+    },
+    {
+      "LogicalResourceId": "Pool",
+      "PhysicalResourceId": "ap-southeast-2_zc3CjOWwv",
+      "ResourceType": "AWS::Cognito::UserPool",
+      "LastUpdatedTimestamp": "2026-10-14T16:32:30.532000+00:00",
+      "ResourceStatus": "DELETE_SKIPPED",
+      "DriftInformation": {
+        "StackResourceDriftStatus": "NOT_CHECKED"
+      }
+    },
+    {
+      "LogicalResourceId": "Results",
+      "PhysicalResourceId": "ccproj-results-0ns2hpa55zip",
+      "ResourceType": "AWS::S3::Bucket",
+      "LastUpdatedTimestamp": "2026-10-14T16:32:32.106000+00:00",
+      "ResourceStatus": "DELETE_SKIPPED",
+      "DriftInformation": {
+        "StackResourceDriftStatus": "NOT_CHECKED"
+      }
+    }
+  ],
+  "note": "All tables/pools/buckets were checked empty; KMS deletion uses AWS's seven-day pending window."
+}

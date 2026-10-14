@@ -30,7 +30,7 @@ def test_all_buckets_private_encrypted_versioned_and_retention_bounded(templates
                     rule["ExpirationInDays"]
                     == rule["NoncurrentVersionExpiration"]["NoncurrentDays"]
                 )
-                assert resource["DeletionPolicy"] == "Retain"
+                assert resource["DeletionPolicy"] in ("Retain", "RetainExceptOnCreate")
 
 
 def test_every_route_is_protected_and_client_has_no_secret(templates):
@@ -54,6 +54,12 @@ def test_queue_retry_and_processor_partial_failure_configuration(templates):
     assert resources["ProcessingMapping"]["Properties"]["FunctionResponseTypes"] == [
         "ReportBatchItemFailures"
     ]
+    for queue in ("Telemetry", "DeadLetter"):
+        policy = resources[queue + "Policy"]["Properties"]
+        assert policy["Queues"] == [{"Ref": queue}]
+        assert policy["PolicyDocument"]["Statement"][0]["Resource"] == {
+            "Fn::GetAtt": [queue, "Arn"]
+        }
 
 
 def test_ec2_has_no_inbound_ports_no_nat_and_requires_imdsv2(templates):

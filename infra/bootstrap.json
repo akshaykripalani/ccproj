@@ -70,7 +70,7 @@
           ]
         }
       },
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "RetainExceptOnCreate",
       "UpdateReplacePolicy": "Retain"
     },
     "ArtifactsPolicy": {

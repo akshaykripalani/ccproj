@@ -75,7 +75,7 @@ def bucket(t, name, why, days=30):
         },
         why,
         ["Keep private, encrypted, versioned; bound current/noncurrent retention"],
-        DeletionPolicy="Retain",
+        DeletionPolicy="RetainExceptOnCreate",
         UpdateReplacePolicy="Retain",
     )
     add(
@@ -242,7 +242,7 @@ def build():
             if name == "Data"
             else "Requested/applied simulator modes separate from measurements",
             ["No destructive replacement without data export"],
-            DeletionPolicy="Retain",
+            DeletionPolicy="RetainExceptOnCreate",
             UpdateReplacePolicy="Retain",
         )
     add(
@@ -271,27 +271,29 @@ def build():
             "DynamoDB handles duplicates outside SQS dedup window",
         ],
     )
-    add(
-        t,
-        "QueuePolicy",
-        "SQS::QueuePolicy",
-        {
-            "Queues": [ref("Telemetry"), ref("DeadLetter")],
-            "PolicyDocument": {
-                "Version": "2012-10-17",
-                "Statement": [
-                    {
-                        "Effect": "Deny",
-                        "Principal": "*",
-                        "Action": "sqs:*",
-                        "Resource": [att("Telemetry"), att("DeadLetter")],
-                        "Condition": {"Bool": {"aws:SecureTransport": "false"}},
-                    }
-                ],
+    for queue in ("Telemetry", "DeadLetter"):
+        add(
+            t,
+            queue + "Policy",
+            "SQS::QueuePolicy",
+            {
+                "Queues": [ref(queue)],
+                "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                        {
+                            "Effect": "Deny",
+                            "Principal": "*",
+                            "Action": "sqs:*",
+                            "Resource": att(queue),
+                            "Condition": {"Bool": {"aws:SecureTransport": "false"}},
+                        }
+                    ],
+                },
             },
-        },
-        "Reject non-TLS queue traffic",
-    )
+            "Reject non-TLS traffic for this queue",
+            ["SQS requires one queue resource per policy statement"],
+        )
     add(
         t,
         "NotificationKey",
@@ -331,7 +333,7 @@ def build():
         },
         "SNS encryption key permits alarm delivery without a broad managed SNS policy",
         ["Only same-account project alarms may use service principal"],
-        DeletionPolicy="Retain",
+        DeletionPolicy="RetainExceptOnCreate",
         UpdateReplacePolicy="Retain",
     )
     add(
@@ -404,7 +406,7 @@ def build():
         },
         "Small invited user directory with classic hosted login",
         ["No public registration; do not replace pool casually"],
-        DeletionPolicy="Retain",
+        DeletionPolicy="RetainExceptOnCreate",
         UpdateReplacePolicy="Retain",
     )
     for name in ("viewer", "operator"):

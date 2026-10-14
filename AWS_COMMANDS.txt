@@ -549,3 +549,92 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T16:32:45.181005+00:00] ce6fc3c0f6c7 Read any failed resource events during deployment
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-events", "--stack-name", "ccproj", "--query", "OperationEvents[?ResourceStatus==`CREATE_FAILED` || EventType==`VALIDATION_ERROR`]", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-14T16:32:49.304045+00:00] ce6fc3c0f6c7 EXIT 0
+
+[2026-10-14T16:33:31.141490+00:00] d10fc9542911 Capture resources retained by the failed first platform creation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "list-stack-resources", "--stack-name", "ccproj", "--query", "StackResourceSummaries[?ResourceStatus==`DELETE_SKIPPED`].[LogicalResourceId,ResourceType,PhysicalResourceId]", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:33:33.718282+00:00] d10fc9542911 EXIT 0
+[2026-10-14T16:34:57.699811+00:00] 20b3314a92a0 EXIT 255
+
+[2026-10-14T16:34:57.717020+00:00] 107ddb29c8f2 Inspect deployment and validation failures
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-events", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:35:01.658838+00:00] 107ddb29c8f2 EXIT 0
+
+[2026-10-14T16:35:10.374785+00:00] 47cc3b808d1e Check whether failed platform rollback has finished before cleanup
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--query", "Stacks[0].StackStatus", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:35:12.552846+00:00] 47cc3b808d1e EXIT 0
+
+[2026-10-14T16:36:11.675418+00:00] 0360aad7e6e2 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:13.910290+00:00] 0360aad7e6e2 EXIT 0
+
+[2026-10-14T16:36:13.932120+00:00] 97cf11a02fe8 Verify failed initial creation is fully rolled back
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:16.122010+00:00] 97cf11a02fe8 EXIT 0
+
+[2026-10-14T16:36:16.142048+00:00] 9050efb1bbb9 Identify exact resources retained by failed initial creation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "list-stack-resources", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:18.631025+00:00] 9050efb1bbb9 EXIT 0
+
+[2026-10-14T16:36:18.651213+00:00] f486c276921c Verify failed-creation bucket has no data or versions
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-object-versions", "--bucket", "ccproj-archive-q7i3s7g9jsbx", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:20.868400+00:00] f486c276921c EXIT 0
+
+[2026-10-14T16:36:20.889338+00:00] 174f77f390bf Verify retained failed-creation table contains no telemetry
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "scan", "--table-name", "ccproj-Controls-1MFLKF3C3TDBN", "--consistent-read", "--select", "COUNT", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:23.177166+00:00] 174f77f390bf EXIT 0
+
+[2026-10-14T16:36:23.194251+00:00] a7b20f8512b5 Verify retained failed-creation table contains no telemetry
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "scan", "--table-name", "ccproj-Data-1UYE06HJ7TXFR", "--consistent-read", "--select", "COUNT", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:25.402492+00:00] a7b20f8512b5 EXIT 0
+
+[2026-10-14T16:36:25.425381+00:00] de5296c60b3c Verify failed-creation bucket has no data or versions
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-object-versions", "--bucket", "ccproj-frontend-2gqlbpolvopv", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:27.589401+00:00] de5296c60b3c EXIT 0
+
+[2026-10-14T16:36:27.608406+00:00] 2511745389d5 Inspect only the encryption key retained by this failed initial creation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "kms", "describe-key", "--key-id", "8a3697d6-4f91-4921-a54f-4062755636c3", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:29.780493+00:00] 2511745389d5 EXIT 0
+
+[2026-10-14T16:36:29.798527+00:00] 9043f27c94f2 Verify failed-creation user pool contains no users
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "list-users", "--user-pool-id", "ap-southeast-2_zc3CjOWwv", "--limit", "1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:31.985773+00:00] 9043f27c94f2 EXIT 0
+
+[2026-10-14T16:36:32.009721+00:00] 673beaaf4073 Verify failed-creation bucket has no data or versions
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "list-object-versions", "--bucket", "ccproj-results-0ns2hpa55zip", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:34.231415+00:00] 673beaaf4073 EXIT 0
+
+[2026-10-14T16:36:34.255400+00:00] 7895ad6cb485 Remove verified-empty failed-creation bucket
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "delete-bucket", "--bucket", "ccproj-archive-q7i3s7g9jsbx", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:36.817361+00:00] 7895ad6cb485 EXIT 0
+
+[2026-10-14T16:36:36.834787+00:00] 8c42087f45a0 Remove verified-empty failed-creation table
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "delete-table", "--table-name", "ccproj-Controls-1MFLKF3C3TDBN", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:38.997455+00:00] 8c42087f45a0 EXIT 0
+
+[2026-10-14T16:36:39.019211+00:00] e157a2b47e37 Remove verified-empty failed-creation table
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "delete-table", "--table-name", "ccproj-Data-1UYE06HJ7TXFR", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:41.207344+00:00] e157a2b47e37 EXIT 0
+
+[2026-10-14T16:36:41.228354+00:00] 1cfe6364814f Remove verified-empty failed-creation bucket
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "delete-bucket", "--bucket", "ccproj-frontend-2gqlbpolvopv", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:43.901403+00:00] 1cfe6364814f EXIT 0
+
+[2026-10-14T16:36:43.922843+00:00] e294c576667d Schedule removal of only the abandoned failed-creation encryption key
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "kms", "schedule-key-deletion", "--key-id", "8a3697d6-4f91-4921-a54f-4062755636c3", "--pending-window-in-days", "7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:46.123399+00:00] e294c576667d EXIT 0
+
+[2026-10-14T16:36:46.144456+00:00] e611d4bb4bc2 Remove verified-empty failed-creation user pool
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "delete-user-pool", "--user-pool-id", "ap-southeast-2_zc3CjOWwv", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:48.350404+00:00] e611d4bb4bc2 EXIT 0
+
+[2026-10-14T16:36:48.375266+00:00] da01730a6ff9 Remove verified-empty failed-creation bucket
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "delete-bucket", "--bucket", "ccproj-results-0ns2hpa55zip", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:50.975945+00:00] da01730a6ff9 EXIT 0
+
+[2026-10-14T16:36:50.997838+00:00] 7123f0875c95 Remove rolled-back initial stack metadata after empty-resource cleanup
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "delete-stack", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:53.338848+00:00] 7123f0875c95 EXIT 0
+
+[2026-10-14T16:36:53.356777+00:00] cf0075dee73d Wait before recreating corrected project stack
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "wait", "stack-delete-complete", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:36:55.526500+00:00] cf0075dee73d EXIT 0

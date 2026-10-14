@@ -70,7 +70,7 @@
           ]
         }
       },
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "RetainExceptOnCreate",
       "UpdateReplacePolicy": "Retain"
     },
     "ArchivePolicy": {
@@ -189,7 +189,7 @@
           ]
         }
       },
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "RetainExceptOnCreate",
       "UpdateReplacePolicy": "Retain"
     },
     "ResultsPolicy": {
@@ -308,7 +308,7 @@
           ]
         }
       },
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "RetainExceptOnCreate",
       "UpdateReplacePolicy": "Retain"
     },
     "FrontendPolicy": {
@@ -453,7 +453,7 @@
           ]
         }
       },
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "RetainExceptOnCreate",
       "UpdateReplacePolicy": "Retain"
     },
     "Controls": {
@@ -502,7 +502,7 @@
           ]
         }
       },
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "RetainExceptOnCreate",
       "UpdateReplacePolicy": "Retain"
     },
     "DeadLetter": {
@@ -549,15 +549,12 @@
         }
       }
     },
-    "QueuePolicy": {
+    "TelemetryPolicy": {
       "Type": "AWS::SQS::QueuePolicy",
       "Properties": {
         "Queues": [
           {
             "Ref": "Telemetry"
-          },
-          {
-            "Ref": "DeadLetter"
           }
         ],
         "PolicyDocument": {
@@ -567,20 +564,12 @@
               "Effect": "Deny",
               "Principal": "*",
               "Action": "sqs:*",
-              "Resource": [
-                {
-                  "Fn::GetAtt": [
-                    "Telemetry",
-                    "Arn"
-                  ]
-                },
-                {
-                  "Fn::GetAtt": [
-                    "DeadLetter",
-                    "Arn"
-                  ]
-                }
-              ],
+              "Resource": {
+                "Fn::GetAtt": [
+                  "Telemetry",
+                  "Arn"
+                ]
+              },
               "Condition": {
                 "Bool": {
                   "aws:SecureTransport": "false"
@@ -592,8 +581,49 @@
       },
       "Metadata": {
         "com.aws.cloudformation.Context": {
-          "why": "Reject non-TLS queue traffic",
-          "must": []
+          "why": "Reject non-TLS traffic for this queue",
+          "must": [
+            "SQS requires one queue resource per policy statement"
+          ]
+        }
+      }
+    },
+    "DeadLetterPolicy": {
+      "Type": "AWS::SQS::QueuePolicy",
+      "Properties": {
+        "Queues": [
+          {
+            "Ref": "DeadLetter"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Deny",
+              "Principal": "*",
+              "Action": "sqs:*",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "DeadLetter",
+                  "Arn"
+                ]
+              },
+              "Condition": {
+                "Bool": {
+                  "aws:SecureTransport": "false"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Reject non-TLS traffic for this queue",
+          "must": [
+            "SQS requires one queue resource per policy statement"
+          ]
         }
       }
     },
@@ -651,7 +681,7 @@
           ]
         }
       },
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "RetainExceptOnCreate",
       "UpdateReplacePolicy": "Retain"
     },
     "Alerts": {
@@ -783,7 +813,7 @@
           ]
         }
       },
-      "DeletionPolicy": "Retain",
+      "DeletionPolicy": "RetainExceptOnCreate",
       "UpdateReplacePolicy": "Retain"
     },
     "ViewerGroup": {
