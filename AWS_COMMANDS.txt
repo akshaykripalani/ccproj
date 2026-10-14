@@ -249,3 +249,23 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T16:18:42.505861+00:00] 6d13acf4bb9b Check whether CloudFormation validation is allowed in the managed home region
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "validate-template", "--region", "ap-southeast-2", "--template-body", "file://infra/bootstrap.json", "--no-cli-pager"]
 [2026-10-14T16:18:44.799285+00:00] 6d13acf4bb9b EXIT 0
+
+[2026-10-14T16:21:02.639735+00:00] 19dd689769ae Recheck CLI identity after team invitation acceptance
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:21:04.040175+00:00] 19dd689769ae EXIT 0
+
+[2026-10-14T16:21:04.605989+00:00] aa2695e0ac2a Recheck Mumbai deployment permission after team invitation acceptance
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "validate-template", "--region", "ap-south-1", "--template-body", "file://infra/bootstrap.json", "--no-cli-pager"]
+[2026-10-14T16:21:05.948939+00:00] aa2695e0ac2a EXIT 254
+
+[2026-10-14T16:21:06.489867+00:00] 73ab6e0fd279 Recheck Mumbai Lambda access after team invitation acceptance
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "list-functions", "--region", "ap-south-1", "--max-items", "1", "--no-cli-pager"]
+[2026-10-14T16:21:08.020948+00:00] 73ab6e0fd279 EXIT 254
+
+[2026-10-14T16:21:08.575369+00:00] 683d2660b323 List CLI profiles without displaying credentials
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "configure", "list-profiles", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:21:09.342253+00:00] 683d2660b323 EXIT 0
+
+[2026-10-14T16:21:37.406921+00:00] 5e88596193f8 Check CLI support for browser login after team invitation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "--version", "--region", "ap-south-1", "--no-cli-pager"]
+[2026-10-14T16:21:38.082249+00:00] 5e88596193f8 EXIT 0
