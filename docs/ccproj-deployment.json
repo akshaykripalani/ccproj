@@ -1,0 +1,47 @@
+{
+  "stack": "ccproj",
+  "artifacts": "ccproj-artifacts-artifacts-bllhfj9fhpbr",
+  "platform": {
+    "DataTable": "ccproj-Data-OWJUAYGLMZZB",
+    "ProcessorFunction": "ccproj-Processor",
+    "GlueDatabase": "ccproj",
+    "ProcessingMapping": "0c7ebf06-260d-42de-b451-071598a6f2f9",
+    "DistributionId": "E2QMBAOSKXNVMX",
+    "LoginDomain": "https://ccproj-039379078306.auth.ap-southeast-2.amazoncognito.com",
+    "AthenaWorkgroup": "ccproj-reports",
+    "ResultsBucket": "ccproj-results-noqdomj6xuph",
+    "QueueUrl": "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo",
+    "ApiUrl": "https://9ojy2mmg65.execute-api.ap-southeast-2.amazonaws.com",
+    "UserPoolId": "ap-southeast-2_iJjP0yB7V",
+    "ArchiveBucket": "ccproj-archive-mx5crrke5wcd",
+    "DlqUrl": "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo",
+    "AlertTopicArn": "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1",
+    "ClientId": "54ddf0h4j4g6c47e7cbmhpp5rt",
+    "ControlTable": "ccproj-Controls-1SBLS2VLV34K5",
+    "DlqArn": "arn:aws:sqs:ap-southeast-2:039379078306:ccproj-DeadLetter-YU54yXeRi1o8.fifo",
+    "FrontendBucket": "ccproj-frontend-ipu2nmzptkhj",
+    "QueueArn": "arn:aws:sqs:ap-southeast-2:039379078306:ccproj-Telemetry-fZ6tZS66tzGn.fifo",
+    "NotifierFunction": "ccproj-Notifier",
+    "DashboardUrl": "https://d1idggpc663p7f.cloudfront.net"
+  },
+  "simulator": {
+    "InstanceId": "i-098cf45e426dd3ab7",
+    "LogGroup": "ccproj-simulator-simulator"
+  },
+  "release": {
+    "backend": {
+      "path": "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip",
+      "key": "releases/fb39fe4732a20afe02033a0bcb1fede544dcbff686afff44f3a96b7f955f3b1d/backend.zip",
+      "sha256": "fb39fe4732a20afe02033a0bcb1fede544dcbff686afff44f3a96b7f955f3b1d"
+    },
+    "simulator": {
+      "path": "C:\\Akshay\\Projects-2\\ccproj\\build\\simulator.tar.gz",
+      "key": "releases/cad6d8d2adeea2c6d0f9afdd3243dbeae6509f2e8649fd9357b41c80302f001f/simulator.tar.gz",
+      "sha256": "cad6d8d2adeea2c6d0f9afdd3243dbeae6509f2e8649fd9357b41c80302f001f"
+    }
+  },
+  "budgetPeriod": {
+    "start": 1791995401,
+    "end": 1805155200
+  }
+}

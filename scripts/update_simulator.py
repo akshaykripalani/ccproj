@@ -31,6 +31,7 @@ def update_simulator(instance, artifacts, key):
         raise RuntimeError("Simulator did not become available through SSM within ten minutes")
     commands = [
         "set -e",
+        "sudo cloud-init status --wait || test -f /etc/systemd/system/ccproj-simulator.service",
         "test -f /etc/systemd/system/ccproj-simulator.service",
         "sudo systemctl stop ccproj-simulator",
         "trap 'sudo systemctl start ccproj-simulator' EXIT",

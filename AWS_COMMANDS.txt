@@ -837,3 +837,87 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T16:45:03.355099+00:00] 68b668a31279 Read simulator stack provisioning state
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj-simulator", "--query", "Stacks[0].StackStatus", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-14T16:45:05.686565+00:00] 68b668a31279 EXIT 0
+
+[2026-10-14T16:46:30.216537+00:00] febd08381822 Check simulator stack output for the live test target
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj-simulator", "--query", "Stacks[0].{Status:StackStatus,Outputs:Outputs}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:46:32.383321+00:00] febd08381822 EXIT 0
+[2026-10-14T16:46:41.623563+00:00] 1f7e77e600d4 EXIT 0
+
+[2026-10-14T16:46:41.646819+00:00] 0a396cef0547 Read deployed stack outputs
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj-simulator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:46:43.809396+00:00] 0a396cef0547 EXIT 0
+
+[2026-10-14T16:46:43.834927+00:00] f672694613c1 Wait for SSM-managed simulator readiness
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "describe-instance-information", "--filters", "Key=InstanceIds,Values=i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:46:45.996008+00:00] f672694613c1 EXIT 0
+
+[2026-10-14T16:46:46.016008+00:00] b98a2781c81b Apply content-addressed simulator release via SSM
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\update-simulator.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:46:48.249096+00:00] b98a2781c81b EXIT 0
+
+[2026-10-14T16:46:48.274399+00:00] fc6bf6328b33 Wait for supervised simulator release update
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "52a3e85c-0b3e-4417-a191-788c6a763755", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:46:50.497055+00:00] fc6bf6328b33 EXIT 255
+
+[2026-10-14T16:47:10.279729+00:00] 08bc6d54b199 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:12.417032+00:00] 08bc6d54b199 EXIT 0
+
+[2026-10-14T16:47:12.504311+00:00] 25b9ab5acfdd Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-fy1kej9i\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:15.029505+00:00] 25b9ab5acfdd EXIT 0 (private response withheld)
+
+[2026-10-14T16:47:15.065781+00:00] 2402dc05b31c Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-o4arx3qh\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:17.522405+00:00] 2402dc05b31c EXIT 0 (private response withheld)
+
+[2026-10-14T16:47:17.542417+00:00] 64dbd2d6f308 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-1184f482e7ff@example.invalid", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:19.877358+00:00] 64dbd2d6f308 EXIT 0
+
+[2026-10-14T16:47:19.909902+00:00] f36aaf90d5cb Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-vublnv5p\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:47:20.170650+00:00] eb181f66fae9 Observe the first EC2 motor states written through the live pipeline
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "query", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--key-condition-expression", "pk = :device AND sk = :state", "--expression-attribute-values", "{\"\\u003adevice\":{\"S\":\"motor-01\"},\"\\u003astate\":{\"S\":\"STATE\"}}", "--query", "Items[].{Device:deviceId,Observed:observedAt,LastSeen:lastSeen}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:22.529215+00:00] eb181f66fae9 EXIT 0
+[2026-10-14T16:47:22.836550+00:00] f36aaf90d5cb EXIT 0 (private response withheld)
+
+[2026-10-14T16:47:22.873325+00:00] 7c314c960b79 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-0tjdf2xv\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:25.350077+00:00] 7c314c960b79 EXIT 0 (private response withheld)
+
+[2026-10-14T16:47:25.371695+00:00] 76ac89cd3093 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-1184f482e7ff@example.invalid", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:29.335120+00:00] 76ac89cd3093 EXIT 0
+
+[2026-10-14T16:47:30.525356+00:00] 71fec483612a Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-1qw6fygb\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:33.368715+00:00] 71fec483612a EXIT 0 (private response withheld)
+
+[2026-10-14T16:47:38.525086+00:00] 3fecfe4ef350 Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-po0fshrq\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:40.839809+00:00] 3fecfe4ef350 EXIT 0 (private response withheld)
+
+[2026-10-14T16:47:50.340541+00:00] cfd84d6a858c Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-1184f482e7ff@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:52.658294+00:00] cfd84d6a858c EXIT 0
+
+[2026-10-14T16:47:52.678297+00:00] 9da127848f8a Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-1184f482e7ff@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T16:47:52.951724+00:00] f54bfcfc0873 Diagnose the first SSM release-update command failure
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "list-command-invocations", "--instance-id", "i-098cf45e426dd3ab7", "--details", "--query", "CommandInvocations[].{CommandId:CommandId,Status:Status,Output:CommandPlugins[].Output}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:47:55.097382+00:00] 9da127848f8a EXIT 0
+[2026-10-14T16:47:55.378943+00:00] f54bfcfc0873 EXIT 0
+
+[2026-10-14T16:48:55.505278+00:00] aa9429e9ad51 Wait for SSM-managed simulator readiness
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "describe-instance-information", "--filters", "Key=InstanceIds,Values=i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:48:57.740338+00:00] aa9429e9ad51 EXIT 0
+
+[2026-10-14T16:48:57.760337+00:00] 1a37ebc021ae Apply content-addressed simulator release via SSM
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\update-simulator.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T16:48:59.913746+00:00] 1a37ebc021ae EXIT 0
+
+[2026-10-14T16:48:59.934337+00:00] 48f5d7a12675 Wait for supervised simulator release update
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "42886e80-b5d0-4e8f-b611-59607e920ab3", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
