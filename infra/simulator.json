@@ -1,0 +1,392 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Single three-motor factory simulator with IAM-only access and no inbound network ports or NAT gateway",
+  "Metadata": {
+    "AWSToolsMetrics": {
+      "AWSAgentToolkit": "aws-cloudformation@3"
+    }
+  },
+  "Resources": {
+    "Vpc": {
+      "Type": "AWS::EC2::VPC",
+      "Properties": {
+        "CidrBlock": "10.42.0.0/24",
+        "EnableDnsSupport": true,
+        "EnableDnsHostnames": true,
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "ccproj"
+          }
+        ]
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Explicit simulator network",
+          "must": []
+        }
+      }
+    },
+    "Subnet": {
+      "Type": "AWS::EC2::Subnet",
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "CidrBlock": "10.42.0.0/26",
+        "MapPublicIpOnLaunch": true
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Public subnet avoids hourly NAT charges",
+          "must": []
+        }
+      }
+    },
+    "Gateway": {
+      "Type": "AWS::EC2::InternetGateway",
+      "Properties": {},
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "HTTPS egress to AWS service endpoints",
+          "must": []
+        }
+      }
+    },
+    "AttachGateway": {
+      "Type": "AWS::EC2::VPCGatewayAttachment",
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "InternetGatewayId": {
+          "Ref": "Gateway"
+        }
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Attach egress route",
+          "must": []
+        }
+      }
+    },
+    "RouteTable": {
+      "Type": "AWS::EC2::RouteTable",
+      "Properties": {
+        "VpcId": {
+          "Ref": "Vpc"
+        }
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Explicit internet routing",
+          "must": []
+        }
+      }
+    },
+    "InternetRoute": {
+      "Type": "AWS::EC2::Route",
+      "Properties": {
+        "RouteTableId": {
+          "Ref": "RouteTable"
+        },
+        "DestinationCidrBlock": "0.0.0.0/0",
+        "GatewayId": {
+          "Ref": "Gateway"
+        }
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Outbound connectivity only",
+          "must": []
+        }
+      },
+      "DependsOn": [
+        "AttachGateway"
+      ]
+    },
+    "SubnetRoute": {
+      "Type": "AWS::EC2::SubnetRouteTableAssociation",
+      "Properties": {
+        "SubnetId": {
+          "Ref": "Subnet"
+        },
+        "RouteTableId": {
+          "Ref": "RouteTable"
+        }
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Bind public routing",
+          "must": []
+        }
+      }
+    },
+    "SecurityGroup": {
+      "Type": "AWS::EC2::SecurityGroup",
+      "Properties": {
+        "GroupDescription": "No inbound access; HTTPS and DNS egress",
+        "VpcId": {
+          "Ref": "Vpc"
+        },
+        "SecurityGroupEgress": [
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 443,
+            "ToPort": 443,
+            "CidrIp": "0.0.0.0/0"
+          },
+          {
+            "IpProtocol": "udp",
+            "FromPort": 53,
+            "ToPort": 53,
+            "CidrIp": "10.42.0.2/32"
+          },
+          {
+            "IpProtocol": "tcp",
+            "FromPort": 53,
+            "ToPort": 53,
+            "CidrIp": "10.42.0.2/32"
+          }
+        ]
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "No SSH or other inbound ports; allow service HTTPS",
+          "must": [
+            "Never add public ingress"
+          ]
+        }
+      }
+    },
+    "SimulatorRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "ec2.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "ScopedAccess",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "execute-api:Invoke"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:execute-api:${AWS::Region}:${AWS::AccountId}:${ApiId}/*/POST/telemetry"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:GetItem",
+                    "dynamodb:PutItem",
+                    "dynamodb:UpdateItem"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:dynamodb:${AWS::Region}:${AWS::AccountId}:table/${ControlTable}"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:s3:::${ArtifactBucket}/${SimulatorKey}"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "ssm:UpdateInstanceInformation",
+                    "ssmmessages:CreateControlChannel",
+                    "ssmmessages:CreateDataChannel",
+                    "ssmmessages:OpenControlChannel",
+                    "ssmmessages:OpenDataChannel"
+                  ],
+                  "Resource": "*"
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:${AWS::StackName}-simulator:*"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Instance role signs ingestion, polls only controls, and reads exact release",
+          "must": [
+            "Only enumerated application access; no user access keys"
+          ]
+        }
+      }
+    },
+    "Profile": {
+      "Type": "AWS::IAM::InstanceProfile",
+      "Properties": {
+        "Roles": [
+          {
+            "Ref": "SimulatorRole"
+          }
+        ]
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Attach runtime role without access keys",
+          "must": []
+        }
+      }
+    },
+    "SimulatorLogs": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "${AWS::StackName}-simulator"
+        },
+        "RetentionInDays": 7
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Bounded simulator diagnostics",
+          "must": []
+        }
+      }
+    },
+    "Instance": {
+      "Type": "AWS::EC2::Instance",
+      "Properties": {
+        "ImageId": {
+          "Ref": "Ami"
+        },
+        "InstanceType": {
+          "Ref": "InstanceType"
+        },
+        "IamInstanceProfile": {
+          "Ref": "Profile"
+        },
+        "SubnetId": {
+          "Ref": "Subnet"
+        },
+        "SecurityGroupIds": [
+          {
+            "Ref": "SecurityGroup"
+          }
+        ],
+        "MetadataOptions": {
+          "HttpTokens": "required",
+          "HttpEndpoint": "enabled",
+          "HttpPutResponseHopLimit": 1
+        },
+        "BlockDeviceMappings": [
+          {
+            "DeviceName": "/dev/xvda",
+            "Ebs": {
+              "VolumeSize": 8,
+              "VolumeType": "gp3",
+              "Encrypted": true,
+              "DeleteOnTermination": true
+            }
+          }
+        ],
+        "CreditSpecification": {
+          "CPUCredits": "standard"
+        },
+        "UserData": {
+          "Fn::Base64": {
+            "Fn::Sub": "#!/bin/bash\nset -euo pipefail\nexec > >(tee /var/log/ccproj-bootstrap.log) 2>&1\ndnf install -y python3-pip amazon-cloudwatch-agent\nmkdir -p /opt/ccproj\naws s3 cp 's3://${ArtifactBucket}/${SimulatorKey}' /tmp/simulator.tar.gz --region '${AWS::Region}'\ntar -xzf /tmp/simulator.tar.gz -C /opt/ccproj\npython3 -m venv /opt/ccproj/venv\n/opt/ccproj/venv/bin/pip install --no-index --find-links /opt/ccproj/wheels -r /opt/ccproj/requirements-runtime.txt\nuseradd --system --home-dir /opt/ccproj ccproj\nchown -R ccproj:ccproj /opt/ccproj\ncat > /etc/systemd/system/ccproj-simulator.service <<'UNIT'\n[Unit]\nDescription=Industrial motor simulator\nAfter=network-online.target\nWants=network-online.target\n[Service]\nUser=ccproj\nWorkingDirectory=/opt/ccproj\nEnvironment=API_URL=${ApiUrl}\nEnvironment=CONTROL_TABLE=${ControlTable}\nEnvironment=AWS_DEFAULT_REGION=${AWS::Region}\nExecStart=/opt/ccproj/venv/bin/python -m simulator.main\nRestart=always\nRestartSec=10\nStandardOutput=append:/var/log/ccproj-simulator.log\nStandardError=append:/var/log/ccproj-simulator.log\nNoNewPrivileges=true\nProtectSystem=strict\nProtectHome=true\n[Install]\nWantedBy=multi-user.target\nUNIT\ntouch /var/log/ccproj-simulator.log\ncat > /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json <<'AGENT'\n{\"logs\":{\"logs_collected\":{\"files\":{\"collect_list\":[{\"file_path\":\"/var/log/ccproj-simulator.log\",\"log_group_name\":\"${AWS::StackName}-simulator\",\"log_stream_name\":\"{instance_id}\",\"timezone\":\"UTC\"},{\"file_path\":\"/var/log/ccproj-bootstrap.log\",\"log_group_name\":\"${AWS::StackName}-simulator\",\"log_stream_name\":\"{instance_id}-bootstrap\",\"timezone\":\"UTC\"}]}}}}\nAGENT\n/opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -s -c file:/opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json\nsystemctl daemon-reload\nsystemctl enable --now ccproj-simulator\n"
+          }
+        },
+        "Tags": [
+          {
+            "Key": "Name",
+            "Value": {
+              "Fn::Sub": "${AWS::StackName}-simulator"
+            }
+          },
+          {
+            "Key": "Project",
+            "Value": "ccproj"
+          }
+        ]
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "One supervised simulator, encrypted small disk, IMDSv2",
+          "must": [
+            "No credentials in user data",
+            "All motors initialize normally on each run"
+          ]
+        }
+      },
+      "DependsOn": [
+        "InternetRoute",
+        "SubnetRoute",
+        "SimulatorLogs"
+      ]
+    }
+  },
+  "Outputs": {
+    "InstanceId": {
+      "Value": {
+        "Ref": "Instance"
+      }
+    },
+    "LogGroup": {
+      "Value": {
+        "Ref": "SimulatorLogs"
+      }
+    }
+  },
+  "Parameters": {
+    "ArtifactBucket": {
+      "Type": "String"
+    },
+    "SimulatorKey": {
+      "Type": "String"
+    },
+    "ApiUrl": {
+      "Type": "String"
+    },
+    "ControlTable": {
+      "Type": "String"
+    },
+    "ApiId": {
+      "Type": "String"
+    },
+    "InstanceType": {
+      "Type": "String",
+      "Default": "t4g.micro",
+      "AllowedValues": [
+        "t4g.micro",
+        "t4g.small"
+      ]
+    },
+    "Ami": {
+      "Type": "AWS::SSM::Parameter::Value<AWS::EC2::Image::Id>",
+      "Default": "/aws/service/ami-amazon-linux-latest/al2023-ami-kernel-default-arm64"
+    }
+  }
+}

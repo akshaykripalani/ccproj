@@ -1,0 +1,32 @@
+let buckets = Resources.*[ Type == 'AWS::S3::Bucket' ]
+rule private_encrypted_versioned_buckets when %buckets !empty {
+    %buckets.Properties.PublicAccessBlockConfiguration.BlockPublicAcls == true
+    %buckets.Properties.PublicAccessBlockConfiguration.BlockPublicPolicy == true
+    %buckets.Properties.PublicAccessBlockConfiguration.IgnorePublicAcls == true
+    %buckets.Properties.PublicAccessBlockConfiguration.RestrictPublicBuckets == true
+    %buckets.Properties.BucketEncryption.ServerSideEncryptionConfiguration !empty
+    %buckets.Properties.VersioningConfiguration.Status == 'Enabled'
+}
+let routes = Resources.*[ Type == 'AWS::ApiGatewayV2::Route' ]
+rule authenticated_routes when %routes !empty {
+    %routes.Properties.AuthorizationType IN ['AWS_IAM', 'JWT']
+}
+let clients = Resources.*[ Type == 'AWS::Cognito::UserPoolClient' ]
+rule public_pkce_clients when %clients !empty {
+    %clients.Properties.GenerateSecret == false
+    %clients.Properties.AllowedOAuthFlows == ['code']
+}
+let instances = Resources.*[ Type == 'AWS::EC2::Instance' ]
+rule encrypted_imdsv2_instances when %instances !empty {
+    %instances.Properties.MetadataOptions.HttpTokens == 'required'
+    %instances.Properties.BlockDeviceMappings.*.Ebs.Encrypted == true
+    %instances.Properties.CreditSpecification.CPUCredits == 'standard'
+}
+let groups = Resources.*[ Type == 'AWS::EC2::SecurityGroup' ]
+rule no_inbound_simulator_ports when %groups !empty {
+    %groups.Properties.SecurityGroupIngress !exists
+}
+let queues = Resources.*[ Type == 'AWS::SQS::Queue' ]
+rule encrypted_queues when %queues !empty {
+    %queues.Properties.SqsManagedSseEnabled == true
+}
