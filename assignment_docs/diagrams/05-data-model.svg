@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="650" height="545" preserveAspectRatio="xMinYMin meet" viewBox="0 0 650 545" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="650" height="545"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-545)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="650" height="545" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="10" y="120" width="385" height="410" rx="9" ry="9" style="stroke: rgb(65%,72%,77%); stroke-linecap: butt; stroke-width: 1; fill: none; fill-rule: evenodd; stroke-dasharray: 5, 3;"/>
+			<text x="22" y="512" style="font-family: Helvetica-Bold; font-size: 11.5px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,1024) scale(1,-1)">Data table: pk + sk / on-demand / encrypted / TTL</text>
+			<rect x="26" y="408" width="170" height="83" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="68.964" y="461.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,923) scale(1,-1)">Device STATE</text>
+			<text x="74.82" y="445.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,891) scale(1,-1)">pk = motor ID</text>
+			<text x="52.980000000000004" y="429.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,859) scale(1,-1)">latest / rules / revision</text>
+			<rect x="209" y="408" width="170" height="83" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="239.5702" y="461.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,923) scale(1,-1)">READING#time#ID</text>
+			<text x="257.82" y="445.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,891) scale(1,-1)">pk = motor ID</text>
+			<text x="235.644" y="429.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,859) scale(1,-1)">24-hour recent history</text>
+			<rect x="26" y="304" width="170" height="83" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="42.4404" y="357.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,715) scale(1,-1)">EVENT#eventId / META</text>
+			<text x="49.64399999999999" y="341.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,683) scale(1,-1)">fingerprint / archiveKey</text>
+			<text x="72.324" y="325.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,651) scale(1,-1)">31-day marker</text>
+			<rect x="209" y="304" width="170" height="83" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="246.45839999999998" y="357.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,715) scale(1,-1)">ALERT#episode</text>
+			<text x="257.82" y="341.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,683) scale(1,-1)">pk = motor ID</text>
+			<text x="246.816" y="325.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,651) scale(1,-1)">active -&gt; resolved</text>
+			<rect x="26" y="200" width="170" height="83" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="64.4876" y="253.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,507) scale(1,-1)">NOTIFY / alertId</text>
+			<text x="51.480000000000004" y="237.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,475) scale(1,-1)">delivery + message ID</text>
+			<text x="48.971999999999994" y="221.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,443) scale(1,-1)">pending work attributes</text>
+			<rect x="209" y="200" width="170" height="83" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="235.78199999999998" y="253.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,507) scale(1,-1)">REPORT#ID / META</text>
+			<text x="242.316" y="237.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,475) scale(1,-1)">owner / parameters</text>
+			<text x="245.65800000000002" y="221.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,443) scale(1,-1)">daily QUOTA item</text>
+			<rect x="26" y="136" width="353" height="43" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="111.205" y="153.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,307) scale(1,-1)">Work GSI: workStatus / workAt</text>
+			<rect x="435" y="366" width="200" height="125" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="493.3174" y="456.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,913) scale(1,-1)">Controls table</text>
+			<text x="477.658" y="440.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,881) scale(1,-1)">motor ID / CONTROL</text>
+			<text x="479.638" y="424.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,849) scale(1,-1)">requested vs applied</text>
+			<text x="491.308" y="408.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,817) scale(1,-1)">requestId / runId</text>
+			<text x="486.994" y="392.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,785) scale(1,-1)">GATEWAY / RUN</text>
+			<rect x="435" y="222" width="200" height="94" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="503.9814" y="289.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,578) scale(1,-1)">S3 archive</text>
+			<text x="477.81399999999996" y="273.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,546) scale(1,-1)">telemetry/day=DATE/</text>
+			<text x="494.644" y="257.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,514) scale(1,-1)">batchId.json.gz</text>
+			<text x="457.46799999999996" y="241.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,482) scale(1,-1)">30-day current + old versions</text>
+			<rect x="435" y="119" width="200" height="60" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="482.9634" y="153.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,306) scale(1,-1)">Private S3 results</text>
+			<text x="483.316" y="137.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,274) scale(1,-1)">Seven-day lifecycle</text>
+			<polyline points="111 200, 202.5 179" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="202.5 179, 194.7006 177.2198, 196.2574 184.0029" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="77.07165" y="182" width="69.85669999999999" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="81.07165" y="186" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,372) scale(1,-1)">Pending only</text>
+			<polyline points="196 345.5, 201 346, 201 395, 405 395, 405 269, 435 269" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="435 269, 427.7964 265.5203, 427.7964 272.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="410.32085" y="325" width="79.35829999999999" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="414.32085" y="329" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,658) scale(1,-1)">Archive pointer</text>
+			<text x="14" y="67" style="font-family: Helvetica; font-size: 11.4px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,134) scale(1,-1)">API date bounds enforce visibility even while asynchronous TTL deletion is pending.</text>
+			<text x="14" y="41" style="font-family: Helvetica; font-size: 11.4px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,82) scale(1,-1)">Device state and control records remain current; history items have separate lifetimes.</text>
+		</g>
+	</g>
+</svg>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="650" height="535" preserveAspectRatio="xMinYMin meet" viewBox="0 0 650 535" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="650" height="535"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-535)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="650" height="535" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="11.0" y="474" width="113.6" height="49" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="42.29939999999999" y="494.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,989) scale(1,-1)">Gateway</text>
+			<path d="M 67.8,470 L 67.8,53 Z" style="stroke: rgb(74%,78%,82%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<rect x="136.6" y="474" width="113.6" height="49" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="177.72019999999998" y="502.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,1005) scale(1,-1)">API +</text>
+			<text x="169.05199999999996" y="486.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,973) scale(1,-1)">Ingestion</text>
+			<path d="M 193.4,470 L 193.4,53 Z" style="stroke: rgb(74%,78%,82%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<rect x="262.2" y="474" width="113.59999999999997" height="49" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="290.0584" y="494.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,989) scale(1,-1)">SQS FIFO</text>
+			<path d="M 319,470 L 319,53 Z" style="stroke: rgb(74%,78%,82%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<rect x="387.79999999999995" y="474" width="113.60000000000002" height="49" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="414.27579999999995" y="494.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,989) scale(1,-1)">Processor</text>
+			<path d="M 444.6,470 L 444.6,53 Z" style="stroke: rgb(74%,78%,82%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<rect x="513.4" y="474" width="113.60000000000002" height="49" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="557.2729999999999" y="502.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,1005) scale(1,-1)">S3 +</text>
+			<text x="539.5279999999999" y="486.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,973) scale(1,-1)">DynamoDB</text>
+			<path d="M 570.2,470 L 570.2,53 Z" style="stroke: rgb(74%,78%,82%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<polyline points="67.8 436, 193.4 436" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="193.4 436, 186.1964 432.5203, 186.1964 439.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="81.9917" y="441" width="97.21660000000001" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="85.9917" y="445" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,890) scale(1,-1)">1. Signed readings</text>
+			<polyline points="193.4 393, 319 393" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="319 393, 311.7964 389.5203, 311.7964 396.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="172.78994999999998" y="398" width="166.82010000000002" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="176.78994999999998" y="402" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,804) scale(1,-1)">2. Validate; enqueue stable batch</text>
+			<polyline points="193.4 350, 67.8 350" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="67.8 350, 75.00358 353.4797, 75.00358 346.5203" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="54.32684999999999" y="355" width="152.54630000000003" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="58.32684999999999" y="359" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,718) scale(1,-1)">3. 202 after queue acceptance</text>
+			<polyline points="319 307, 444.6 307" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="444.6 307, 437.3964 303.5203, 437.3964 310.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="304.05024999999995" y="312" width="155.49949999999995" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="308.05024999999995" y="316" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,632) scale(1,-1)">4. Batch event source mapping</text>
+			<polyline points="444.6 264, 570.2 264" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="570.2 264, 562.9964 260.5203, 562.9964 267.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="432.03099999999995" y="269" width="150.73800000000006" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="436.03099999999995" y="273" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,546) scale(1,-1)">5. Conditional S3 date archive</text>
+			<polyline points="444.6 221, 570.2 221" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="570.2 221, 562.9964 217.5203, 562.9964 224.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="416.5802" y="226" width="181.63959999999997" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="420.5802" y="230" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,460) scale(1,-1)">6. DDB atomic event/state/alert write</text>
+			<polyline points="444.6 178, 319 178" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="319 178, 326.2036 181.4797, 326.2036 174.5203" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="289.48754999999994" y="183" width="184.62490000000003" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="293.48754999999994" y="187" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,374) scale(1,-1)">7. Success or failed/unprocessed IDs</text>
+			<polyline points="319 135, 444.6 135" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="444.6 135, 437.3964 131.5203, 437.3964 138.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="305.55895" y="140" width="152.4821" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="309.55895" y="144" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,288) scale(1,-1)">8. Retry until DLQ receive limit</text>
+			<text x="14" y="39" style="font-family: Helvetica; font-size: 11.4px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,78) scale(1,-1)">Matching event markers suppress recounting; changed-payload event IDs fail validation.</text>
+		</g>
+	</g>
+</svg>

@@ -1,0 +1,16 @@
+flowchart TB
+    source["Git source + PRD<br/>Python / TypeScript<br/>infra generator"]
+    validate["Validate + test<br/>pytest / lint / Guard<br/>TypeScript / browser"]
+    artifacts["Artifact stack<br/>Versioned S3 releases<br/>Backend + simulator"]
+    platform["Platform stack<br/>API / data / identity<br/>Hosting / monitoring"]
+    sim["Simulator stack<br/>Network / EC2 / SSM<br/>Supervised gateway"]
+    frontend["React build / publish<br/>Private S3 + config<br/>CloudFront invalidate"]
+    proof["Recorded acceptance evidence<br/>AWS scenarios / real browser journeys<br/>Screenshots / hashes / XML"]
+    audit["AWS_COMMANDS.txt<br/>Logged CLI purpose / argv / exit<br/>No response or credential logging"]
+    source --> validate
+    validate --> artifacts
+    artifacts -->|"Deploy"| platform
+    platform -->|"Outputs"| sim
+    sim -->|"Platform URL/config"| frontend
+    frontend -->|"Verify served release"| proof
+    platform -->|"All operator AWS calls"| audit

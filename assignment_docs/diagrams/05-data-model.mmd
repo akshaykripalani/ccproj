@@ -1,0 +1,13 @@
+flowchart TB
+    state["Device STATE<br/>pk = motor ID<br/>latest / rules / revision"]
+    recent["READING#time#ID<br/>pk = motor ID<br/>24-hour recent history"]
+    event["EVENT#eventId / META<br/>fingerprint / archiveKey<br/>31-day marker"]
+    alert["ALERT#episode<br/>pk = motor ID<br/>active -> resolved"]
+    outbox["NOTIFY / alertId<br/>delivery + message ID<br/>pending work attributes"]
+    reports["REPORT#ID / META<br/>owner / parameters<br/>daily QUOTA item"]
+    gsi["Work GSI: workStatus / workAt"]
+    controls["Controls table<br/>motor ID / CONTROL<br/>requested vs applied<br/>requestId / runId<br/>GATEWAY / RUN"]
+    archive["S3 archive<br/>telemetry/day=DATE/<br/>batchId.json.gz<br/>30-day current + old versions"]
+    results["Private S3 results<br/>Seven-day lifecycle"]
+    outbox -->|"Pending only"| gsi
+    event -->|"Archive pointer"| archive

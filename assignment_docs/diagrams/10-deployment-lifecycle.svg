@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="650" height="485" preserveAspectRatio="xMinYMin meet" viewBox="0 0 650 485" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="650" height="485"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-485)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="650" height="485" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="12" y="379" width="170" height="76" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="46.178599999999996" y="429.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,858) scale(1,-1)">Git source + PRD</text>
+			<text x="44.64399999999999" y="413.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,826) scale(1,-1)">Python / TypeScript</text>
+			<text x="57.982" y="397.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,794) scale(1,-1)">infra generator</text>
+			<rect x="241" y="379" width="170" height="76" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="284.1314" y="429.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,858) scale(1,-1)">Validate + test</text>
+			<text x="275.642" y="413.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,826) scale(1,-1)">pytest / lint / Guard</text>
+			<text x="270.986" y="397.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,794) scale(1,-1)">TypeScript / browser</text>
+			<rect x="468" y="379" width="170" height="76" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="513.723" y="429.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,858) scale(1,-1)">Artifact stack</text>
+			<text x="492.64" y="413.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,826) scale(1,-1)">Versioned S3 releases</text>
+			<text x="498.478" y="397.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,794) scale(1,-1)">Backend + simulator</text>
+			<rect x="468" y="220" width="170" height="76" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="510.2758" y="270.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,540) scale(1,-1)">Platform stack</text>
+			<text x="502.63599999999997" y="254.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,508) scale(1,-1)">API / data / identity</text>
+			<text x="499.648" y="238.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,476) scale(1,-1)">Hosting / monitoring</text>
+			<rect x="241" y="220" width="170" height="76" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="279.8286" y="270.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,540) scale(1,-1)">Simulator stack</text>
+			<text x="269.318" y="254.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,508) scale(1,-1)">Network / EC2 / SSM</text>
+			<text x="271.976" y="238.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,476) scale(1,-1)">Supervised gateway</text>
+			<rect x="12" y="220" width="170" height="76" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="36.364000000000004" y="270.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,540) scale(1,-1)">React build / publish</text>
+			<text x="46.474000000000004" y="254.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,508) scale(1,-1)">Private S3 + config</text>
+			<text x="40.312" y="238.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,476) scale(1,-1)">CloudFront invalidate</text>
+			<rect x="12" y="60" width="290" height="76" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="64.651" y="110.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,220) scale(1,-1)">Recorded acceptance evidence</text>
+			<text x="53.638000000000005" y="94.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,188) scale(1,-1)">AWS scenarios / real browser journeys</text>
+			<text x="81.964" y="78.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,156) scale(1,-1)">Screenshots / hashes / XML</text>
+			<rect x="350" y="60" width="288" height="76" rx="7" ry="7" style="stroke: rgb(38%,45%,52%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="429.5944" y="110.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,220) scale(1,-1)">AWS_COMMANDS.txt</text>
+			<text x="408.62" y="94.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,188) scale(1,-1)">Logged CLI purpose / argv / exit</text>
+			<text x="404.294" y="78.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,156) scale(1,-1)">No response or credential logging</text>
+			<polyline points="182 417, 241 417" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="241 417, 233.7964 413.5203, 233.7964 420.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<polyline points="411 417, 468 417" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="468 417, 460.7964 413.5203, 460.7964 420.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<polyline points="553 379, 553 296" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="553 296, 549.5203 303.2036, 556.4797 303.2036" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="532.3508" y="342.5" width="41.298400000000015" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="536.3508" y="346.5" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,693) scale(1,-1)">Deploy</text>
+			<polyline points="468 258, 411 258" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="411 258, 418.2036 261.4797, 418.2036 254.5203" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="416.7643" y="263.0" width="45.47140000000002" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="420.7643" y="267.0" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,534) scale(1,-1)">Outputs</text>
+			<polyline points="241 258, 182 258" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="182 258, 189.2036 261.4797, 189.2036 254.5203" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="159.63355" y="263.0" width="103.73289999999997" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="163.63355" y="267.0" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,534) scale(1,-1)">Platform URL/config</text>
+			<polyline points="97 220, 157 136" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="157 136, 149.9814 139.8392, 155.6446 143.8843" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="71.75280000000001" y="168" width="108.49439999999998" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="75.75280000000001" y="172" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,344) scale(1,-1)">Verify served release</text>
+			<polyline points="553 220, 494 136" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="494 136, 495.2929 143.8948, 500.9879 139.8948" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="474.78355" y="168" width="114.43290000000002" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="478.78355" y="172" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,344) scale(1,-1)">All operator AWS calls</text>
+		</g>
+	</g>
+</svg>

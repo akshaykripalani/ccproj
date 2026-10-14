@@ -1,0 +1,35 @@
+flowchart TB
+    ec2["EC2 gateway<br/>IAM / SigV4"]
+    api["API Gateway<br/>IAM or JWT"]
+    ing["Ingestion<br/>Lambda"]
+    q["SQS FIFO<br/>factory group"]
+    processor["Processor<br/>Lambda"]
+    dlq["FIFO DLQ<br/>After 3 receives"]
+    data["DynamoDB Data<br/>State / history<br/>Alerts / outbox"]
+    archive["S3 archive<br/>JSON.gz / date<br/>Glue schema"]
+    app["ApiBackend<br/>Lambda"]
+    ctrl["DynamoDB<br/>Controls"]
+    browser["React browser<br/>Cognito login<br/>JWT APIs"]
+    hosting["CloudFront<br/>OAC -> private<br/>S3 frontend"]
+    athena["Athena<br/>Bounded SQL<br/>Private results"]
+    sched["Scheduler<br/>Every minute"]
+    notify["Notifier Lambda<br/>Pending work<br/>GSI query"]
+    sns["SNS + KMS<br/>Confirmed<br/>email"]
+    ec2 --> api
+    api --> ing
+    ing --> q
+    q -->|"Consume"| processor
+    q -->|"Redrive"| dlq
+    processor -->|"Transaction"| data
+    processor -->|"Archive"| archive
+    api -->|"JWT routes"| app
+    app -->|"Request"| ctrl
+    ec2 -->|"Poll / ack"| ctrl
+    browser -->|"Access JWT"| api
+    hosting -->|"HTTPS"| browser
+    app -->|"Start / status"| athena
+    athena -->|"Query"| archive
+    app -->|"Read state"| data
+    sched --> notify
+    notify -->|"Publish"| sns
+    data -->|"Pending intents"| notify

@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant browser as React browser
+    participant cognito as Cognito hosted login
+    participant api as API Gateway JWT authorizer
+    participant backend as ApiBackend
+    participant data as DynamoDB / Cognito groups
+    browser->>cognito: Authorize: code + state + S256
+    cognito->>browser: Callback: code + matching state
+    browser->>cognito: Exchange code + PKCE verifier
+    cognito->>browser: Access / ID / refresh tokens
+    browser->>api: Bearer access token
+    api->>backend: Validated principal + claims
+    backend->>data: Role/owner check; current operator
+    backend->>browser: Authorized result or rejection

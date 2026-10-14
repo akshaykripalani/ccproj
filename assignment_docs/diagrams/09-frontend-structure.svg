@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="650" height="465" preserveAspectRatio="xMinYMin meet" viewBox="0 0 650 465" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="650" height="465"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-465)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="650" height="465" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="10" y="363" width="150" height="67" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="59.846599999999995" y="400.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,801) scale(1,-1)">main.tsx</text>
+			<text x="57.321999999999996" y="384.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,769) scale(1,-1)">React root</text>
+			<rect x="229" y="363" width="185" height="67" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="298.7646" y="400.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,801) scale(1,-1)">App.tsx</text>
+			<text x="258.8" y="384.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,769) scale(1,-1)">Auth shell / hash routes</text>
+			<rect x="478" y="363" width="160" height="67" rx="7" ry="7" style="stroke: rgb(50%,33%,65%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(94%,92%,98%); fill-rule: evenodd;"/>
+			<text x="537.6764000000001" y="400.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,801) scale(1,-1)">auth.ts</text>
+			<text x="499.65" y="384.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,769) scale(1,-1)">OIDC / PKCE session</text>
+			<rect x="20" y="195" width="275" height="86" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="128.89939999999999" y="250.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,500) scale(1,-1)">pages.tsx</text>
+			<text x="90.48" y="234.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,468) scale(1,-1)">Overview / device / alerts</text>
+			<text x="92.80799999999999" y="218.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,436) scale(1,-1)">Reports / operator users</text>
+			<rect x="356" y="195" width="275" height="86" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="445.9584" y="250.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,500) scale(1,-1)">components.tsx</text>
+			<text x="423.81" y="234.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,468) scale(1,-1)">Recharts / cards / controls</text>
+			<text x="437.148" y="218.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,436) scale(1,-1)">Accessible shared UI</text>
+			<rect x="20" y="52" width="175" height="67" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="82.0056" y="89.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,179) scale(1,-1)">hooks.ts</text>
+			<text x="60.147999999999996" y="73.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,147) scale(1,-1)">Poll / clock / abort</text>
+			<rect x="238" y="52" width="175" height="67" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="309.3056" y="89.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,179) scale(1,-1)">api.ts</text>
+			<text x="265.14" y="73.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,147) scale(1,-1)">Access token / timeout</text>
+			<rect x="456" y="52" width="175" height="67" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="488.3758" y="89.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,179) scale(1,-1)">types.ts / format.ts</text>
+			<text x="493.478" y="73.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,147) scale(1,-1)">CSS tokens / entry</text>
+			<polyline points="160 396.5, 229 396.5" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="229 396.5, 221.7964 393.0203, 221.7964 399.9797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<polyline points="414 396.5, 478 396.5" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="478 396.5, 470.7964 393.0203, 470.7964 399.9797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<polyline points="321.5 363, 321 320, 157 320, 157.5 281" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="157.5 281, 153.9282 288.1584, 160.8871 288.2476" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="196.7262" y="324" width="36.54759999999999" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="200.7262" y="328" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,656) scale(1,-1)">Route</text>
+			<polyline points="295 238, 356 238" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="356 238, 348.7964 234.5203, 348.7964 241.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="298.60735" y="243.0" width="53.78530000000001" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="302.60735" y="247.0" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,494) scale(1,-1)">Compose</text>
+			<polyline points="157.5 195, 107.5 119" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="107.5 119, 108.5522 126.9305, 114.3662 123.1055" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="105.602" y="162.0" width="53.79599999999999" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="109.602" y="166.0" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,332) scale(1,-1)">Live state</text>
+			<polyline points="195 85.5, 238 85.5" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="238 85.5, 230.7964 82.02028, 230.7964 88.97972" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="199.11965" y="90.5" width="34.760700000000014" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="203.11965" y="94.5" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,189) scale(1,-1)">Fetch</text>
+			<polyline points="543.5 119, 493.5 195" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="493.5 195, 500.3662 190.8945, 494.5522 187.0695" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="496.529" y="146" width="104.94200000000001" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="500.529" y="150" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,300) scale(1,-1)">Types / presentation</text>
+		</g>
+	</g>
+</svg>

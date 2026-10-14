@@ -52,7 +52,9 @@ The overview, detail, alerts, reports and mobile overview below were captured fr
 
 ### Screenshot E. Mobile viewer layout
 
-![Mobile overview captured during deployed browser acceptance](assets/ui-overview-mobile.png)
+![Mobile overview viewport excerpt from deployed browser acceptance](assets/ui-overview-mobile-viewport.png)
+
+The top viewport is shown for print legibility. The unchanged [full-page mobile capture](assets/ui-overview-mobile.png) is also supplied.
 
 ### Screenshot F. Revised concise entry page
 

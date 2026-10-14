@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant gateway as Gateway
+    participant ingest as API + Ingestion
+    participant queue as SQS FIFO
+    participant process as Processor
+    participant stores as S3 + DynamoDB
+    gateway->>ingest: Signed readings
+    ingest->>queue: Validate; enqueue stable batch
+    ingest->>gateway: 202 after queue acceptance
+    queue->>process: Batch event source mapping
+    process->>stores: Conditional S3 date archive
+    process->>stores: DDB atomic event/state/alert write
+    process->>queue: Success or failed/unprocessed IDs
+    queue->>process: Retry until DLQ receive limit

@@ -1,0 +1,17 @@
+flowchart TB
+    browser["Authenticated UI<br/>Report parameters"]
+    backend["ApiBackend<br/>Validate / quota / owner"]
+    athena["Athena workgroup<br/>10 MiB scan limit"]
+    archive["Private S3 archive<br/>Projected dates<br/>Glue table schema"]
+    results["Private results<br/>Owner-checked status<br/>Charts / table / CSV"]
+    recovery["Recovery script<br/>Bounded archive prefix<br/>Dedup + original times"]
+    table["Disposable table<br/>Reconstructed state<br/>No live-table writes"]
+    verify["Verify + clean up<br/>No SNS publication<br/>Not regional DR"]
+    browser --> backend
+    backend -->|"Predefined SQL"| athena
+    athena -->|"Read"| archive
+    athena -->|"Query output"| results
+    results -->|"Poll result via API"| browser
+    archive -->|"Read / sort history"| recovery
+    recovery --> table
+    table --> verify

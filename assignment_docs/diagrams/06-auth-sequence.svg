@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="650" height="545" preserveAspectRatio="xMinYMin meet" viewBox="0 0 650 545" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="650" height="545"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-545)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="650" height="545" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="11.0" y="484" width="113.6" height="49" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="25.075799999999994" y="504.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,1009) scale(1,-1)">React browser</text>
+			<path d="M 67.8,480 L 67.8,53 Z" style="stroke: rgb(74%,78%,82%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<rect x="136.6" y="484" width="113.6" height="49" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="169.9826" y="512.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,1025) scale(1,-1)">Cognito</text>
+			<text x="161.04799999999997" y="496.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,993) scale(1,-1)">hosted login</text>
+			<path d="M 193.4,480 L 193.4,53 Z" style="stroke: rgb(74%,78%,82%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<rect x="262.2" y="484" width="113.59999999999997" height="49" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="281.4404" y="512.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,1025) scale(1,-1)">API Gateway</text>
+			<text x="278.326" y="496.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,993) scale(1,-1)">JWT authorizer</text>
+			<path d="M 319,480 L 319,53 Z" style="stroke: rgb(74%,78%,82%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<rect x="387.79999999999995" y="484" width="113.60000000000002" height="49" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="408.7702" y="504.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,1009) scale(1,-1)">ApiBackend</text>
+			<path d="M 444.6,480 L 444.6,53 Z" style="stroke: rgb(74%,78%,82%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<rect x="513.4" y="484" width="113.60000000000002" height="49" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="533.3409999999999" y="512.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,1025) scale(1,-1)">DynamoDB /</text>
+			<text x="529.5139999999999" y="496.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,993) scale(1,-1)">Cognito groups</text>
+			<path d="M 570.2,480 L 570.2,53 Z" style="stroke: rgb(74%,78%,82%); stroke-linecap: butt; stroke-width: 1; stroke-dasharray: 3, 3;"/>
+			<polyline points="67.8 446, 193.4 446" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="193.4 446, 186.1964 442.5203, 186.1964 449.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="47.189949999999996" y="451" width="166.82009999999997" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="51.189949999999996" y="455" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,910) scale(1,-1)">1. Authorize: code + state + S256</text>
+			<polyline points="193.4 403, 67.8 403" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="67.8 403, 75.00358 406.4797, 75.00358 399.5203" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="44.67545" y="408" width="171.84909999999996" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="48.67545" y="412" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,824) scale(1,-1)">2. Callback: code + matching state</text>
+			<polyline points="67.8 360, 193.4 360" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="193.4 360, 186.1964 356.5203, 186.1964 363.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="45.5689" y="365" width="170.06220000000002" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="49.5689" y="369" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,738) scale(1,-1)">3. Exchange code + PKCE verifier</text>
+			<polyline points="193.4 317, 67.8 317" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="67.8 317, 75.00358 320.4797, 75.00358 313.5203" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="55.23635" y="322" width="150.72729999999996" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="59.23635" y="326" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,652) scale(1,-1)">4. Access / ID / refresh tokens</text>
+			<polyline points="67.8 274, 319 274" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="319 274, 311.7964 270.5203, 311.7964 277.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="134.68555" y="279" width="117.4289" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="138.68555" y="283" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,566) scale(1,-1)">5. Bearer access token</text>
+			<polyline points="319 231, 444.6 231" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="444.6 231, 437.3964 227.5203, 437.3964 234.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="306.88575" y="236" width="149.82850000000002" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="310.88575" y="240" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,480) scale(1,-1)">6. Validated principal + claims</text>
+			<polyline points="444.6 188, 570.2 188" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="570.2 188, 562.9964 184.5203, 562.9964 191.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="413.89985" y="193" width="187.00029999999992" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="417.89985" y="197" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,394) scale(1,-1)">7. Role/owner check; current operator</text>
+			<polyline points="444.6 145, 67.8 145" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="67.8 145, 75.00358 148.4797, 75.00358 141.5203" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="178.16134999999997" y="150" width="156.07730000000004" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="182.16134999999997" y="154" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,308) scale(1,-1)">8. Authorized result or rejection</text>
+			<text x="14" y="40" style="font-family: Helvetica; font-size: 11.4px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,80) scale(1,-1)">Session storage is per tab. Sign-out clears local session and uses hosted logout.</text>
+		</g>
+	</g>
+</svg>

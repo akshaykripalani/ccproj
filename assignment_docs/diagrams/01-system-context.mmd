@@ -1,0 +1,12 @@
+flowchart TB
+    people["Viewer / operator<br/>Web browser"]
+    gateway["Factory gateway<br/>Three simulated<br/>motors on EC2"]
+    app["Monitoring platform<br/>Current state + charts<br/>Controls + alerts<br/>Historical reports"]
+    cognito["Amazon Cognito<br/>Human identity"]
+    email["Confirmed mailbox<br/>Equipment /<br/>operational alerts"]
+    maintainer["Maintainer<br/>Logged CLI + IaC"]
+    people -->|"HTTPS + access JWT"| app
+    gateway -->|"Signed telemetry"| app
+    people -->|"Hosted login"| cognito
+    app -->|"SNS email"| email
+    maintainer -->|"Deploy / observe"| app

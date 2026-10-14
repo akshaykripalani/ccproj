@@ -8,10 +8,12 @@ Start with [Submission_Report.pdf](Submission_Report.pdf), the consolidated requ
 1. [Requirements.md](Requirements.md): problem, scope, users, functional and non-functional requirements, and acceptance traceability.
 2. [Design_and_Implementation.md](Design_and_Implementation.md): architecture, data model, processing algorithms, authentication, dashboard, deployment, testing, costs and limitations.
 3. [Tools_Used.md](Tools_Used.md): AWS services, development tools, libraries, versions and repository map.
-4. [Diagrams.md](Diagrams.md): eight architecture/design diagrams, supplied as vector SVG, PNG and editable Mermaid source in `diagrams/`.
+4. [Diagrams.md](Diagrams.md): ten architecture/design diagrams, supplied as vector SVG, PNG and editable Mermaid source in `diagrams/`.
 5. [Evidence.md](Evidence.md): evidence index, test scope, selected screenshots and submission readiness.
 
 `assets/` contains copies of selected project screenshots. `evidence/` contains compact copies of recorded acceptance summaries and a checksum manifest. The original XML runs, detailed operational records and append-only AWS command log remain in the repository, linked from the evidence document. No account passwords, tokens or email screenshots are included.
+
+The 40-page PDF was rendered for visual review. Local links, required report text, page text bounds and credential patterns were checked; [document-review.json](evidence/document-review.json) records the review scope. The original PRD and application code were unchanged during this submission task.
 
 ## Important submission status
 

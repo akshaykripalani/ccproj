@@ -1,0 +1,6 @@
+flowchart TB
+    instance["EC2 t4g.micro ARM<br/>systemd Python simulator<br/>Encrypted 8 GiB gp3; IMDSv2<br/>IAM instance profile; no SSH ingress"]
+    igw["Route + Internet Gateway<br/>0.0.0.0/0; public IPv4"]
+    endpoints["Regional AWS endpoints<br/>API Gateway / DynamoDB<br/>SSM / S3 / CloudWatch<br/>Service IAM authorization"]
+    instance -->|"TCP 443 outbound"| igw
+    igw -->|"HTTPS"| endpoints

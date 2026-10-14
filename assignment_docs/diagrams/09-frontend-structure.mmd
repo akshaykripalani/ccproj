@@ -1,0 +1,16 @@
+flowchart TB
+    entry["main.tsx<br/>React root"]
+    app["App.tsx<br/>Auth shell / hash routes"]
+    auth["auth.ts<br/>OIDC / PKCE session"]
+    pages["pages.tsx<br/>Overview / device / alerts<br/>Reports / operator users"]
+    components["components.tsx<br/>Recharts / cards / controls<br/>Accessible shared UI"]
+    hooks["hooks.ts<br/>Poll / clock / abort"]
+    api["api.ts<br/>Access token / timeout"]
+    types["types.ts / format.ts<br/>CSS tokens / entry"]
+    entry --> app
+    app --> auth
+    app -->|"Route"| pages
+    pages -->|"Compose"| components
+    pages -->|"Live state"| hooks
+    hooks -->|"Fetch"| api
+    types -->|"Types / presentation"| components

@@ -1,0 +1,12 @@
+flowchart TB
+    request["Operator request<br/>new requestId<br/>status pending"]
+    apply["Simulator poll<br/>Match request / run<br/>Apply + acknowledge"]
+    timeout["No ack after 60s<br/>UI timeout<br/>Request retained"]
+    healthy["Healthy rule<br/>above = 0..2<br/>No active episode"]
+    active["Active episode<br/>Record alert + intent<br/>No repeat activation"]
+    resolved["Resolved episode<br/>Keep alert history<br/>No recovery email"]
+    request -->|"~5-second poll"| apply
+    apply -->|"If no ack"| timeout
+    healthy -->|"3 consecutive breaches"| active
+    active -->|"3 consecutive healthy"| resolved
+    resolved -->|"A later episode may activate again"| healthy

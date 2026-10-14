@@ -1,0 +1,115 @@
+{
+  "Items": [
+    {
+      "rule": {
+        "S": "temperature"
+      },
+      "pk": {
+        "S": "NOTIFY"
+      },
+      "delivery": {
+        "S": "sns_accepted"
+      },
+      "expiresAt": {
+        "N": "1794588664"
+      },
+      "reading": {
+        "M": {
+          "eventId": {
+            "S": "96d9266a63c24168b48147f08c0aac5c:motor-01:13"
+          },
+          "schemaVersion": {
+            "N": "1"
+          },
+          "temperatureC": {
+            "N": "94.23"
+          },
+          "operatingState": {
+            "S": "running"
+          },
+          "observedAt": {
+            "S": "2026-10-14T16:51:04.122Z"
+          },
+          "vibrationMmS": {
+            "N": "1.518"
+          },
+          "powerWatts": {
+            "N": "422.53"
+          },
+          "deviceId": {
+            "S": "motor-01"
+          }
+        }
+      },
+      "publishedAt": {
+        "S": "2026-10-14T17:17:54.409Z"
+      },
+      "deviceId": {
+        "S": "motor-01"
+      },
+      "snsMessageId": {
+        "S": "ce447f9a-a529-500f-9edd-1cd31eab88fe"
+      },
+      "sk": {
+        "S": "2026-10-14T16:51:04.122Z#temperature#96d9266a63c24168b48147f08c0aac5c:motor-01:13"
+      }
+    },
+    {
+      "pk": {
+        "S": "NOTIFY"
+      },
+      "expiresAt": {
+        "N": "1794588724"
+      },
+      "publishedAt": {
+        "S": "2026-10-14T17:17:54.446Z"
+      },
+      "delivery": {
+        "S": "sns_accepted"
+      },
+      "rule": {
+        "S": "vibration"
+      },
+      "reading": {
+        "M": {
+          "eventId": {
+            "S": "96d9266a63c24168b48147f08c0aac5c:motor-01:19"
+          },
+          "schemaVersion": {
+            "N": "1"
+          },
+          "temperatureC": {
+            "N": "52.08"
+          },
+          "operatingState": {
+            "S": "running"
+          },
+          "observedAt": {
+            "S": "2026-10-14T16:52:04.448Z"
+          },
+          "vibrationMmS": {
+            "N": "6.854"
+          },
+          "powerWatts": {
+            "N": "416.68"
+          },
+          "deviceId": {
+            "S": "motor-01"
+          }
+        }
+      },
+      "sk": {
+        "S": "2026-10-14T16:52:04.448Z#vibration#96d9266a63c24168b48147f08c0aac5c:motor-01:19"
+      },
+      "deviceId": {
+        "S": "motor-01"
+      },
+      "snsMessageId": {
+        "S": "6a005931-42b2-50ce-9a4a-3a78f930f83f"
+      }
+    }
+  ],
+  "Count": 2,
+  "ScannedCount": 2,
+  "ConsumedCapacity": null
+}

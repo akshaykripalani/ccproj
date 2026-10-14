@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="650" height="515" preserveAspectRatio="xMinYMin meet" viewBox="0 0 650 515" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="650" height="515"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-515)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="650" height="515" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="12" y="394" width="175" height="76" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="49.199400000000004" y="444.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,888) scale(1,-1)">Operator request</text>
+			<text x="61.814" y="428.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,856) scale(1,-1)">new requestId</text>
+			<text x="60.476" y="412.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,824) scale(1,-1)">status pending</text>
+			<rect x="238" y="394" width="175" height="76" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="284.15840000000003" y="444.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,888) scale(1,-1)">Simulator poll</text>
+			<text x="273.81" y="428.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,856) scale(1,-1)">Match request / run</text>
+			<text x="268.638" y="412.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,824) scale(1,-1)">Apply + acknowledge</text>
+			<rect x="465" y="394" width="173" height="76" rx="7" ry="7" style="stroke: rgb(71%,48%,13%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(100%,96%,90%); fill-rule: evenodd;"/>
+			<text x="503.946" y="444.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,888) scale(1,-1)">No ack after 60s</text>
+			<text x="524.158" y="428.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,856) scale(1,-1)">UI timeout</text>
+			<text x="505.81" y="412.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,824) scale(1,-1)">Request retained</text>
+			<polyline points="187 432, 238 432" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="238 432, 230.7964 428.5203, 230.7964 435.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="173.55915" y="437.0" width="77.8817" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="177.55915" y="441.0" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,882) scale(1,-1)">~5-second poll</text>
+			<polyline points="413 432, 465 432" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="465 432, 457.7964 428.5203, 457.7964 435.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="414.777" y="437.0" width="48.44599999999997" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="418.777" y="441.0" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,882) scale(1,-1)">If no ack</text>
+			<text x="18" y="340" style="font-family: Helvetica-Bold; font-size: 13px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,680) scale(1,-1)">Per-device, per-rule measured state</text>
+			<rect x="12" y="215" width="175" height="80" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="64.0112" y="267.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,534) scale(1,-1)">Healthy rule</text>
+			<text x="66.30799999999999" y="251.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,502) scale(1,-1)">above = 0..2</text>
+			<text x="51.812" y="235.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,470) scale(1,-1)">No active episode</text>
+			<rect x="238" y="215" width="175" height="80" rx="7" ry="7" style="stroke: rgb(71%,48%,13%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(100%,96%,90%); fill-rule: evenodd;"/>
+			<text x="281.7404" y="267.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,534) scale(1,-1)">Active episode</text>
+			<text x="271.308" y="251.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,502) scale(1,-1)">Record alert + intent</text>
+			<text x="272.142" y="235.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,470) scale(1,-1)">No repeat activation</text>
+			<rect x="465" y="215" width="173" height="80" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="498.7814" y="267.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,534) scale(1,-1)">Resolved episode</text>
+			<text x="504.81399999999996" y="251.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,502) scale(1,-1)">Keep alert history</text>
+			<text x="503.158" y="235.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,470) scale(1,-1)">No recovery email</text>
+			<polyline points="187 255, 238 255" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="238 255, 230.7964 251.5203, 230.7964 258.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="153.79825" y="304" width="120.40350000000001" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="157.79825" y="308" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,616) scale(1,-1)">3 consecutive breaches</text>
+			<polyline points="413 255, 465 255" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="465 255, 457.7964 251.5203, 457.7964 258.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="382.5544" y="304" width="110.89119999999997" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="386.5544" y="308" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,616) scale(1,-1)">3 consecutive healthy</text>
+			<polyline points="551.5 215, 551 160, 99 160, 99.5 215" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="99.5 215, 102.9141 207.7651, 95.95494 207.8284" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="239.22525000000002" y="164" width="171.54950000000002" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="243.22525000000002" y="168" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,336) scale(1,-1)">A later episode may activate again</text>
+			<text x="14" y="104" style="font-family: Helvetica; font-size: 11.4px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,208) scale(1,-1)">Temperature &gt;75 C; vibration &gt;4.5 mm/s. Each opposite reading resets its sequence.</text>
+			<text x="14" y="78" style="font-family: Helvetica; font-size: 11.4px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,156) scale(1,-1)">Stopped + reporting can be online. No valid processed receipt for 60s means offline.</text>
+			<text x="14" y="52" style="font-family: Helvetica; font-size: 11.4px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,104) scale(1,-1)">Only newer observations advance counters. Operator reset does not delete alerts.</text>
+		</g>
+	</g>
+</svg>

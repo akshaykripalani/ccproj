@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="650" height="520" preserveAspectRatio="xMinYMin meet" viewBox="0 0 650 520" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="650" height="520"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-520)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="650" height="520" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="12" y="415" width="145" height="70" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="35.241" y="454.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,908) scale(1,-1)">Authenticated UI</text>
+			<text x="34.483999999999995" y="438.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,876) scale(1,-1)">Report parameters</text>
+			<rect x="224" y="415" width="185" height="70" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="280.6702" y="454.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,908) scale(1,-1)">ApiBackend</text>
+			<text x="253.464" y="438.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,876) scale(1,-1)">Validate / quota / owner</text>
+			<rect x="477" y="415" width="160" height="70" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="502.2292" y="454.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,908) scale(1,-1)">Athena workgroup</text>
+			<text x="511.658" y="438.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,876) scale(1,-1)">10 MiB scan limit</text>
+			<rect x="477" y="259" width="160" height="85" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="503.5808" y="313.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,627) scale(1,-1)">Private S3 archive</text>
+			<text x="515.312" y="297.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,595) scale(1,-1)">Projected dates</text>
+			<text x="506.978" y="281.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,563) scale(1,-1)">Glue table schema</text>
+			<rect x="224" y="259" width="185" height="85" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="273.76959999999997" y="313.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,627) scale(1,-1)">Private results</text>
+			<text x="256.812" y="297.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,595) scale(1,-1)">Owner-checked status</text>
+			<text x="263.478" y="281.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,563) scale(1,-1)">Charts / table / CSV</text>
+			<rect x="12" y="95" width="175" height="85" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="52.9814" y="149.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,299) scale(1,-1)">Recovery script</text>
+			<text x="38.138" y="133.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,267) scale(1,-1)">Bounded archive prefix</text>
+			<text x="39.64399999999999" y="117.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,235) scale(1,-1)">Dedup + original times</text>
+			<rect x="255" y="95" width="175" height="85" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="293.22860000000003" y="149.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,299) scale(1,-1)">Disposable table</text>
+			<text x="289.142" y="133.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,267) scale(1,-1)">Reconstructed state</text>
+			<text x="291.824" y="117.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,235) scale(1,-1)">No live-table writes</text>
+			<rect x="477" y="95" width="160" height="85" rx="7" ry="7" style="stroke: rgb(38%,45%,52%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(94%,95%,96%); fill-rule: evenodd;"/>
+			<text x="507.5488" y="149.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,299) scale(1,-1)">Verify + clean up</text>
+			<text x="504.98" y="133.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,267) scale(1,-1)">No SNS publication</text>
+			<text x="514.322" y="117.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,235) scale(1,-1)">Not regional DR</text>
+			<polyline points="157 450, 224 450" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="224 450, 216.7964 446.5203, 216.7964 453.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<polyline points="409 450, 477 450" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="477 450, 469.7964 446.5203, 469.7964 453.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="400.93475" y="455.0" width="84.13049999999998" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="404.93475" y="459.0" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,918) scale(1,-1)">Predefined SQL</text>
+			<polyline points="557 415, 557 344" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="557 344, 553.5203 351.2036, 560.4797 351.2036" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="540.2135" y="384.5" width="33.57299999999998" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="544.2135" y="388.5" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,777) scale(1,-1)">Read</text>
+			<polyline points="477 450, 444 450, 444 302, 409 301.5" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="409 301.5, 416.1531 305.0823, 416.2525 298.1235" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="408.07165" y="373" width="69.85669999999999" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="412.07165" y="377" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,754) scale(1,-1)">Query output</text>
+			<polyline points="224 301.5, 84 302, 84.5 415" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="84.5 415, 87.94782 407.7811, 80.98844 407.8119" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="95.07740000000001" y="311" width="91.84519999999998" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="99.07740000000001" y="315" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,630) scale(1,-1)">Poll result via API</text>
+			<polyline points="557 259, 557 225, 99 225, 99.5 180" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="99.5 180, 95.94046 187.1645, 102.8995 187.2418" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="254.5901" y="229" width="94.81979999999999" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="258.5901" y="233" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,466) scale(1,-1)">Read / sort history</text>
+			<polyline points="187 137.5, 255 137.5" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="255 137.5, 247.7964 134.0203, 247.7964 140.9797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<polyline points="430 137.5, 477 137.5" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="477 137.5, 469.7964 134.0203, 469.7964 140.9797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<text x="14" y="43" style="font-family: Helvetica; font-size: 11.4px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,86) scale(1,-1)">Reports: 1-7 dates within 30 days, at most 100 project report starts per UTC day.</text>
+		</g>
+	</g>
+</svg>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg
+  PUBLIC '-//W3C//DTD SVG 1.0//EN'
+  'http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd'>
+<svg width="650" height="465" preserveAspectRatio="xMinYMin meet" viewBox="0 0 650 465" xmlns="http://www.w3.org/2000/svg" version="1.0" fill-rule="evenodd" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>...</title>
+	<desc>...</desc>
+	<clipPath id="clip">
+		<rect x="0" y="0" width="650" height="465"/>
+	</clipPath>
+	<g id="group" transform="scale(1,-1) translate(0,-465)" style="clip-path: url(#clip)">
+		<g transform="">
+			<rect x="0" y="0" width="650" height="465" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<rect x="10" y="105" width="390" height="345" rx="9" ry="9" style="stroke: rgb(65%,72%,77%); stroke-linecap: butt; stroke-width: 1; fill: none; fill-rule: evenodd; stroke-dasharray: 5, 3;"/>
+			<text x="22" y="432" style="font-family: Helvetica-Bold; font-size: 11.5px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,864) scale(1,-1)">Simulator stack / VPC 10.42.0.0/24</text>
+			<rect x="27" y="205" width="355" height="205" rx="9" ry="9" style="stroke: rgb(65%,72%,77%); stroke-linecap: butt; stroke-width: 1; fill: none; fill-rule: evenodd; stroke-dasharray: 5, 3;"/>
+			<text x="39" y="392" style="font-family: Helvetica-Bold; font-size: 11.5px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,784) scale(1,-1)">Public subnet 10.42.0.0/26</text>
+			<rect x="58" y="245" width="290" height="120" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="145.4702" y="325.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,650) scale(1,-1)">EC2 t4g.micro ARM</text>
+			<text x="134.312" y="309.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,618) scale(1,-1)">systemd Python simulator</text>
+			<text x="122.966" y="293.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,586) scale(1,-1)">Encrypted 8 GiB gp3; IMDSv2</text>
+			<text x="105.296" y="277.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,554) scale(1,-1)">IAM instance profile; no SSH ingress</text>
+			<rect x="75" y="125" width="255" height="55" rx="7" ry="7" style="stroke: rgb(21%,45%,67%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,94%,98%); fill-rule: evenodd;"/>
+			<text x="127.9078" y="156.5" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,313) scale(1,-1)">Route + Internet Gateway</text>
+			<text x="146.466" y="140.5" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,281) scale(1,-1)">0.0.0.0/0; public IPv4</text>
+			<rect x="440" y="225" width="192" height="120" rx="7" ry="7" style="stroke: rgb(16%,50%,44%); stroke-linecap: butt; stroke-width: 1.1; fill: rgb(91%,96%,95%); fill-rule: evenodd;"/>
+			<text x="462.282" y="305.0" style="font-family: Helvetica-Bold; font-size: 12.4px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,610) scale(1,-1)">Regional AWS endpoints</text>
+			<text x="465.308" y="289.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,578) scale(1,-1)">API Gateway / DynamoDB</text>
+			<text x="472.976" y="273.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,546) scale(1,-1)">SSM / S3 / CloudWatch</text>
+			<text x="467.642" y="257.0" style="font-family: Helvetica; font-size: 12px;fill: rgb(9%,18%,27%); stroke:none;" transform="translate(0,514) scale(1,-1)">Service IAM authorization</text>
+			<polyline points="203 245, 202.5 180" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="202.5 180, 199.0758 187.2301, 206.035 187.1766" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="153.84210000000002" y="217.5" width="97.8158" height="16.0" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="157.84210000000002" y="221.5" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,443) scale(1,-1)">TCP 443 outbound</text>
+			<polyline points="330 152.5, 419 153, 419 285, 440 285" style="stroke: rgb(32%,40%,47%); stroke-linecap: butt; stroke-width: 1.25; fill: None; fill-rule: evenodd;"/>
+			<polygon points="440 285, 432.7964 281.5203, 432.7964 288.4797" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(32%,40%,47%); fill-rule: evenodd;"/>
+			<rect x="408.4627" y="180" width="43.074599999999975" height="16" style="stroke: none; stroke-linecap: butt; stroke-width: 1; fill: rgb(100%,100%,100%); fill-rule: evenodd;"/>
+			<text x="412.4627" y="184" style="font-family: Helvetica; font-size: 10.7px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,368) scale(1,-1)">HTTPS</text>
+			<text x="14" y="68" style="font-family: Helvetica; font-size: 11.4px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,136) scale(1,-1)">DNS egress: TCP/UDP 53 to the VPC resolver 10.42.0.2.</text>
+			<text x="14" y="44" style="font-family: Helvetica; font-size: 11.4px;fill: rgb(32%,40%,47%); stroke:none;" transform="translate(0,88) scale(1,-1)">No NAT Gateway, inbound listener, bastion host or continuously running frontend server.</text>
+		</g>
+	</g>
+</svg>
