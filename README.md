@@ -45,6 +45,8 @@ Publishing uploads to private S3 and waits for CloudFront invalidation. Keep dep
 
 ## Validation
 
+For initial access, use the temporary password from your Cognito invitation on the normal Sign in screen, then choose your own password. Forgot password requires a verified recovery email. The hosted reset screen can deliberately show simulated delivery details for an account without a verified recovery method; a “code sent” screen alone does not prove that email was sent. Administrators can resend an uncompleted invitation with `admin-create-user --message-action RESEND --desired-delivery-mediums EMAIL` through the command logger; Cognito generates the temporary password. Do not write passwords into source, command arguments or project files.
+
 ```powershell
 .venv\Scripts\python.exe -m scripts.validate
 $env:CCPROJ_LIVE = '1'

@@ -2,21 +2,31 @@
   "dashboardUrl": "https://d1idggpc663p7f.cloudfront.net",
   "controlledBrowserTests": {
     "stats": {
-      "startTime": "2026-10-14T18:28:16.055Z",
-      "duration": 18772.346,
-      "expected": 22,
+      "startTime": "2026-10-14T19:01:52.115Z",
+      "duration": 20434.354,
+      "expected": 23,
       "skipped": 0,
       "unexpected": 0,
       "flaky": 0
     },
     "scenarios": [
       {
+        "title": "sign-in page is concise, responsive and explains initial password setup",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 1741
+          }
+        ]
+      },
+      {
         "title": "overview shows three healthy motors and current units",
         "ok": true,
         "results": [
           {
             "status": "passed",
-            "durationMs": 2002
+            "durationMs": 1440
           }
         ]
       },
@@ -26,7 +36,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 2283
+            "durationMs": 1647
           }
         ]
       },
@@ -36,7 +46,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 938
+            "durationMs": 1035
           }
         ]
       },
@@ -46,7 +56,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 473
+            "durationMs": 801
           }
         ]
       },
@@ -56,7 +66,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 759
+            "durationMs": 1237
           }
         ]
       },
@@ -66,7 +76,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 677
+            "durationMs": 871
           }
         ]
       },
@@ -76,7 +86,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 4096
+            "durationMs": 4458
           }
         ]
       },
@@ -86,7 +96,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 4163
+            "durationMs": 4265
           }
         ]
       },
@@ -96,7 +106,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 4085
+            "durationMs": 4139
           }
         ]
       },
@@ -106,7 +116,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 7477
+            "durationMs": 7553
           }
         ]
       },
@@ -116,7 +126,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 664
+            "durationMs": 764
           }
         ]
       },
@@ -126,7 +136,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 750
+            "durationMs": 869
           }
         ]
       },
@@ -136,7 +146,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 974
+            "durationMs": 1213
           }
         ]
       },
@@ -146,7 +156,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 632
+            "durationMs": 713
           }
         ]
       },
@@ -156,7 +166,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 459
+            "durationMs": 557
           }
         ]
       },
@@ -166,7 +176,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 587
+            "durationMs": 693
           }
         ]
       },
@@ -176,7 +186,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 1048
+            "durationMs": 1161
           }
         ]
       },
@@ -186,7 +196,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 1883
+            "durationMs": 1943
           }
         ]
       },
@@ -196,7 +206,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 885
+            "durationMs": 748
           }
         ]
       },
@@ -206,7 +216,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 591
+            "durationMs": 621
           }
         ]
       },
@@ -216,7 +226,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 834
+            "durationMs": 753
           }
         ]
       },
@@ -226,7 +236,7 @@
         "results": [
           {
             "status": "passed",
-            "durationMs": 5295
+            "durationMs": 5390
           }
         ]
       }
@@ -245,14 +255,14 @@
       "sha256": "29ca10ab9cb4df4563be176eadf99040124c06e07d5b20fccc31bcb3365b9552"
     },
     {
-      "path": "assets/index-COnxbZV4.js",
-      "bytes": 49793,
-      "sha256": "3edf73bc214bfed362cbb4a04d6fc76f4e61a5d0cad246c8866138b816d2e3c4"
+      "path": "assets/index-BdmwSsUk.js",
+      "bytes": 48690,
+      "sha256": "01d82705a7092a6c6e8652422737ef3348f72636adf3ba8a8b19f8f5064799aa"
     },
     {
-      "path": "assets/index-Kie9BZH7.css",
-      "bytes": 29741,
-      "sha256": "524bd08cb4c68e8209d8f621264fa94a61f710fd0d6467aebb33c0339e272f0b"
+      "path": "assets/index-DYzd1lKl.css",
+      "bytes": 28327,
+      "sha256": "e386039c8cbea11e890e00f166f323098aa234a83bd7d8a4ea6899ee6d06ea36"
     },
     {
       "path": "assets/rolldown-runtime-XKyaHtl9.js",
@@ -272,7 +282,7 @@
     {
       "path": "index.html",
       "bytes": 915,
-      "sha256": "85615ceca1fc58fce1f72c173ab2c860985463a4033bac1ebd2793ccd495b9a4"
+      "sha256": "26a1b2978ea109c8a477bc4629bc19a8381cd7a44c7ac1646e54aecb31b2d78a"
     }
   ],
   "publicReleaseMatchesBuild": true,
@@ -282,5 +292,12 @@
     "x-frame-options": "DENY"
   },
   "platformStackStatus": "UPDATE_COMPLETE",
-  "disposableAccountsRemaining": 0
+  "disposableAccountsRemaining": 0,
+  "entryRefinement": "15 October 2026: concise sign-in page, collapsed first-access help, frontend-design skill applied.",
+  "currentUserRecovery": {
+    "account": "collegeproject@akshaykripalani.com",
+    "emailVerified": true,
+    "ownershipEvidence": "Human confirmed current SNS subscription and both received emails in this conversation.",
+    "invitation": "Cloudflare confirmed Forwarded with SPF/DKIM/DMARC pass. Located the invitation conversation in destination Gmail Spam and moved it to Inbox. Permanent password setup remains a user action."
+  }
 }

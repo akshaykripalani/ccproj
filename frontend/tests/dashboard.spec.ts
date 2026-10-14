@@ -26,6 +26,7 @@ test("sign-in page is concise, responsive and explains initial password setup", 
     .withTags(["wcag2a", "wcag2aa"])
     .analyze();
   expect(accessibility.violations).toEqual([]);
+  await page.getByText("First sign-in or password trouble?").click();
   await page.screenshot({
     path: "../docs/ui-login-desktop.png",
     fullPage: true,
