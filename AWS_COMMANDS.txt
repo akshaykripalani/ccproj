@@ -1682,3 +1682,298 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-14T17:15:30.002254+00:00] 85dce1525f67 Wait for queue backlog visibility
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-14T17:15:32.042008+00:00] 85dce1525f67 EXIT 0
+
+[2026-10-14T17:15:35.068034+00:00] 874bff08e5c4 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:15:37.089701+00:00] 874bff08e5c4 EXIT 0
+
+[2026-10-14T17:15:40.115258+00:00] 251cbd685343 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:15:42.180160+00:00] 251cbd685343 EXIT 0
+
+[2026-10-14T17:15:45.207223+00:00] 727cfaa2ec9f Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:15:47.517570+00:00] 727cfaa2ec9f EXIT 0
+
+[2026-10-14T17:15:50.539251+00:00] d735aac18d35 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:15:52.594076+00:00] d735aac18d35 EXIT 0
+
+[2026-10-14T17:15:55.618750+00:00] 9cd8ef0c9d09 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:15:57.673767+00:00] 9cd8ef0c9d09 EXIT 0
+
+[2026-10-14T17:16:00.697753+00:00] 9b5396e12142 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:02.718541+00:00] 9b5396e12142 EXIT 0
+
+[2026-10-14T17:16:05.741575+00:00] 78ecd63f2cc7 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:07.787321+00:00] 78ecd63f2cc7 EXIT 0
+
+[2026-10-14T17:16:08.037363+00:00] ef7c4d9cdd41 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:10.111287+00:00] ef7c4d9cdd41 EXIT 0
+
+[2026-10-14T17:16:10.181779+00:00] 49746ff1bfc3 Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-jt_g1eyq\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:16:10.811132+00:00] 1646dcaa6e27 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:12.637523+00:00] 49746ff1bfc3 EXIT 0 (private response withheld)
+
+[2026-10-14T17:16:12.677147+00:00] 1ad8570fb640 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-_umkl4aj\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:12.976297+00:00] 1646dcaa6e27 EXIT 0
+[2026-10-14T17:16:15.027322+00:00] 1ad8570fb640 EXIT 0 (private response withheld)
+
+[2026-10-14T17:16:15.050529+00:00] cb25389aeaad Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-4cfc6d3e1cab@example.invalid", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:16:16.000194+00:00] f03e2543477d Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:17.256787+00:00] cb25389aeaad EXIT 0
+
+[2026-10-14T17:16:17.295348+00:00] c65bfa5bc17c Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-d0374yf_\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:18.144690+00:00] f03e2543477d EXIT 0
+[2026-10-14T17:16:19.719326+00:00] c65bfa5bc17c EXIT 0 (private response withheld)
+
+[2026-10-14T17:16:19.758107+00:00] 01675ad3d0d5 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-i_sdfp_s\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:16:21.166673+00:00] 097307073450 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:22.109027+00:00] 01675ad3d0d5 EXIT 0 (private response withheld)
+
+[2026-10-14T17:16:22.128550+00:00] 1cac8b8d887d Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-4cfc6d3e1cab@example.invalid", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:23.199966+00:00] 097307073450 EXIT 0
+[2026-10-14T17:16:24.436031+00:00] 1cac8b8d887d EXIT 0
+
+[2026-10-14T17:16:24.478753+00:00] 24f7ee6547e9 Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-r0_6xa51\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:16:26.326908+00:00] 356bb9e49fda Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:26.795560+00:00] 24f7ee6547e9 EXIT 0 (private response withheld)
+[2026-10-14T17:16:28.406265+00:00] 356bb9e49fda EXIT 0
+
+[2026-10-14T17:16:31.427212+00:00] 90c5361806da Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:33.507869+00:00] 90c5361806da EXIT 0
+
+[2026-10-14T17:16:36.531655+00:00] 7eb4fb222f01 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:16:37.191387+00:00] a2c401f2297b Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-e2b3idbw\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:38.616407+00:00] 7eb4fb222f01 EXIT 0
+[2026-10-14T17:16:39.479245+00:00] a2c401f2297b EXIT 0 (private response withheld)
+
+[2026-10-14T17:16:41.641426+00:00] 64a2fc3988af Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:16:42.709144+00:00] 82b2935c154e Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-0khc2dy4\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:43.743006+00:00] 64a2fc3988af EXIT 0
+[2026-10-14T17:16:45.014085+00:00] 82b2935c154e EXIT 0 (private response withheld)
+
+[2026-10-14T17:16:46.764585+00:00] 764661d40fef Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:48.812157+00:00] 764661d40fef EXIT 0
+
+[2026-10-14T17:16:51.688598+00:00] 2d57efdcf53f Remove only API-created disposable management test account
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-api-management-8a20ab75b4585ef3@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:16:51.834770+00:00] c70c51071b47 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:54.028014+00:00] c70c51071b47 EXIT 0
+[2026-10-14T17:16:54.058594+00:00] 2d57efdcf53f EXIT 0
+
+[2026-10-14T17:16:54.087149+00:00] 0e9238fbccb8 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-4cfc6d3e1cab@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:56.323885+00:00] 0e9238fbccb8 EXIT 0
+
+[2026-10-14T17:16:56.345933+00:00] bbe65e33d4a6 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-4cfc6d3e1cab@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:16:57.052062+00:00] 2836d0655bdd Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:16:58.611001+00:00] bbe65e33d4a6 EXIT 0
+[2026-10-14T17:16:59.181686+00:00] 2836d0655bdd EXIT 0
+
+[2026-10-14T17:17:02.199211+00:00] 682cb2c52127 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:04.279948+00:00] 682cb2c52127 EXIT 0
+
+[2026-10-14T17:17:07.295578+00:00] 166abcc434f6 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:09.704167+00:00] 166abcc434f6 EXIT 0
+
+[2026-10-14T17:17:12.725716+00:00] 920dfea5c796 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:15.368383+00:00] 920dfea5c796 EXIT 0
+
+[2026-10-14T17:17:18.390320+00:00] 6cc020d00f8c Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:20.727052+00:00] 6cc020d00f8c EXIT 0
+
+[2026-10-14T17:17:22.665029+00:00] 8268fae21c5b Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:17:23.750262+00:00] 144529ced89c Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:25.038863+00:00] 8268fae21c5b EXIT 0
+
+[2026-10-14T17:17:25.061864+00:00] c1091f94fa08 Capture deployed acceptance evidence: stacks
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--query", "Stacks[?starts_with(StackName, 'ccproj')].{name:StackName,status:StackStatus}", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:17:25.061864+00:00] 642d30084f90 Capture deployed acceptance evidence: subscriptions
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:17:25.061864+00:00] 7221a60e17ea Capture deployed acceptance evidence: consumer
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:17:25.062869+00:00] b02c4fe1f9ce Capture deployed acceptance evidence: alarms
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudwatch", "describe-alarms", "--alarm-name-prefix", "ccproj-", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:25.971047+00:00] 144529ced89c EXIT 0
+[2026-10-14T17:17:28.054466+00:00] 642d30084f90 EXIT 0
+[2026-10-14T17:17:28.082540+00:00] c1091f94fa08 EXIT 0
+
+[2026-10-14T17:17:28.135384+00:00] 6863944824d7 Capture deployed acceptance evidence: budget
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "budgets", "describe-budget", "--account-id", "039379078306", "--budget-name", "ccproj-total-ceiling", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:28.146398+00:00] 7221a60e17ea EXIT 0
+[2026-10-14T17:17:28.179387+00:00] b02c4fe1f9ce EXIT 0
+
+[2026-10-14T17:17:28.214311+00:00] 3dfeea131810 Capture deployed acceptance evidence: budgetNotifications
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "budgets", "describe-notifications-for-budget", "--account-id", "039379078306", "--budget-name", "ccproj-total-ceiling", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:17:28.349238+00:00] 072a494de599 Capture deployed acceptance evidence: instance
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ec2", "describe-instances", "--instance-ids", "i-098cf45e426dd3ab7", "--query", "Reservations[].Instances[].{id:InstanceId,state:State.Name,type:InstanceType,metadata:MetadataOptions,volumes:BlockDeviceMappings}", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:17:28.419447+00:00] d312547af8cd Capture deployed acceptance evidence: managedInstance
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "describe-instance-information", "--filters", "Key=InstanceIds,Values=i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:17:29.004741+00:00] 89985ef1e9d6 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:31.265964+00:00] 6863944824d7 EXIT 0
+
+[2026-10-14T17:17:31.343170+00:00] 5a3730159624 Capture deployed acceptance evidence: recentTTL
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "describe-time-to-live", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:31.487829+00:00] 3dfeea131810 EXIT 0
+
+[2026-10-14T17:17:31.557514+00:00] c5d4b163b030 Capture deployed acceptance evidence: archiveVersioning
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "get-bucket-versioning", "--bucket", "ccproj-archive-mx5crrke5wcd", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:31.697169+00:00] d312547af8cd EXIT 0
+
+[2026-10-14T17:17:31.770895+00:00] e5fd0c84e71a Capture deployed acceptance evidence: archiveRetention
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "get-bucket-lifecycle-configuration", "--bucket", "ccproj-archive-mx5crrke5wcd", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:31.847429+00:00] 072a494de599 EXIT 0
+
+[2026-10-14T17:17:31.914123+00:00] cb1c3189dce5 Capture deployed acceptance evidence: hostingPrivacy
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3api", "get-public-access-block", "--bucket", "ccproj-frontend-ipu2nmzptkhj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:31.935885+00:00] 89985ef1e9d6 EXIT 0
+[2026-10-14T17:17:34.134833+00:00] 5a3730159624 EXIT 0
+
+[2026-10-14T17:17:34.152986+00:00] 2a3697426f77 Capture deployed acceptance evidence: athenaLimits
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "athena", "get-work-group", "--work-group", "ccproj-reports", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:34.508026+00:00] c5d4b163b030 EXIT 0
+
+[2026-10-14T17:17:34.527045+00:00] 1378518c8790 Capture deployed acceptance evidence: queue
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:34.752691+00:00] e5fd0c84e71a EXIT 0
+
+[2026-10-14T17:17:34.769687+00:00] 2ad1efa28dea Capture deployed acceptance evidence: deadLetters
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-DeadLetter-YU54yXeRi1o8.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:34.878210+00:00] cb1c3189dce5 EXIT 0
+
+[2026-10-14T17:17:34.895962+00:00] 514f902db5fc Capture deployed acceptance evidence: motor-01
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--consistent-read", "--key", "{\"pk\": {\"S\": \"motor-01\"}, \"sk\": {\"S\": \"STATE\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:17:35.985715+00:00] 12b9cf6e8112 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:37.028337+00:00] 2a3697426f77 EXIT 0
+
+[2026-10-14T17:17:37.098869+00:00] f5f87fffd449 Capture deployed acceptance evidence: motor-02
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--consistent-read", "--key", "{\"pk\": {\"S\": \"motor-02\"}, \"sk\": {\"S\": \"STATE\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:37.356842+00:00] 1378518c8790 EXIT 0
+
+[2026-10-14T17:17:37.424855+00:00] 230b53b1cd23 Capture deployed acceptance evidence: motor-03
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--consistent-read", "--key", "{\"pk\": {\"S\": \"motor-03\"}, \"sk\": {\"S\": \"STATE\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:37.610010+00:00] 2ad1efa28dea EXIT 0
+[2026-10-14T17:17:37.733593+00:00] 514f902db5fc EXIT 0
+[2026-10-14T17:17:38.470542+00:00] 12b9cf6e8112 EXIT 0
+[2026-10-14T17:17:39.673486+00:00] f5f87fffd449 EXIT 0
+[2026-10-14T17:17:39.949923+00:00] 230b53b1cd23 EXIT 0
+
+[2026-10-14T17:17:41.544085+00:00] 9aaf1c1a6216 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:43.815426+00:00] 9aaf1c1a6216 EXIT 0
+
+[2026-10-14T17:17:46.885208+00:00] 02b695913f72 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:49.041632+00:00] 02b695913f72 EXIT 0
+
+[2026-10-14T17:17:52.117884+00:00] dec7db6cb1fa Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:54.257167+00:00] dec7db6cb1fa EXIT 0
+
+[2026-10-14T17:17:55.561436+00:00] f36b8a0b58a2 Verify user-confirmed current SNS subscription
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:17:57.333989+00:00] f7bf57bc3765 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:57.746770+00:00] f36b8a0b58a2 EXIT 0
+
+[2026-10-14T17:17:57.927253+00:00] 8554cd245b23 Drain durable motor fault notifications after email confirmation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "invoke", "--function-name", "ccproj-Notifier", "--cli-binary-format", "raw-in-base64-out", "--payload", "{}", ".runtime/notification-confirmed.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:17:59.660451+00:00] f7bf57bc3765 EXIT 0
+[2026-10-14T17:18:00.219993+00:00] 8554cd245b23 EXIT 0
+
+[2026-10-14T17:18:02.729539+00:00] 5af4aff394b9 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:18:04.854988+00:00] 5af4aff394b9 EXIT 0
+
+[2026-10-14T17:18:07.918948+00:00] 89821593d6d6 Wait for queue backlog visibility
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-Telemetry-fZ6tZS66tzGn.fifo", "--attribute-names", "ApproximateNumberOfMessages", "ApproximateNumberOfMessagesNotVisible", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:18:10.217516+00:00] 89821593d6d6 EXIT 0
+
+[2026-10-14T17:18:13.257091+00:00] cb5ffe7ef3b6 Live E2E: restore processing mapping
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "update-event-source-mapping", "--uuid", "0c7ebf06-260d-42de-b451-071598a6f2f9", "--enabled", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:18:15.493910+00:00] cb5ffe7ef3b6 EXIT 0
+
+[2026-10-14T17:18:15.625320+00:00] fff17e57eae3 Live test: temporarily start simulator service
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "send-command", "--cli-input-json", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\service-command.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-14T17:18:16.719796+00:00] 83d4008c5e1c Record real fault notification acceptance
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "query", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--consistent-read", "--key-condition-expression", "pk = :p", "--expression-attribute-values", "{\":p\": {\"S\": \"NOTIFY\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:18:17.846408+00:00] fff17e57eae3 EXIT 0
+
+[2026-10-14T17:18:17.873493+00:00] ffce5e5286da Wait for simulator service exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "ssm", "wait", "command-executed", "--command-id", "5b933450-6960-4291-af2d-f7f4595b6e3a", "--instance-id", "i-098cf45e426dd3ab7", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:18:18.948302+00:00] 83d4008c5e1c EXIT 0
+[2026-10-14T17:18:19.984581+00:00] ffce5e5286da EXIT 0
+
+[2026-10-14T17:18:20.008083+00:00] 3a5dbb43f9c9 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-c29087beee9f@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:18:22.482481+00:00] 3a5dbb43f9c9 EXIT 0
+
+[2026-10-14T17:18:22.506507+00:00] d0380df1fb6b Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-c29087beee9f@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:18:24.757820+00:00] d0380df1fb6b EXIT 0
+
+[2026-10-14T17:19:35.869561+00:00] ac37beefb77f Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:19:38.014859+00:00] ac37beefb77f EXIT 0
+
+[2026-10-14T17:19:38.086426+00:00] 0e030a01d86b Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-wfdlyx8k\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:19:40.572160+00:00] 0e030a01d86b EXIT 0 (private response withheld)
+
+[2026-10-14T17:19:40.617974+00:00] 1bf52d059eee Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-suj0ufen\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-14T17:19:42.992894+00:00] 1bf52d059eee EXIT 0 (private response withheld)
+
+[2026-10-14T17:19:43.016184+00:00] 02067081c0ad Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-fa733669f96d@example.invalid", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]

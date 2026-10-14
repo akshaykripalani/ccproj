@@ -3,6 +3,7 @@ import datetime as dt
 import hashlib
 import json
 import secrets
+import time
 from html.parser import HTMLParser
 from urllib.parse import parse_qs, urlencode, urljoin, urlparse
 
@@ -102,7 +103,8 @@ def test_real_hosted_login_authorization_code_pkce(live):
         session.close()
 
 
-def test_real_version_restore_and_separate_state_reconstruction(paused_simulator):
+def test_real_version_restore_and_separate_state_reconstruction(paused_simulator, record_property):
+    started = time.monotonic()
     live = paused_simulator
     bucket = live.platform["ArchiveBucket"]
     unique = secrets.token_hex(8)
@@ -149,17 +151,17 @@ def test_real_version_restore_and_separate_state_reconstruction(paused_simulator
     assert status == 202
     archive_key = f"telemetry/day={observed[:10]}/{accepted['batchId']}.json.gz"
     wait_for(
-        lambda: (
-            call(
-                ["s3api", "list-objects-v2", "--bucket", bucket, "--prefix", archive_key],
-                "Wait for owned recovery telemetry archive",
-            ).get("Contents", [])
-        )
+        lambda: call(
+            ["s3api", "list-objects-v2", "--bucket", bucket, "--prefix", archive_key],
+            "Wait for owned recovery telemetry archive",
+        ).get("Contents", [])
     )
     recovered = recover(live.deployment, archive_key)
     try:
         assert recovered["devices"] == 3 and recovered["uniqueEvents"] == 3
         assert recovered["table"] != live.platform["DataTable"]
+        record_property("recovery_table", recovered["table"])
+        record_property("recovery_seconds", round(time.monotonic() - started, 3))
         for reading in readings:
             result = call(
                 [

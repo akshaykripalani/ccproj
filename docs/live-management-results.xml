@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="0" skipped="0" tests="1" time="50.844" timestamp="2026-10-14T22:46:07.998151+05:30" hostname="Akshay_Laptop"><testcase classname="tests.live.test_management_load" name="test_initial_accounts_and_operator_user_management" time="50.798" /></testsuite></testsuites>

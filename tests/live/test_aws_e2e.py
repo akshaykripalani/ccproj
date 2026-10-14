@@ -92,13 +92,14 @@ def test_ec2_normal_operation_and_controls_fault_recovery(live):
         assert live.api("POST", "/controls/reset-all", {}).status_code == 202
 
 
-def test_real_pipeline_deduplication_ordering_and_archive(paused_simulator):
+def test_real_pipeline_deduplication_ordering_and_archive(paused_simulator, record_property):
     live = paused_simulator
     newer = measurement()
     sent_at = time.monotonic()
     assert live.send([newer])[0] == 202
     wait_for(lambda: live.state()["latest"]["eventId"] == newer["eventId"], timeout=60)
     assert time.monotonic() - sent_at < 30, "PRD normal-latency target exceeded"
+    record_property("telemetry_latency_seconds", round(time.monotonic() - sent_at, 3))
     assert live.send([newer])[0] == 202
     older = measurement(observed=timestamp(utcnow() - dt.timedelta(minutes=2)), temperature=99)
     assert live.send([older])[0] == 202
