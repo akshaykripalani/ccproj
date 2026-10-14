@@ -5,18 +5,22 @@ async function login(page: Page, role: "OPERATOR" | "VIEWER") {
   await page.getByRole("button", { name: "Sign in to your dashboard" }).click();
   await page.waitForURL(/amazoncognito.com/);
   await page
-    .locator('input[name="password"]')
+    .locator('input[name="password"]:visible')
     .first()
     .waitFor({ state: "visible" });
   // Avoid recording secret values in locator failure call logs, traces, or source files.
   await page.evaluate(
     ({ email, password }) => {
-      const username = document.querySelector<HTMLInputElement>(
-        'input[name="username"]',
-      );
-      const credential = document.querySelector<HTMLInputElement>(
-        'input[name="password"]',
-      );
+      const username = [
+        ...document.querySelectorAll<HTMLInputElement>(
+          'input[name="username"]',
+        ),
+      ].find((input) => input.offsetParent !== null);
+      const credential = [
+        ...document.querySelectorAll<HTMLInputElement>(
+          'input[name="password"]',
+        ),
+      ].find((input) => input.offsetParent !== null);
       if (!username || !credential)
         throw new Error("Hosted login fields were not found");
       username.value = email;
@@ -31,7 +35,7 @@ async function login(page: Page, role: "OPERATOR" | "VIEWER") {
   );
   await page
     .locator(
-      'input[name="signInSubmitButton"], button[name="signInSubmitButton"]',
+      'input[name="signInSubmitButton"]:visible, button[name="signInSubmitButton"]:visible',
     )
     .first()
     .click();
@@ -85,6 +89,14 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
   );
   expect(errors).toEqual([]);
   expect(csp).toEqual([]);
+  await page.getByRole("link", { name: "Overview", exact: true }).click();
+  await expect(
+    page.getByRole("img", { name: /Temperature chart with [1-9]\d* readings/ }),
+  ).toBeVisible();
+  await page.screenshot({
+    path: "../docs/ui-overview-desktop.png",
+    fullPage: true,
+  });
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
   });
@@ -99,6 +111,11 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
       viewer.getByRole("heading", { name: "Operator access required" }),
     ).toBeVisible();
     await viewer.goto("/#/overview");
+    await expect(
+      viewer.getByRole("img", {
+        name: /Temperature chart with [1-9]\d* readings/,
+      }),
+    ).toBeVisible();
     await viewer.screenshot({
       path: "../docs/ui-overview-mobile.png",
       fullPage: true,

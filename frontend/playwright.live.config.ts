@@ -11,12 +11,13 @@ if (
 export default defineConfig({
   testDir: "./tests",
   testMatch: "live.spec.ts",
+  outputDir: "test-results/live",
   workers: 1,
   timeout: 240000,
   expect: { timeout: 90000 },
   reporter: [
     ["list"],
-    ["json", { outputFile: "test-results/live-results.json" }],
+    ["json", { outputFile: "test-results/live/results.json" }],
   ],
   use: {
     baseURL: process.env.CCPROJ_DASHBOARD_URL,

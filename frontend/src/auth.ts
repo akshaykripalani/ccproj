@@ -5,7 +5,10 @@ let configPromise: Promise<Config> | undefined;
 let manager: UserManager | undefined;
 
 export function getConfig(): Promise<Config> {
-  return (configPromise ??= fetch("/config.json", { cache: "no-store" })
+  return (configPromise ??= fetch("/config.json", {
+    cache: "no-store",
+    signal: AbortSignal.timeout(20000),
+  })
     .then(async (response) => {
       if (!response.ok)
         throw new Error(

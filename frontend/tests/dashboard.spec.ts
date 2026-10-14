@@ -360,7 +360,7 @@ test("mobile navigation and dashboard have no horizontal overflow", async ({
 test("dashboard and report form have accessible controls and landmarks", async ({
   page,
 }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.emulateMedia({ reducedMotion: "reduce" });
   await mockApp(page);
   await page.goto("/");
   await expect(page.getByTestId("motor-01")).toBeVisible();
@@ -453,4 +453,49 @@ test("sign-out clears local tokens and requests the hosted logout URL", async ({
   expect(new URL(page.url()).searchParams.get("logout_uri")).toBe(
     config.logoutUrl,
   );
+});
+
+test("alert history, team roles and report results pass accessibility checks", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  const state = await mockApp(page);
+  state.devices.devices[0].latest!.rules!.temperature.active = true;
+  state.alerts.alerts = [
+    {
+      alertId: "episode",
+      pk: "motor-01",
+      rule: "temperature",
+      state: "active",
+      activatedAt: new Date().toISOString(),
+      reading: makeReading("motor-01"),
+      emailStatus: "sns_accepted",
+    },
+  ];
+  for (const route of ["alerts", "users", "reports"]) {
+    await page.goto(`/#/${route}`);
+    if (route === "alerts")
+      await expect(
+        page.getByRole("cell", { name: "Accepted by SNS" }),
+      ).toBeVisible();
+    if (route === "users")
+      await expect(
+        page.getByText("operator@example.test", { exact: true }),
+      ).toBeVisible();
+    if (route === "reports") {
+      await page.getByRole("button", { name: "Generate report" }).click();
+      await expect(
+        page.getByRole("heading", { name: "Report results" }),
+      ).toBeVisible();
+    }
+    const result = await new AxeBuilder({ page })
+      .withTags(["wcag2a", "wcag2aa"])
+      .analyze();
+    expect(
+      result.violations.map((item) => ({
+        id: item.id,
+        targets: item.nodes.map((node) => node.target),
+      })),
+    ).toEqual([]);
+  }
 });

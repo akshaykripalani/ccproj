@@ -134,7 +134,8 @@ function Dashboard({ user }: { user: User }) {
   const [open, setOpen] = useState(false);
   const [help, setHelp] = useState(false);
   const [logoutError, setLogoutError] = useState("");
-  const operator = rolesFromToken(user.access_token).includes("operator");
+  const roles = rolesFromToken(user.access_token);
+  const operator = roles.includes("operator");
   const live = usePoll((signal) => api<DeviceResponse>("/devices", { signal }));
   const serverOffset = live.data
     ? Date.parse(live.data.serverTime) - live.updatedAt
@@ -256,7 +257,13 @@ function Dashboard({ user }: { user: User }) {
             </span>
             <div>
               <strong title={String(email)}>{email}</strong>
-              <span>{operator ? "Operator & viewer" : "Viewer"}</span>
+              <span>
+                {operator
+                  ? roles.includes("viewer")
+                    ? "Operator & viewer"
+                    : "Operator"
+                  : "Viewer"}
+              </span>
             </div>
             <button
               aria-label="Sign out"
@@ -300,7 +307,9 @@ function Dashboard({ user }: { user: User }) {
               {live.error
                 ? "Connection interrupted"
                 : live.updatedAt
-                  ? "Live connection"
+                  ? now - live.updatedAt > 30000
+                    ? "Telemetry response stale"
+                    : "Live connection"
                   : "Connecting"}
             </Badge>
             <button

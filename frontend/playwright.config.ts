@@ -3,11 +3,15 @@ import { defineConfig } from "@playwright/test";
 export default defineConfig({
   testDir: "./tests",
   testMatch: "dashboard.spec.ts",
+  outputDir: "test-results/browser",
   fullyParallel: true,
   workers: 3,
   timeout: 30000,
   expect: { timeout: 8000 },
-  reporter: [["list"], ["json", { outputFile: "test-results/results.json" }]],
+  reporter: [
+    ["list"],
+    ["json", { outputFile: "test-results/browser/results.json" }],
+  ],
   use: {
     baseURL: "http://localhost:5173",
     browserName: "chromium",

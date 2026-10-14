@@ -155,7 +155,7 @@ p {
   border-radius: 5px;
   padding: 5px 8px;
   background: #eef0eb;
-  color: #67726a;
+  color: #566157;
   font-size: 10px;
   font-weight: 600;
   white-space: nowrap;
@@ -176,11 +176,11 @@ p {
 }
 .badge.danger {
   background: #fbece7;
-  color: #b65336;
+  color: #a0442d;
 }
 .badge.warning {
   background: #fbf0d8;
-  color: #956f23;
+  color: #80601c;
 }
 .status-dot {
   color: #8b968e;
@@ -389,7 +389,7 @@ p {
 }
 .nav-count {
   margin-left: auto;
-  background: #bd7556;
+  background: #985336;
   color: #fff;
   border-radius: 4px;
   min-width: 18px;
@@ -1126,7 +1126,7 @@ table {
 }
 th {
   font-size: 11px;
-  color: #87917e;
+  color: #596653;
   font-weight: 500;
   background: #f9faf5;
   padding: 14px 23px;

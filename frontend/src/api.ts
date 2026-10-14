@@ -25,7 +25,9 @@ export async function api<T>(
       },
       body:
         options.body === undefined ? undefined : JSON.stringify(options.body),
-      signal: options.signal,
+      signal: options.signal
+        ? AbortSignal.any([options.signal, AbortSignal.timeout(20000)])
+        : AbortSignal.timeout(20000),
     });
   let response = await send(token);
   if (response.status === 401 && (!options.method || options.method === "GET"))

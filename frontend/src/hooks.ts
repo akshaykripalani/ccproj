@@ -24,7 +24,7 @@ export function usePoll<T>(
     let request: AbortController;
     async function run() {
       if (document.hidden) {
-        timer = setTimeout(run, interval);
+        if (interval > 0) timer = setTimeout(run, interval);
         return;
       }
       request?.abort();
