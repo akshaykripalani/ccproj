@@ -1,6 +1,6 @@
-# Industrial equipment monitoring: AWS layer
+# Industrial equipment monitoring
 
-This repository implements the PRD's AWS backend and the EC2 three-motor simulator. The deployment region is Sydney (`ap-southeast-2`), authorized by the user after the account's managed region policy blocked Mumbai. The original architecture and product behavior remain unchanged. The React dashboard is the next application stage; its private hosting, Cognito configuration, and application APIs are provided here.
+This repository implements the PRD's React dashboard, AWS backend and EC2 three-motor simulator. The deployment region is Sydney (`ap-southeast-2`), authorized by the user after the account's managed region policy blocked Mumbai. The original architecture and product behavior remain unchanged. Open https://d1idggpc663p7f.cloudfront.net and sign in with an invited team account.
 
 One EC2 gateway sends signed telemetry through API Gateway and an ingestion Lambda to FIFO SQS. A processing Lambda archives batched NDJSON in private S3 and atomically writes current/recent state, event markers, fault history, and notification intent in DynamoDB. EventBridge Scheduler invokes the durable SNS notification worker. Cognito protects dashboard, control, user-management, and bounded Athena report endpoints. Glue supplies a projected archive schema; CloudWatch records logs and operational alarms. CloudFormation owns the infrastructure. No Kinesis, Firehose, or QuickSight is used.
 
@@ -29,7 +29,19 @@ The deployed AWS acceptance report is `docs/AWS_ACCEPTANCE.md`: 64 local tests a
 
 The main Markdown handoff is a small set: `PRD.md` for scope, `PROGRESS.md` for the completed state and next work, and `docs/AWS_ACCEPTANCE.md` for results, measurements and limitations. This README supplies build/deployment/operation commands. `docs/API.md` and `docs/SHUTDOWN.md` are the focused frontend contract and later cleanup references; `IMPLEMENTATION_PLAN.md` preserves the original phased plan with the updated implementation boundary.
 
-Publish the completed React build separately with `.venv\Scripts\python.exe -m scripts.publish_frontend path\to\dist`. It uploads to private S3 and waits for CloudFront invalidation. Keep deployment-owned `config.json` out of the build; infrastructure updates preserve an existing application entry point. The current entry point is a deployment status page until the React stage is implemented.
+The React application is in `frontend/`: Cognito hosted PKCE login, motor overview/detail/charts, operator controls and acknowledgements, active/historical alerts, asynchronous reports with charts/tables/CSV, and operator user invitations/role assignment. It handles loading, API errors, expired sessions and stale readings. Viewer access is enforced by the existing backend as well as reflected in the UI. Responsive desktop/mobile layouts, keyboard focus and reduced-motion support are included.
+
+```powershell
+Push-Location frontend
+npm.cmd ci
+npx.cmd playwright install chromium
+npm.cmd run build
+npm.cmd test
+Pop-Location
+.venv\Scripts\python.exe -m scripts.publish_frontend frontend/dist
+```
+
+Publishing uploads to private S3 and waits for CloudFront invalidation. Keep deployment-owned `config.json` out of the build; infrastructure updates preserve an existing application entry point. Public configuration contains endpoints and IDs only. Tokens exist at runtime in per-tab session storage, never in the build, Git, test evidence or command log; sign-out clears them and requests token revocation and hosted logout. The maintained `oidc-client-ts` library handles OAuth state, PKCE and token renewal. Recharts renders measurements with visible threshold lines and gaps for missing samples; after initial pagination, chart polling retrieves new samples with a short overlap rather than rescanning the complete 24-hour window.
 
 ## Validation
 
@@ -37,9 +49,13 @@ Publish the completed React build separately with `.venv\Scripts\python.exe -m s
 .venv\Scripts\python.exe -m scripts.validate
 $env:CCPROJ_LIVE = '1'
 .venv\Scripts\python.exe -m pytest -m live -v --junitxml=docs/live-test-results.xml
+# UI-only deployed journeys (does not run queue/recovery infrastructure exercises):
+.venv\Scripts\python.exe -m pytest tests/live/test_frontend_browser.py -v -s --junitxml=docs/ui-live-acceptance.xml
 ```
 
 Local tests exercise the full handler pipeline against Moto, partial failures, archive retries, transactional deduplication, older events, fault episodes, controls, user roles, report limits, and safe command logging. Schema checks use cfn-lint; security checks use the version-controlled CloudFormation Guard rules. These are distinct from live AWS tests.
+
+Frontend browser tests use deterministic API fixtures for errors/expiry/permissions/filters/report outcomes and axe accessibility checks. The separate deployed Playwright suite signs in through real Cognito, loads actual charts, triggers and resolves real motor faults/disconnection, renders all three Athena reports, persists disposable-user role changes and signs out. Its pytest launcher supplies temporary credentials in process memory, suppresses invitations for test accounts and deletes those accounts afterward. Browser traces/videos and login screenshots are disabled. Evidence and screenshots are linked in `docs/AWS_ACCEPTANCE.md`.
 
 The live suite creates disposable Cognito test users with invitations suppressed, exercises real token/API authorization, runs EC2 fault/recovery/disconnection controls, briefly pauses the simulator and consumer to test buffering, forces a duplicate outside SQS deduplication, demonstrates DLQ isolation and corrected redrive, checks Athena results/hosting, signs in through hosted OAuth/PKCE, and restores/rebuilds recovery evidence. It restores processing/simulation after exercises and removes disposable test users/recovery tables. Run it during a demonstration maintenance window because all users share the same motors. Test failure requires investigation; tests cannot guarantee every future AWS outage or failure condition.
 

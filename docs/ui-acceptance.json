@@ -1,0 +1,286 @@
+{
+  "dashboardUrl": "https://d1idggpc663p7f.cloudfront.net",
+  "controlledBrowserTests": {
+    "stats": {
+      "startTime": "2026-10-14T18:28:16.055Z",
+      "duration": 18772.346,
+      "expected": 22,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "scenarios": [
+      {
+        "title": "overview shows three healthy motors and current units",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 2002
+          }
+        ]
+      },
+      {
+        "title": "controls show requested and applied states separately",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 2283
+          }
+        ]
+      },
+      {
+        "title": "viewers cannot see controls or request user management",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 938
+          }
+        ]
+      },
+      {
+        "title": "offline differs from a stopped reporting motor and timeout is visible",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 473
+          }
+        ]
+      },
+      {
+        "title": "device detail loads all charts and pagination for 24h",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 759
+          }
+        ]
+      },
+      {
+        "title": "alerts filter by device and state with truthful email statuses",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 677
+          }
+        ]
+      },
+      {
+        "title": "temperature report shows asynchronous result chart and CSV",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 4096
+          }
+        ]
+      },
+      {
+        "title": "vibration report shows asynchronous result chart and CSV",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 4163
+          }
+        ]
+      },
+      {
+        "title": "power report shows asynchronous result chart and CSV",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 4085
+          }
+        ]
+      },
+      {
+        "title": "reports show empty results and query failures without false success",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 7477
+          }
+        ]
+      },
+      {
+        "title": "report date window is validated before query starts",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 664
+          }
+        ]
+      },
+      {
+        "title": "operators invite accounts and update roles while protecting self",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 750
+          }
+        ]
+      },
+      {
+        "title": "API failures preserve visible readings and support retry",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 974
+          }
+        ]
+      },
+      {
+        "title": "hosted sign-in uses authorization code with PKCE and random state",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 632
+          }
+        ]
+      },
+      {
+        "title": "callback rejects a missing OAuth state and clears code from URL",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 459
+          }
+        ]
+      },
+      {
+        "title": "session rejection and refresh failure return to sign-in",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 587
+          }
+        ]
+      },
+      {
+        "title": "mobile navigation and dashboard have no horizontal overflow",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 1048
+          }
+        ]
+      },
+      {
+        "title": "dashboard and report form have accessible controls and landmarks",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 1883
+          }
+        ]
+      },
+      {
+        "title": "clock advancement makes old live responses visibly stale and motors offline",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 885
+          }
+        ]
+      },
+      {
+        "title": "refresh token renewal replaces the access token after a read rejection",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 591
+          }
+        ]
+      },
+      {
+        "title": "sign-out clears local tokens and requests the hosted logout URL",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 834
+          }
+        ]
+      },
+      {
+        "title": "alert history, team roles and report results pass accessibility checks",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 5295
+          }
+        ]
+      }
+    ]
+  },
+  "deployedBrowserFullRun": {
+    "scenariosPassed": 4,
+    "source": "ui-live-acceptance.xml",
+    "note": "Full journeys passed before final contrast/freshness polish; the final published build also passed the separate hosted-login/live-chart desktop/mobile smoke."
+  },
+  "finalPublishedSmoke": "ui-live-smoke.json",
+  "build": [
+    {
+      "path": "assets/charts-DME9z0Gk.js",
+      "bytes": 405277,
+      "sha256": "29ca10ab9cb4df4563be176eadf99040124c06e07d5b20fccc31bcb3365b9552"
+    },
+    {
+      "path": "assets/index-COnxbZV4.js",
+      "bytes": 49793,
+      "sha256": "3edf73bc214bfed362cbb4a04d6fc76f4e61a5d0cad246c8866138b816d2e3c4"
+    },
+    {
+      "path": "assets/index-Kie9BZH7.css",
+      "bytes": 29741,
+      "sha256": "524bd08cb4c68e8209d8f621264fa94a61f710fd0d6467aebb33c0339e272f0b"
+    },
+    {
+      "path": "assets/rolldown-runtime-XKyaHtl9.js",
+      "bytes": 726,
+      "sha256": "548d1dbf321e7d2ae804fcc158b588706a7c52f8ca175de1490c6ccb4dbe55b7"
+    },
+    {
+      "path": "assets/vendor-B6-PMUlF.js",
+      "bytes": 283574,
+      "sha256": "26b105d5eeed7a17ee35bcb84baca11ab86976a5c7361cb80065c0449bde16c8"
+    },
+    {
+      "path": "favicon.svg",
+      "bytes": 176,
+      "sha256": "b884228a71aa0e78d554c6a50400df9dd02178a8b4dac2eef73dcf9b8d11f30c"
+    },
+    {
+      "path": "index.html",
+      "bytes": 915,
+      "sha256": "85615ceca1fc58fce1f72c173ab2c860985463a4033bac1ebd2793ccd495b9a4"
+    }
+  ],
+  "publicReleaseMatchesBuild": true,
+  "verifiedSecurityHeaders": {
+    "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; style-src-attr 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://*.amazonaws.com https://*.amazoncognito.com; frame-ancestors 'none'; base-uri 'self'; object-src 'none'",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY"
+  },
+  "platformStackStatus": "UPDATE_COMPLETE",
+  "disposableAccountsRemaining": 0
+}

@@ -1,6 +1,6 @@
 # Deployed AWS acceptance — 14 October 2026
 
-The complete AWS layer of the PRD is deployed and operating in account **039379078306**, **Sydney (`ap-southeast-2`)**, on the existing Free Plan. The user authorized Sydney after the managed account policy blocked Mumbai. Three CloudFormation stacks own the platform, artifact storage and EC2 simulator. The React dashboard remains the subsequent application stage; the live hosting entry point currently shows deployment status.
+The complete AWS layer of the PRD is deployed and operating in account **039379078306**, **Sydney (`ap-southeast-2`)**, on the existing Free Plan. The user authorized Sydney after the managed account policy blocked Mumbai. Three CloudFormation stacks own the platform, artifact storage and EC2 simulator. The subsequently requested React dashboard is now deployed at the same CloudFront entry point; UI acceptance is recorded below.
 
 - Hosting: https://d1idggpc663p7f.cloudfront.net
 - Protected API: https://9ojy2mmg65.execute-api.ap-southeast-2.amazonaws.com
@@ -46,8 +46,29 @@ The first platform creation rolled back because SQS requires a separate statemen
 
 Tests cover the defined AWS scenarios and do not guarantee every future outage, IAM change, concurrency pattern or external delivery condition. The single EC2 gateway is an intentional demonstration dependency. Full live teardown was not run because the user requires continued operation; `SHUTDOWN.md` gives ordered future cleanup instructions and retained identifiers. The cleanup of failed initial creation resources and disposable recovery stacks was actually exercised.
 
-## Frontend handoff
+## React dashboard and browser acceptance
 
-Use `API.md` and CloudFront `/config.json` for the React implementation. Cognito invitations for both initial accounts have been created; the frontend needs hosted login/callback/sign-out handling, shared motor views/charts/controls, user management and report visualization. The underlying APIs are live and tested. Publish a completed React build with `scripts.publish_frontend`; later infrastructure updates preserve its entry point. Do not place secrets in the build.
+The React application in `frontend/` replaces the original hosting placeholder. It implements hosted Cognito authorization-code/PKCE login/callback/logout, token renewal/expiry, role-aware navigation, three shared motors with current measurements/freshness, recent temperature/vibration/power charts, independent operator fault/reset controls with requested/applied acknowledgement, alert history/filtering/notification state, asynchronous historical reports and CSV exports, and operator user invitations/role assignment. The original feature scope remains unchanged. README.md has build/publish/test commands; API.md remains the backend contract.
+
+**22 controlled Playwright browser scenarios passed.** These exercise normal/offline/stopped/pending/failed control states, viewer restrictions, 24-hour pagination, alert filters/email status, all three report kinds and CSV exports, report validation/empty/failure states, invitations/roles/self-role protection, API failure/retry, OAuth PKCE/state rejection, expiry/renewal/logout, stale telemetry, mobile navigation/no overflow, and axe WCAG 2 A/AA checks on overview, report form/results, alert history and team management. Deterministic fixtures make rare errors reproducible; they are separate from real AWS proof.
+
+**Four real deployed browser scenarios passed** (`ui-live-acceptance.xml`, 275.73 seconds including account setup/cleanup):
+
+| Browser journey | Verified result |
+| --- | --- |
+| Real hosted PKCE login and live equipment | Operator desktop and viewer mobile sign in through Cognito; callback removes the code; actual recent charts/pagination render; no page errors or CSP violations; viewer controls/user management unavailable |
+| Motor controls and recovery | Overheat on motor-01 and vibration on motor-02 receive simulator acknowledgements and produce visible stored alerts; other motors remain healthy; reset resolves both faults; disconnect becomes offline; final reset restores all three motors healthy |
+| Historical reports | Temperature, vibration and running-power queries complete through deployed Athena; result charts/tables display real motor rows; all three CSV downloads work |
+| Team management and logout | Both initial accounts appear; a disposable viewer gains an operator role through the browser, survives reload, then loses that role; hosted sign-out returns to the login page |
+
+The initial browser run was interrupted after its selector chose Cognito's hidden desktop/mobile duplicate form. `ui-live-interrupted.xml` preserves that failure. The selector now chooses visible fields, and the full rerun passed. Test credentials remain only in an OS-protected temporary input directory/process memory/browser runtime; invitations for test accounts are suppressed, accounts are deleted, and traces/videos/login screenshots are disabled.
+
+The only infrastructure update for the UI was the existing CloudFront security-header resource, verified by comparing the deployed template. Recharts needs inline style **attributes** for responsive layout; external/inline scripts and external style elements remain blocked. cfn-lint, Guard and all 64 existing non-live backend/infrastructure tests passed. Production builds pass strict TypeScript checking, contain no configuration/secrets, and split application/vendor/chart bundles. Every AWS publishing/invalidation operation goes through the append-only command logger. Subsequent infrastructure deployments preserve the React entry point.
+
+After final contrast/freshness polish, the published build passed another real desktop/mobile Cognito/login/chart smoke (`ui-live-smoke.xml/json`). `ui-acceptance.json` records all 22 controlled scenarios and release SHA-256 hashes; every public asset was fetched and matched against that build. The platform stack is UPDATE_COMPLETE, no disposable test accounts remain, and npm audit reports zero known vulnerabilities. Automated accessibility checks cover the tested views and do not replace a full manual accessibility audit.
+
+Screenshots captured from the real deployment: [desktop overview](ui-overview-desktop.png), [motor detail/charts](ui-device-desktop.png), [active/resolved alerts](ui-alerts-desktop.png), [report results](ui-reports-desktop.png), and [mobile viewer overview](ui-overview-mobile.png). They contain real archived history, including earlier test readings, rather than fabricated production telemetry. The test users visible in screenshots are disposable accounts.
+
+Browser tests verify these journeys; they cannot guarantee future AWS availability or inbox delivery. The invitation UI was tested with controlled API fixtures to avoid sending unsolicited test invitations, while real account creation/role enforcement was already verified by the AWS suite. React reports reuse the predefined, bounded backend queries. No infrastructure shutdown was performed; the existing budget and keep-online rules continue to apply.
 
 All operator AWS CLI commands, including failures, are appended to `AWS_COMMANDS.txt` with timestamps, purpose and exit status. Commands are executed through `scripts.aws_cli`; responses and sensitive authentication inputs are withheld. Source and evidence were committed in incremental milestones.

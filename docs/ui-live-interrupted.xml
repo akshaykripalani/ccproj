@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="214.451" timestamp="2026-10-14T23:46:46.787645+05:30" hostname="Akshay_Laptop"><testcase classname="tests.live.test_frontend_browser" name="test_deployed_react_browser_acceptance" file="tests\live\test_frontend_browser.py" line="13" time="214.276"><failure message="AssertionError: Deployed browser acceptance failed; inspect nonsecret test results&#10;assert 4294967295 == 0&#10; +  where 4294967295 = CompletedProcess(args=['npm.cmd', 'run', 'test:live'], returncode=4294967295).returncode">live = &lt;tests.live.conftest.Live object at 0x0000020135367150&gt;
+record_property = &lt;function record_property.&lt;locals&gt;.append_property at 0x0000020135342700&gt;
+
+    def test_deployed_react_browser_acceptance(live, record_property):
+        environment = os.environ.copy()
+        environment["CCPROJ_DASHBOARD_URL"] = live.platform["DashboardUrl"]
+        for role in ("viewer", "operator"):
+            email, password = live.users[role]
+            environment[f"CCPROJ_{role.upper()}_EMAIL"] = email
+            environment[f"CCPROJ_{role.upper()}_PASSWORD"] = password
+        # Environment stays in process memory: no credentials file, browser trace or video.
+        result = subprocess.run(
+            ["npm.cmd" if os.name == "nt" else "npm", "run", "test:live"],
+            cwd=PROJECT / "frontend",
+            env=environment,
+            timeout=1000,
+            check=False,
+        )
+&gt;       assert result.returncode == 0, "Deployed browser acceptance failed; inspect nonsecret test results"
+E       AssertionError: Deployed browser acceptance failed; inspect nonsecret test results
+E       assert 4294967295 == 0
+E        +  where 4294967295 = CompletedProcess(args=['npm.cmd', 'run', 'test:live'], returncode=4294967295).returncode
+
+tests\live\test_frontend_browser.py:29: AssertionError</failure></testcase></testsuite></testsuites>

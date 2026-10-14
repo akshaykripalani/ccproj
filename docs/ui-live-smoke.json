@@ -1,0 +1,22 @@
+{
+  "stats": {
+    "startTime": "2026-10-14T18:31:44.297Z",
+    "duration": 27229.447,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "scenarios": [
+    {
+      "title": "real hosted PKCE login, current motors, live charts and protected viewer UI",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 26195
+        }
+      ]
+    }
+  ]
+}

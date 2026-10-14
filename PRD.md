@@ -2,7 +2,8 @@
 
 ## Cloud-Based Industrial Equipment Monitoring and Fault Detection
 
-**Status:** AWS implementation deployed; React application stage remains  
+**Status:** AWS implementation and React dashboard deployed
+
 **Date:** 14 October 2026  
 **Context:** Academic Cloud Computing course project  
 **Budget ceiling:** USD $50 of total AWS service usage, before credit offsets  
@@ -17,7 +18,7 @@ There is no physical hardware requirement. One software simulator will represent
 
 This is a working academic demonstration with a limited operating period. It is not intended to provide production industrial monitoring or safety-critical decisions.
 
-The AWS layer is deployed in Sydney: the EC2 simulator, telemetry pipeline, protected application/control/user-management APIs, fault detection and notifications, reporting, monitoring, and private frontend hosting. The current CloudFront entry point is a deployment status page; the React dashboard remains the subsequent application stage. Deployed evidence and acceptance results are recorded in `docs/AWS_ACCEPTANCE.md`. The original product scope below remains in force.
+The AWS layer and React dashboard are deployed in Sydney: the EC2 simulator, telemetry pipeline, protected application/control/user-management APIs, fault detection and notifications, reporting, monitoring, and private frontend hosting. CloudFront serves the React application with Cognito sign-in, shared motor monitoring/charts/controls, alerts, historical report visualization and user management. Deployed evidence and acceptance results are recorded in `docs/AWS_ACCEPTANCE.md`. The original product scope below remains in force.
 
 ## 2. Goals and success criteria
 

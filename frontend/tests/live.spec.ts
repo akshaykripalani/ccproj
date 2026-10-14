@@ -91,11 +91,15 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
   expect(csp).toEqual([]);
   await page.getByRole("link", { name: "Overview", exact: true }).click();
   await expect(
+    page.getByRole("heading", { name: "Plant overview" }),
+  ).toBeVisible();
+  await expect(
     page.getByRole("img", { name: /Temperature chart with [1-9]\d* readings/ }),
   ).toBeVisible();
   await page.screenshot({
     path: "../docs/ui-overview-desktop.png",
     fullPage: true,
+    animations: "disabled",
   });
   const context = await browser.newContext({
     viewport: { width: 390, height: 844 },
