@@ -12,14 +12,13 @@ from tests.test_pipeline import process
 
 
 @pytest.mark.parametrize(
-    "rule,overrides,subject,measurement,limit,other",
+    "rule,overrides,subject,measurement,other",
     [
         (
             "temperature",
             {"temperature": Decimal("81.25")},
             "Forge alert: Motor 02 over temperature",
             "Temperature: 81.25 °C",
-            "Limit: 75 °C",
             "Vibration: 1.5 mm/s",
         ),
         (
@@ -27,13 +26,12 @@ from tests.test_pipeline import process
             {"vibration": Decimal("4.5000001")},
             "Forge alert: Motor 02 high vibration",
             "Vibration: 4.5000001 mm/s",
-            "Limit: 4.5 mm/s",
             "Temperature: 52 °C",
         ),
     ],
 )
 def test_fault_pipeline_publishes_readable_email_once(
-    aws, reading, rule, overrides, subject, measurement, limit, other
+    aws, reading, rule, overrides, subject, measurement, other
 ):
     for sequence in (1, 2, 3):
         assert process([reading(sequence, device="motor-02", **overrides)]) == {
@@ -58,18 +56,21 @@ def test_fault_pipeline_publishes_readable_email_once(
     detected = parse_time(intent["reading"]["observedAt"]).strftime("%d %b %Y, %H:%M:%S UTC")
     for expected in (
         measurement,
-        limit,
         other,
         "Power: 420 W",
-        "Operating state: Running",
         f"Detected: {detected}",
-        "3 consecutive readings above the limit",
         "https://dashboard.example.test/#/devices/motor-02",
-        "Operators can use Reset",
-        "Check Forge for the current state",
     ):
         assert expected in body
     assert "{" not in body and "eventId" not in body and intent["sk"] not in body
+    for invariant in (
+        "Operating state:",
+        "Limit:",
+        "consecutive readings",
+        "Operators can",
+        "Check Forge",
+    ):
+        assert invariant not in body
     saved = query_items(aws["data"], Key("pk").eq("NOTIFY"))[0]
     assert saved["delivery"] == "sns_accepted" and saved["snsMessageId"] == "readable-alert"
     assert "workStatus" not in saved
@@ -84,3 +85,14 @@ def test_delayed_email_uses_detection_time_and_equipment_link(reading):
     body = render_email(intent, "https://dashboard.example.test/")["Message"]
     assert "Detected: 14 Oct 2026, 10:00:00 UTC" in body
     assert "https://dashboard.example.test/#/devices/motor-03" in body
+
+
+def test_stopped_state_is_included_when_it_is_exceptional(reading):
+    sample = reading(temperature=81)
+    sample.update(operatingState="stopped", powerWatts=0)
+    body = render_email(
+        {"deviceId": "motor-01", "rule": "temperature", "reading": sample},
+        "https://dashboard.example.test",
+    )["Message"]
+    assert "Operating state: Stopped" in body
+    assert "Power: 0 W" in body

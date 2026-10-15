@@ -5,17 +5,11 @@ Subject: Forge alert: Motor 02 over temperature
 Motor 02 is over its temperature limit.
 
 Temperature: 81.25 °C
-Limit: 75 °C
 Detected: 15 Oct 2026, 05:30:00 UTC
-Confirmed by 3 consecutive readings above the limit.
 
 Other readings at detection
 Vibration: 1.5 mm/s
 Power: 420 W
-Operating state: Running
 
 View Motor 02
 https://d1idggpc663p7f.cloudfront.net/#/devices/motor-02
-
-Check Forge for the current state; this email records the fault at detection.
-Operators can use Reset on the dashboard to return this motor to normal.

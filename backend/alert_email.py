@@ -15,7 +15,7 @@ def render_email(intent, dashboard_url):
     reading = intent["reading"]
     motor = intent["deviceId"].replace("motor-", "Motor ")
     rule = intent["rule"]
-    field, limit = RULES[rule]
+    field, _ = RULES[rule]
     label, unit, description = {
         "temperature": ("Temperature", "°C", "over its temperature limit"),
         "vibration": ("Vibration", "mm/s", "over its vibration limit"),
@@ -26,21 +26,18 @@ def render_email(intent, dashboard_url):
         if rule == "temperature"
         else ("temperatureC", "Temperature", "°C")
     )
+    operating_state = "Operating state: Stopped\n" if reading["operatingState"] == "stopped" else ""
     return {
         "Subject": f"Forge alert: {motor} {'over temperature' if rule == 'temperature' else 'high vibration'}",
         "Message": (
             f"{motor} is {description}.\n\n"
             f"{label}: {number(reading[field])} {unit}\n"
-            f"Limit: {number(limit)} {unit}\n"
-            f"Detected: {detected}\n"
-            "Confirmed by 3 consecutive readings above the limit.\n\n"
+            f"Detected: {detected}\n\n"
             "Other readings at detection\n"
             f"{other_label}: {number(reading[other_field])} {other_unit}\n"
             f"Power: {number(reading['powerWatts'])} W\n"
-            f"Operating state: {reading['operatingState'].capitalize()}\n\n"
+            f"{operating_state}\n"
             f"View {motor}\n"
-            f"{dashboard_url.rstrip('/')}/#/devices/{intent['deviceId']}\n\n"
-            "Check Forge for the current state; this email records the fault at detection.\n"
-            "Operators can use Reset on the dashboard to return this motor to normal.\n"
+            f"{dashboard_url.rstrip('/')}/#/devices/{intent['deviceId']}\n"
         ),
     }

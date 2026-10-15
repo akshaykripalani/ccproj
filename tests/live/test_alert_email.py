@@ -116,17 +116,16 @@ def test_readable_email_from_real_ec2_fault_and_scheduled_notifier(live):
         for expected in (
             "Motor 01 is over its temperature limit.",
             "Temperature:",
-            "Limit: 75 °C",
             "Detected:",
             " UTC",
-            "3 consecutive readings",
             "Vibration:",
             "Power:",
             live.platform["DashboardUrl"] + "/#/devices/motor-01",
-            "Operators can use Reset",
         ):
             assert expected in body
         assert "{" not in body and "eventId" not in body
+        assert "Operating state:" not in body and "Limit:" not in body
+        assert "consecutive readings" not in body and "Operators can" not in body
 
         def accepted():
             record = call(
