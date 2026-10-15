@@ -3042,3 +3042,23 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-15T06:46:19.241795+00:00] b6168a30bab0 Remove only disposable live-test user
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-068950e5e1d8@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-15T06:46:24.109442+00:00] b6168a30bab0 EXIT 0
+
+[2026-10-15T06:54:07.574416+00:00] f3927282c774 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:54:12.109762+00:00] f3927282c774 EXIT 0
+
+[2026-10-15T06:54:12.134763+00:00] 4715a39454a0 Publish completed frontend build to the private hosting bucket
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "sync", "C:\\Akshay\\Projects-2\\ccproj\\frontend\\dist", "s3://ccproj-frontend-ipu2nmzptkhj", "--cache-control", "public,max-age=86400", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:54:20.474198+00:00] 4715a39454a0 EXIT 0
+
+[2026-10-15T06:54:20.500283+00:00] 4c462331cbaf Publish frontend entry point with revalidation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\frontend\\dist\\index.html", "s3://ccproj-frontend-ipu2nmzptkhj/index.html", "--content-type", "text/html", "--cache-control", "no-cache", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:54:25.120745+00:00] 4c462331cbaf EXIT 0
+
+[2026-10-15T06:54:25.146838+00:00] 88892a02de4a Make the explicitly published frontend release visible
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudfront", "create-invalidation", "--distribution-id", "E2QMBAOSKXNVMX", "--paths", "/*", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:54:29.091756+00:00] 88892a02de4a EXIT 0
+
+[2026-10-15T06:54:29.114105+00:00] 18ba426cb4e5 Wait for frontend release cache invalidation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudfront", "wait", "invalidation-completed", "--distribution-id", "E2QMBAOSKXNVMX", "--id", "IAF23TPLAR8EHVW9IOJZMAV8UL", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:54:54.159598+00:00] 18ba426cb4e5 EXIT 0

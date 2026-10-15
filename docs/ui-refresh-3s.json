@@ -1,0 +1,81 @@
+{
+  "verifiedAt": "2026-10-15T06:55:09.998832+00:00",
+  "dashboardUrl": "https://d1idggpc663p7f.cloudfront.net",
+  "normalRefreshMs": 3000,
+  "pendingCommandRefreshMs": 1000,
+  "simulatorTelemetryMs": 10000,
+  "validation": {
+    "productionBuild": "passed",
+    "targetedBrowserTests": {
+      "startTime": "2026-10-15T06:52:20.203Z",
+      "duration": 9643.536999999998,
+      "expected": 3,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "scope": [
+      "three-second cadence after command acknowledgement",
+      "bounded fast polling after refresh failures",
+      "reading ages tick independently of polling"
+    ]
+  },
+  "invalidationId": "IAF23TPLAR8EHVW9IOJZMAV8UL",
+  "assets": [
+    {
+      "path": "assets/charts-D5JkseK7.js",
+      "sha256": "ab811c2b28441394a129b262384467638ea2403a1dd8dcbdce8f457ed51c6915",
+      "bytes": 406169
+    },
+    {
+      "path": "assets/index-BKucCGVe.css",
+      "sha256": "3922b26448312c8b3975da3c471c3f63081d2bb1b7759428efbcffa16751c327",
+      "bytes": 24679
+    },
+    {
+      "path": "assets/index-Bp-mlZk4.js",
+      "sha256": "02b9eae7e96e97f73ed7636c9a8b99cd308b4ab6f343a2880e64cf0836f6a33b",
+      "bytes": 59371
+    },
+    {
+      "path": "assets/rolldown-runtime-XKyaHtl9.js",
+      "sha256": "548d1dbf321e7d2ae804fcc158b588706a7c52f8ca175de1490c6ccb4dbe55b7",
+      "bytes": 726
+    },
+    {
+      "path": "assets/vendor-B9iMLyJ4.js",
+      "sha256": "78b0fc2228b7b3695942c466b2fa66f20bd3f1d0df41bdd440b22f1fbfe35d0c",
+      "bytes": 278838
+    },
+    {
+      "path": "favicon.svg",
+      "sha256": "b884228a71aa0e78d554c6a50400df9dd02178a8b4dac2eef73dcf9b8d11f30c",
+      "bytes": 176
+    },
+    {
+      "path": "fonts/ibm-plex-mono-400.woff2",
+      "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7",
+      "bytes": 14708
+    },
+    {
+      "path": "fonts/ibm-plex-mono-500.woff2",
+      "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22",
+      "bytes": 14888
+    },
+    {
+      "path": "fonts/ibm-plex-sans.woff2",
+      "sha256": "e2291e842cf5af167122a22881a740c7f2dda7716f1e8cd76680264f4a859470",
+      "bytes": 45712
+    },
+    {
+      "path": "fonts/OFL.txt",
+      "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "bytes": 4456
+    },
+    {
+      "path": "index.html",
+      "sha256": "6677504f5625356e252c11329d04f14ef31e93c2ca753367ac8a17a7017dff58",
+      "bytes": 915
+    }
+  ]
+}
