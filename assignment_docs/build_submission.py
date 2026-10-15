@@ -257,78 +257,9 @@ def figures():
     )
     result.append(f)
 
-    f = Figure(
-        "02-aws-components",
-        "Figure 2. Implemented AWS components",
-        "Logical data flow, not VPC placement. ApiBackend owns controls and reporting. A durable outbox and scheduled Notifier separate email from telemetry commit.",
-        585,
-    )
-    f.box("ec2", 8, 20, 120, 58, ["EC2 gateway", "IAM / SigV4"])
-    f.box("api", 177, 20, 125, 58, ["API Gateway", "IAM or JWT"])
-    f.box("ing", 350, 20, 122, 58, ["Ingestion", "Lambda"])
-    f.box("q", 519, 20, 122, 58, ["SQS FIFO", "factory group"], "data")
-    f.box("processor", 519, 135, 122, 58, ["Processor", "Lambda"])
-    f.box("dlq", 350, 135, 122, 58, ["FIFO DLQ", "After 3 receives"], "warning")
-    f.box(
-        "data", 519, 252, 122, 70, ["DynamoDB Data", "State / history", "Alerts / outbox"], "data"
-    )
-    f.box("archive", 350, 252, 122, 70, ["S3 archive", "JSON.gz / date", "Glue schema"], "data")
-    f.box("app", 177, 135, 125, 58, ["ApiBackend", "Lambda"])
-    f.box("ctrl", 8, 135, 120, 58, ["DynamoDB", "Controls"], "data")
-    f.box("browser", 8, 252, 120, 70, ["React browser", "Cognito login", "JWT APIs"], "auth")
-    f.box("hosting", 8, 390, 120, 70, ["CloudFront", "OAC -> private", "S3 frontend"])
-    f.box("athena", 177, 252, 125, 70, ["Athena", "Bounded SQL", "Private results"], "data")
-    f.box("sched", 177, 390, 125, 70, ["Scheduler", "Every minute"])
-    f.box("notify", 350, 390, 122, 70, ["Notifier Lambda", "Pending work", "GSI query"])
-    f.box("sns", 519, 390, 122, 70, ["SNS + KMS", "Confirmed", "email"], "auth")
-    f.arrow("ec2", "api")
-    f.arrow("api", "ing")
-    f.arrow("ing", "q")
-    f.arrow("q", "processor", "Consume", ("b", "t"))
-    f.arrow("q", "dlq", "Redrive", ("b", "t"), via=[(500, 106), (411, 106)], label_at=(437, 96))
-    f.arrow("processor", "data", "Transaction", ("b", "t"))
-    f.arrow(
-        "processor",
-        "archive",
-        "Archive",
-        ("l", "t"),
-        via=[(493, 164), (493, 219), (411, 219)],
-        label_at=(452, 211),
-    )
-    f.arrow("api", "app", "JWT routes", ("b", "t"))
-    f.arrow("app", "ctrl", "Request", ("l", "r"))
-    f.arrow("ec2", "ctrl", "Poll / ack", ("b", "t"))
-    f.arrow(
-        "browser", "api", "Access JWT", ("r", "l"), via=[(151, 287), (151, 49)], label_at=(150, 226)
-    )
-    f.arrow("hosting", "browser", "HTTPS", ("t", "b"))
-    f.arrow("app", "athena", "Start / status", ("b", "t"))
-    f.arrow("athena", "archive", "Query")
-    f.arrow(
-        "app",
-        "data",
-        "Read state",
-        ("r", "l"),
-        via=[(325, 164), (325, 229), (494, 229), (494, 287)],
-        label_at=(341, 214),
-    )
-    f.arrow("sched", "notify")
-    f.arrow("notify", "sns", "Publish")
-    f.arrow(
-        "data",
-        "notify",
-        "Pending intents",
-        ("b", "t"),
-        via=[(580, 351), (411, 351)],
-        label_at=(489, 343),
-    )
-    f.note(
-        520, "Cross-cutting: IAM roles, CloudWatch logs/alarms, CloudFormation and logged AWS CLI."
-    )
-    f.note(
-        545, "Four Lambda functions. Live reads use DynamoDB; only requested reports use Athena."
-    )
-    result.append(f)
+    from build_architecture import ArchitectureFigure
+
+    result.append(ArchitectureFigure())
 
     f = Figure(
         "03-network-deployment",
@@ -1135,7 +1066,7 @@ def main():
     figs = figures()
     index = [
         "# Part 5. Architecture and design diagrams\n",
-        "All diagrams describe the implemented design. SVG is the vector submission original; PNG is a convenient preview; Mermaid is editable semantic source. The PDF embeds vector drawings. Colors distinguish compute (blue), stores (green), identity (purple), external actors (grey) and exceptional states (amber). Arrows show the labeled request/data/dependency direction; network boundaries are explicit only in Figure 3.\n",
+        "All diagrams describe the implemented design. SVG is the vector submission original; PNG is a convenient preview; Mermaid is editable semantic source. The PDF embeds vector drawings. Colors distinguish compute (blue), stores (green), identity (purple), external actors (grey) and exceptional states (amber). Arrows show the labeled request/data/dependency direction; Figure 2 groups services for presentation; Figure 3 shows network boundaries.\n",
     ]
     for f in figs:
         f.save()

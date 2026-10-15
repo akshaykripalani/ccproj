@@ -48,8 +48,8 @@
       "sha256": "5a1cbcf6b28cfb64708d1fa1a025a6311289d66140a7f3bfbb9f22d721c76b75"
     },
     "build_submission.py": {
-      "bytes": 41801,
-      "sha256": "29b9b82992c80e82ff5efe5071205809f9cf2ecd89334d8f6c6ff0534640ec7b"
+      "bytes": 38807,
+      "sha256": "c252d9a864219ee57188595e4aa20747e6185c409fe5d645ae71f9c18e521dd6"
     },
     "Design_and_Implementation.md": {
       "bytes": 30767,
@@ -68,16 +68,16 @@
       "sha256": "66ab2117260c94f57e9dc87a63a15834b6cc55c04bb9c6e989188f7467208889"
     },
     "diagrams/02-aws-components.mmd": {
-      "bytes": 1278,
-      "sha256": "55539924375ef01821a961e0d3f140dda0bd59df74541f9f3017a04b8154285b"
+      "bytes": 829,
+      "sha256": "e04d8a41998bdd80bf6331cdfd62773be70951f6a4bda4ebaf0e7de83f6a42c8"
     },
     "diagrams/02-aws-components.png": {
-      "bytes": 199747,
-      "sha256": "a5e834574918aee8c33be6d02e86b6cd592242eb55b31379def5bf35ed8c4bc3"
+      "bytes": 267421,
+      "sha256": "7cf028224070bb0bdb1a3118ea2583dfe9fe3507afee4fc7ca23040c472f42df"
     },
     "diagrams/02-aws-components.svg": {
-      "bytes": 22120,
-      "sha256": "b814472a3a05a0bf924172a86aae112ae2fb0f9e13847fdf09ae02b3e0fb15ec"
+      "bytes": 11922,
+      "sha256": "63e9ff355c55b895bed9daee8e4f8dfd2d680a4452521f00a089f06e1b07e2fd"
     },
     "diagrams/03-network-deployment.mmd": {
       "bytes": 407,
@@ -176,8 +176,8 @@
       "sha256": "63544e7a72708c8889b4b3f2af79011fccfdf5110991bbebc28f3ea010618af3"
     },
     "Diagrams.md": {
-      "bytes": 4299,
-      "sha256": "062fbd5b3c1ed0e9701ae932bd419dfeffd578e12896f1dec1602527596d1079"
+      "bytes": 4484,
+      "sha256": "e87d3bb859cebc7da9f994a7f26ef65f7c5046831200d188c37320b4a1b00468"
     },
     "evidence/budget-model.json": {
       "bytes": 1496,
@@ -212,8 +212,8 @@
       "sha256": "0c6f2a6aeea62f0362594b6a8f36e2ec647b56e6b09a7e1895a5dddd000d50c0"
     },
     "README.md": {
-      "bytes": 3169,
-      "sha256": "9fb1e289748297022e32813965045d6819ac18214d85053fb4fd40187b30107b"
+      "bytes": 3638,
+      "sha256": "3d42dfd22492465fc204d07eca0c18c3c5fa7d0a8a832a573fed8eb3ee867f94"
     },
     "Requirements.md": {
       "bytes": 11084,
@@ -226,6 +226,21 @@
     "Tools_Used.md": {
       "bytes": 11116,
       "sha256": "681ec4919e1a216e3498f7e9fcd39ab314db4dd0bf787bbf25de442518e93ca5"
+    },
+    "build_architecture.py": {
+      "bytes": 8140,
+      "sha256": "ec1a19cfef18986a35bf631e5344d80f4f668b4531ed0f6ad4ac94bc25b9bc74"
     }
+  },
+  "architectureUpdate": {
+    "date": "2026-10-15",
+    "scope": "Single simplified nine-block overview, PNG and SVG only; semantic source and rebuild instructions aligned.",
+    "pngSize": [
+      3840,
+      2160
+    ],
+    "visualReview": "Final export inspected: readable labels, no text clipping or crossing connectors.",
+    "pdfUnchanged": true,
+    "awsOperations": 0
   }
 }

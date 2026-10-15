@@ -1,6 +1,6 @@
 # Part 5. Architecture and design diagrams
 
-All diagrams describe the implemented design. SVG is the vector submission original; PNG is a convenient preview; Mermaid is editable semantic source. The PDF embeds vector drawings. Colors distinguish compute (blue), stores (green), identity (purple), external actors (grey) and exceptional states (amber). Arrows show the labeled request/data/dependency direction; network boundaries are explicit only in Figure 3.
+All diagrams describe the implemented design. SVG is the vector submission original; PNG is a convenient preview; Mermaid is editable semantic source. The PDF embeds vector drawings. Colors distinguish compute (blue), stores (green), identity (purple), external actors (grey) and exceptional states (amber). Arrows show the labeled request/data/dependency direction; Figure 2 groups services for presentation; Figure 3 shows network boundaries.
 
 ## Figure 1. System context
 
@@ -10,11 +10,11 @@ People authenticate through Cognito; the gateway uses IAM. Equipment notificatio
 
 [PNG](diagrams/01-system-context.png) | [Editable Mermaid](diagrams/01-system-context.mmd)
 
-## Figure 2. Implemented AWS components
+## Figure 2. AWS architecture overview
 
-Logical data flow, not VPC placement. ApiBackend owns controls and reporting. A durable outbox and scheduled Notifier separate email from telemetry commit.
+Use this single 16:9 overview for the presentation. Nine grouped blocks cover the dashboard, API, telemetry pipeline, storage/reporting and fault emails. Grouped boxes summarize responsibilities rather than physical deployment boundaries. Updated 15 October 2026; the consolidated PDF retains its earlier snapshot.
 
-![Figure 2. Implemented AWS components](diagrams/02-aws-components.svg)
+![Figure 2. AWS architecture overview](diagrams/02-aws-components.svg)
 
 [PNG](diagrams/02-aws-components.png) | [Editable Mermaid](diagrams/02-aws-components.mmd)
 

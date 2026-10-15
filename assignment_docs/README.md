@@ -3,6 +3,8 @@
 **Cloud-Based Industrial Equipment Monitoring and Fault Detection**  
 Prepared: 15 October 2026. Source baseline: Git `b31c746`, followed by documentation-only commits.
 
+For the presentation, use the **[architecture PNG](diagrams/02-aws-components.png)** (3840 x 2160, 16:9) or **[editable SVG](diagrams/02-aws-components.svg)**. This single overview groups the implementation into nine blocks. Updated 15 October 2026; the PDF remains the earlier snapshot. Rebuild these images with `python build_architecture.py` from this folder using the document-authoring runtime. The full report builder will use this overview on its next rebuild.
+
 Start with [Submission_Report.pdf](Submission_Report.pdf), the consolidated requirements, design, tools and implementation report. Editable source documents:
 
 1. [Requirements.md](Requirements.md): problem, scope, users, functional and non-functional requirements, and acceptance traceability.
