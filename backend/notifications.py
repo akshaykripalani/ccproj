@@ -3,8 +3,9 @@ import os
 
 from boto3.dynamodb.conditions import Key
 
+from backend.alert_email import render_email
 from backend.aws_support import client, query_items, table
-from backend.domain import canonical, timestamp, utcnow
+from backend.domain import timestamp, utcnow
 
 log = logging.getLogger(__name__)
 
@@ -42,15 +43,7 @@ def handler(event, context):
         try:
             result = client("sns").publish(
                 TopicArn=os.environ["ALERT_TOPIC"],
-                Subject=f"Motor alert: {intent['deviceId']} {intent['rule']}",
-                Message=canonical(
-                    {
-                        "alertId": intent["sk"],
-                        "deviceId": intent["deviceId"],
-                        "rule": intent["rule"],
-                        "reading": intent["reading"],
-                    }
-                ),
+                **render_email(intent, os.environ["DASHBOARD_URL"]),
             )
             target.update_item(
                 Key=key,

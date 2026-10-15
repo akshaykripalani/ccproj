@@ -458,7 +458,10 @@ def build():
             }
         },
         "React security headers; chart library needs inline layout attributes only, scripts and style elements stay self-hosted",
-        ["No inline scripts or external style elements", "Inline style attributes only for responsive chart layout"],
+        [
+            "No inline scripts or external style elements",
+            "Inline style attributes only for responsive chart layout",
+        ],
     )
     add(
         t,
@@ -699,8 +702,8 @@ def build():
             statement(["sns:Publish", "sns:ListSubscriptionsByTopic"], ref("Alerts")),
             statement(["kms:Decrypt", "kms:GenerateDataKey"], att("NotificationKey")),
         ],
-        common,
-        "Retry durable notification intent independently of telemetry",
+        {**common, "DASHBOARD_URL": sub("https://${Distribution.DomainName}")},
+        "Retry durable intent; send readable fault emails with deployment-derived equipment links",
     )
     api_permissions = [
         statement(

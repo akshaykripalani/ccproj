@@ -1597,7 +1597,7 @@
       },
       "Metadata": {
         "com.aws.cloudformation.Context": {
-          "why": "Retry durable notification intent independently of telemetry",
+          "why": "Retry durable intent; send readable fault emails with deployment-derived equipment links",
           "must": [
             "Only enumerated application access; no user access keys"
           ]
@@ -1669,7 +1669,10 @@
             "ATHENA_WORKGROUP": {
               "Ref": "Workgroup"
             },
-            "OFFLINE_SECONDS": "60"
+            "OFFLINE_SECONDS": "60",
+            "DASHBOARD_URL": {
+              "Fn::Sub": "https://${Distribution.DomainName}"
+            }
           }
         },
         "Tags": [
@@ -1681,7 +1684,7 @@
       },
       "Metadata": {
         "com.aws.cloudformation.Context": {
-          "why": "Retry durable notification intent independently of telemetry",
+          "why": "Retry durable intent; send readable fault emails with deployment-derived equipment links",
           "must": [
             "Role credentials only; no public function URL"
           ]

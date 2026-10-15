@@ -22,6 +22,7 @@ def aws(monkeypatch):
         "GLUE_DATABASE": "ccproj",
         "ATHENA_WORKGROUP": "reports",
         "OFFLINE_SECONDS": "60",
+        "DASHBOARD_URL": "https://dashboard.example.test",
     }.items():
         monkeypatch.setenv(name, value)
     aws_support.client.cache_clear()
