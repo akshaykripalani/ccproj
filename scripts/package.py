@@ -5,16 +5,14 @@ import json
 import subprocess
 import sys
 import tarfile
+import tempfile
 import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def package():
-    build = ROOT / "build"
-    wheels = build / "wheels"
-    wheels.mkdir(parents=True, exist_ok=True)
+def download_wheels(wheels):
     subprocess.run(
         [
             sys.executable,
@@ -37,6 +35,9 @@ def package():
         ],
         check=True,
     )
+
+
+def bundle(build, wheels):
     backend = build / "backend.zip"
     with zipfile.ZipFile(backend, "w", zipfile.ZIP_DEFLATED) as bundle:
         for path in sorted((ROOT / "backend").glob("*.py")):
@@ -64,6 +65,17 @@ def package():
         }
     (build / "release.json").write_text(json.dumps(result, indent=2) + "\n")
     return result
+
+
+def package():
+    build = ROOT / "build"
+    build.mkdir(exist_ok=True)
+    # pip's download directory is additive. A reused directory can silently mix
+    # old and newly resolved SDK versions, producing duplicate ZIP entries.
+    with tempfile.TemporaryDirectory(prefix="wheels-", dir=build) as directory:
+        wheels = Path(directory)
+        download_wheels(wheels)
+        return bundle(build, wheels)
 
 
 if __name__ == "__main__":
