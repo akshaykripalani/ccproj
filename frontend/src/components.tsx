@@ -5,6 +5,7 @@ import {
   LineChart,
   CartesianGrid,
   ReferenceLine,
+  ReferenceArea,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -14,6 +15,7 @@ import { api } from "./api";
 import { ago, modeName, motorName, number, when } from "./format";
 import { usePoll } from "./hooks";
 import type { Control, Device, Mode, Reading } from "./types";
+import { readingPath, timeLabel } from "./telemetry";
 
 export function Badge({
   children,
@@ -57,6 +59,74 @@ export function Loading({ label = "Loading live data…" }: { label?: string }) 
       <LoaderCircle size={20} className="spin" />
       {label}
     </div>
+  );
+}
+
+export function TelemetrySkeleton() {
+  return (
+    <div
+      className="telemetry-skeleton"
+      role="status"
+      aria-label="Loading equipment readings"
+    >
+      <span className="sr-only">Loading equipment readings</span>
+      {[0, 1, 2].map((row) => (
+        <div key={row} className="skeleton-row" aria-hidden="true">
+          {[0, 1, 2, 3].map((cell) => (
+            <span key={cell} />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+export function AnimatedNumber({
+  value,
+  decimals = 1,
+}: {
+  value?: number;
+  decimals?: number;
+}) {
+  const [shown, setShown] = useState(value);
+  const previous = useRef(value);
+  useEffect(() => {
+    const from = previous.current;
+    previous.current = value;
+    const media = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let frame = 0;
+    if (
+      from === undefined ||
+      value === undefined ||
+      from === value ||
+      media.matches
+    ) {
+      setShown(value);
+      return;
+    }
+    const started = performance.now();
+    function draw(time: number) {
+      const progress = Math.min(1, (time - started) / 300);
+      setShown(from! + (value! - from!) * (1 - (1 - progress) ** 3));
+      if (progress < 1) frame = requestAnimationFrame(draw);
+    }
+    function reduce() {
+      if (media.matches) {
+        cancelAnimationFrame(frame);
+        setShown(value);
+      }
+    }
+    media.addEventListener("change", reduce);
+    frame = requestAnimationFrame(draw);
+    return () => {
+      cancelAnimationFrame(frame);
+      media.removeEventListener("change", reduce);
+    };
+  }, [value]);
+  return (
+    <span className="value-flash" key={value}>
+      {number(shown, decimals)}
+    </span>
   );
 }
 export function Heading({
@@ -224,7 +294,7 @@ export function Controls({
   );
 }
 
-function Gauge({
+export function Gauge({
   value,
   unit,
   limit,
@@ -232,15 +302,19 @@ function Gauge({
 }: {
   value?: number;
   unit: string;
-  limit: number;
+  limit?: number;
   scale: number;
 }) {
   const maximum = Math.max(scale, value ?? 0);
-  const breached = value !== undefined && value > limit;
+  const breached = value !== undefined && limit !== undefined && value > limit;
   return (
     <div className={`gauge ${breached ? "problem" : ""}`}>
       <strong>
-        {number(value, unit === "mm/s" ? 2 : 1)} <small>{unit}</small>
+        <AnimatedNumber
+          value={value}
+          decimals={unit === "mm/s" ? 2 : unit === "W" ? 0 : 1}
+        />{" "}
+        <small>{unit}</small>
       </strong>
       <div className="gauge-track" aria-hidden="true">
         <span
@@ -248,9 +322,88 @@ function Gauge({
             width: `${Math.max(0, Math.min(100, ((value ?? 0) / maximum) * 100))}%`,
           }}
         />
-        <i style={{ left: `${(limit / maximum) * 100}%` }} />
+        {limit !== undefined && (
+          <i style={{ left: `${(limit / maximum) * 100}%` }} />
+        )}
+        {Array.from(
+          {
+            length: Math.floor(
+              maximum / (unit === "°C" ? 10 : unit === "mm/s" ? 1 : 100),
+            ),
+          },
+          (_, index) => (
+            <b
+              key={index}
+              style={{
+                left: `${(((index + 1) * (unit === "°C" ? 10 : unit === "mm/s" ? 1 : 100)) / maximum) * 100}%`,
+              }}
+            />
+          ),
+        )}
       </div>
     </div>
+  );
+}
+
+function Sparkline({
+  device,
+  readings,
+  now,
+}: {
+  device: Device;
+  readings: Reading[];
+  now: number;
+}) {
+  const values = readings
+    .filter(
+      (r) =>
+        r.deviceId === device.deviceId &&
+        Date.parse(r.observedAt) >= now - 1800000,
+    )
+    .sort((a, b) => a.observedAt.localeCompare(b.observedAt));
+  const min = Math.min(40, ...values.map((r) => r.temperatureC));
+  const max = Math.max(90, ...values.map((r) => r.temperatureC));
+  const from = Math.min(
+    now - 60000,
+    Date.parse(values[0]?.observedAt ?? new Date(now).toISOString()),
+  );
+  const path = readingPath(
+    values,
+    (t) => 2 + ((t - from) / (now - from)) * 116,
+    (v) => 35 - ((v - min) / (max - min)) * 30,
+  );
+  return (
+    <svg
+      className="sparkline"
+      viewBox="0 0 120 40"
+      preserveAspectRatio="none"
+      role="img"
+      aria-label={`${motorName(device.deviceId)} temperature over the last 30 minutes`}
+    >
+      <line
+        x1="0"
+        x2="120"
+        y1={35 - ((75 - min) / (max - min)) * 30}
+        y2={35 - ((75 - min) / (max - min)) * 30}
+        className="spark-limit"
+      />
+      {path && (
+        <path
+          d={path}
+          fill="none"
+          className={
+            device.latest && device.latest.temperatureC > 75
+              ? "spark-fault"
+              : ""
+          }
+        />
+      )}
+      {!path && (
+        <text x="60" y="25" textAnchor="middle">
+          No history
+        </text>
+      )}
+    </svg>
   );
 }
 
@@ -260,25 +413,37 @@ function MotorRow({
   operator,
   refresh,
   links,
+  readings,
 }: {
   device: Device;
   now: number;
   operator: boolean;
   refresh: () => void;
   links: boolean;
+  readings: Reading[];
 }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [requested, setRequested] = useState<Control>();
+  const control =
+    requested &&
+    requested.requestId !== device.control.requestId &&
+    Date.parse(requested.requestedAt ?? "") >
+      Date.parse(device.control.requestedAt ?? "1970-01-01")
+      ? requested
+      : device.control;
   const condition = deviceCondition(device);
   const attention = condition.tone === "danger" || condition.tone === "warning";
   async function reset() {
     setBusy(true);
     setError("");
     try {
-      await api(`/controls/${device.deviceId}`, {
-        method: "POST",
-        body: { mode: "normal" },
-      });
+      setRequested(
+        await api<Control>(`/controls/${device.deviceId}`, {
+          method: "POST",
+          body: { mode: "normal" },
+        }),
+      );
       refresh();
     } catch (err) {
       setError(
@@ -289,7 +454,15 @@ function MotorRow({
     }
   }
   return (
-    <tr data-testid={device.deviceId} className={attention ? "fault-row" : ""}>
+    <tr
+      data-testid={device.deviceId}
+      className={[
+        attention ? "fault-row" : "",
+        !device.online ? "offline-row" : "",
+      ]
+        .filter(Boolean)
+        .join(" ")}
+    >
       <th scope="row">
         {links ? (
           <a href={`#/devices/${device.deviceId}`}>
@@ -301,22 +474,26 @@ function MotorRow({
       </th>
       <td>
         <span className={`equipment-state ${attention ? "problem" : ""}`}>
-          <i aria-hidden="true" />
+          <i
+            key={device.latest?.eventId}
+            className={device.online ? "heartbeat" : ""}
+            aria-hidden="true"
+          />
           {condition.label}
         </span>
-        {device.control.status !== "applied" && (
-          <small
-            className={`row-command ${device.control.status}`}
-            role="status"
-          >
-            {device.control.status === "pending"
-              ? "Applying change…"
+        {!device.online && (
+          <small className="cell-sub">Last-known readings</small>
+        )}
+        {control.status !== "applied" && (
+          <small className={`row-command ${control.status}`} role="status">
+            {control.status === "pending"
+              ? `${modeName(control.requestedMode)} requested → Applying change…`
               : "Change not confirmed. Try again."}
           </small>
         )}
         {error && <ErrorNotice message={error} />}
       </td>
-      <td>
+      <td data-label={`Temp · ${device.thresholds.temperature?.value ?? 75} °C limit`}>
         <Gauge
           value={device.latest?.temperatureC}
           unit="°C"
@@ -324,7 +501,7 @@ function MotorRow({
           scale={90}
         />
       </td>
-      <td>
+      <td data-label={`Vibration · ${device.thresholds.vibration?.value ?? 4.5} limit`}>
         <Gauge
           value={device.latest?.vibrationMmS}
           unit="mm/s"
@@ -332,13 +509,17 @@ function MotorRow({
           scale={6}
         />
       </td>
-      <td className="numeric">
-        {number(device.latest?.powerWatts, 0)} <small>W</small>
+      <td data-label="Power">
+        <Gauge value={device.latest?.powerWatts} unit="W" scale={600} />
+      </td>
+      <td className="trend-cell">
+        <Sparkline device={device} readings={readings} now={now} />
       </td>
       <td
         className="numeric seen"
         title={`Last received ${when(device.lastSeen)}`}
       >
+        <span className="mobile-label">Last reading </span>
         {ago(device.lastSeen, now)}
       </td>
       <td>
@@ -355,14 +536,6 @@ function MotorRow({
                 {busy ? "Resetting…" : "Reset"}
               </button>
             )}
-          {links && (
-            <a
-              href={`#/devices/${device.deviceId}`}
-              aria-label={`${motorName(device.deviceId)} details`}
-            >
-              Details
-            </a>
-          )}
         </div>
       </td>
     </tr>
@@ -375,12 +548,14 @@ export function MotorTable({
   operator,
   refresh,
   links = true,
+  readings = [],
 }: {
   devices: Device[];
   now: number;
   operator: boolean;
   refresh: () => void;
   links?: boolean;
+  readings?: Reading[];
 }) {
   return (
     <section className="panel motor-table" aria-label="Motors">
@@ -395,10 +570,11 @@ export function MotorTable({
             <tr>
               <th>Motor</th>
               <th>State</th>
-              <th>Temp · limit 75 °C</th>
-              <th>Vibration · limit 4.5 mm/s</th>
+              <th>Temperature<span className="column-limit">75 °C limit</span></th>
+              <th>Vibration<span className="column-limit">4.5 mm/s limit</span></th>
               <th>Power</th>
-              <th>Seen</th>
+              <th>Temperature · 30 min</th>
+              <th>Last reading</th>
               <th>
                 <span className="sr-only">Actions</span>
               </th>
@@ -413,6 +589,7 @@ export function MotorTable({
                 operator={operator}
                 refresh={refresh}
                 links={links}
+                readings={readings}
               />
             ))}
           </tbody>
@@ -467,19 +644,19 @@ export const metrics = {
   temperatureC: {
     title: "Temperature",
     unit: "°C",
-    color: "#14181b",
+    color: "#1d5c7a",
     threshold: 75,
   },
   vibrationMmS: {
     title: "Vibration",
     unit: "mm/s",
-    color: "#5e686d",
+    color: "#1d5c7a",
     threshold: 4.5,
   },
   powerWatts: {
     title: "Power draw",
     unit: "W",
-    color: "#8c969b",
+    color: "#1d5c7a",
     threshold: undefined,
   },
 };
@@ -488,15 +665,36 @@ export function TelemetryChart({
   readings,
   field,
   threshold = true,
+  syncId,
 }: {
   readings: Reading[];
   field: keyof typeof metrics;
   threshold?: boolean;
+  syncId?: string;
 }) {
   const metric = metrics[field];
   const ordered = [...readings].sort((a, b) =>
     a.observedAt.localeCompare(b.observedAt),
   );
+  const domain: [number, number] =
+    field === "temperatureC"
+      ? [
+          Math.floor(Math.min(40, ...readings.map((r) => r[field])) / 10) * 10,
+          Math.ceil(Math.max(90, ...readings.map((r) => r[field])) / 10) * 10,
+        ]
+      : [
+          0,
+          field === "vibrationMmS"
+            ? Math.max(
+                6,
+                Math.ceil(Math.max(0, ...readings.map((r) => r[field]))),
+              )
+            : Math.max(
+                600,
+                Math.ceil(Math.max(0, ...readings.map((r) => r[field])) / 100) *
+                  100,
+              ),
+        ];
   const points: {
     time: number;
     temperatureC: number | null;
@@ -531,7 +729,9 @@ export function TelemetryChart({
       <ResponsiveContainer width="100%" height="100%" minWidth={0}>
         <LineChart
           data={points}
-          margin={{ top: 18, right: 12, bottom: 0, left: -20 }}
+          margin={{ top: 18, right: 28, bottom: 0, left: -12 }}
+          syncId={syncId}
+          syncMethod="value"
           accessibilityLayer
         >
           <CartesianGrid
@@ -543,19 +743,15 @@ export function TelemetryChart({
             dataKey="time"
             type="number"
             domain={["dataMin", "dataMax"]}
-            tickFormatter={(time) =>
-              new Date(time).toLocaleTimeString(undefined, {
-                hour: "2-digit",
-                minute: "2-digit",
-              })
-            }
+            tickFormatter={(time) => timeLabel(Number(time), Date.parse(ordered.at(-1)!.observedAt) - Date.parse(ordered[0].observedAt) < 600000)}
+            padding={{ left: 8, right: 20 }}
             tick={{ fontSize: 13, fill: "#4a5459" }}
             axisLine={false}
             tickLine={false}
             minTickGap={45}
           />
           <YAxis
-            domain={["auto", "auto"]}
+            domain={domain}
             tick={{ fontSize: 13, fill: "#4a5459" }}
             axisLine={false}
             tickLine={false}
@@ -568,15 +764,23 @@ export function TelemetryChart({
             ]}
           />
           {threshold && metric.threshold !== undefined && (
+            <ReferenceArea
+              y1={metric.threshold}
+              y2={domain[1]}
+              fill="#a8340a"
+              fillOpacity={0.06}
+            />
+          )}
+          {threshold && metric.threshold !== undefined && (
             <ReferenceLine
               y={metric.threshold}
               ifOverflow="extendDomain"
-              stroke="#14181b"
+              stroke="#a8340a"
               strokeDasharray="4 4"
               label={{
                 value: `Limit ${metric.threshold}`,
                 position: "insideTopRight",
-                fill: "#14181b",
+                fill: "#a8340a",
                 fontSize: 13,
               }}
             />
@@ -652,7 +856,11 @@ export function RecentCharts({
                   <span>{metrics[field].unit}</span>
                 </div>
               )}
-              <TelemetryChart readings={recent.data!} field={field} />
+              <TelemetryChart
+                readings={recent.data!}
+                field={field}
+                syncId={`recent-${deviceId}`}
+              />
             </div>
           ))}
         </div>
@@ -661,7 +869,7 @@ export function RecentCharts({
   );
 }
 
-function useReadingHistory(deviceIds: string[], hours: string) {
+export function useReadingHistory(deviceIds: string[], hours: string) {
   const key = deviceIds.join(",") + ":" + hours;
   const retained = useRef<{ key: string; readings: Reading[] }>({
     key: "",
@@ -712,195 +920,5 @@ function useReadingHistory(deviceIds: string[], hours: string) {
     },
     10000,
     key,
-  );
-}
-
-export function AllMotorTrend({
-  devices,
-  now,
-}: {
-  devices: Device[];
-  now: number;
-}) {
-  const [hours, setHours] = useState("1");
-  const history = useReadingHistory(
-    devices.map((device) => device.deviceId),
-    hours,
-  );
-  const container = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(640);
-  useEffect(() => {
-    if (!container.current) return;
-    const observer = new ResizeObserver(([entry]) =>
-      setWidth(Math.max(260, entry.contentRect.width)),
-    );
-    observer.observe(container.current);
-    return () => observer.disconnect();
-  }, []);
-  const values = history.data ?? [];
-  const minimum =
-    Math.floor(
-      Math.min(50, ...values.map((reading) => reading.temperatureC)) / 10,
-    ) * 10;
-  const maximum =
-    Math.ceil(
-      Math.max(90, ...values.map((reading) => reading.temperatureC)) / 10,
-    ) * 10;
-  const left = 36,
-    right = width - 115,
-    top = 24,
-    bottom = 230;
-  const from = now - Number(hours) * 3600000;
-  const x = (time: number) =>
-    left +
-    (right - left) * Math.max(0, Math.min(1, (time - from) / (now - from)));
-  const y = (value: number) =>
-    bottom - ((value - minimum) / (maximum - minimum)) * (bottom - top);
-  const series = devices.map((device, index) => {
-    const readings = values
-      .filter((reading) => reading.deviceId === device.deviceId)
-      .sort((a, b) => a.observedAt.localeCompare(b.observedAt));
-    const last = readings.at(-1);
-    const condition = deviceCondition(device);
-    const color =
-      condition.tone === "danger" || condition.tone === "warning"
-        ? "#a8340a"
-        : ["#14181b", "#5e686d", "#8c969b"][index % 3];
-    const path = readings
-      .map(
-        (reading, i) =>
-          `${!i || Date.parse(reading.observedAt) - Date.parse(readings[i - 1].observedAt) > 25000 ? "M" : "L"}${x(Date.parse(reading.observedAt)).toFixed(1)},${y(reading.temperatureC).toFixed(1)}`,
-      )
-      .join(" ");
-    return {
-      id: device.deviceId,
-      readings,
-      last,
-      color,
-      path,
-      labelY: last ? y(last.temperatureC) : bottom,
-    };
-  });
-  const labels = series
-    .filter((item) => item.last)
-    .sort((a, b) => a.labelY - b.labelY);
-  for (let i = 0; i < labels.length; i++)
-    labels[i].labelY = Math.max(
-      top + 8,
-      labels[i].labelY,
-      i ? labels[i - 1].labelY + 18 : top + 8,
-    );
-  const overflow = Math.max(0, (labels.at(-1)?.labelY ?? 0) - bottom);
-  for (const label of labels) label.labelY -= overflow;
-  return (
-    <section className="panel comparison-panel">
-      <PanelHead
-        title="Temperature, all motors"
-        action={
-          <label className="range-picker">
-            <span className="sr-only">Chart time range</span>
-            <select
-              aria-label="Chart time range"
-              value={hours}
-              onChange={(event) => setHours(event.target.value)}
-            >
-              <option value="1">Last hour</option>
-              <option value="6">Last 6 hours</option>
-              <option value="24">Last 24 hours</option>
-            </select>
-          </label>
-        }
-      />
-      {history.error && (
-        <ErrorNotice
-          message={history.error + " Chart may show older data."}
-          retry={history.refresh}
-        />
-      )}
-      <div className="comparison-chart" ref={container}>
-        {!history.data ? (
-          <Loading label="Loading recent readings…" />
-        ) : !values.length ? (
-          <Empty title="No readings in this window" />
-        ) : (
-          <svg
-            viewBox={`0 0 ${width} 270`}
-            role="img"
-            aria-label={`Temperature chart with ${values.length} readings across all motors in °C`}
-          >
-            {[0, 1, 2, 3, 4].map((index) => {
-              const value = minimum + ((maximum - minimum) * index) / 4;
-              return (
-                <g key={index}>
-                  <line
-                    x1={left}
-                    x2={right}
-                    y1={y(value)}
-                    y2={y(value)}
-                    stroke="#d5d9db"
-                  />
-                  <text x={left - 9} y={y(value) + 4} textAnchor="end">
-                    {number(value, 0)}
-                  </text>
-                </g>
-              );
-            })}
-            <line
-              x1={left}
-              x2={right}
-              y1={y(75)}
-              y2={y(75)}
-              stroke="#14181b"
-              strokeDasharray="5 4"
-            />
-            <text x={left + 3} y={y(75) - 7} className="limit-label">
-              Limit 75 °C
-            </text>
-            {series.map((item) => (
-              <path
-                key={item.id}
-                d={item.path}
-                fill="none"
-                stroke={item.color}
-                strokeWidth={item.color === "#a8340a" ? 2.8 : 1.8}
-              />
-            ))}
-            {labels.map((item) => (
-              <g
-                key={item.id}
-                fill={item.color === "#a8340a" ? "#a8340a" : "#4a5459"}
-              >
-                <circle
-                  cx={x(Date.parse(item.last!.observedAt))}
-                  cy={y(item.last!.temperatureC)}
-                  r="3"
-                >
-                  <title>
-                    {motorName(item.id)} · {number(item.last!.temperatureC)} °C
-                    · {when(item.last!.observedAt)}
-                  </title>
-                </circle>
-                <text x={right + 10} y={item.labelY + 4}>
-                  {motorName(item.id)} {number(item.last!.temperatureC)}
-                </text>
-              </g>
-            ))}
-            {[0, 0.5, 1].map((fraction) => (
-              <text
-                key={fraction}
-                x={left + (right - left) * fraction}
-                y="260"
-                textAnchor="middle"
-              >
-                {new Date(from + (now - from) * fraction).toLocaleTimeString(
-                  undefined,
-                  { hour: "2-digit", minute: "2-digit" },
-                )}
-              </text>
-            ))}
-          </svg>
-        )}
-      </div>
-    </section>
   );
 }

@@ -20,13 +20,15 @@
   font-display: swap;
 }
 :root {
-  --bg: #e9ebec;
-  --card: #f4f5f5;
+  --bg: #e8edef;
+  --card: #f8fafb;
   --ink: #14181b;
   --muted: #4a5459;
-  --line: #c9ced1;
-  --track: #d5d9db;
+  --line: #d4dfe4;
+  --track: #dce5e9;
   --accent: #a8340a;
   --accent-bg: #f8e8e0;
+  --data: #1d5c7a;
+  --data-bg: #e5eff4;
   --mono: "IBM Plex Mono", ui-monospace, monospace;
 }

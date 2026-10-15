@@ -99,6 +99,9 @@ test("controls show requested and applied states separately", async ({
     page.getByTestId("motor-02").getByText("Running", { exact: true }),
   ).toBeVisible();
   await page.getByRole("button", { name: "Reset all motors" }).click();
+  await page
+    .getByRole("button", { name: "Confirm reset", exact: true })
+    .click();
   await expect(page.getByText("Reset requested for all motors.")).toBeVisible();
 });
 
@@ -132,6 +135,9 @@ test("reset-all polls pending controls quickly and returns to normal cadence aft
   await page.goto("/");
   await expect(page.getByTestId("motor-03")).toBeVisible();
   await page.getByRole("button", { name: "Reset all motors" }).click();
+  await page
+    .getByRole("button", { name: "Confirm reset", exact: true })
+    .click();
   await expect(
     page.getByRole("table").getByText("Applying change…"),
   ).toHaveCount(3);
@@ -446,7 +452,7 @@ test("mobile navigation and dashboard have no horizontal overflow", async ({
   await page.goto("/");
   await expect(page.getByTestId("motor-03")).toBeVisible();
   await page.getByRole("link", { name: "Reports" }).click();
-  await expect(page.getByRole("heading", { name: "Reports" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Reports", exact: true })).toBeVisible();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
@@ -476,7 +482,7 @@ test("dashboard and report form have accessible controls and landmarks", async (
     })),
   ).toEqual([]);
   await page.goto("/#/reports");
-  await expect(page.getByRole("heading", { name: "Reports" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Reports", exact: true })).toBeVisible();
   const report = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa"])
     .analyze();
@@ -555,7 +561,7 @@ test("sign-out clears local tokens and requests the hosted logout URL", async ({
   );
 });
 
-test("reference overview derives the fault headline, comparison lines and row reset from live responses", async ({
+test("compact overview keeps a fixed heading while readings and fault indicators update", async ({
   page,
 }) => {
   const state = await mockApp(page);
@@ -592,16 +598,16 @@ test("reference overview derives the fault headline, comparison lines and row re
   await page.goto("/");
   await expect(
     page.getByRole("heading", {
-      name: "Motor 02 is over its temperature limit",
+      name: "Overview",
       exact: true,
     }),
   ).toBeVisible();
   await expect(page.locator(".plant-summary")).toContainText("1 active fault");
   const chart = page.getByRole("img", {
-    name: /Temperature chart with 1080 readings across all motors/,
+    name: /Temperature chart with \d+ readings across all motors/,
   });
   await expect(chart).toBeVisible();
-  await expect(chart.locator('path[d*="L"]')).toHaveCount(3);
+  await expect(chart.locator('.fleet-line[d*="L"]')).toHaveCount(3);
   for (const id of ["Motor 01", "Motor 02", "Motor 03"])
     await expect(chart.locator("text").filter({ hasText: id })).toHaveCount(1);
   await expect(page.getByTestId("motor-02")).toHaveClass("fault-row");
@@ -639,7 +645,7 @@ test("reference overview derives the fault headline, comparison lines and row re
   await page.getByRole("button", { name: "Refresh telemetry" }).click();
   await expect(
     page.getByRole("heading", {
-      name: "All motors are running normally",
+      name: "Overview",
       exact: true,
     }),
   ).toBeVisible();

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import {
   Bar,
@@ -19,15 +19,21 @@ import {
   Loading,
   MotorTable,
   DemoControls,
-  AllMotorTrend,
   PanelHead,
   RecentCharts,
   deviceCondition,
+  Gauge,
+  AnimatedNumber,
+  useReadingHistory,
 } from "./components";
 import { modeName, motorName, number, utcDate, when } from "./format";
-import { usePoll } from "./hooks";
+import { useClock, usePoll } from "./hooks";
+import { AllMotorTrend } from "./FleetChart";
+import { equipmentEvents, timeLabel, type EquipmentEvent } from "./telemetry";
+import { ago } from "./format";
 import type {
   Account,
+  Alert,
   AlertResponse,
   Control,
   Device,
@@ -45,10 +51,12 @@ interface LiveProps {
 }
 
 function ResetAll({ refresh }: { refresh: () => void }) {
+  const dialog = useRef<HTMLDialogElement>(null);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   async function reset() {
+    dialog.current?.close();
     setBusy(true);
     setError("");
     setMessage("");
@@ -69,10 +77,30 @@ function ResetAll({ refresh }: { refresh: () => void }) {
       <button
         className="button secondary"
         disabled={busy}
-        onClick={() => void reset()}
+        onClick={() => dialog.current?.showModal()}
       >
         Reset all motors
       </button>
+      <dialog
+        ref={dialog}
+        className="confirm-dialog"
+        aria-labelledby="reset-confirm-title"
+      >
+        <h2 id="reset-confirm-title">Reset all three motors?</h2>
+        <p>Each motor will return to normal mode.</p>
+        <div>
+          <button
+            className="button secondary"
+            autoFocus
+            onClick={() => dialog.current?.close()}
+          >
+            Cancel
+          </button>
+          <button className="button primary" onClick={() => void reset()}>
+            Confirm reset
+          </button>
+        </div>
+      </dialog>
       {message && (
         <p className="tiny" role="status">
           {message}
@@ -83,126 +111,57 @@ function ResetAll({ refresh }: { refresh: () => void }) {
   );
 }
 
-function statusHeadline(devices: Device[]) {
-  const attention = devices.filter((device) =>
-    ["danger", "warning"].includes(deviceCondition(device).tone),
-  );
-  const offline = devices.filter((device) => !device.online);
-  const stopped = devices.filter(
-    (device) => device.online && device.latest?.operatingState === "stopped",
-  );
-  if (attention.length > 1)
-    return {
-      title: `${attention.length} motors need attention`,
-      detail:
-        attention
-          .map(
-            (device) =>
-              `${motorName(device.deviceId)}: ${deviceCondition(device).label.toLowerCase()}`,
-          )
-          .join(". ") + ".",
-    };
-  if (attention.length) {
-    const device = attention[0],
-      state = deviceCondition(device).label;
-    const temperature =
-      device.latest!.temperatureC >
-      (device.thresholds.temperature?.value ?? 75);
-    const vibration =
-      device.latest!.vibrationMmS > (device.thresholds.vibration?.value ?? 4.5);
-    return {
-      title:
-        state === "Recovering"
-          ? `${motorName(device.deviceId)} is recovering`
-          : temperature && vibration
-            ? `${motorName(device.deviceId)} is over its temperature and vibration limits`
-            : `${motorName(device.deviceId)} is over its ${temperature ? "temperature" : "vibration"} limit`,
-      detail:
-        state === "Recovering"
-          ? "Readings have returned below the limit. Waiting for recovery confirmation."
-          : `${number(temperature ? device.latest!.temperatureC : device.latest!.vibrationMmS, temperature ? 1 : 2)} ${temperature ? "°C" : "mm/s"} against a ${temperature ? (device.thresholds.temperature?.value ?? 75) : (device.thresholds.vibration?.value ?? 4.5)} ${temperature ? "°C" : "mm/s"} limit.`,
-    };
-  }
-  if (offline.length)
-    return {
-      title:
-        offline.length === 1
-          ? `${motorName(offline[0].deviceId)} is not reporting`
-          : `${offline.length} motors are not reporting`,
-      detail: "Check the last-seen times below.",
-    };
-  if (stopped.length)
-    return {
-      title:
-        stopped.length === 1
-          ? `${motorName(stopped[0].deviceId)} is stopped`
-          : `${stopped.length} motors are stopped`,
-      detail: "Equipment is still reporting.",
-    };
-  if (!devices.length || devices.some((device) => !device.latest))
-    return { title: "Waiting for equipment readings", detail: "" };
-  return {
-    title: "All motors are running normally",
-    detail: "Temperature and vibration are within limits.",
-  };
-}
-
-function Events({ devices }: { devices: Device[] }) {
-  const alerts = usePoll((signal) => api<AlertResponse>("/alerts", { signal }));
-  const events: {
-    id: string;
-    time: string;
-    title: string;
-    problem?: boolean;
-  }[] = [];
-  for (const alert of alerts.data?.alerts ?? []) {
-    events.push({
-      id: `${alert.alertId}:active`,
-      time: alert.activatedAt,
-      title: `${motorName(alert.pk)} ${alert.rule === "temperature" ? "over temperature" : "high vibration"}. Alert activated.`,
-      problem: alert.state === "active",
-    });
-    if (alert.resolvedAt)
-      events.push({
-        id: `${alert.alertId}:resolved`,
-        time: alert.resolvedAt,
-        title: `${motorName(alert.pk)} ${alert.rule} fault resolved.`,
-      });
-  }
-  for (const device of devices) {
-    const control = device.control;
-    if (control.appliedAt)
-      events.push({
-        id: `${device.deviceId}:applied:${control.appliedAt}`,
-        time: control.appliedAt,
-        title: `${motorName(device.deviceId)} ${modeName(control.appliedMode).toLowerCase()} mode applied.`,
-      });
-    if (control.status === "pending" && control.requestedAt)
-      events.push({
-        id: `${device.deviceId}:request:${control.requestId}`,
-        time: control.requestedAt,
-        title: `${motorName(device.deviceId)} ${modeName(control.requestedMode).toLowerCase()} requested.`,
-      });
-  }
-  events.sort((a, b) => b.time.localeCompare(a.time));
+function Events({
+  events,
+  error,
+  loading,
+  retry,
+  selected,
+  select,
+}: {
+  events: EquipmentEvent[];
+  error: string;
+  loading: boolean;
+  retry: () => void;
+  selected?: string;
+  select: (id?: string) => void;
+}) {
   return (
     <section className="panel events-panel">
       <PanelHead title="Events" action={<a href="#/alerts">View all</a>} />
-      {alerts.error && (
-        <ErrorNotice message={alerts.error} retry={alerts.refresh} />
-      )}
-      {!alerts.data && !events.length ? (
+      {error && <ErrorNotice message={error} retry={retry} />}
+      {loading && !events.length ? (
         <Loading />
       ) : events.length ? (
         <ol className="event-log">
-          {events.slice(0, 6).map((event) => (
-            <li key={event.id}>
-              <time dateTime={event.time}>{when(event.time)}</time>
-              <span className={event.problem ? "problem" : ""}>
-                {event.title}
-              </span>
-            </li>
-          ))}
+          {events.slice(0, 6).map((event, index) => {
+            const day = new Date(event.time).toLocaleDateString(undefined, {
+              day: "numeric",
+              month: "short",
+            });
+            const priorDay = index
+              ? new Date(events[index - 1].time).toLocaleDateString(undefined, {
+                  day: "numeric",
+                  month: "short",
+                })
+              : "";
+            return (
+              <li
+                key={event.id}
+                className={selected === event.id ? "event-selected" : ""}
+                onPointerEnter={() => select(event.id)}
+                onPointerLeave={() => select(undefined)}
+              >
+                {day !== priorDay && <span className="event-day">{day}</span>}
+                <time dateTime={event.time} title={when(event.time)}>
+                  {timeLabel(event.time, true)}
+                </time>
+                <span className={event.problem ? "problem" : ""}>
+                  {event.title}
+                </span>
+              </li>
+            );
+          })}
         </ol>
       ) : (
         <Empty title="No events in the last 24 hours" />
@@ -212,7 +171,14 @@ function Events({ devices }: { devices: Device[] }) {
 }
 
 export function Overview({ devices, operator, now, refresh }: LiveProps) {
-  const headline = statusHeadline(devices);
+  const [hours, setHours] = useState("0.5");
+  const history = useReadingHistory(
+    devices.map((device) => device.deviceId),
+    hours,
+  );
+  const alerts = usePoll((signal) => api<AlertResponse>("/alerts", { signal }));
+  const [selected, setSelected] = useState<string>();
+  const events = equipmentEvents(devices, alerts.data?.alerts ?? []);
   const reporting = devices.filter((device) => device.online && device.latest);
   const active = devices.reduce(
     (sum, device) =>
@@ -225,100 +191,313 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
     (sum, device) => sum + (device.latest?.powerWatts ?? 0),
     0,
   );
+  const hottest = reporting.reduce<Device | undefined>(
+    (hot, device) =>
+      !hot || device.latest!.temperatureC > hot.latest!.temperatureC
+        ? device
+        : hot,
+    undefined,
+  );
+  const margin = hottest
+    ? (hottest.thresholds.temperature?.value ?? 75) -
+      hottest.latest!.temperatureC
+    : undefined;
   return (
     <section aria-label="Plant overview">
       <div className="overview-heading">
-        <div>
-          <h1>{headline.title}</h1>
-          {headline.detail && <p>{headline.detail}</p>}
-          <p className="plant-summary">
-            {devices.filter((device) => device.online).length} /{" "}
-            {devices.length} online <span>·</span> {active} active{" "}
-            {active === 1 ? "fault" : "faults"} <span>·</span>{" "}
-            {reporting.length
-              ? `${number(power / 1000, 2)} kW total draw`
-              : "Power unavailable"}
-          </p>
-        </div>
+        <h1>Overview</h1>
         {operator && <ResetAll refresh={refresh} />}
+      </div>
+      <div className="readout-strip plant-summary">
+        <div>
+          <span>Total draw</span>
+          <strong>
+            <AnimatedNumber
+              value={reporting.length ? power / 1000 : undefined}
+              decimals={2}
+            />{" "}
+            <small>kW</small>
+          </strong>
+          <small>{reporting.length} motors reporting</small>
+        </div>
+        <div>
+          <span>
+            Hottest · {hottest ? motorName(hottest.deviceId) : "No readings"}
+          </span>
+          <strong
+            className={margin !== undefined && margin < 0 ? "problem" : ""}
+          >
+            <AnimatedNumber value={hottest?.latest?.temperatureC} />{" "}
+            <small>°C</small>
+          </strong>
+          <small
+            className={margin !== undefined && margin < 0 ? "problem" : ""}
+          >
+            {margin === undefined
+              ? "—"
+              : margin === 0
+                ? "At limit"
+                : `${number(Math.abs(margin))}° ${margin < 0 ? "over" : "below"} limit`}
+          </small>
+        </div>
+        <div>
+          <span>Motors online</span>
+          <strong>
+            {reporting.length}
+            <small> / {devices.length}</small>
+          </strong>
+          <small className={active ? "problem" : ""}>
+            {active} active {active === 1 ? "fault" : "faults"}
+          </small>
+        </div>
       </div>
       <MotorTable
         devices={devices}
         operator={operator}
         now={now}
         refresh={refresh}
+        readings={history.data}
       />
-      {operator && <DemoControls devices={devices} refresh={refresh} />}
       <div className="overview-bottom">
-        <AllMotorTrend devices={devices} now={now} />
-        <Events devices={devices} />
+        <AllMotorTrend
+          devices={devices}
+          now={now}
+          history={history}
+          hours={hours}
+          setHours={setHours}
+          events={events}
+          selectedEvent={selected}
+          selectEvent={setSelected}
+        />
+        <Events
+          events={events}
+          error={alerts.error}
+          loading={!alerts.data}
+          retry={alerts.refresh}
+          selected={selected}
+          select={setSelected}
+        />
       </div>
+      {operator && (
+        <div className="operator-tools">
+          <DemoControls devices={devices} refresh={refresh} />
+        </div>
+      )}
     </section>
   );
 }
 
-export function Equipment(props: LiveProps & { deviceId?: string }) {
-  if (!props.deviceId)
-    return (
-      <>
-        <Heading
-          title="Equipment"
-          action={props.operator && <ResetAll refresh={props.refresh} />}
-        />
-        <MotorTable {...props} />
-        {props.operator && (
-          <DemoControls devices={props.devices} refresh={props.refresh} />
-        )}
-      </>
-    );
-  const device = props.devices.find((item) => item.deviceId === props.deviceId);
-  if (!device)
-    return (
-      <Empty
-        title="Equipment not found"
-        text="Choose a motor from Equipment."
+function EquipmentList(props: LiveProps) {
+  const history = useReadingHistory(
+    props.devices.map((d) => d.deviceId),
+    "0.5",
+  );
+  return (
+    <>
+      <Heading
+        title="Equipment"
+        action={props.operator && <ResetAll refresh={props.refresh} />}
       />
-    );
+      <MotorTable {...props} readings={history.data} />
+      {history.error && (
+        <ErrorNotice message={history.error} retry={history.refresh} />
+      )}
+      {props.operator && (
+        <div className="operator-tools">
+          <DemoControls devices={props.devices} refresh={props.refresh} />
+        </div>
+      )}
+    </>
+  );
+}
+
+export function Equipment(props: LiveProps & { deviceId?: string }) {
+  if (!props.deviceId) return <EquipmentList {...props} />;
+  const device = props.devices.find((item) => item.deviceId === props.deviceId);
+  return device ? (
+    <EquipmentDetail {...props} device={device} />
+  ) : (
+    <Empty title="Equipment not found" text="Choose a motor from Equipment." />
+  );
+}
+
+function EquipmentDetail({
+  device,
+  operator,
+  now,
+  refresh,
+}: LiveProps & { device: Device }) {
+  const alerts = usePoll(
+    (signal) =>
+      api<AlertResponse>(`/alerts?deviceId=${device.deviceId}`, { signal }),
+    10000,
+    device.deviceId,
+  );
+  const condition = deviceCondition(device);
+  const [requested, setRequested] = useState<Control>();
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const control =
+    requested &&
+    requested.requestId !== device.control.requestId &&
+    Date.parse(requested.requestedAt ?? "") >
+      Date.parse(device.control.requestedAt ?? "1970-01-01")
+      ? requested
+      : device.control;
+  async function reset() {
+    setBusy(true);
+    setError("");
+    try {
+      setRequested(
+        await api<Control>(`/controls/${device.deviceId}`, {
+          method: "POST",
+          body: { mode: "normal" },
+        }),
+      );
+      refresh();
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Could not request reset.");
+    } finally {
+      setBusy(false);
+    }
+  }
   return (
     <>
       <a href="#/devices" className="breadcrumb">
         ← Equipment
       </a>
-      <Heading title={motorName(device.deviceId)} />
-      <MotorTable {...props} devices={[device]} links={false} />
-      {props.operator && (
-        <DemoControls devices={[device]} refresh={props.refresh} />
+      <div className="page-heading detail-heading">
+        <div>
+          <h1>{motorName(device.deviceId)}</h1>
+          <span
+            className={`equipment-state ${condition.tone === "danger" || condition.tone === "warning" ? "problem" : ""}`}
+          >
+            <i
+              key={device.latest?.eventId}
+              className={device.online ? "heartbeat" : ""}
+              aria-hidden="true"
+            />
+            {condition.label}
+          </span>
+        </div>
+        {operator && (
+          <button
+            className="button secondary"
+            disabled={busy || control.status === "pending"}
+            onClick={() => void reset()}
+          >
+            Reset
+          </button>
+        )}
+      </div>
+      {control.status !== "applied" && (
+        <p className="row-command" role="status">
+          {control.status === "pending"
+            ? `${modeName(control.requestedMode)} requested → Applying change…`
+            : "Change not confirmed. Try again."}
+        </p>
       )}
-      <details className="equipment-details panel">
-        <summary>Equipment details</summary>
-        <dl>
-          <div>
-            <dt>Device identifier</dt>
-            <dd>{device.deviceId}</dd>
-          </div>
-          <div>
-            <dt>Last received</dt>
-            <dd>{when(device.lastSeen)}</dd>
-          </div>
-          <div>
-            <dt>Observed at</dt>
-            <dd>{when(device.latest?.observedAt)}</dd>
-          </div>
-          <div>
-            <dt>Temperature limit</dt>
-            <dd>&gt; {device.thresholds.temperature?.value ?? 75} °C</dd>
-          </div>
-          <div>
-            <dt>Vibration limit</dt>
-            <dd>&gt; {device.thresholds.vibration?.value ?? 4.5} mm/s</dd>
-          </div>
-          <div>
-            <dt>Recent history</dt>
-            <dd>24 hours</dd>
-          </div>
-        </dl>
-      </details>
-      <RecentCharts deviceId={device.deviceId} />
+      {error && <ErrorNotice message={error} />}
+      <div className={`detail-readouts ${!device.online ? "offline-row" : ""}`}>
+        <div>
+          <span>Temperature</span>
+          <Gauge
+            value={device.latest?.temperatureC}
+            unit="°C"
+            limit={device.thresholds.temperature?.value ?? 75}
+            scale={90}
+          />
+        </div>
+        <div>
+          <span>Vibration</span>
+          <Gauge
+            value={device.latest?.vibrationMmS}
+            unit="mm/s"
+            limit={device.thresholds.vibration?.value ?? 4.5}
+            scale={6}
+          />
+        </div>
+        <div>
+          <span>Power</span>
+          <Gauge value={device.latest?.powerWatts} unit="W" scale={600} />
+        </div>
+      </div>
+      <div className="detail-layout">
+        <div className="detail-main">
+          <RecentCharts deviceId={device.deviceId} />
+          <section className="panel motor-alerts">
+            <PanelHead
+              title="Recent alerts"
+              action={<a href="#/alerts">View all</a>}
+            />
+            {alerts.error && (
+              <ErrorNotice message={alerts.error} retry={alerts.refresh} />
+            )}
+            {!alerts.data ? (
+              <Loading />
+            ) : alerts.data.alerts.length ? (
+              <ul className="motor-alert-list">
+                {alerts.data.alerts.slice(0, 5).map((alert) => (
+                  <li key={alert.alertId}>
+                    <span className={alert.state === "active" ? "problem" : ""}>
+                      {alert.rule === "temperature"
+                        ? "Over temperature"
+                        : "High vibration"}{" "}
+                      · {alert.state}
+                    </span>
+                    <time title={when(alert.activatedAt)}>
+                      {when(alert.activatedAt)}
+                    </time>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Empty title="No recent alerts" />
+            )}
+          </section>
+        </div>
+        <aside className="panel equipment-details">
+          <PanelHead title="Equipment details" />
+          <dl>
+            <div>
+              <dt>Device</dt>
+              <dd>{device.deviceId}</dd>
+            </div>
+            <div>
+              <dt>Last reading</dt>
+              <dd title={when(device.lastSeen)}>
+                {ago(device.lastSeen, now)}
+                {!device.online && " · last known"}
+              </dd>
+            </div>
+            <div>
+              <dt>Observed</dt>
+              <dd>{when(device.latest?.observedAt)}</dd>
+            </div>
+            <div>
+              <dt>Temperature limit</dt>
+              <dd>&gt; {device.thresholds.temperature?.value ?? 75} °C</dd>
+            </div>
+            <div>
+              <dt>Vibration limit</dt>
+              <dd>&gt; {device.thresholds.vibration?.value ?? 4.5} mm/s</dd>
+            </div>
+            <div>
+              <dt>Requested</dt>
+              <dd>{modeName(control.requestedMode)}</dd>
+            </div>
+            <div>
+              <dt>Applied</dt>
+              <dd>{modeName(control.appliedMode)}</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+      {operator && (
+        <div className="operator-tools">
+          <DemoControls devices={[device]} refresh={refresh} />
+        </div>
+      )}
     </>
   );
 }
@@ -337,9 +516,17 @@ function emailLabel(status: string) {
 }
 
 export function Alerts() {
+  const now = useClock();
   const [device, setDevice] = useState("");
   const [state, setState] = useState("");
   const [days, setDays] = useState("1");
+  // Include older ongoing episodes that overlap the visible 24-hour timeline.
+  const timeline = usePoll((signal) =>
+    api<AlertResponse>(
+      `/alerts?from=${new Date(Date.now() - 30 * 86400000 + 10000).toISOString()}&to=${new Date().toISOString()}`,
+      { signal },
+    ),
+  );
   const alerts = usePoll(
     (signal) => {
       const params = new URLSearchParams({
@@ -358,7 +545,23 @@ export function Alerts() {
   return (
     <>
       <Heading title="Alerts & events" />
+      <EpisodeTimeline
+        alerts={timeline.data?.alerts}
+        error={timeline.error}
+        retry={timeline.refresh}
+        now={now}
+      />
       <section className="panel">
+        {timeline.data && (
+          <div className="alert-context">
+            <span>Limits: &gt; 75 °C · &gt; 4.5 mm/s</span>
+            <span>
+              Email subscriptions:{" "}
+              <strong>{timeline.data.subscriptions.confirmed} confirmed</strong>{" "}
+              · {timeline.data.subscriptions.pending} pending
+            </span>
+          </div>
+        )}
         <div className="filters">
           <label>
             Equipment
@@ -492,6 +695,101 @@ export function Alerts() {
   );
 }
 
+function EpisodeTimeline({
+  alerts,
+  error,
+  retry,
+  now,
+}: {
+  alerts?: Alert[];
+  error: string;
+  retry: () => void;
+  now: number;
+}) {
+  const [selected, setSelected] = useState<string>();
+  const start = now - 86400000;
+  const episodes = (alerts ?? []).filter(
+    (alert) =>
+      Date.parse(alert.activatedAt) <= now &&
+      (!alert.resolvedAt || Date.parse(alert.resolvedAt) >= start),
+  );
+  const chosen = episodes.find((a) => a.alertId === selected);
+  return (
+    <section
+      className="panel episode-timeline"
+      aria-label="Alert episodes in the last 24 hours"
+    >
+      <PanelHead
+        title="Last 24 hours"
+        action={<span className="muted">{episodes.length} episodes</span>}
+      />
+      {error && <ErrorNotice message={error} retry={retry} />}
+      {alerts === undefined ? (
+        <Loading />
+      ) : (
+        <div className="episode-rows">
+          {["motor-01", "motor-02", "motor-03"].map((id) => (
+            <div className="episode-row" key={id}>
+              <a href={`#/devices/${id}`}>{motorName(id)}</a>
+              <div className="episode-track">
+                {episodes
+                  .filter((a) => a.pk === id)
+                  .map((alert) => {
+                    const left = Math.max(
+                      0,
+                      ((Date.parse(alert.activatedAt) - start) / 86400000) *
+                        100,
+                    );
+                    const end = Math.min(
+                      100,
+                      (((alert.resolvedAt
+                        ? Date.parse(alert.resolvedAt)
+                        : now) -
+                        start) /
+                        86400000) *
+                        100,
+                    );
+                    return (
+                      <span
+                        key={alert.alertId}
+                        tabIndex={0}
+                        role="img"
+                        className={`episode-bar ${alert.state}`}
+                        aria-label={`${motorName(id)} ${alert.rule} ${alert.state}, ${when(alert.activatedAt)}${alert.resolvedAt ? ` to ${when(alert.resolvedAt)}` : " ongoing"}`}
+                        title={`${alert.rule} · ${when(alert.activatedAt)} → ${alert.resolvedAt ? when(alert.resolvedAt) : "Ongoing"}`}
+                        onPointerEnter={() => setSelected(alert.alertId)}
+                        onPointerLeave={() => setSelected(undefined)}
+                        onFocus={() => setSelected(alert.alertId)}
+                        onBlur={() => setSelected(undefined)}
+                        style={{
+                          left: `${left}%`,
+                          width: `${Math.max(0.15, end - left)}%`,
+                          maxWidth: `${100 - left}%`,
+                        }}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+          ))}
+          <div className="episode-axis">
+            <span>{timeLabel(start)}</span>
+            <span>{timeLabel(now - 43200000)}</span>
+            <span>Now</span>
+          </div>
+          <p className="episode-caption">
+            {chosen
+              ? `${motorName(chosen.pk)} · ${chosen.rule} · ${chosen.state} · ${when(chosen.activatedAt)}`
+              : episodes.length
+                ? ""
+                : "No fault episodes in this window."}
+          </p>
+        </div>
+      )}
+    </section>
+  );
+}
+
 const reportDescriptions = {
   temperature: {
     title: "Temperature",
@@ -600,7 +898,7 @@ function ReportResults({ result, kind }: { result: Report; kind: ReportKind }) {
                     key={key}
                     dataKey={key}
                     name={columnLabels[key]}
-                    fill={index === 0 ? "#14181b" : "#8c969b"}
+                    fill={index === 0 ? "#1d5c7a" : "#4b7b8d"}
                     radius={[1, 1, 0, 0]}
                   />
                 ))}
@@ -647,7 +945,34 @@ function ReportResults({ result, kind }: { result: Report; kind: ReportKind }) {
   );
 }
 
-export function Reports() {
+interface RecentReport {
+  reportId: string;
+  parameters: ReportParameters;
+  createdAt: string;
+  status: Report["status"];
+}
+
+export function Reports({ username }: { username: string }) {
+  const storageKey = `forge.reports.${username}`;
+  const [recent, setRecent] = useState<RecentReport[]>(() => {
+    try {
+      const stored: unknown = JSON.parse(
+        sessionStorage.getItem(storageKey) ?? "[]",
+      );
+      return Array.isArray(stored)
+        ? stored
+            .filter(
+              (item) =>
+                typeof item?.reportId === "string" &&
+                item.parameters &&
+                item.createdAt,
+            )
+            .slice(0, 10)
+        : [];
+    } catch {
+      return [];
+    }
+  });
   const [kind, setKind] = useState<ReportKind>("temperature");
   const [start, setStart] = useState(utcDate());
   const [end, setEnd] = useState(utcDate());
@@ -657,6 +982,19 @@ export function Reports() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const running = report?.status === "QUEUED" || report?.status === "RUNNING";
+  useEffect(() => {
+    sessionStorage.setItem(storageKey, JSON.stringify(recent));
+  }, [recent, storageKey]);
+  useEffect(() => {
+    if (report)
+      setRecent((items) =>
+        items.map((item) =>
+          item.reportId === report.reportId
+            ? { ...item, status: report.status }
+            : item,
+        ),
+      );
+  }, [report]);
   useEffect(() => {
     if (!running || !report) return;
     const controller = new AbortController();
@@ -709,8 +1047,21 @@ export function Reports() {
       ...(device ? { deviceId: device } : {}),
     };
     try {
-      setReport(
-        await api<Report>("/reports", { method: "POST", body: parameters }),
+      const created = await api<Report>("/reports", {
+        method: "POST",
+        body: parameters,
+      });
+      setReport(created);
+      setRecent((items) =>
+        [
+          {
+            reportId: created.reportId,
+            parameters,
+            status: created.status,
+            createdAt: new Date().toISOString(),
+          },
+          ...items.filter((item) => item.reportId !== created.reportId),
+        ].slice(0, 10),
       );
     } catch (err) {
       setError(
@@ -728,6 +1079,28 @@ export function Reports() {
         className="panel report-form"
       >
         <PanelHead title="Build a report" />
+        <div className="date-presets" aria-label="Date presets">
+          <button
+            type="button"
+            className="button secondary"
+            onClick={() => {
+              setStart(utcDate());
+              setEnd(utcDate());
+            }}
+          >
+            Today
+          </button>
+          <button
+            type="button"
+            className="button secondary"
+            onClick={() => {
+              setStart(utcDate(-6));
+              setEnd(utcDate());
+            }}
+          >
+            Last 7 days
+          </button>
+        </div>
         <div
           className="report-options"
           role="radiogroup"
@@ -832,11 +1205,45 @@ export function Reports() {
           }
         />
       )}
-      {!report && !busy && (
-        <div className="report-placeholder">
-          <h3>No report generated</h3>
-        </div>
-      )}
+      <section className="panel recent-reports">
+        <PanelHead title="Recent reports" />
+        {!recent.length ? (
+          <p className="recent-empty">No reports in this session.</p>
+        ) : (
+          <ul>
+            {recent.map((item) => (
+              <li key={item.reportId}>
+                <button
+                  className="text-button"
+                  disabled={busy || running}
+                  onClick={() => {
+                    setBusy(true);
+                    setError("");
+                    setSubmittedKind(item.parameters.report);
+                    void api<Report>(`/reports/${item.reportId}`)
+                      .then(setReport)
+                      .catch((err: unknown) =>
+                        setError(
+                          err instanceof Error
+                            ? err.message
+                            : "Could not open report.",
+                        ),
+                      )
+                      .finally(() => setBusy(false));
+                  }}
+                >
+                  {reportDescriptions[item.parameters.report]?.title ??
+                    "Report"}{" "}
+                  · {item.parameters.start}
+                  {item.parameters.start !== item.parameters.end &&
+                    ` – ${item.parameters.end}`}
+                </button>
+                <span>{item.status.toLowerCase()}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
     </>
   );
 }

@@ -3,7 +3,7 @@ import type { User } from "oidc-client-ts";
 import { RefreshCw } from "lucide-react";
 import { api } from "./api";
 import { auth, finishSignIn, rolesFromToken, signIn, signOut } from "./auth";
-import { ErrorNotice, Loading } from "./components";
+import { ErrorNotice, Loading, TelemetrySkeleton } from "./components";
 import { useClock, usePoll, useRoute } from "./hooks";
 import {
   Alerts,
@@ -163,10 +163,22 @@ function Dashboard({ user }: { user: User }) {
     0,
   );
   const props = { devices, operator, now: serverNow, refresh: live.refresh };
+  const activeSince = devices
+    .flatMap((device) =>
+      Object.values(device.latest?.rules ?? {})
+        .filter((rule) => rule.active && rule.alertId)
+        .map((rule) => Date.parse(rule.alertId!.split("#")[0])),
+    )
+    .filter(Number.isFinite);
+  const elapsed = activeSince.length
+    ? Math.max(0, Math.floor((serverNow - Math.min(...activeSince)) / 1000))
+    : undefined;
   useEffect(() => {
-    document.title = `${title} — Forge`;
+    document.title = `${active ? `(${active}) ` : ""}${title} — Forge`;
+  }, [title, active]);
+  useEffect(() => {
     window.scrollTo(0, 0);
-  }, [route, title]);
+  }, [route]);
   async function logout() {
     try {
       await signOut();
@@ -239,6 +251,23 @@ function Dashboard({ user }: { user: User }) {
           </button>
         </div>
       </header>
+      {active > 0 && (
+        <div className="fault-banner" role="status">
+          <span className="fault-indicator" aria-hidden="true" />
+          <a href="#/alerts">
+            {active} active {active === 1 ? "fault" : "faults"}
+          </a>
+          {elapsed !== undefined && (
+            <span>
+              Active for{" "}
+              <time>
+                {String(Math.floor(elapsed / 60)).padStart(2, "0")}:
+                {String(elapsed % 60).padStart(2, "0")}
+              </time>
+            </span>
+          )}
+        </div>
+      )}
       <main id="main" tabIndex={-1}>
         {logoutError && <ErrorNotice message={logoutError} />}
         {live.error && (
@@ -256,11 +285,11 @@ function Dashboard({ user }: { user: User }) {
         {section === "alerts" ? (
           <Alerts />
         ) : section === "reports" ? (
-          <Reports />
+          <Reports key={username} username={username} />
         ) : section === "users" ? (
           <UserManagement operator={operator} username={username} />
         ) : !live.data ? (
-          <Loading />
+          <TelemetrySkeleton />
         ) : section === "devices" ? (
           <Equipment {...props} deviceId={route.split("/")[1]} />
         ) : (
