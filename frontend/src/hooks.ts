@@ -1,9 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+export const LIVE_INTERVAL_MS = 3000;
+
 export function usePoll<T>(
   load: (signal: AbortSignal) => Promise<T>,
   interval:
-    number | ((data: T | undefined, receivedAt: number) => number) = 10000,
+    | number
+    | ((data: T | undefined, receivedAt: number) => number) = LIVE_INTERVAL_MS,
   key = "",
 ) {
   const [data, setData] = useState<T>();

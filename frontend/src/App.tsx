@@ -4,7 +4,7 @@ import { RefreshCw } from "lucide-react";
 import { api } from "./api";
 import { auth, finishSignIn, rolesFromToken, signIn, signOut } from "./auth";
 import { ErrorNotice, Loading, TelemetrySkeleton } from "./components";
-import { useClock, usePoll, useRoute } from "./hooks";
+import { LIVE_INTERVAL_MS, useClock, usePoll, useRoute } from "./hooks";
 import {
   Alerts,
   Equipment,
@@ -123,7 +123,7 @@ function Dashboard({ user }: { user: User }) {
   const live = usePoll(
     (signal) => api<DeviceResponse>("/devices", { signal }),
     (response, receivedAt) => {
-      if (!response) return 10000;
+      if (!response) return LIVE_INTERVAL_MS;
       const serverNow =
         Date.parse(response.serverTime) + Date.now() - receivedAt;
       // Use server time, and bound fast retries even if later refreshes fail.
@@ -133,7 +133,7 @@ function Dashboard({ user }: { user: User }) {
           control.requestedAt &&
           serverNow - Date.parse(control.requestedAt) < 60000,
       );
-      return pending ? 1000 : 10000;
+      return pending ? 1000 : LIVE_INTERVAL_MS;
     },
   );
   const serverOffset = live.data

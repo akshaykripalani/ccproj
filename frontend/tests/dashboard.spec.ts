@@ -161,9 +161,9 @@ test("reset-all polls pending controls quickly and returns to normal cadence aft
     page.getByRole("table").getByText("Applying change…"),
   ).toHaveCount(0);
   const appliedReads = reads();
-  await page.clock.fastForward(5000);
+  await page.clock.fastForward(2000);
   expect(reads()).toBe(appliedReads);
-  await page.clock.fastForward(5000);
+  await page.clock.fastForward(1000);
   await expect.poll(reads).toBe(appliedReads + 1);
 });
 
@@ -193,7 +193,7 @@ test("failed refreshes cannot keep a stale command on fast polling indefinitely"
   const expiredReads = reads();
   await page.clock.fastForward(1000);
   expect(reads()).toBe(expiredReads);
-  await page.clock.fastForward(9000);
+  await page.clock.fastForward(2000);
   await expect.poll(reads).toBe(expiredReads + 1);
 });
 

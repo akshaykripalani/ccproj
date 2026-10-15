@@ -27,7 +27,7 @@ import {
   useReadingHistory,
 } from "./components";
 import { modeName, motorName, number, utcDate, when } from "./format";
-import { useClock, usePoll } from "./hooks";
+import { LIVE_INTERVAL_MS, useClock, usePoll } from "./hooks";
 import { AllMotorTrend } from "./FleetChart";
 import { equipmentEvents, timeLabel, type EquipmentEvent } from "./telemetry";
 import { ago } from "./format";
@@ -330,7 +330,7 @@ function EquipmentDetail({
   const alerts = usePoll(
     (signal) =>
       api<AlertResponse>(`/alerts?deviceId=${device.deviceId}`, { signal }),
-    10000,
+    LIVE_INTERVAL_MS,
     device.deviceId,
   );
   const condition = deviceCondition(device);
@@ -539,7 +539,7 @@ export function Alerts() {
       if (state) params.set("state", state);
       return api<AlertResponse>(`/alerts?${params}`, { signal });
     },
-    10000,
+    LIVE_INTERVAL_MS,
     device + state + days,
   );
   return (

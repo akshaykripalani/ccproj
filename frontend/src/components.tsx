@@ -13,7 +13,7 @@ import {
 } from "recharts";
 import { api } from "./api";
 import { ago, modeName, motorName, number, when } from "./format";
-import { usePoll } from "./hooks";
+import { LIVE_INTERVAL_MS, usePoll } from "./hooks";
 import type { Control, Device, Mode, Reading } from "./types";
 import { readingPath, timeLabel } from "./telemetry";
 
@@ -938,7 +938,7 @@ export function useReadingHistory(deviceIds: string[], hours: string) {
       if (!signal.aborted) retained.current = { key, readings: merged };
       return merged;
     },
-    10000,
+    LIVE_INTERVAL_MS,
     key,
   );
 }
