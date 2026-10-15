@@ -1,0 +1,49 @@
+{
+  "verifiedAt": "2026-10-15T07:06:48.008023+00:00",
+  "stackStatus": "UPDATE_COMPLETE",
+  "changeSetId": "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/email-trim-20261015/f01f3fd6-aff0-40d7-8570-f4bd8689ce96",
+  "backend": {
+    "path": "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip",
+    "key": "releases/9bd50c15b0618446c345544922d1e6cfc9481361a334b50e22dc09dc8ab92459/backend.zip",
+    "sha256": "9bd50c15b0618446c345544922d1e6cfc9481361a334b50e22dc09dc8ab92459"
+  },
+  "functions": [
+    {
+      "FunctionName": "ccproj-ApiBackend",
+      "CodeSha256": "m9UMFbBhhEbDRVRJItHmz8lIE2GjNLUOItwJ3Iq5JFk=",
+      "State": "Active",
+      "LastUpdateStatus": "Successful"
+    },
+    {
+      "FunctionName": "ccproj-Ingestion",
+      "CodeSha256": "m9UMFbBhhEbDRVRJItHmz8lIE2GjNLUOItwJ3Iq5JFk=",
+      "State": "Active",
+      "LastUpdateStatus": "Successful"
+    },
+    {
+      "FunctionName": "ccproj-Processor",
+      "CodeSha256": "m9UMFbBhhEbDRVRJItHmz8lIE2GjNLUOItwJ3Iq5JFk=",
+      "State": "Active",
+      "LastUpdateStatus": "Successful"
+    },
+    {
+      "FunctionName": "ccproj-Notifier",
+      "CodeSha256": "m9UMFbBhhEbDRVRJItHmz8lIE2GjNLUOItwJ3Iq5JFk=",
+      "State": "Active",
+      "LastUpdateStatus": "Successful"
+    }
+  ],
+  "validation": {
+    "notificationAndPipelineTestsPassed": 29,
+    "ruff": "passed",
+    "liveFaultInjection": false
+  },
+  "removed": [
+    "routine Running state",
+    "fixed Limit field",
+    "fixed three-reading confirmation count",
+    "repeated dashboard instructions"
+  ],
+  "exception": "Stopped operating state is shown when present",
+  "deliveryVerification": "Deployed package hash verified; no test notification sent."
+}

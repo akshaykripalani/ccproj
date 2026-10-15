@@ -3062,3 +3062,59 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-15T06:54:29.114105+00:00] 18ba426cb4e5 Wait for frontend release cache invalidation
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudfront", "wait", "invalidation-completed", "--distribution-id", "E2QMBAOSKXNVMX", "--id", "IAF23TPLAR8EHVW9IOJZMAV8UL", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-15T06:54:54.159598+00:00] 18ba426cb4e5 EXIT 0
+
+[2026-10-15T06:58:00.548565+00:00] 4a9635f57347 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:58:05.120262+00:00] 4a9635f57347 EXIT 0
+
+[2026-10-15T06:58:05.151265+00:00] bf7bdbb00472 Inspect current platform and parameters before email-only release
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:58:11.195846+00:00] bf7bdbb00472 EXIT 0
+
+[2026-10-15T06:58:43.450918+00:00] 61c8b423edeb Upload concise email release package
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip", "s3://ccproj-artifacts-artifacts-bllhfj9fhpbr/releases/9bd50c15b0618446c345544922d1e6cfc9481361a334b50e22dc09dc8ab92459/backend.zip", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:59:47.155493+00:00] 61c8b423edeb EXIT 1
+
+[2026-10-15T07:04:30.127740+00:00] 13ef65510365 Retry concise email artifact upload after socket timeout
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip", "s3://ccproj-artifacts-artifacts-bllhfj9fhpbr/releases/9bd50c15b0618446c345544922d1e6cfc9481361a334b50e22dc09dc8ab92459/backend.zip", "--sse", "AES256", "--cli-connect-timeout", "30", "--cli-read-timeout", "120", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T07:04:44.962627+00:00] 13ef65510365 EXIT 0
+
+[2026-10-15T07:04:44.988409+00:00] 5dbc12755a5f Prepare existing-template code release for concise equipment alerts
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "create-change-set", "--stack-name", "ccproj", "--change-set-name", "email-trim-20261015", "--use-previous-template", "--capabilities", "CAPABILITY_IAM", "--parameters", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\email-trim-parameters.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T07:04:48.916966+00:00] 5dbc12755a5f EXIT 0
+
+[2026-10-15T07:04:48.942264+00:00] 041ed94a9209 Wait for concise email change-set review
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "wait", "change-set-create-complete", "--stack-name", "ccproj", "--change-set-name", "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/email-trim-20261015/f01f3fd6-aff0-40d7-8570-f4bd8689ce96", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T07:05:23.003584+00:00] 041ed94a9209 EXIT 0
+
+[2026-10-15T07:05:23.007577+00:00] 16c9db5159ad Review concise email release resource changes
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-change-set", "--stack-name", "ccproj", "--change-set-name", "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/email-trim-20261015/f01f3fd6-aff0-40d7-8570-f4bd8689ce96", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T07:05:25.620120+00:00] 16c9db5159ad EXIT 0
+
+[2026-10-15T07:05:43.515572+00:00] 716d1db81286 Deploy reviewed concise email code release without resource replacement
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "execute-change-set", "--stack-name", "ccproj", "--change-set-name", "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/email-trim-20261015/f01f3fd6-aff0-40d7-8570-f4bd8689ce96", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T07:05:45.934244+00:00] 716d1db81286 EXIT 0
+
+[2026-10-15T07:05:45.958863+00:00] a8c7cffab7db Wait for concise alert email release
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "wait", "stack-update-complete", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T07:06:24.460229+00:00] a8c7cffab7db EXIT 0
+
+[2026-10-15T07:06:41.782749+00:00] f81573cb10ad Verify deployed concise email package and Lambda health
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-function-configuration", "--function-name", "ccproj-ApiBackend", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T07:06:41.782749+00:00] a10a4ea62731 Verify deployed concise email package and Lambda health
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-function-configuration", "--function-name", "ccproj-Ingestion", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T07:06:41.782749+00:00] 5fa890b4ebd6 Verify deployed concise email package and Lambda health
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-function-configuration", "--function-name", "ccproj-Processor", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T07:06:41.783689+00:00] 7e9cfc0a8afc Verify deployed concise email package and Lambda health
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-function-configuration", "--function-name", "ccproj-Notifier", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T07:06:45.496377+00:00] a10a4ea62731 EXIT 0
+[2026-10-15T07:06:45.510380+00:00] f81573cb10ad EXIT 0
+[2026-10-15T07:06:45.517383+00:00] 5fa890b4ebd6 EXIT 0
+[2026-10-15T07:06:45.528481+00:00] 7e9cfc0a8afc EXIT 0
+
+[2026-10-15T07:06:45.578611+00:00] 4b2931d46040 Confirm concise email CloudFormation release completed
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T07:06:47.985226+00:00] 4b2931d46040 EXIT 0
