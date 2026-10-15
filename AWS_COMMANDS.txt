@@ -2986,3 +2986,59 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-15T05:35:45.847880+00:00] 252307196309 EXIT 0
 [2026-10-15T05:35:45.989829+00:00] d49e5ed69599 EXIT 0
 [2026-10-15T05:35:46.151831+00:00] 9b0ec36d4c5a EXIT 0
+
+[2026-10-15T06:43:12.056411+00:00] 95fb087209e3 Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:43:17.057330+00:00] 95fb087209e3 EXIT 0
+
+[2026-10-15T06:43:17.201916+00:00] e9f9682f7ae8 Publish completed frontend build to the private hosting bucket
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "sync", "C:\\Akshay\\Projects-2\\ccproj\\frontend\\dist", "s3://ccproj-frontend-ipu2nmzptkhj", "--cache-control", "public,max-age=86400", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:43:26.068194+00:00] e9f9682f7ae8 EXIT 0
+
+[2026-10-15T06:43:26.215091+00:00] 65dbc1e9cb37 Publish frontend entry point with revalidation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\frontend\\dist\\index.html", "s3://ccproj-frontend-ipu2nmzptkhj/index.html", "--content-type", "text/html", "--cache-control", "no-cache", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:43:30.880959+00:00] 65dbc1e9cb37 EXIT 0
+
+[2026-10-15T06:43:30.882961+00:00] d04933ed2386 Make the explicitly published frontend release visible
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudfront", "create-invalidation", "--distribution-id", "E2QMBAOSKXNVMX", "--paths", "/*", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:43:36.702469+00:00] d04933ed2386 EXIT 0
+
+[2026-10-15T06:43:36.848936+00:00] 828b360a98cb Wait for frontend release cache invalidation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudfront", "wait", "invalidation-completed", "--distribution-id", "E2QMBAOSKXNVMX", "--id", "I20A97P2CNOZLGUPS8EF5ONOEZ", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:44:10.913111+00:00] 828b360a98cb EXIT 0
+
+[2026-10-15T06:44:34.493254+00:00] 439cf0c3bbfb Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:44:39.336632+00:00] 439cf0c3bbfb EXIT 0
+
+[2026-10-15T06:44:39.466657+00:00] 312705f6cdb9 Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-k8fpy_hp\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:44:44.758484+00:00] 312705f6cdb9 EXIT 0 (private response withheld)
+
+[2026-10-15T06:44:44.810133+00:00] 2a201a84f9a9 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-831jf53w\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:44:49.790274+00:00] 2a201a84f9a9 EXIT 0 (private response withheld)
+
+[2026-10-15T06:44:49.814800+00:00] d55893126c59 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-068950e5e1d8@example.invalid", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:44:54.602925+00:00] d55893126c59 EXIT 0
+
+[2026-10-15T06:44:54.658028+00:00] 0248a7c1d10b Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-_uiva7l9\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:44:59.573574+00:00] 0248a7c1d10b EXIT 0 (private response withheld)
+
+[2026-10-15T06:44:59.627815+00:00] 8480a1a79e40 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-4whsjazu\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:45:04.368159+00:00] 8480a1a79e40 EXIT 0 (private response withheld)
+
+[2026-10-15T06:45:04.397673+00:00] 7d9d42080386 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-068950e5e1d8@example.invalid", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:45:09.019042+00:00] 7d9d42080386 EXIT 0
+
+[2026-10-15T06:46:14.570168+00:00] 9325248551ca Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-068950e5e1d8@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:46:19.218690+00:00] 9325248551ca EXIT 0
+
+[2026-10-15T06:46:19.241795+00:00] b6168a30bab0 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-068950e5e1d8@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T06:46:24.109442+00:00] b6168a30bab0 EXIT 0

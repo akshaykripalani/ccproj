@@ -1,0 +1,266 @@
+{
+  "recordedAt": "2026-10-15T06:43:21.807070+00:00",
+  "design": "Compact state-independent Overview heading; blue measurement hue, readout strip, animated changes, per-row real-history sparklines, mobile cards, shared crosshair and keyboard inspection, chart domain/leader/event fixes, stacked synchronized detail charts and visible metadata/recent alerts, alert episode timeline, confirmed/pending counts, reset-all confirmation, bounded date shortcuts and owner-scoped per-session report history.",
+  "controlledBrowserStats": {
+    "startTime": "2026-10-15T06:41:23.074Z",
+    "duration": 43345.991,
+    "expected": 35,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "scenarios": [
+    {
+      "title": "sign-in page is concise, responsive and explains initial password setup",
+      "ok": true
+    },
+    {
+      "title": "overview shows three healthy motors and current units",
+      "ok": true
+    },
+    {
+      "title": "controls show requested and applied states separately",
+      "ok": true
+    },
+    {
+      "title": "viewers cannot see controls or request user management",
+      "ok": true
+    },
+    {
+      "title": "reset-all polls pending controls quickly and returns to normal cadence after acknowledgement",
+      "ok": true
+    },
+    {
+      "title": "failed refreshes cannot keep a stale command on fast polling indefinitely",
+      "ok": true
+    },
+    {
+      "title": "offline differs from a stopped reporting motor and timeout is visible",
+      "ok": true
+    },
+    {
+      "title": "device detail loads all charts and pagination for 24h",
+      "ok": true
+    },
+    {
+      "title": "alerts filter by device and state with truthful email statuses",
+      "ok": true
+    },
+    {
+      "title": "temperature report shows asynchronous result chart and CSV",
+      "ok": true
+    },
+    {
+      "title": "vibration report shows asynchronous result chart and CSV",
+      "ok": true
+    },
+    {
+      "title": "power report shows asynchronous result chart and CSV",
+      "ok": true
+    },
+    {
+      "title": "reports show empty results and query failures without false success",
+      "ok": true
+    },
+    {
+      "title": "report date window is validated before query starts",
+      "ok": true
+    },
+    {
+      "title": "operators invite accounts and update roles while protecting self",
+      "ok": true
+    },
+    {
+      "title": "API failures preserve visible readings and support retry",
+      "ok": true
+    },
+    {
+      "title": "hosted sign-in uses authorization code with PKCE and random state",
+      "ok": true
+    },
+    {
+      "title": "callback rejects a missing OAuth state and clears code from URL",
+      "ok": true
+    },
+    {
+      "title": "session rejection and refresh failure return to sign-in",
+      "ok": true
+    },
+    {
+      "title": "mobile navigation and dashboard have no horizontal overflow",
+      "ok": true
+    },
+    {
+      "title": "dashboard and report form have accessible controls and landmarks",
+      "ok": true
+    },
+    {
+      "title": "clock advancement makes old live responses visibly stale and motors offline",
+      "ok": true
+    },
+    {
+      "title": "refresh token renewal replaces the access token after a read rejection",
+      "ok": true
+    },
+    {
+      "title": "sign-out clears local tokens and requests the hosted logout URL",
+      "ok": true
+    },
+    {
+      "title": "compact overview keeps a fixed heading while readings and fault indicators update",
+      "ok": true
+    },
+    {
+      "title": "reference styling and self-hosted fonts remain usable across desktop and mobile views",
+      "ok": true
+    },
+    {
+      "title": "alert history, team roles and report results pass accessibility checks",
+      "ok": true
+    },
+    {
+      "title": "last-reading ages tick between polls and row sparklines use real history",
+      "ok": true
+    },
+    {
+      "title": "fleet chart fits available data and supports shared hover, keyboard inspection and event linking",
+      "ok": true
+    },
+    {
+      "title": "reset-all requires confirmation and cancel sends no command",
+      "ok": true
+    },
+    {
+      "title": "mobile cards expose every metric and all navigation at 320 and 390 pixels",
+      "ok": true
+    },
+    {
+      "title": "equipment skeleton and value changes respect reduced motion",
+      "ok": true
+    },
+    {
+      "title": "detail charts share inspection, expose metadata and use a zero power baseline",
+      "ok": true
+    },
+    {
+      "title": "alert timeline includes ongoing episodes that began before its visible window",
+      "ok": true
+    },
+    {
+      "title": "report shortcuts retain query bounds and recent results reopen without new queries",
+      "ok": true
+    }
+  ],
+  "constraints": "No API/infrastructure/email behavior change. Report starts remain limited to seven UTC dates within 30 days; Today and Last 7 days presets do not start a query. Recent report entries reference already-started reports, are scoped to the signed-in username in session storage, and contain no tokens.",
+  "screenshotProvenance": "Controlled API fixtures in docs/ui-instruments; deployed desktop/mobile screenshots are recorded separately by the real login smoke.",
+  "controlledScreenshots": [
+    "redesign-alerts-desktop.png",
+    "redesign-alerts-mobile.png",
+    "redesign-devices-motor-01-desktop.png",
+    "redesign-devices-motor-01-mobile.png",
+    "redesign-overview-desktop.png",
+    "redesign-overview-fault-desktop.png",
+    "redesign-overview-mobile.png",
+    "redesign-reports-desktop.png",
+    "redesign-reports-mobile.png",
+    "redesign-users-desktop.png",
+    "redesign-users-mobile.png",
+    "instruments-mobile.png"
+  ],
+  "dashboardUrl": "https://d1idggpc663p7f.cloudfront.net",
+  "publicVerifiedAt": "2026-10-15T06:44:35.864669+00:00",
+  "publicAssets": [
+    {
+      "path": "assets/charts-D5JkseK7.js",
+      "sha256": "ab811c2b28441394a129b262384467638ea2403a1dd8dcbdce8f457ed51c6915",
+      "bytes": 406169,
+      "contentType": "application/javascript"
+    },
+    {
+      "path": "assets/index-BKucCGVe.css",
+      "sha256": "3922b26448312c8b3975da3c471c3f63081d2bb1b7759428efbcffa16751c327",
+      "bytes": 24679,
+      "contentType": "text/css"
+    },
+    {
+      "path": "assets/index-C1BCBpLU.js",
+      "sha256": "b27de43811c63d94bd490efcdde8bf30257e17510bf8986a280cbb6b62dd8d88",
+      "bytes": 59370,
+      "contentType": "application/javascript"
+    },
+    {
+      "path": "assets/rolldown-runtime-XKyaHtl9.js",
+      "sha256": "548d1dbf321e7d2ae804fcc158b588706a7c52f8ca175de1490c6ccb4dbe55b7",
+      "bytes": 726,
+      "contentType": "application/javascript"
+    },
+    {
+      "path": "assets/vendor-B9iMLyJ4.js",
+      "sha256": "78b0fc2228b7b3695942c466b2fa66f20bd3f1d0df41bdd440b22f1fbfe35d0c",
+      "bytes": 278838,
+      "contentType": "application/javascript"
+    },
+    {
+      "path": "favicon.svg",
+      "sha256": "b884228a71aa0e78d554c6a50400df9dd02178a8b4dac2eef73dcf9b8d11f30c",
+      "bytes": 176,
+      "contentType": "image/svg+xml"
+    },
+    {
+      "path": "fonts/ibm-plex-mono-400.woff2",
+      "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7",
+      "bytes": 14708,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "fonts/ibm-plex-mono-500.woff2",
+      "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22",
+      "bytes": 14888,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "fonts/ibm-plex-sans.woff2",
+      "sha256": "e2291e842cf5af167122a22881a740c7f2dda7716f1e8cd76680264f4a859470",
+      "bytes": 45712,
+      "contentType": "font/woff2"
+    },
+    {
+      "path": "fonts/OFL.txt",
+      "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da",
+      "bytes": 4456,
+      "contentType": "text/plain"
+    },
+    {
+      "path": "index.html",
+      "sha256": "6cf401e1dd34088c7ba1e70f2bf8e57172235ce3fce36ab1b0403e885efa22a0",
+      "bytes": 915,
+      "contentType": "text/html"
+    }
+  ],
+  "invalidationCompleted": true,
+  "deployedBrowserSmoke": {
+    "stats": {
+      "startTime": "2026-10-15T06:45:11.991Z",
+      "duration": 62499.687,
+      "expected": 1,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "scenarios": [
+      {
+        "title": "real hosted PKCE login, current motors, live charts and protected viewer UI",
+        "ok": true,
+        "results": [
+          {
+            "status": "passed",
+            "durationMs": 58232
+          }
+        ]
+      }
+    ]
+  },
+  "deployedBrowserEvidence": "docs/ui-instruments-live-smoke.xml",
+  "deployedBrowserScope": "Real desktop/operator and mobile/viewer Cognito login, three healthy motors, actual charts including 24-hour history, overview comparison and viewer access restrictions. No motor fault injection, report query, invitation email or infrastructure mutation in this smoke; disposable test accounts were cleaned up.",
+  "completedAt": "2026-10-15T06:47:05.696443+00:00"
+}
