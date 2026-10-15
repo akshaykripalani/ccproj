@@ -71,7 +71,13 @@ def run(args, purpose, *, check=True, private=False):
     operation_id = uuid.uuid4().hex[:12]
     stamp = dt.datetime.now(dt.timezone.utc).isoformat()
     append(f"\n[{stamp}] {operation_id} {purpose}\nCOMMAND argv: " + json.dumps([AWS, *args]))
-    env = dict(os.environ, AWS_PAGER="", AWS_CLI_AUTO_PROMPT="off")
+    env = dict(
+        os.environ,
+        AWS_PAGER="",
+        AWS_CLI_AUTO_PROMPT="off",
+        AWS_CLI_OUTPUT_ENCODING="UTF-8",
+        AWS_CLI_FILE_ENCODING="UTF-8",
+    )
     result = subprocess.run([AWS, *args], capture_output=True, text=True, encoding="utf-8", env=env)
     # Never log command output: it can contain tokens or temporary credentials.
     append(
