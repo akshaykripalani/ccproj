@@ -31,8 +31,8 @@
   "release": {
     "backend": {
       "path": "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip",
-      "key": "releases/fb39fe4732a20afe02033a0bcb1fede544dcbff686afff44f3a96b7f955f3b1d/backend.zip",
-      "sha256": "fb39fe4732a20afe02033a0bcb1fede544dcbff686afff44f3a96b7f955f3b1d"
+      "key": "releases/acdf87469386b756eaf4c50c9c699bc7f16bc656644992cfb36ee19ae6d40762/backend.zip",
+      "sha256": "acdf87469386b756eaf4c50c9c699bc7f16bc656644992cfb36ee19ae6d40762"
     },
     "simulator": {
       "path": "C:\\Akshay\\Projects-2\\ccproj\\build\\simulator.tar.gz",

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="104.072" timestamp="2026-10-15T10:59:45.196987+05:30" hostname="Akshay_Laptop"><testcase classname="tests.live.test_alert_email" name="test_readable_email_from_real_ec2_fault_and_scheduled_notifier" file="tests\live\test_alert_email.py" line="13" time="103.873"><failure message="AttributeError: 'NoneType' object has no attribute 'strip'">live = &lt;tests.live.conftest.Live object at 0x000002059ECC99D0&gt;
+
+    def test_readable_email_from_real_ec2_fault_and_scheduled_notifier(live):
+        initial = live.api("GET", "/devices").json()["devices"]
+        assert all(
+            d["online"]
+            and d["control"].get("appliedMode") == "normal"
+            and not any(r["active"] for r in d["latest"]["rules"].values())
+            for d in initial
+        ), "Start this notification exercise with all shared motors healthy"
+        topic = live.platform["AlertTopicArn"]
+        queue = call(
+            [
+                "sqs",
+                "create-queue",
+                "--queue-name",
+                "ccproj-email-capture-" + secrets.token_hex(6),
+                "--attributes",
+                json.dumps({"SqsManagedSseEnabled": "true", "MessageRetentionPeriod": "300"}),
+            ],
+            "Create disposable encrypted capture queue for email publication verification",
+        )["QueueUrl"]
+        subscription = None
+        changed = False
+        try:
+            arn = call(
+                ["sqs", "get-queue-attributes", "--queue-url", queue, "--attribute-names", "QueueArn"],
+                "Read disposable notification capture queue ARN",
+            )["Attributes"]["QueueArn"]
+            policy = {
+                "Version": "2012-10-17",
+                "Statement": [
+                    {
+                        "Effect": "Allow",
+                        "Principal": {"Service": "sns.amazonaws.com"},
+                        "Action": "sqs:SendMessage",
+                        "Resource": arn,
+                        "Condition": {
+                            "ArnEquals": {"aws:SourceArn": topic},
+                            "StringEquals": {"aws:SourceAccount": "039379078306"},
+                        },
+                    },
+                    {
+                        "Effect": "Deny",
+                        "Principal": "*",
+                        "Action": "sqs:*",
+                        "Resource": arn,
+                        "Condition": {"Bool": {"aws:SecureTransport": "false"}},
+                    },
+                ],
+            }
+            call(
+                [
+                    "sqs",
+                    "set-queue-attributes",
+                    "--queue-url",
+                    queue,
+                    "--attributes",
+                    json.dumps({"Policy": json.dumps(policy)}),
+                ],
+                "Allow only the existing project SNS topic to publish to the disposable capture queue",
+            )
+            subscription = call(
+                [
+                    "sns",
+                    "subscribe",
+                    "--topic-arn",
+                    topic,
+                    "--protocol",
+                    "sqs",
+                    "--notification-endpoint",
+                    arn,
+                    "--return-subscription-arn",
+                ],
+                "Capture actual notifier subject and body through a temporary SNS subscription",
+            )["SubscriptionArn"]
+            changed = True
+            assert live.api("POST", "/controls/motor-01", {"mode": "overheat"}).status_code == 202
+            wait_for(lambda: live.state()["latest"]["rules"]["temperature"]["active"], timeout=100)
+            alert_id = live.state()["latest"]["rules"]["temperature"]["alertId"]
+    
+            def capture():
+                messages = call(
+                    [
+                        "sqs",
+                        "receive-message",
+                        "--queue-url",
+                        queue,
+                        "--wait-time-seconds",
+                        "10",
+                        "--max-number-of-messages",
+                        "10",
+                    ],
+                    "Wait for the scheduled notifier's real readable fault publication",
+                ).get("Messages", [])
+                for message in messages:
+                    envelope = json.loads(message["Body"])
+                    if envelope.get("Subject") == "Forge alert: Motor 01 over temperature":
+                        return envelope
+                return None
+    
+&gt;           envelope = wait_for(capture, timeout=150)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests\live\test_alert_email.py:113: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+tests\live\conftest.py:53: in wait_for
+    result = check()
+             ^^^^^^^
+tests\live\test_alert_email.py:94: in capture
+    messages = call(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+args = ['sqs', 'receive-message', '--queue-url', 'https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-d7c8d43a9643', '--wait-time-seconds', '10', ...]
+purpose = "Wait for the scheduled notifier's real readable fault publication"
+kwargs = {}
+result = CompletedProcess(args=['C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe', 'sqs', 'receive-messag...nds', '10', '--max-number-of-messages', '10', '--region', 'ap-southeast-2', '--no-cli-pager'], returncode=0, stderr='')
+
+    def call(args, purpose, **kwargs):
+        result = run(args, purpose, **kwargs)
+&gt;       return json.loads(result.stdout) if result.stdout.strip() else {}
+                                            ^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'strip'
+
+scripts\aws_cli.py:91: AttributeError</failure></testcase></testsuite></testsuites>

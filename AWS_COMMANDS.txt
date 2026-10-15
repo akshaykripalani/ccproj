@@ -2718,3 +2718,271 @@ COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aw
 [2026-10-15T05:23:32.136144+00:00] 58c27dec2615 Remove only disposable live-test user
 COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-2f01d6b731a8@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
 [2026-10-15T05:23:34.215802+00:00] 58c27dec2615 EXIT 0
+
+[2026-10-15T05:25:56.857250+00:00] e13cff7e103f Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:25:58.951035+00:00] e13cff7e103f EXIT 0
+
+[2026-10-15T05:26:07.082392+00:00] 02c6735ad051 Upload readable-email backend release
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip", "s3://ccproj-artifacts-artifacts-bllhfj9fhpbr/releases/a67b89ab3975e50864bfb1248e87883564d55d1cdd24d752ba2bf9cf1ad828c9/backend.zip", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:26:14.164461+00:00] 02c6735ad051 EXIT 0
+
+[2026-10-15T05:26:14.183463+00:00] feb0fe767716 Compare email update with deployed template
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "get-template", "--stack-name", "ccproj", "--template-stage", "Original", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:26:17.011626+00:00] feb0fe767716 EXIT 0
+
+[2026-10-15T05:26:17.031119+00:00] cfed56571757 Upload validated email template for CloudFormation review
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "infra\\platform.json", "s3://ccproj-artifacts-artifacts-bllhfj9fhpbr/templates/email-01d4e47f7ae853c58adc7e86233dae608430ca3c26d6df32552b4e2a63d6fc86.json", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:26:19.983795+00:00] cfed56571757 EXIT 0
+
+[2026-10-15T05:26:20.003904+00:00] 8951b117937d Read existing parameters for scoped email release
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:26:22.191730+00:00] 8951b117937d EXIT 0
+
+[2026-10-15T05:26:22.212731+00:00] 216565fd0ce3 Prepare scoped readable-email CloudFormation change set
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "create-change-set", "--stack-name", "ccproj", "--change-set-name", "readable-email-1792041982", "--change-set-type", "UPDATE", "--template-url", "https://ccproj-artifacts-artifacts-bllhfj9fhpbr.s3.ap-southeast-2.amazonaws.com/templates/email-01d4e47f7ae853c58adc7e86233dae608430ca3c26d6df32552b4e2a63d6fc86.json", "--parameters", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\email-parameters.json", "--capabilities", "CAPABILITY_IAM", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:26:24.751506+00:00] 216565fd0ce3 EXIT 0
+
+[2026-10-15T05:26:24.775671+00:00] e2c96803bd78 Wait for email release change-set validation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "wait", "change-set-create-complete", "--change-set-name", "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/readable-email-1792041982/7b3a0c70-147b-4ef7-8161-c5d96d143c1d", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:26:58.009393+00:00] e2c96803bd78 EXIT 0
+
+[2026-10-15T05:26:58.036903+00:00] 8a5fe9491570 Review readable-email changes before execution
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-change-set", "--change-set-name", "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/readable-email-1792041982/7b3a0c70-147b-4ef7-8161-c5d96d143c1d", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:27:01.550752+00:00] 8a5fe9491570 EXIT 0
+
+[2026-10-15T05:27:28.793383+00:00] da5254f20d96 Discard unexecuted email plan containing mixed cached SDK versions
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "delete-change-set", "--change-set-name", "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/readable-email-1792041982/7b3a0c70-147b-4ef7-8161-c5d96d143c1d", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:27:30.953426+00:00] da5254f20d96 EXIT 0
+
+[2026-10-15T05:27:30.995962+00:00] 98532972c0ae Upload clean readable-email backend release
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "s3", "cp", "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip", "s3://ccproj-artifacts-artifacts-bllhfj9fhpbr/releases/acdf87469386b756eaf4c50c9c699bc7f16bc656644992cfb36ee19ae6d40762/backend.zip", "--sse", "AES256", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:27:38.098035+00:00] 98532972c0ae EXIT 0
+
+[2026-10-15T05:27:38.164960+00:00] 2c52ccadd6a7 Prepare clean readable-email release change set
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "create-change-set", "--stack-name", "ccproj", "--change-set-name", "readable-email-1792042058", "--change-set-type", "UPDATE", "--template-url", "https://ccproj-artifacts-artifacts-bllhfj9fhpbr.s3.ap-southeast-2.amazonaws.com/templates/email-01d4e47f7ae853c58adc7e86233dae608430ca3c26d6df32552b4e2a63d6fc86.json", "--parameters", "file://C:\\Akshay\\Projects-2\\ccproj\\.runtime\\email-parameters.json", "--capabilities", "CAPABILITY_IAM", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:27:40.534405+00:00] 2c52ccadd6a7 EXIT 0
+
+[2026-10-15T05:27:40.552485+00:00] 40f7b46a807a Wait for clean email release change-set validation
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "wait", "change-set-create-complete", "--change-set-name", "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/readable-email-1792042058/52158a7d-ecdf-4fac-b78c-f71d71005eb0", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:28:13.665761+00:00] 40f7b46a807a EXIT 0
+
+[2026-10-15T05:28:13.695767+00:00] 973172331f9a Review clean email release changes
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-change-set", "--change-set-name", "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/readable-email-1792042058/52158a7d-ecdf-4fac-b78c-f71d71005eb0", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:28:15.852324+00:00] 973172331f9a EXIT 0
+
+[2026-10-15T05:28:49.851759+00:00] b305c485c7c7 Deploy reviewed readable-equipment-email release
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "execute-change-set", "--change-set-name", "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/readable-email-1792042058/52158a7d-ecdf-4fac-b78c-f71d71005eb0", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:28:52.180732+00:00] b305c485c7c7 EXIT 0
+
+[2026-10-15T05:28:52.199245+00:00] 37ad4d06b882 Wait for readable-email platform update
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "wait", "stack-update-complete", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:29:25.189003+00:00] 37ad4d06b882 EXIT 0
+
+[2026-10-15T05:29:25.189902+00:00] 04c21ab9d192 Verify readable-email platform update completed
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cloudformation", "describe-stacks", "--stack-name", "ccproj", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:29:27.197780+00:00] 04c21ab9d192 EXIT 0
+
+[2026-10-15T05:29:45.249147+00:00] e53884795e2a Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:29:47.254808+00:00] e53884795e2a EXIT 0
+
+[2026-10-15T05:29:47.337338+00:00] 203ce095163c Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-h66ecck6\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:29:49.843454+00:00] 203ce095163c EXIT 0 (private response withheld)
+
+[2026-10-15T05:29:49.875931+00:00] 341d0b81a894 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-43jf2nkr\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:29:52.227398+00:00] 341d0b81a894 EXIT 0 (private response withheld)
+
+[2026-10-15T05:29:52.244485+00:00] baf0bb654e97 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-1a781b713c78@example.invalid", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T05:29:54.100338+00:00] 8f2aae806979 Verify existing email remains confirmed after readable-email deployment
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:29:54.397217+00:00] baf0bb654e97 EXIT 0
+
+[2026-10-15T05:29:54.430833+00:00] bb96d723fd1a Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-j05wawj0\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:29:56.208080+00:00] 8f2aae806979 EXIT 0
+[2026-10-15T05:29:56.879323+00:00] bb96d723fd1a EXIT 0 (private response withheld)
+
+[2026-10-15T05:29:56.909876+00:00] 7b9431d16aee Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-trmgkksh\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:29:59.244246+00:00] 7b9431d16aee EXIT 0 (private response withheld)
+
+[2026-10-15T05:29:59.261752+00:00] 6bfd4f673950 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-1a781b713c78@example.invalid", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:30:01.396915+00:00] 6bfd4f673950 EXIT 0
+
+[2026-10-15T05:30:01.434594+00:00] d6acb7a0b4d5 Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-anaxk077\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:30:03.611034+00:00] d6acb7a0b4d5 EXIT 0 (private response withheld)
+
+[2026-10-15T05:30:07.023187+00:00] ae1b9b1c3db1 Create disposable encrypted capture queue for email publication verification
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "create-queue", "--queue-name", "ccproj-email-capture-d7c8d43a9643", "--attributes", "{\"SqsManagedSseEnabled\": \"true\", \"MessageRetentionPeriod\": \"300\"}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:30:09.081314+00:00] ae1b9b1c3db1 EXIT 0
+
+[2026-10-15T05:30:09.098421+00:00] 4823549c3a34 Read disposable notification capture queue ARN
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-d7c8d43a9643", "--attribute-names", "QueueArn", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:30:11.071634+00:00] 4823549c3a34 EXIT 0
+
+[2026-10-15T05:30:11.090754+00:00] 26d4dfd4b8c9 Allow only the existing project SNS topic to publish to the disposable capture queue
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "set-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-d7c8d43a9643", "--attributes", "{\"Policy\": \"{\\\"Version\\\": \\\"2012-10-17\\\", \\\"Statement\\\": [{\\\"Effect\\\": \\\"Allow\\\", \\\"Principal\\\": {\\\"Service\\\": \\\"sns.amazonaws.com\\\"}, \\\"Action\\\": \\\"sqs:SendMessage\\\", \\\"Resource\\\": \\\"arn:aws:sqs:ap-southeast-2:039379078306:ccproj-email-capture-d7c8d43a9643\\\", \\\"Condition\\\": {\\\"ArnEquals\\\": {\\\"aws:SourceArn\\\": \\\"arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1\\\"}, \\\"StringEquals\\\": {\\\"aws:SourceAccount\\\": \\\"039379078306\\\"}}}, {\\\"Effect\\\": \\\"Deny\\\", \\\"Principal\\\": \\\"*\\\", \\\"Action\\\": \\\"sqs:*\\\", \\\"Resource\\\": \\\"arn:aws:sqs:ap-southeast-2:039379078306:ccproj-email-capture-d7c8d43a9643\\\", \\\"Condition\\\": {\\\"Bool\\\": {\\\"aws:SecureTransport\\\": \\\"false\\\"}}}]}\"}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:30:13.040536+00:00] 26d4dfd4b8c9 EXIT 0
+
+[2026-10-15T05:30:13.061059+00:00] 440f025cbf4a Capture actual notifier subject and body through a temporary SNS subscription
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "subscribe", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--protocol", "sqs", "--notification-endpoint", "arn:aws:sqs:ap-southeast-2:039379078306:ccproj-email-capture-d7c8d43a9643", "--return-subscription-arn", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:30:15.098210+00:00] 440f025cbf4a EXIT 0
+
+[2026-10-15T05:30:38.386012+00:00] ac06d739f57f Verify deployed ApiBackend backend package and update status
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-function-configuration", "--function-name", "ccproj-ApiBackend", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T05:30:38.386012+00:00] 7a8d8ce8bd38 Verify deployed Ingestion backend package and update status
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-function-configuration", "--function-name", "ccproj-Ingestion", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T05:30:38.386012+00:00] eebf575afebe Verify deployed Processor backend package and update status
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-function-configuration", "--function-name", "ccproj-Processor", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T05:30:38.387459+00:00] 361bf643f9e7 Verify deployed Notifier backend package and update status
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "get-function-configuration", "--function-name", "ccproj-Notifier", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:30:41.092003+00:00] eebf575afebe EXIT 0
+[2026-10-15T05:30:41.119457+00:00] ac06d739f57f EXIT 0
+[2026-10-15T05:30:41.129446+00:00] 7a8d8ce8bd38 EXIT 0
+[2026-10-15T05:30:41.130445+00:00] 361bf643f9e7 EXIT 0
+
+[2026-10-15T05:30:49.218623+00:00] 5b0428e30918 Wait for the scheduled notifier's real readable fault publication
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "receive-message", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-d7c8d43a9643", "--wait-time-seconds", "10", "--max-number-of-messages", "10", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:30:54.755255+00:00] 5b0428e30918 EXIT 0
+
+[2026-10-15T05:31:20.436626+00:00] 186a81d9d4cb Remove only the temporary capture subscription
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "unsubscribe", "--subscription-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1:b6dfb406-a3f2-4f36-8d4f-f8bd5cf14e40", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:31:22.519611+00:00] 186a81d9d4cb EXIT 0
+
+[2026-10-15T05:31:22.542730+00:00] ecf1ebd1c29e Remove only the disposable notification capture queue
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "delete-queue", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-d7c8d43a9643", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:31:24.639252+00:00] ecf1ebd1c29e EXIT 0
+
+[2026-10-15T05:31:24.797563+00:00] f440ff7c1e01 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-1a781b713c78@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:31:26.983531+00:00] f440ff7c1e01 EXIT 0
+
+[2026-10-15T05:31:27.002535+00:00] 94cc25b9fcaf Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-1a781b713c78@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:31:29.233641+00:00] 94cc25b9fcaf EXIT 0
+
+[2026-10-15T05:32:19.911442+00:00] 1ba76811781c Verify deployment identity
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sts", "get-caller-identity", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:21.984968+00:00] 1ba76811781c EXIT 0
+
+[2026-10-15T05:32:22.046667+00:00] 053769ba6ab8 Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-kaw2pyz7\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:24.360858+00:00] 053769ba6ab8 EXIT 0 (private response withheld)
+
+[2026-10-15T05:32:24.396117+00:00] 391adea5c475 Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-g6xfap7a\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:26.689353+00:00] 391adea5c475 EXIT 0 (private response withheld)
+
+[2026-10-15T05:32:26.707253+00:00] 31f2c328c9b7 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-85e1bc9857c6@example.invalid", "--group-name", "viewer", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:28.825511+00:00] 31f2c328c9b7 EXIT 0
+
+[2026-10-15T05:32:28.855799+00:00] 2e83ea0d396e Create disposable live-test user without email
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-create-user", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-t73gpvme\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:31.184749+00:00] 2e83ea0d396e EXIT 0 (private response withheld)
+
+[2026-10-15T05:32:31.214780+00:00] 638acea2023e Set disposable test password (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-set-user-password", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-krmnm1mn\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:33.477507+00:00] 638acea2023e EXIT 0 (private response withheld)
+
+[2026-10-15T05:32:33.495648+00:00] b3c38844e5e4 Grant disposable test role
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-add-user-to-group", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-85e1bc9857c6@example.invalid", "--group-name", "operator", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:35.641304+00:00] b3c38844e5e4 EXIT 0
+
+[2026-10-15T05:32:35.671229+00:00] aedc0798b0ce Authenticate disposable live-test user (secrets withheld)
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-initiate-auth", "--cli-input-json", "file://C:\\Users\\aksha\\AppData\\Local\\Temp\\ccproj-auth-adk1i6pu\\input.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:37.904631+00:00] aedc0798b0ce EXIT 0 (private response withheld)
+
+[2026-10-15T05:32:39.357300+00:00] 4662013d62af Create disposable encrypted capture queue for email publication verification
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "create-queue", "--queue-name", "ccproj-email-capture-e8383a45c55d", "--attributes", "{\"SqsManagedSseEnabled\": \"true\", \"MessageRetentionPeriod\": \"300\"}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:41.405378+00:00] 4662013d62af EXIT 0
+
+[2026-10-15T05:32:41.424871+00:00] b4cfcd770d77 Read disposable notification capture queue ARN
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "get-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-e8383a45c55d", "--attribute-names", "QueueArn", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:43.435193+00:00] b4cfcd770d77 EXIT 0
+
+[2026-10-15T05:32:43.452196+00:00] 80ccc35cf4c7 Allow only the existing project SNS topic to publish to the disposable capture queue
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "set-queue-attributes", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-e8383a45c55d", "--attributes", "{\"Policy\": \"{\\\"Version\\\": \\\"2012-10-17\\\", \\\"Statement\\\": [{\\\"Effect\\\": \\\"Allow\\\", \\\"Principal\\\": {\\\"Service\\\": \\\"sns.amazonaws.com\\\"}, \\\"Action\\\": \\\"sqs:SendMessage\\\", \\\"Resource\\\": \\\"arn:aws:sqs:ap-southeast-2:039379078306:ccproj-email-capture-e8383a45c55d\\\", \\\"Condition\\\": {\\\"ArnEquals\\\": {\\\"aws:SourceArn\\\": \\\"arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1\\\"}, \\\"StringEquals\\\": {\\\"aws:SourceAccount\\\": \\\"039379078306\\\"}}}, {\\\"Effect\\\": \\\"Deny\\\", \\\"Principal\\\": \\\"*\\\", \\\"Action\\\": \\\"sqs:*\\\", \\\"Resource\\\": \\\"arn:aws:sqs:ap-southeast-2:039379078306:ccproj-email-capture-e8383a45c55d\\\", \\\"Condition\\\": {\\\"Bool\\\": {\\\"aws:SecureTransport\\\": \\\"false\\\"}}}]}\"}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:45.591329+00:00] 80ccc35cf4c7 EXIT 0
+
+[2026-10-15T05:32:45.611230+00:00] 9eb334584f79 Capture actual notifier subject and body through a temporary SNS subscription
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "subscribe", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--protocol", "sqs", "--notification-endpoint", "arn:aws:sqs:ap-southeast-2:039379078306:ccproj-email-capture-e8383a45c55d", "--return-subscription-arn", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:32:47.810843+00:00] 9eb334584f79 EXIT 0
+
+[2026-10-15T05:33:22.057027+00:00] 350e519165dd Wait for the scheduled notifier's real readable fault publication
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "receive-message", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-e8383a45c55d", "--wait-time-seconds", "10", "--max-number-of-messages", "10", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:33:34.091170+00:00] 350e519165dd EXIT 0
+
+[2026-10-15T05:33:37.111737+00:00] 416b7ebe48ef Wait for the scheduled notifier's real readable fault publication
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "receive-message", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-e8383a45c55d", "--wait-time-seconds", "10", "--max-number-of-messages", "10", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:33:49.056205+00:00] 416b7ebe48ef EXIT 0
+
+[2026-10-15T05:33:52.079484+00:00] bbd7db0a0852 Wait for the scheduled notifier's real readable fault publication
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "receive-message", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-e8383a45c55d", "--wait-time-seconds", "10", "--max-number-of-messages", "10", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:33:54.615986+00:00] bbd7db0a0852 EXIT 0
+
+[2026-10-15T05:33:54.747524+00:00] b734260ff2fd Verify captured SNS message ID matches the persisted fault notification
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "get-item", "--table-name", "ccproj-Data-OWJUAYGLMZZB", "--consistent-read", "--key", "{\"pk\": {\"S\": \"NOTIFY\"}, \"sk\": {\"S\": \"2026-10-15T05:33:17.762Z#temperature#f1ed77e0e7be451ea15d225e21fb64ce:motor-01:4350\"}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:33:56.905699+00:00] b734260ff2fd EXIT 0
+
+[2026-10-15T05:33:57.037150+00:00] 84ca7af33600 Verify completed readable notification is not republished on retry
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "lambda", "invoke", "--function-name", "ccproj-Notifier", "--cli-binary-format", "raw-in-base64-out", "--payload", "{}", "C:\\Akshay\\Projects-2\\ccproj\\.runtime\\readable-email-retry.json", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:33:59.148594+00:00] 84ca7af33600 EXIT 0
+
+[2026-10-15T05:34:30.713430+00:00] a76c7d6b515b Remove only the temporary capture subscription
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "unsubscribe", "--subscription-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1:19d33c08-437a-4c89-8919-c8dc6bff37f2", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:34:32.747472+00:00] a76c7d6b515b EXIT 0
+
+[2026-10-15T05:34:32.888431+00:00] b202a16f7068 Remove only the disposable notification capture queue
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "delete-queue", "--queue-url", "https://sqs.ap-southeast-2.amazonaws.com/039379078306/ccproj-email-capture-e8383a45c55d", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:34:34.965051+00:00] b202a16f7068 EXIT 0
+
+[2026-10-15T05:34:35.111888+00:00] 1e1c092bfb7b Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-viewer-85e1bc9857c6@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:34:37.344700+00:00] 1e1c092bfb7b EXIT 0
+
+[2026-10-15T05:34:37.486114+00:00] bd15320b6188 Remove only disposable live-test user
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "admin-delete-user", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--username", "ccproj-e2e-operator-85e1bc9857c6@example.invalid", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:34:39.724463+00:00] bd15320b6188 EXIT 0
+
+[2026-10-15T05:35:19.107915+00:00] 13a420768769 Verify all three motors are healthy after email verification
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "batch-get-item", "--request-items", "{\"ccproj-Data-OWJUAYGLMZZB\": {\"Keys\": [{\"pk\": {\"S\": \"motor-01\"}, \"sk\": {\"S\": \"STATE\"}}, {\"pk\": {\"S\": \"motor-02\"}, \"sk\": {\"S\": \"STATE\"}}, {\"pk\": {\"S\": \"motor-03\"}, \"sk\": {\"S\": \"STATE\"}}], \"ConsistentRead\": true}, \"ccproj-Controls-1SBLS2VLV34K5\": {\"Keys\": [{\"pk\": {\"S\": \"motor-01\"}, \"sk\": {\"S\": \"CONTROL\"}}, {\"pk\": {\"S\": \"motor-02\"}, \"sk\": {\"S\": \"CONTROL\"}}, {\"pk\": {\"S\": \"motor-03\"}, \"sk\": {\"S\": \"CONTROL\"}}], \"ConsistentRead\": true}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T05:35:19.107915+00:00] 0cdb715f0ef1 Verify only the original alert subscription remains
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T05:35:19.107915+00:00] 807813d15dcf Verify disposable notification queues were removed
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "list-queues", "--queue-name-prefix", "ccproj-email-capture-", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T05:35:19.108917+00:00] ef0c9ea48260 Verify disposable verification users were removed
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "list-users", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--filter", "email ^= \"ccproj-e2e-\"", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:35:21.437129+00:00] 13a420768769 EXIT 0
+[2026-10-15T05:35:21.453024+00:00] 0cdb715f0ef1 EXIT 0
+[2026-10-15T05:35:21.561024+00:00] 807813d15dcf EXIT 0
+[2026-10-15T05:35:21.870206+00:00] ef0c9ea48260 EXIT 0
+
+[2026-10-15T05:35:43.236414+00:00] d8d760589e0f Capture all three motors after notification exercise
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "dynamodb", "batch-get-item", "--request-items", "{\"ccproj-Data-OWJUAYGLMZZB\": {\"Keys\": [{\"pk\": {\"S\": \"motor-01\"}, \"sk\": {\"S\": \"STATE\"}}, {\"pk\": {\"S\": \"motor-02\"}, \"sk\": {\"S\": \"STATE\"}}, {\"pk\": {\"S\": \"motor-03\"}, \"sk\": {\"S\": \"STATE\"}}], \"ConsistentRead\": true}, \"ccproj-Controls-1SBLS2VLV34K5\": {\"Keys\": [{\"pk\": {\"S\": \"motor-01\"}, \"sk\": {\"S\": \"CONTROL\"}}, {\"pk\": {\"S\": \"motor-02\"}, \"sk\": {\"S\": \"CONTROL\"}}, {\"pk\": {\"S\": \"motor-03\"}, \"sk\": {\"S\": \"CONTROL\"}}], \"ConsistentRead\": true}}", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T05:35:43.236414+00:00] 252307196309 Capture final confirmed email subscription
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sns", "list-subscriptions-by-topic", "--topic-arn", "arn:aws:sns:ap-southeast-2:039379078306:ccproj-Alerts-1jcE3IeXFso1", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T05:35:43.236414+00:00] d49e5ed69599 Capture absence of temporary notification queues
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "sqs", "list-queues", "--queue-name-prefix", "ccproj-email-capture-", "--region", "ap-southeast-2", "--no-cli-pager"]
+
+[2026-10-15T05:35:43.236414+00:00] 9b0ec36d4c5a Capture absence of disposable verification users
+COMMAND argv: ["C:\\Users\\aksha\\AppData\\Local\\Programs\\Amazon\\AWSCLIV2\\aws.exe", "cognito-idp", "list-users", "--user-pool-id", "ap-southeast-2_iJjP0yB7V", "--filter", "email ^= \"ccproj-e2e-\"", "--region", "ap-southeast-2", "--no-cli-pager"]
+[2026-10-15T05:35:45.759877+00:00] d8d760589e0f EXIT 0
+[2026-10-15T05:35:45.847880+00:00] 252307196309 EXIT 0
+[2026-10-15T05:35:45.989829+00:00] d49e5ed69599 EXIT 0
+[2026-10-15T05:35:46.151831+00:00] 9b0ec36d4c5a EXIT 0

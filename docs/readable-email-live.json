@@ -1,0 +1,10 @@
+{
+  "subject": "Forge alert: Motor 01 over temperature",
+  "message": "Motor 01 is over its temperature limit.\n\nTemperature: 93.89 °C\nLimit: 75 °C\nDetected: 15 Oct 2026, 05:33:17 UTC\nConfirmed by 3 consecutive readings above the limit.\n\nOther readings at detection\nVibration: 1.476 mm/s\nPower: 416.22 W\nOperating state: Running\n\nView Motor 01\nhttps://d1idggpc663p7f.cloudfront.net/#/devices/motor-01\n\nCheck Forge for the current state; this email records the fault at detection.\nOperators can use Reset on the dashboard to return this motor to normal.\n",
+  "snsMessageId": "ccb2ffb7-8bf3-59d3-bd86-9cfde3f13de4",
+  "publishedAt": "2026-10-15T05:33:54.386Z",
+  "alertId": "2026-10-15T05:33:17.762Z#temperature#f1ed77e0e7be451ea15d225e21fb64ce:motor-01:4350",
+  "delivery": "sns_accepted",
+  "retryPublished": 0,
+  "proof": "Actual SNS publication captured via disposable SQS; inbox receipt is not asserted."
+}

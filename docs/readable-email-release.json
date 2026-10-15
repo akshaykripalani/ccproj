@@ -1,0 +1,388 @@
+{
+  "changeSetId": "arn:aws:cloudformation:ap-southeast-2:039379078306:changeSet/readable-email-1792042058/52158a7d-ecdf-4fac-b78c-f71d71005eb0",
+  "backend": {
+    "path": "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip",
+    "key": "releases/acdf87469386b756eaf4c50c9c699bc7f16bc656644992cfb36ee19ae6d40762/backend.zip",
+    "sha256": "acdf87469386b756eaf4c50c9c699bc7f16bc656644992cfb36ee19ae6d40762"
+  },
+  "templateChangedResources": [
+    "NotifierRole",
+    "Notifier"
+  ],
+  "packageVersions": [
+    "boto3-1.43.113.dist-info",
+    "botocore-1.43.114.dist-info",
+    "jmespath-1.1.0.dist-info",
+    "python_dateutil-2.9.0.post0.dist-info",
+    "s3transfer-0.19.2.dist-info",
+    "six-1.17.0.dist-info",
+    "urllib3-2.8.0.dist-info"
+  ],
+  "changes": [
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Modify",
+        "LogicalResourceId": "ApiBackend",
+        "PhysicalResourceId": "ccproj-ApiBackend",
+        "ResourceType": "AWS::Lambda::Function",
+        "Replacement": "False",
+        "Scope": [
+          "Properties"
+        ],
+        "Details": [
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Code",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Static",
+            "ChangeSource": "ParameterReference",
+            "CausingEntity": "BackendKey"
+          },
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Code",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Dynamic",
+            "ChangeSource": "DirectModification"
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Modify",
+        "LogicalResourceId": "DashboardIntegration",
+        "PhysicalResourceId": "gbt4nl5",
+        "ResourceType": "AWS::ApiGatewayV2::Integration",
+        "Replacement": "False",
+        "Scope": [
+          "Properties"
+        ],
+        "Details": [
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "IntegrationUri",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Dynamic",
+            "ChangeSource": "ResourceAttribute",
+            "CausingEntity": "ApiBackend.Arn"
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Modify",
+        "LogicalResourceId": "IngestIntegration",
+        "PhysicalResourceId": "1tu20b7",
+        "ResourceType": "AWS::ApiGatewayV2::Integration",
+        "Replacement": "False",
+        "Scope": [
+          "Properties"
+        ],
+        "Details": [
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "IntegrationUri",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Dynamic",
+            "ChangeSource": "ResourceAttribute",
+            "CausingEntity": "Ingestion.Arn"
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Modify",
+        "LogicalResourceId": "Ingestion",
+        "PhysicalResourceId": "ccproj-Ingestion",
+        "ResourceType": "AWS::Lambda::Function",
+        "Replacement": "False",
+        "Scope": [
+          "Properties"
+        ],
+        "Details": [
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Code",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Static",
+            "ChangeSource": "ParameterReference",
+            "CausingEntity": "BackendKey"
+          },
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Code",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Dynamic",
+            "ChangeSource": "DirectModification"
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Modify",
+        "LogicalResourceId": "NotificationSchedule",
+        "PhysicalResourceId": "ccproj-NotificationSchedule-1MWWAQ99APRAQ",
+        "ResourceType": "AWS::Scheduler::Schedule",
+        "Replacement": "False",
+        "Scope": [
+          "Properties"
+        ],
+        "Details": [
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Target",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Dynamic",
+            "ChangeSource": "ResourceAttribute",
+            "CausingEntity": "ScheduleRole.Arn"
+          },
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Target",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Dynamic",
+            "ChangeSource": "ResourceAttribute",
+            "CausingEntity": "Notifier.Arn"
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Modify",
+        "LogicalResourceId": "NotifierRole",
+        "PhysicalResourceId": "ccproj-NotifierRole-mFH1YWCMN9lj",
+        "ResourceType": "AWS::IAM::Role",
+        "Replacement": "False",
+        "Scope": [
+          "Metadata"
+        ],
+        "Details": [
+          {
+            "Target": {
+              "Attribute": "Metadata",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Static",
+            "ChangeSource": "DirectModification"
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Modify",
+        "LogicalResourceId": "Notifier",
+        "PhysicalResourceId": "ccproj-Notifier",
+        "ResourceType": "AWS::Lambda::Function",
+        "Replacement": "False",
+        "Scope": [
+          "Metadata",
+          "Properties"
+        ],
+        "Details": [
+          {
+            "Target": {
+              "Attribute": "Metadata",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Static",
+            "ChangeSource": "DirectModification"
+          },
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Environment",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Static",
+            "ChangeSource": "DirectModification"
+          },
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Code",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Static",
+            "ChangeSource": "ParameterReference",
+            "CausingEntity": "BackendKey"
+          },
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Code",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Dynamic",
+            "ChangeSource": "DirectModification"
+          },
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Role",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Dynamic",
+            "ChangeSource": "ResourceAttribute",
+            "CausingEntity": "NotifierRole.Arn"
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Modify",
+        "LogicalResourceId": "Processor",
+        "PhysicalResourceId": "ccproj-Processor",
+        "ResourceType": "AWS::Lambda::Function",
+        "Replacement": "False",
+        "Scope": [
+          "Properties"
+        ],
+        "Details": [
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Code",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Static",
+            "ChangeSource": "ParameterReference",
+            "CausingEntity": "BackendKey"
+          },
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Code",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Dynamic",
+            "ChangeSource": "DirectModification"
+          }
+        ]
+      }
+    },
+    {
+      "Type": "Resource",
+      "ResourceChange": {
+        "Action": "Modify",
+        "LogicalResourceId": "ScheduleRole",
+        "PhysicalResourceId": "ccproj-ScheduleRole-V2Q7hijmbnWt",
+        "ResourceType": "AWS::IAM::Role",
+        "Replacement": "False",
+        "Scope": [
+          "Properties"
+        ],
+        "Details": [
+          {
+            "Target": {
+              "Attribute": "Properties",
+              "Name": "Policies",
+              "RequiresRecreation": "Never"
+            },
+            "Evaluation": "Dynamic",
+            "ChangeSource": "ResourceAttribute",
+            "CausingEntity": "Notifier.Arn"
+          }
+        ]
+      }
+    }
+  ],
+  "deployedAt": "2026-10-15T05:29:27.222800+00:00",
+  "stackStatus": "UPDATE_COMPLETE",
+  "localTestsPassed": 68,
+  "validation": {
+    "cfnLint": "passed for Sydney",
+    "cloudFormationGuard": "passed all three templates",
+    "ruff": "passed"
+  },
+  "verifiedFunctions": [
+    {
+      "function": "ccproj-ApiBackend",
+      "codeSha256": "rN+HRpOGt1bq9MUMnGmbx/FrxlZkSZLPs27hmubUB2I=",
+      "state": "Active",
+      "lastUpdateStatus": "Successful"
+    },
+    {
+      "function": "ccproj-Ingestion",
+      "codeSha256": "rN+HRpOGt1bq9MUMnGmbx/FrxlZkSZLPs27hmubUB2I=",
+      "state": "Active",
+      "lastUpdateStatus": "Successful"
+    },
+    {
+      "function": "ccproj-Processor",
+      "codeSha256": "rN+HRpOGt1bq9MUMnGmbx/FrxlZkSZLPs27hmubUB2I=",
+      "state": "Active",
+      "lastUpdateStatus": "Successful"
+    },
+    {
+      "function": "ccproj-Notifier",
+      "codeSha256": "rN+HRpOGt1bq9MUMnGmbx/FrxlZkSZLPs27hmubUB2I=",
+      "state": "Active",
+      "lastUpdateStatus": "Successful"
+    }
+  ],
+  "finalVerifiedAt": "2026-10-15T05:35:46.370881+00:00",
+  "finalDeviceHealth": [
+    {
+      "deviceId": "motor-01",
+      "operatingState": "running",
+      "online": true,
+      "activeRules": [],
+      "appliedMode": "normal",
+      "lastSeen": "2026-10-15T05:35:38.406Z"
+    },
+    {
+      "deviceId": "motor-02",
+      "operatingState": "running",
+      "online": true,
+      "activeRules": [],
+      "appliedMode": "normal",
+      "lastSeen": "2026-10-15T05:35:38.406Z"
+    },
+    {
+      "deviceId": "motor-03",
+      "operatingState": "running",
+      "online": true,
+      "activeRules": [],
+      "appliedMode": "normal",
+      "lastSeen": "2026-10-15T05:35:38.406Z"
+    }
+  ],
+  "temporaryCaptureQueuesRemaining": 0,
+  "disposableTestUsersRemaining": 0,
+  "originalEmailConfirmed": true,
+  "liveTest": "docs/readable-email-live.xml",
+  "liveMessage": "docs/readable-email-live.json",
+  "initialAttempt": "docs/readable-email-live-initial.xml",
+  "initialAttemptNote": "Scheduled email published, but local Windows CLI decoding failed on the degree symbol. Motor recovery and cleanup completed. UTF-8 wrapper fix passed the rerun; the two attempts are distinct fault episodes."
+}

@@ -67,7 +67,7 @@ All motors start normal. Controls poll every five seconds and measurements repor
 
 The project ceiling is $50 before credits. Budget email notifications are configured at $20, $30 and $40. The budget conservatively tracks the account during the project period so unactivated cost tags do not silently omit charges; unrelated teammate usage can also trigger it. It does not automatically stop resources. Keep the project online until the user requests shutdown, and ask before stopping anything for spending reasons. Account Free Plan availability and expiry still apply.
 
-SNS email recipient: `collegeproject@akshaykripalani.com`. The recipient must confirm the current live subscription; dashboard/backend alerts work while email is pending. `sns_accepted` means SNS accepted the publication, not that an inbox received it. Notification retries can duplicate an email if a worker crashes between publish and recording success; exactly-once delivery is not claimed.
+SNS email recipient: `collegeproject@akshaykripalani.com`. The recipient must confirm the current live subscription; dashboard/backend alerts work while email is pending. `sns_accepted` means SNS accepted the publication, not that an inbox received it. Equipment emails use a readable Forge subject, the breached value and limit, UTC detection time, supporting readings and a direct equipment link. They use the recorded activation reading, so the dashboard is the source for current state. See docs/alert-email-example.txt for an illustrative preview. Notification retries can duplicate an email if a worker crashes between publish and recording success; exactly-once delivery is not claimed.
 
 ## Recovery and later shutdown
 
