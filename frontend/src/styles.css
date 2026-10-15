@@ -867,6 +867,9 @@ summary small {
 .mobile-label {
   display: none;
 }
+.mobile-limit-caption {
+  display: none;
+}
 .sparkline {
   width: 100%;
   max-width: 140px;
@@ -1042,14 +1045,45 @@ summary small {
   appearance: none;
   background: transparent;
 }
-.chart-scrubber::-webkit-slider-runnable-track { height: 2px; background: var(--track); }
-.chart-scrubber::-webkit-slider-thumb { appearance: none; width: 8px; height: 8px; border-radius: 50%; background: var(--data); margin-top: -3px; }
-.chart-scrubber::-moz-range-track { height: 2px; background: var(--track); }
-.chart-scrubber::-moz-range-thumb { width: 8px; height: 8px; border: 0; border-radius: 50%; background: var(--data); }
-.overview-heading { margin-bottom: 12px; }
-.overview-heading .button { min-height: 36px; padding: 6px 12px; }
-.column-limit { display: block; font-size: 12px; font-weight: 400; }
-.motor-table thead th { padding-top: 12px; padding-bottom: 12px; }
+.chart-scrubber::-webkit-slider-runnable-track {
+  height: 2px;
+  background: var(--track);
+}
+.chart-scrubber::-webkit-slider-thumb {
+  appearance: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--data);
+  margin-top: -3px;
+}
+.chart-scrubber::-moz-range-track {
+  height: 2px;
+  background: var(--track);
+}
+.chart-scrubber::-moz-range-thumb {
+  width: 8px;
+  height: 8px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--data);
+}
+.overview-heading {
+  margin-bottom: 12px;
+}
+.overview-heading .button {
+  min-height: 36px;
+  padding: 6px 12px;
+}
+.column-limit {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+}
+.motor-table thead th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
 .chart-scrubber-label {
   margin-top: 2px;
 }
@@ -1172,6 +1206,15 @@ summary small {
   list-style: none;
   margin: 0;
   padding: 0 20px 20px;
+}
+.motor-alerts .empty {
+  padding: 12px 20px 20px;
+  text-align: left;
+}
+.motor-alerts .empty h3 {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--muted);
 }
 .motor-alert-list li {
   display: flex;
@@ -1397,6 +1440,12 @@ summary small {
   .motor-table {
     background: transparent;
   }
+  .mobile-limit-caption {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    padding-bottom: 10px;
+  }
   .motor-table .table-scroll {
     overflow: visible;
   }
@@ -1464,7 +1513,9 @@ summary small {
     max-width: none;
     height: 40px;
   }
-  .motor-table tr:not(:has(.row-actions button)) .trend-cell { grid-column: 1 / -1; }
+  .motor-table tr:not(:has(.row-actions button)) .trend-cell {
+    grid-column: 1 / -1;
+  }
   .motor-table .seen {
     grid-column: 1 / 3;
     grid-row: 4;
@@ -1575,6 +1626,15 @@ summary small {
   }
   .skeleton-row {
     gap: 12px;
+  }
+}
+@media (max-width: 360px) {
+  .motor-table .gauge strong small {
+    display: block;
+    margin-top: 2px;
+  }
+  .motor-table .gauge strong {
+    font-size: 21px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

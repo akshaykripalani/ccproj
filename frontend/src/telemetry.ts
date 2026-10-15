@@ -11,6 +11,7 @@ export interface EquipmentEvent {
 export function equipmentEvents(
   devices: Device[],
   alerts: Alert[],
+  now = Date.now(),
 ): EquipmentEvent[] {
   const events: EquipmentEvent[] = alerts.flatMap((alert) => [
     {
@@ -44,7 +45,13 @@ export function equipmentEvents(
         title: `${motorName(device.deviceId)} ${modeName(control.requestedMode).toLowerCase()} requested.`,
       });
   }
-  return events.sort((a, b) => b.time.localeCompare(a.time));
+  return events
+    .filter(
+      (event) =>
+        Date.parse(event.time) >= now - 86400000 &&
+        Date.parse(event.time) <= now,
+    )
+    .sort((a, b) => b.time.localeCompare(a.time));
 }
 
 export function timeLabel(time: number | string, seconds = false) {

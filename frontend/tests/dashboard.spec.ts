@@ -452,7 +452,9 @@ test("mobile navigation and dashboard have no horizontal overflow", async ({
   await page.goto("/");
   await expect(page.getByTestId("motor-03")).toBeVisible();
   await page.getByRole("link", { name: "Reports" }).click();
-  await expect(page.getByRole("heading", { name: "Reports", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Reports", exact: true }),
+  ).toBeVisible();
   expect(
     await page.evaluate(
       () => document.documentElement.scrollWidth <= window.innerWidth,
@@ -482,7 +484,9 @@ test("dashboard and report form have accessible controls and landmarks", async (
     })),
   ).toEqual([]);
   await page.goto("/#/reports");
-  await expect(page.getByRole("heading", { name: "Reports", exact: true })).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Reports", exact: true }),
+  ).toBeVisible();
   const report = await new AxeBuilder({ page })
     .withTags(["wcag2a", "wcag2aa"])
     .analyze();
@@ -649,6 +653,11 @@ test("compact overview keeps a fixed heading while readings and fault indicators
       exact: true,
     }),
   ).toBeVisible();
+  await expect(
+    page.getByTestId("motor-02").getByText("Running", { exact: true }),
+  ).toBeVisible();
+  await expect(page.locator(".plant-summary")).toContainText("0 active faults");
+  await expect(page.locator(".fault-banner")).toHaveCount(0);
 });
 
 test("reference styling and self-hosted fonts remain usable across desktop and mobile views", async ({
@@ -680,7 +689,14 @@ test("reference styling and self-hosted fonts remain usable across desktop and m
         await expect(
           page.getByText("operator@example.test", { exact: true }).last(),
         ).toBeVisible();
-      await page.evaluate(() => document.fonts.ready);
+      await page.evaluate(async () => {
+        // Some screens use no numeric mono text until a result arrives.
+        await Promise.all([
+          document.fonts.load('15px "IBM Plex Sans"'),
+          document.fonts.load('13px "IBM Plex Mono"'),
+        ]);
+        await document.fonts.ready;
+      });
       expect(
         await page.evaluate(
           () =>

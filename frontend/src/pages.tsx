@@ -178,7 +178,7 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
   );
   const alerts = usePoll((signal) => api<AlertResponse>("/alerts", { signal }));
   const [selected, setSelected] = useState<string>();
-  const events = equipmentEvents(devices, alerts.data?.alerts ?? []);
+  const events = equipmentEvents(devices, alerts.data?.alerts ?? [], now);
   const reporting = devices.filter((device) => device.online && device.latest);
   const active = devices.reduce(
     (sum, device) =>
@@ -1495,7 +1495,7 @@ export function Welcome({
   return (
     <div className="entry-page">
       <header className="entry-header">
-        <span>Forge</span>
+        <span className="brand">Forge</span>
       </header>
       <main className="entry-main">
         <section className="entry-card" aria-labelledby="entry-title">

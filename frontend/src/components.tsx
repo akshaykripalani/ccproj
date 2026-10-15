@@ -53,7 +53,7 @@ export function Empty({ title, text }: { title: string; text?: string }) {
     </div>
   );
 }
-export function Loading({ label = "Loading live data…" }: { label?: string }) {
+export function Loading({ label = "Loading…" }: { label?: string }) {
   return (
     <div className="loading" role="status">
       <LoaderCircle size={20} className="spin" />
@@ -493,7 +493,7 @@ function MotorRow({
         )}
         {error && <ErrorNotice message={error} />}
       </td>
-      <td data-label={`Temp · ${device.thresholds.temperature?.value ?? 75} °C limit`}>
+      <td data-label="Temperature">
         <Gauge
           value={device.latest?.temperatureC}
           unit="°C"
@@ -501,7 +501,7 @@ function MotorRow({
           scale={90}
         />
       </td>
-      <td data-label={`Vibration · ${device.thresholds.vibration?.value ?? 4.5} limit`}>
+      <td data-label="Vibration">
         <Gauge
           value={device.latest?.vibrationMmS}
           unit="mm/s"
@@ -559,6 +559,7 @@ export function MotorTable({
 }) {
   return (
     <section className="panel motor-table" aria-label="Motors">
+      <p className="mobile-limit-caption">Limits: 75 °C · 4.5 mm/s</p>
       <div
         className="table-scroll"
         tabIndex={0}
@@ -570,8 +571,12 @@ export function MotorTable({
             <tr>
               <th>Motor</th>
               <th>State</th>
-              <th>Temperature<span className="column-limit">75 °C limit</span></th>
-              <th>Vibration<span className="column-limit">4.5 mm/s limit</span></th>
+              <th>
+                Temperature<span className="column-limit">75 °C limit</span>
+              </th>
+              <th>
+                Vibration<span className="column-limit">4.5 mm/s limit</span>
+              </th>
               <th>Power</th>
               <th>Temperature · 30 min</th>
               <th>Last reading</th>
@@ -743,7 +748,14 @@ export function TelemetryChart({
             dataKey="time"
             type="number"
             domain={["dataMin", "dataMax"]}
-            tickFormatter={(time) => timeLabel(Number(time), Date.parse(ordered.at(-1)!.observedAt) - Date.parse(ordered[0].observedAt) < 600000)}
+            tickFormatter={(time) =>
+              timeLabel(
+                Number(time),
+                Date.parse(ordered.at(-1)!.observedAt) -
+                  Date.parse(ordered[0].observedAt) <
+                  600000,
+              )
+            }
             padding={{ left: 8, right: 20 }}
             tick={{ fontSize: 13, fill: "#4a5459" }}
             axisLine={false}
@@ -752,6 +764,14 @@ export function TelemetryChart({
           />
           <YAxis
             domain={domain}
+            ticks={
+              field === "temperatureC"
+                ? Array.from(
+                    { length: (domain[1] - domain[0]) / 10 + 1 },
+                    (_, index) => domain[0] + index * 10,
+                  )
+                : undefined
+            }
             tick={{ fontSize: 13, fill: "#4a5459" }}
             axisLine={false}
             tickLine={false}
@@ -820,7 +840,7 @@ export function RecentCharts({
   return (
     <section className={`panel recent-panel ${compact ? "compact" : ""}`}>
       <PanelHead
-        title={compact ? "Temperature trend" : "Recent telemetry"}
+        title={compact ? "Temperature trend" : "Recent readings"}
         subtitle={compact ? motorName(deviceId) : undefined}
         action={
           <label className="sr-only-label">
