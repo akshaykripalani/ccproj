@@ -29,7 +29,7 @@ The deployed AWS acceptance report is `docs/AWS_ACCEPTANCE.md`: 64 local tests a
 
 The main Markdown handoff is a small set: `PRD.md` for scope, `PROGRESS.md` for the completed state and next work, and `docs/AWS_ACCEPTANCE.md` for results, measurements and limitations. This README supplies build/deployment/operation commands. `docs/API.md` and `docs/SHUTDOWN.md` are the focused frontend contract and later cleanup references; `IMPLEMENTATION_PLAN.md` preserves the original phased plan with the updated implementation boundary.
 
-The React application is in `frontend/`: Cognito hosted PKCE login, motor overview/detail/charts, operator controls and acknowledgements, active/historical alerts, asynchronous reports with charts/tables/CSV, and operator user invitations/role assignment. It handles loading, API errors, expired sessions and stale readings. Viewer access is enforced by the existing backend as well as reflected in the UI. Responsive desktop/mobile layouts, keyboard focus and reduced-motion support are included.
+The React application is in `frontend/`: Cognito hosted PKCE login, motor overview/detail/charts, operator controls and acknowledgements, active/historical alerts, asynchronous reports with charts/tables/CSV, and operator user invitations/role assignment. It handles loading, API errors, expired sessions and stale readings. Viewer access is enforced by the existing backend as well as reflected in the UI. The interface follows the supplied Forge reference: top navigation, a motor table with threshold gauges, an all-motor temperature comparison, timestamped events and collapsed demo controls. Neutral grey surfaces and self-hosted IBM Plex fonts keep faults prominent. Responsive desktop/mobile layouts, keyboard focus and reduced-motion support are included.
 
 ```powershell
 Push-Location frontend
@@ -41,7 +41,7 @@ Pop-Location
 .venv\Scripts\python.exe -m scripts.publish_frontend frontend/dist
 ```
 
-Publishing uploads to private S3 and waits for CloudFront invalidation. Keep deployment-owned `config.json` out of the build; infrastructure updates preserve an existing application entry point. Public configuration contains endpoints and IDs only. Tokens exist at runtime in per-tab session storage, never in the build, Git, test evidence or command log; sign-out clears them and requests token revocation and hosted logout. The maintained `oidc-client-ts` library handles OAuth state, PKCE and token renewal. Recharts renders measurements with visible threshold lines and gaps for missing samples; after initial pagination, chart polling retrieves new samples with a short overlap rather than rescanning the complete 24-hour window.
+Publishing uploads to private S3 and waits for CloudFront invalidation. Keep deployment-owned `config.json` out of the build; infrastructure updates preserve an existing application entry point. Public configuration contains endpoints and IDs only. Tokens exist at runtime in per-tab session storage, never in the build, Git, test evidence or command log; sign-out clears them and requests token revocation and hosted logout. The maintained `oidc-client-ts` library handles OAuth state, PKCE and token renewal. Recharts renders detail/report measurements, while the overview uses a shared SVG comparison with directly labeled motor lines. Charts show threshold lines and gaps for missing samples; after initial pagination, chart polling retrieves new samples with a short overlap rather than rescanning the complete 24-hour window.
 
 ## Validation
 
