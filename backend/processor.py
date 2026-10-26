@@ -179,6 +179,11 @@ def process_message(message):
     keys = archive(envelope)
     for reading in envelope["readings"]:
         process_reading(reading, timestamp(received), keys[reading["observedAt"][:10]])
+    if os.environ.get("PREDICTOR_FUNCTION"):
+        # Async acceptance is required; retry-safe state commits tolerate a retry here.
+        client("lambda").invoke(
+            FunctionName=os.environ["PREDICTOR_FUNCTION"], InvocationType="Event", Payload=b"{}"
+        )
 
 
 def handler(event, context):

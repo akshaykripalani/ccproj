@@ -217,6 +217,25 @@ export async function mockApp(
             ? targets[0].control
             : { controls: targets.map((device) => device.control) },
       });
+    } else if (url.pathname === "/maintenance") {
+      await route.fulfill({ json: { events: [] } });
+    } else if (url.pathname === "/model") {
+      await route.fulfill({
+        json: {
+          version: "rf-test",
+          evaluation: {
+            episodes: 420,
+            heldOut: { precision: 0.903, recall: 0.943, f1: 0.923 },
+            warningLeadMinutes: { median: 5 },
+          },
+        },
+      });
+    } else if (url.pathname.startsWith("/profiles/")) {
+      const device = state.devices.devices.find(
+        (d) => d.deviceId === url.pathname.split("/")[2],
+      );
+      if (device) device.profile = body as unknown as Device["profile"];
+      await route.fulfill({ status: 202, json: device?.control ?? {} });
     } else if (url.pathname === "/reports") {
       parameters = body as unknown as ReportParameters;
       await route.fulfill({

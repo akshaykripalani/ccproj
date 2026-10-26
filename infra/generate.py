@@ -190,6 +190,9 @@ def build():
     t["Parameters"] = {
         "ArtifactBucket": {"Type": "String"},
         "BackendKey": {"Type": "String"},
+        "ModelKey": {"Type": "String", "Description": "Immutable evaluated model artifact key"},
+        "ModelVersion": {"Type": "String"},
+        "ModelEvaluation": {"Type": "String", "Description": "Compact held-out evaluation metrics"},
         "AlertEmail": {"Type": "String", "Default": "collegeproject@akshaykripalani.com"},
         "BudgetStart": {
             "Type": "String",
@@ -594,6 +597,10 @@ def build():
         "vibrationmms": "double",
         "powerwatts": "double",
         "operatingstate": "string",
+        "equipmenttype": "string",
+        "simulationtime": "double",
+        "simulationspeed": "int",
+        "metrics": "map<string,double>",
     }
     add(
         t,
@@ -665,6 +672,8 @@ def build():
         "GLUE_DATABASE": ref("Catalog"),
         "ATHENA_WORKGROUP": ref("Workgroup"),
         "OFFLINE_SECONDS": "60",
+        "MODEL_VERSION": ref("ModelVersion"),
+        "MODEL_EVALUATION": ref("ModelEvaluation"),
     }
     data_arn = att("Data")
     data_index = sub("${Data.Arn}/index/*")
@@ -687,10 +696,45 @@ def build():
             ),
             statement(["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:UpdateItem"], data_arn),
             statement(["s3:PutObject"], sub("${Archive.Arn}/telemetry/*")),
+            statement(
+                ["lambda:InvokeFunction"],
+                sub(
+                    "arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:${AWS::StackName}-Predictor"
+                ),
+            ),
         ],
-        common,
+        {**common, "PREDICTOR_FUNCTION": sub("${AWS::StackName}-Predictor")},
         "Archive then atomically commit state/history/alert intent",
         timeout=30,
+    )
+    function(
+        t,
+        "Predictor",
+        "backend.predictor.handler",
+        [
+            statement(
+                ["dynamodb:GetItem", "dynamodb:PutItem", "dynamodb:UpdateItem"],
+                [data_arn, att("Controls")],
+            ),
+            statement(
+                ["s3:GetObject"], sub("arn:${AWS::Partition}:s3:::${ArtifactBucket}/models/*")
+            ),
+        ],
+        {**common, "MODEL_BUCKET": ref("ArtifactBucket"), "MODEL_KEY": ref("ModelKey")},
+        "Portable learned-tree inference and bounded thermal maintenance; no always-on ML host",
+        timeout=30,
+    )
+    add(
+        t,
+        "PredictionAsync",
+        "Lambda::EventInvokeConfig",
+        {
+            "FunctionName": ref("Predictor"),
+            "Qualifier": "$LATEST",
+            "MaximumEventAgeInSeconds": 120,
+            "MaximumRetryAttempts": 2,
+        },
+        "Bound asynchronous inference retries; minute schedule reconciles missed work",
     )
     function(
         t,
@@ -778,7 +822,7 @@ def build():
         t,
         "ScheduleRole",
         "scheduler.amazonaws.com",
-        [statement(["lambda:InvokeFunction"], att("Notifier"))],
+        [statement(["lambda:InvokeFunction"], [att("Notifier"), att("Predictor")])],
         "Only notification invocation from this schedule group",
     )
     t["Resources"]["ScheduleRole"]["Properties"]["AssumeRolePolicyDocument"]["Statement"][0][
@@ -806,6 +850,24 @@ def build():
             },
         },
         "Periodic durable outbox drain through EventBridge Scheduler",
+    )
+    add(
+        t,
+        "PredictionSchedule",
+        "Scheduler::Schedule",
+        {
+            "GroupName": ref("ScheduleGroup"),
+            "FlexibleTimeWindow": {"Mode": "OFF"},
+            "ScheduleExpression": "rate(1 minute)",
+            "State": "ENABLED",
+            "Target": {
+                "Arn": att("Predictor"),
+                "RoleArn": att("ScheduleRole"),
+                "Input": "{}",
+                "RetryPolicy": {"MaximumRetryAttempts": 2, "MaximumEventAgeInSeconds": 120},
+            },
+        },
+        "Reconcile predictions and maintenance after retries without scanning history",
     )
     add(
         t,
@@ -923,6 +985,9 @@ def build():
         "GET /users",
         "POST /users",
         "PUT /users",
+        "GET /maintenance",
+        "GET /model",
+        "POST /profiles/{deviceId}",
     ]
     for index, route_name in enumerate(routes):
         add(
@@ -956,7 +1021,7 @@ def build():
             1,
         ),
     ]
-    for func in ("Ingestion", "Processor", "Notifier", "ApiBackend"):
+    for func in ("Ingestion", "Processor", "Notifier", "ApiBackend", "Predictor"):
         alarms += [
             (
                 func + "Errors",
@@ -1051,6 +1116,8 @@ def build():
         "AthenaWorkgroup": ref("Workgroup"),
         "ProcessorFunction": ref("Processor"),
         "NotifierFunction": ref("Notifier"),
+        "PredictorFunction": ref("Predictor"),
+        "ModelVersion": ref("ModelVersion"),
         "ProcessingMapping": ref("ProcessingMapping"),
     }
     t["Outputs"] = {key: {"Value": value} for key, value in outputs.items()}

@@ -11,6 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import { api } from "./api";
+import { deviceIds, EquipmentMetrics, MaintenancePanel } from "./Maintenance";
 import {
   Badge,
   Empty,
@@ -64,7 +65,7 @@ function ResetAll({ refresh }: { refresh: () => void }) {
       await api<{ controls: Control[] }>("/controls/reset-all", {
         method: "POST",
       });
-      setMessage("Reset requested for all motors.");
+      setMessage("Reset requested for all equipment.");
       refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not send reset.");
@@ -79,15 +80,15 @@ function ResetAll({ refresh }: { refresh: () => void }) {
         disabled={busy}
         onClick={() => dialog.current?.showModal()}
       >
-        Reset all motors
+        Reset all equipment
       </button>
       <dialog
         ref={dialog}
         className="confirm-dialog"
         aria-labelledby="reset-confirm-title"
       >
-        <h2 id="reset-confirm-title">Reset all three motors?</h2>
-        <p>Each motor will return to normal mode.</p>
+        <h2 id="reset-confirm-title">Reset all equipment?</h2>
+        <p>All equipment will start a new normal cycle.</p>
         <div>
           <button
             className="button secondary"
@@ -218,7 +219,7 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
             />{" "}
             <small>kW</small>
           </strong>
-          <small>{reporting.length} motors reporting</small>
+          <small>{reporting.length} devices reporting</small>
         </div>
         <div>
           <span>
@@ -241,7 +242,7 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
           </small>
         </div>
         <div>
-          <span>Motors online</span>
+          <span>Equipment online</span>
           <strong>
             {reporting.length}
             <small> / {devices.length}</small>
@@ -258,6 +259,7 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
         refresh={refresh}
         readings={history.data}
       />
+      <MaintenancePanel />
       <div className="overview-bottom">
         <AllMotorTrend
           devices={devices}
@@ -317,7 +319,7 @@ export function Equipment(props: LiveProps & { deviceId?: string }) {
   return device ? (
     <EquipmentDetail {...props} device={device} />
   ) : (
-    <Empty title="Equipment not found" text="Choose a motor from Equipment." />
+    <Empty title="Equipment not found" text="Choose a device from Equipment." />
   );
 }
 
@@ -351,7 +353,13 @@ function EquipmentDetail({
       setRequested(
         await api<Control>(`/controls/${device.deviceId}`, {
           method: "POST",
-          body: { mode: "normal" },
+          body: {
+            mode:
+              device.latest?.rules?.vibration?.active ||
+              device.control.maintenanceAction === "Repair needed"
+                ? "repair"
+                : "normal",
+          },
         }),
       );
       refresh();
@@ -386,7 +394,10 @@ function EquipmentDetail({
             disabled={busy || control.status === "pending"}
             onClick={() => void reset()}
           >
-            Reset
+            {device.latest?.rules?.vibration?.active ||
+            device.control.maintenanceAction === "Repair needed"
+              ? "Repair"
+              : "Reset"}
           </button>
         )}
       </div>
@@ -422,6 +433,8 @@ function EquipmentDetail({
           <Gauge value={device.latest?.powerWatts} unit="W" scale={600} />
         </div>
       </div>
+      <EquipmentMetrics device={device} />
+      <MaintenancePanel deviceId={device.deviceId} />
       <div className="detail-layout">
         <div className="detail-main">
           <RecentCharts deviceId={device.deviceId} />
@@ -462,6 +475,13 @@ function EquipmentDetail({
             <div>
               <dt>Device</dt>
               <dd>{device.deviceId}</dd>
+            </div>
+            <div>
+              <dt>Equipment type</dt>
+              <dd>
+                {device.equipmentType?.replaceAll("_", " ") ??
+                  "Industrial equipment"}
+              </dd>
             </div>
             <div>
               <dt>Last reading</dt>
@@ -569,8 +589,8 @@ export function Alerts() {
               value={device}
               onChange={(event) => setDevice(event.target.value)}
             >
-              <option value="">All motors</option>
-              {["motor-01", "motor-02", "motor-03"].map((id) => (
+              <option value="">All equipment</option>
+              {deviceIds.map((id) => (
                 <option value={id} key={id}>
                   {motorName(id)}
                 </option>
@@ -728,7 +748,7 @@ function EpisodeTimeline({
         <Loading />
       ) : (
         <div className="episode-rows">
-          {["motor-01", "motor-02", "motor-03"].map((id) => (
+          {deviceIds.map((id) => (
             <div className="episode-row" key={id}>
               <a href={`#/devices/${id}`}>{motorName(id)}</a>
               <div className="episode-track">
@@ -801,11 +821,11 @@ const reportDescriptions = {
   },
   power: {
     title: "Power usage",
-    description: "Average power while the motor runs",
+    description: "Average power while running",
   },
 };
 const columnLabels: Record<string, string> = {
-  deviceid: "Motor",
+  deviceid: "Equipment",
   day: "Date (UTC)",
   average_temperature_c: "Average (°C)",
   maximum_temperature_c: "Peak (°C)",
@@ -865,7 +885,7 @@ function ReportResults({ result, kind }: { result: Report; kind: ReportKind }) {
       {!rows.length ? (
         <Empty
           title="No readings in this range"
-          text="Choose dates when the motors were reporting, or include all motors."
+          text="Choose dates when equipment was reporting, or include all equipment."
         />
       ) : (
         <>
@@ -1156,8 +1176,8 @@ export function Reports({ username }: { username: string }) {
               value={device}
               onChange={(event) => setDevice(event.target.value)}
             >
-              <option value="">All motors</option>
-              {["motor-01", "motor-02", "motor-03"].map((id) => (
+              <option value="">All equipment</option>
+              {deviceIds.map((id) => (
                 <option key={id} value={id}>
                   {motorName(id)}
                 </option>

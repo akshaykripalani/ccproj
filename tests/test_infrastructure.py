@@ -38,7 +38,7 @@ def test_every_route_is_protected_and_client_has_no_secret(templates):
     routes = [
         r["Properties"] for r in resources.values() if r["Type"] == "AWS::ApiGatewayV2::Route"
     ]
-    assert len(routes) == 12
+    assert len(routes) == 15
     assert all(route["AuthorizationType"] in ("JWT", "AWS_IAM") for route in routes)
     assert resources["TelemetryRoute"]["Properties"]["AuthorizationType"] == "AWS_IAM"
     browser = resources["BrowserClient"]["Properties"]

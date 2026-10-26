@@ -7,8 +7,10 @@ import math
 import re
 from decimal import Decimal
 
-DEVICES = ("motor-01", "motor-02", "motor-03")
-MODES = ("normal", "overheat", "vibration", "disconnect")
+from backend.equipment import CATALOG
+
+DEVICES = tuple(CATALOG)
+MODES = ("normal", "overheat", "vibration", "disconnect", "cooldown", "repair")
 RULES = {"temperature": ("temperatureC", 75), "vibration": ("vibrationMmS", 4.5)}
 
 
@@ -67,12 +69,52 @@ def validate_reading(reading, now=None):
         "powerWatts",
         "operatingState",
     }
+    version = reading.get("schemaVersion")
+    if version == 2:
+        required |= {"equipmentType", "metrics", "simulationTime", "simulationSpeed"}
     if set(reading) != required:
         raise ValueError("Reading must contain exactly the documented telemetry fields")
-    if type(reading["schemaVersion"]) is not int or reading["schemaVersion"] != 1:
-        raise ValueError("schemaVersion must be 1")
+    if type(version) is not int or version not in (1, 2):
+        raise ValueError("schemaVersion must be 1 or 2")
     if reading["deviceId"] not in DEVICES:
         raise ValueError("Unregistered deviceId")
+    if version == 2:
+        if reading["equipmentType"] != CATALOG[reading["deviceId"]]["type"]:
+            raise ValueError("equipmentType does not match device")
+        if type(reading["simulationSpeed"]) is not int or reading["simulationSpeed"] not in (
+            1,
+            5,
+            10,
+        ):
+            raise ValueError("Invalid simulationSpeed")
+        if (
+            isinstance(reading["simulationTime"], bool)
+            or not isinstance(reading["simulationTime"], (int, float, Decimal))
+            or not math.isfinite(float(reading["simulationTime"]))
+            or reading["simulationTime"] < 0
+        ):
+            raise ValueError("Invalid simulationTime")
+        metrics = reading["metrics"]
+        allowed = {
+            "loadPercent",
+            "rpm",
+            "flowLitresMin",
+            "pressureBar",
+            "airflowM3Min",
+            "outputPowerWatts",
+            "voltage",
+            "frequencyHz",
+        }
+        if not isinstance(metrics, dict) or "loadPercent" not in metrics or set(metrics) - allowed:
+            raise ValueError("Invalid equipment metrics")
+        if any(
+            isinstance(v, bool)
+            or not isinstance(v, (int, float, Decimal))
+            or not math.isfinite(float(v))
+            or not 0 <= v <= 100000
+            for v in metrics.values()
+        ):
+            raise ValueError("Equipment metrics must be bounded finite numbers")
     if not isinstance(reading["eventId"], str) or not re.fullmatch(
         r"[A-Za-z0-9:_.-]{1,160}", reading["eventId"]
     ):
@@ -120,6 +162,30 @@ def evolve(previous, reading, received_at):
     if state.get("observedAt", "") >= reading["observedAt"]:
         return state, changes
     state.update(reading)
+    if reading.get("schemaVersion") == 2:
+        history = list((previous or {}).get("featureWindow", []))
+        if history and float(history[-1]["simulationTime"]) >= float(reading["simulationTime"]):
+            history = []
+        history.append(
+            {
+                key: reading[key]
+                for key in (
+                    "simulationTime",
+                    "temperatureC",
+                    "vibrationMmS",
+                    "powerWatts",
+                    "metrics",
+                )
+            }
+        )
+        # Keep approximately two simulated minutes, bounded in size at normal/fast speeds.
+        state["featureWindow"] = [
+            row
+            for row in history[-13:]
+            if float(reading["simulationTime"]) - float(row["simulationTime"]) <= 120
+        ]
+    else:
+        state.pop("featureWindow", None)
     rules = {key: dict(value) for key, value in state.get("rules", {}).items()}
     for rule, (field, threshold) in RULES.items():
         status = rules.get(rule, {"active": False, "above": 0, "healthy": 0})

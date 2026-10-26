@@ -39,7 +39,7 @@ test("fleet chart fits available data and supports shared hover, keyboard inspec
   await mockApp(page);
   await page.goto("/");
   const chart = page.getByRole("img", {
-    name: /Temperature chart with 60 readings across all motors/,
+    name: /Temperature chart with 60 readings across all equipment/,
   });
   await expect(chart).toBeVisible();
   const duration = await chart.evaluate(
@@ -75,8 +75,8 @@ test("reset-all requires confirmation and cancel sends no command", async ({
 }) => {
   const state = await mockApp(page);
   await page.goto("/");
-  await page.getByRole("button", { name: "Reset all motors" }).click();
-  const dialog = page.getByRole("dialog", { name: "Reset all three motors?" });
+  await page.getByRole("button", { name: "Reset all equipment" }).click();
+  const dialog = page.getByRole("dialog", { name: "Reset all equipment?" });
   await expect(dialog).toBeVisible();
   expect(
     state.requests.filter((r) => r.path.startsWith("/controls")),
@@ -86,7 +86,7 @@ test("reset-all requires confirmation and cancel sends no command", async ({
   expect(
     state.requests.filter((r) => r.path.startsWith("/controls")),
   ).toHaveLength(0);
-  await page.getByRole("button", { name: "Reset all motors" }).click();
+  await page.getByRole("button", { name: "Reset all equipment" }).click();
   await dialog.getByRole("button", { name: "Confirm reset" }).click();
   await expect(
     page.getByRole("table").getByText(/Normal requested → Applying change…/),

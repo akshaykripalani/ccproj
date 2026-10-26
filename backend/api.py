@@ -22,6 +22,7 @@ from backend.domain import (
     timestamp,
     utcnow,
 )
+from backend.equipment import CATALOG, DEFAULT_PROFILE, validate_profile
 from backend.notifications import subscriptions
 
 log = logging.getLogger(__name__)
@@ -94,7 +95,10 @@ def device_view(device):
         }
     return {
         "deviceId": device,
-        "name": f"Factory {device}",
+        "name": CATALOG[device]["name"],
+        "equipmentType": CATALOG[device]["type"],
+        "profile": control.get("profile", DEFAULT_PROFILE),
+        "prediction": get_item(table(), device, "PREDICTION"),
         "thresholds": {
             rule: {"field": field, "value": threshold} for rule, (field, threshold) in RULES.items()
         },
@@ -141,10 +145,12 @@ def reading_page(device, params):
     }
 
 
-def request_control(device, mode, user):
+def request_control(device, mode, user, profile=None):
     device_id(device)
     if mode not in MODES:
-        raise ValueError("mode must be normal, overheat, vibration, or disconnect")
+        raise ValueError("Unsupported control mode")
+    if mode == "cooldown":
+        raise ValueError("cooldown is reserved for automatic maintenance")
     target = table("CONTROL_TABLE")
     existing = get_item(target, device, "CONTROL") or {}
     requested = {
@@ -156,10 +162,25 @@ def request_control(device, mode, user):
         "requestedBy": user["sub"],
         "requestedAt": timestamp(utcnow()),
         "status": "pending",
+        "profile": validate_profile(
+            profile if profile is not None else existing.get("profile", {})
+        ),
+        "maintenanceAction": "Repaired" if mode == "repair" else "",
+        "maintenanceEpisode": "",
     }
     # Unconditional replacement means the last request wins. Simulator ack compares
     # requestId and runId; it can never mark a superseding command as applied.
     target.put_item(Item=native(requested))
+    if mode == "repair":
+        from backend.predictor import record
+
+        record(
+            device,
+            "Repaired",
+            requested["requestedAt"],
+            requested["requestId"],
+            requestedBy=user["sub"],
+        )
     return requested
 
 
@@ -311,7 +332,7 @@ def handler(event, context):
                     "serverTime": timestamp(utcnow()),
                 },
             )
-        if match := re.fullmatch(r"/devices/(motor-0[123])(/readings)?", path):
+        if match := re.fullmatch(r"/devices/([a-z]+-\d{2})(/readings)?", path):
             device = device_id(match[1])
             if method == "GET":
                 return response(
@@ -362,7 +383,36 @@ def handler(event, context):
             return response(
                 202, {"controls": [request_control(device, "normal", user) for device in DEVICES]}
             )
-        if match := re.fullmatch(r"/controls/(motor-0[123])", path):
+        if path == "/model" and method == "GET":
+            return response(
+                200,
+                {
+                    "version": os.environ.get("MODEL_VERSION", "pending"),
+                    "horizonMinutes": 5,
+                    "evaluation": json.loads(os.environ.get("MODEL_EVALUATION", "{}")),
+                },
+            )
+        if path == "/maintenance" and method == "GET":
+            events = []
+            for device in [device_id(params["deviceId"])] if params.get("deviceId") else DEVICES:
+                events.extend(
+                    table().query(
+                        KeyConditionExpression=Key("pk").eq(device)
+                        & Key("sk").begins_with("MAINT#"),
+                        ScanIndexForward=False,
+                        Limit=30,
+                    )["Items"]
+                )
+            return response(
+                200, {"events": sorted(events, key=lambda item: item["at"], reverse=True)[:100]}
+            )
+        if match := re.fullmatch(r"/profiles/([a-z]+-\d{2})", path):
+            if method == "POST":
+                operator(user)
+                return response(
+                    202, request_control(match[1], "normal", user, validate_profile(body(event)))
+                )
+        if match := re.fullmatch(r"/controls/([a-z]+-\d{2})", path):
             if method == "POST":
                 operator(user)
                 return response(202, request_control(match[1], body(event)["mode"], user))

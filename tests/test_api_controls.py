@@ -136,7 +136,7 @@ def test_disconnect_silences_only_one_motor_and_remote_reset_resumes(aws):
     gateway.initialize()
     user = {"sub": "operator"}
     assert gateway.apply(api.request_control("motor-02", "disconnect", user))
-    assert {r["deviceId"] for r in gateway.readings()} == {"motor-01", "motor-03"}
+    assert {r["deviceId"] for r in gateway.readings()} == set(DEVICES) - {"motor-02"}
     assert gateway.apply(api.request_control("motor-02", "normal", user))
     assert {r["deviceId"] for r in gateway.readings()} == set(DEVICES)
 

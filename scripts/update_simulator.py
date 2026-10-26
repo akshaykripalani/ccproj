@@ -4,9 +4,29 @@ import json
 import time
 from pathlib import Path
 
-from scripts.aws_cli import call, run
+from scripts.aws_cli import call
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def wait_command(command, instance, timeout=600):
+    """A new AL2023 instance can take longer than the CLI waiter's 100-second bound."""
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        result = call(
+            ["ssm", "get-command-invocation", "--command-id", command, "--instance-id", instance],
+            "Check supervised simulator update status",
+        )
+        if result["Status"] == "Success":
+            return
+        if result["Status"] in ("Failed", "Cancelled", "TimedOut", "Cancelling"):
+            raise RuntimeError(
+                "Simulator update failed: " + result.get("StandardErrorContent", result["Status"])
+            )
+        time.sleep(5)
+    raise RuntimeError(
+        "Simulator update still running after ten minutes; inspect the existing SSM command before retrying"
+    )
 
 
 def update_simulator(instance, artifacts, key):
@@ -57,7 +77,4 @@ def update_simulator(instance, artifacts, key):
         "Apply content-addressed simulator release via SSM",
     )
     command = result["Command"]["CommandId"]
-    run(
-        ["ssm", "wait", "command-executed", "--command-id", command, "--instance-id", instance],
-        "Wait for supervised simulator release update",
-    )
+    wait_command(command, instance)

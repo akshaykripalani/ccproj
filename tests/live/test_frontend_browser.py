@@ -6,7 +6,7 @@ import subprocess
 
 import pytest
 
-from tests.live.conftest import PROJECT
+from tests.live.conftest import PROJECT, wait_for
 
 pytestmark = pytest.mark.live
 
@@ -22,13 +22,28 @@ def test_deployed_react_browser_acceptance(live, record_property):
     command = ["npm.cmd" if os.name == "nt" else "npm", "run", "test:live"]
     if environment.get("CCPROJ_UI_GREP"):
         command += ["--", "--grep", environment["CCPROJ_UI_GREP"]]
-    result = subprocess.run(
-        command,
-        cwd=PROJECT / "frontend",
-        env=environment,
-        timeout=1000,
-        check=False,
-    )
+
+    def restore():
+        assert live.api("POST", "/controls/reset-all").status_code == 202
+
+        def healthy():
+            devices = live.api("GET", "/devices").json()["devices"]
+            return all(
+                device["online"]
+                and not any(rule["active"] for rule in device["latest"]["rules"].values())
+                and not (device.get("prediction") or {}).get("warning")
+                for device in devices
+            )
+
+        wait_for(healthy, timeout=120, interval=3)
+
+    restore()
+    try:
+        result = subprocess.run(
+            command, cwd=PROJECT / "frontend", env=environment, timeout=1000, check=False
+        )
+    finally:
+        restore()
     assert result.returncode == 0, (
         "Deployed browser acceptance failed; inspect nonsecret test results"
     )

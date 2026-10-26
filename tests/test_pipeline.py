@@ -40,8 +40,12 @@ def test_end_to_end_ingestion_queue_archive_state_and_api(aws, reading):
     overview = api.handler(api_event("GET", "/devices"), None)
     assert overview["statusCode"] == 200
     devices = json.loads(overview["body"])["devices"]
-    assert len(devices) == 3 and all(device["online"] for device in devices)
-    assert all(device["latest"]["temperatureC"] == 52 for device in devices)
+    assert len(devices) == 7
+    assert all(device["online"] for device in devices if device["deviceId"].startswith("motor-"))
+    assert all(
+        not device["online"] for device in devices if not device["deviceId"].startswith("motor-")
+    )
+    assert all(device["latest"]["temperatureC"] == 52 for device in devices if device["latest"])
     objects = aws["s3"].list_objects_v2(Bucket="ccproj-test-archive")["Contents"]
     assert len(objects) == 1
     with aws["s3"].get_object(Bucket="ccproj-test-archive", Key=objects[0]["Key"])["Body"] as body:

@@ -55,6 +55,13 @@ def append(line):
 
 def run(args, purpose, *, check=True, private=False):
     args = [str(x) for x in args]
+    for index, value in enumerate(args):
+        if value == "--profile" and (index + 1 >= len(args) or args[index + 1] != "default"):
+            raise ValueError(
+                "Only the default project profile is authorized; provision is forbidden"
+            )
+        if value.startswith("--profile=") and value != "--profile=default":
+            raise ValueError("Only the default project profile is authorized")
     if any(arg.split("=", 1)[0] in SENSITIVE for arg in args):
         raise ValueError(
             "Secret-bearing flags are forbidden; use a private input file and private=True"
@@ -67,6 +74,8 @@ def run(args, purpose, *, check=True, private=False):
             )
     if "--region" not in args:
         args += ["--region", REGION]
+    if "--profile" not in args and "--profile=default" not in args:
+        args += ["--profile", "default"]
     args += ["--no-cli-pager"]
     operation_id = uuid.uuid4().hex[:12]
     stamp = dt.datetime.now(dt.timezone.utc).isoformat()
@@ -78,6 +87,20 @@ def run(args, purpose, *, check=True, private=False):
         AWS_CLI_OUTPUT_ENCODING="UTF-8",
         AWS_CLI_FILE_ENCODING="UTF-8",
     )
+    env.update(
+        AWS_PROFILE="default", AWS_DEFAULT_PROFILE="default", AWS_SDK_UA_APP_ID="AWSSkill-SageMaker"
+    )
+    for key in (
+        "AWS_ACCESS_KEY_ID",
+        "AWS_SECRET_ACCESS_KEY",
+        "AWS_SESSION_TOKEN",
+        "AWS_SECURITY_TOKEN",
+        "AWS_WEB_IDENTITY_TOKEN_FILE",
+        "AWS_ROLE_ARN",
+        "AWS_CONTAINER_CREDENTIALS_FULL_URI",
+        "AWS_CONTAINER_CREDENTIALS_RELATIVE_URI",
+    ):
+        env.pop(key, None)
     result = subprocess.run([AWS, *args], capture_output=True, text=True, encoding="utf-8", env=env)
     # Never log command output: it can contain tokens or temporary credentials.
     append(

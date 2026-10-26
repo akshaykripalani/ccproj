@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 from scripts.aws_cli import call, run
+from scripts.model_release import publish_model
 from scripts.package import package
 from scripts.preflight import preflight
 from scripts.update_simulator import update_simulator
@@ -134,6 +135,7 @@ def main():
             "BackendKey": release["backend"]["key"],
             "BudgetStart": budget["start"],
             "BudgetEnd": budget["end"],
+            **publish_model(artifacts),
         },
         artifacts,
     )

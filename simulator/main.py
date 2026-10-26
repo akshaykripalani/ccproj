@@ -16,7 +16,9 @@ from botocore.auth import SigV4Auth
 from botocore.awsrequest import AWSRequest
 from botocore.config import Config
 
-from backend.domain import DEVICES, canonical, timestamp, utcnow
+from backend.domain import DEVICES, MODES, canonical, native, timestamp, utcnow
+from backend.equipment import DEFAULT_PROFILE, validate_profile
+from simulator.equipment import Equipment as Motor
 
 log = logging.getLogger("simulator")
 
@@ -36,46 +38,14 @@ def signed_request(url, payload, session, region="ap-southeast-2"):
         return result.status, json.loads(result.read())
 
 
-class Motor:
-    def __init__(self, device, randomizer):
-        self.device = device
-        self.random = randomizer
-        self.temperature = 52.0
-        self.vibration = 1.5
-        self.power = 420.0
-        self.sequence = 0
-
-    def sample(self, mode, run_id):
-        self.sequence += 1
-        if mode == "disconnect":
-            return None
-        target_temperature = 95.0 if mode == "overheat" else 52.0
-        target_vibration = 7.0 if mode == "vibration" else 1.5
-        self.temperature += (target_temperature - self.temperature) * 0.7 + self.random.uniform(
-            -0.4, 0.4
-        )
-        self.vibration += (target_vibration - self.vibration) * 0.7 + self.random.uniform(
-            -0.08, 0.08
-        )
-        self.power += (420.0 - self.power) * 0.2 + self.random.uniform(-4, 4)
-        return {
-            "schemaVersion": 1,
-            "eventId": f"{run_id}:{self.device}:{self.sequence}",
-            "deviceId": self.device,
-            "observedAt": timestamp(utcnow()),
-            "temperatureC": round(self.temperature, 2),
-            "vibrationMmS": round(self.vibration, 3),
-            "powerWatts": 0 if mode == "stopped" else round(self.power, 2),
-            "operatingState": "stopped" if mode == "stopped" else "running",
-        }
-
-
 class Gateway:
     def __init__(self, control_table, session, seed=42):
         self.table = control_table
         self.session = session
         self.run_id = uuid.uuid4().hex
         self.modes = {device: "normal" for device in DEVICES}
+        self.profiles = {device: dict(DEFAULT_PROFILE) for device in DEVICES}
+        self.interval = 10
         self.motors = [Motor(device, random.Random(seed + i)) for i, device in enumerate(DEVICES)]
         self.stop = threading.Event()
         self.lock = threading.Lock()
@@ -86,8 +56,11 @@ class Gateway:
             Item={"pk": "GATEWAY", "sk": "RUN", "runId": self.run_id, "startedAt": now}
         )
         for device in DEVICES:
+            previous = self.table.get_item(Key={"pk": device, "sk": "CONTROL"}).get("Item", {})
+            self.profiles[device] = validate_profile(previous.get("profile", {}))
             self.table.put_item(
                 Item={
+                    "profile": native(self.profiles[device]),
                     "pk": device,
                     "sk": "CONTROL",
                     "runId": self.run_id,
@@ -105,12 +78,7 @@ class Gateway:
             return False
         device = record["pk"]
         mode = record.get("requestedMode")
-        if device not in self.modes or mode not in (
-            "normal",
-            "overheat",
-            "vibration",
-            "disconnect",
-        ):
+        if device not in self.modes or mode not in MODES:
             return False
         try:
             self.table.update_item(
@@ -128,7 +96,10 @@ class Gateway:
         except self.table.meta.client.exceptions.ConditionalCheckFailedException:
             return False
         with self.lock:
-            self.modes[device] = mode
+            self.modes[device] = "normal" if mode == "repair" else mode
+            self.profiles[device] = validate_profile(record.get("profile", {}))
+            if mode in ("normal", "repair"):
+                next(m for m in self.motors if m.device == device).reset()
         return True
 
     def poll(self):
@@ -147,13 +118,38 @@ class Gateway:
             self.stop.wait(5)
 
     def readings(self):
+        result = []
         with self.lock:
-            modes = dict(self.modes)
-        return [
-            reading
-            for motor in self.motors
-            if (reading := motor.sample(modes[motor.device], self.run_id))
-        ]
+            for motor in self.motors:
+                reading = motor.sample(
+                    self.modes[motor.device],
+                    self.run_id,
+                    self.profiles[motor.device],
+                    self.interval,
+                )
+                if reading:
+                    result.append(reading)
+                if motor.completed_cooldown:
+                    motor.completed_cooldown = False
+                    existing = self.table.get_item(
+                        Key={"pk": motor.device, "sk": "CONTROL"}, ConsistentRead=True
+                    ).get("Item", {})
+                    if existing.get("requestedMode") == "cooldown":
+                        try:
+                            self.table.update_item(
+                                Key={"pk": motor.device, "sk": "CONTROL"},
+                                ConditionExpression=Attr("requestId").eq(existing["requestId"]),
+                                UpdateExpression="SET requestedMode = :mode, appliedMode = :mode, maintenanceAction = :action, maintenanceAt = :at",
+                                ExpressionAttributeValues={
+                                    ":mode": "normal",
+                                    ":action": "Restarted automatically",
+                                    ":at": timestamp(utcnow()),
+                                },
+                            )
+                            self.modes[motor.device] = "normal"
+                        except self.table.meta.client.exceptions.ConditionalCheckFailedException:
+                            pass
+        return result
 
 
 def main():
@@ -184,6 +180,7 @@ def main():
     gateway = Gateway(
         session.resource("dynamodb", config=config).Table(args.control_table), session, args.seed
     )
+    gateway.interval = args.interval
     gateway.initialize()
     if args.test_scenario == "stopped":
         gateway.modes["motor-01"] = "stopped"

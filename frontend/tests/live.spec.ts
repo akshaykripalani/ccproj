@@ -61,7 +61,7 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
     });
   });
   await login(page, "OPERATOR");
-  await expect(page.getByText("Running", { exact: true })).toHaveCount(3);
+  await expect(page.getByText("Healthy", { exact: true })).toHaveCount(7);
   await page.getByRole("link", { name: "Equipment", exact: true }).click();
   await page.getByRole("link", { name: "Motor 01", exact: true }).click();
   await expect(
@@ -78,7 +78,7 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
     page.getByRole("img", { name: /Temperature chart with [1-9]\d* readings/ }),
   ).toBeVisible();
   await page.screenshot({
-    path: "../docs/ui-device-desktop.png",
+    path: "../docs/predictive-ui/ui-device-desktop.png",
     fullPage: true,
   });
   csp.push(
@@ -97,7 +97,7 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
     page.getByRole("img", { name: /Temperature chart with [1-9]\d* readings/ }),
   ).toBeVisible();
   await page.screenshot({
-    path: "../docs/ui-overview-desktop.png",
+    path: "../docs/predictive-ui/ui-overview-desktop.png",
     fullPage: true,
     animations: "disabled",
   });
@@ -121,7 +121,7 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
       }),
     ).toBeVisible();
     await viewer.screenshot({
-      path: "../docs/ui-overview-mobile.png",
+      path: "../docs/predictive-ui/ui-overview-mobile.png",
       fullPage: true,
     });
     expect(
@@ -138,50 +138,32 @@ test("real hosted PKCE login, current motors, live charts and protected viewer U
   }
 });
 
-test("browser fault controls receive acknowledgement, produce alerts, and reset shared motors", async ({
+test("browser controls demonstrate automatic cooldown and manual mechanical repair", async ({
   page,
 }) => {
-  test.setTimeout(360000);
+  test.setTimeout(420000);
   await login(page, "OPERATOR");
-  const first = page.getByTestId("motor-01");
-  const second = page.getByTestId("motor-02");
+  const first = page.getByTestId("motor-01"),
+    second = page.getByTestId("motor-02");
   try {
     await page.locator(".demo-controls > summary").click();
     await page.getByRole("button", { name: "Overheat", exact: true }).click();
+    await expect(first.getByText("Fault", { exact: true })).toBeVisible();
     await expect(
-      page.locator(".demo-controls .control-status").getByText("Requested:"),
-    ).toContainText("Overheat");
-    await expect(
-      page.locator(".demo-controls .control-status").getByText("Applied:"),
-    ).toContainText("Overheat");
-    await expect(
-      first.getByText("Over temperature", { exact: true }),
-    ).toBeVisible();
-    await expect(page.locator(".plant-summary")).toContainText(
-      "1 active fault",
-    );
-    await expect(second.getByText("Running", { exact: true })).toBeVisible();
-    await page.getByLabel("Motor", { exact: true }).selectOption("motor-02");
+      first.getByText("Restarted automatically", { exact: true }),
+    ).toBeVisible({ timeout: 150000 });
+    await expect(first.getByText("Healthy", { exact: true })).toBeVisible();
+    await page
+      .getByRole("combobox", { name: "Equipment", exact: true })
+      .selectOption("motor-02");
     await page
       .getByRole("button", { name: "Vibration fault", exact: true })
       .click();
+    await expect(second.getByText("Fault", { exact: true })).toBeVisible();
     await expect(
-      page.locator(".demo-controls .control-status").getByText("Applied:"),
-    ).toContainText("Vibration fault");
-    await expect(
-      second.getByText("High vibration", { exact: true }),
+      second.getByText("Repair needed", { exact: true }),
     ).toBeVisible();
-    await expect(page.locator(".plant-summary")).toContainText(
-      "2 active faults",
-    );
-    await page.getByRole("link", { name: "Alerts" }).click();
-    await expect(
-      page
-        .getByRole("row")
-        .filter({ hasText: "Motor 01" })
-        .filter({ hasText: "active" })
-        .first(),
-    ).toBeVisible();
+    await page.getByRole("link", { name: /^Alerts/ }).click();
     await expect(
       page
         .getByRole("row")
@@ -190,23 +172,16 @@ test("browser fault controls receive acknowledgement, produce alerts, and reset 
         .first(),
     ).toBeVisible();
     await page.screenshot({
-      path: "../docs/ui-alerts-desktop.png",
+      path: "../docs/predictive-ui/ui-alerts-desktop.png",
       fullPage: true,
     });
     await page.getByRole("link", { name: "Overview", exact: true }).click();
-    await first.getByRole("button", { name: "Reset", exact: true }).click();
-    await second.getByRole("button", { name: "Reset", exact: true }).click();
-    await expect(first.getByText("Running", { exact: true })).toBeVisible();
-    await expect(second.getByText("Running", { exact: true })).toBeVisible();
+    await second.getByRole("button", { name: "Repair", exact: true }).click();
+    await expect(second.getByText("Healthy", { exact: true })).toBeVisible();
     await page.locator(".demo-controls > summary").click();
     await page.getByRole("button", { name: "Disconnect", exact: true }).click();
-    await expect(
-      page.locator(".demo-controls .control-status").getByText("Applied:"),
-    ).toContainText("Disconnected");
     await expect(first.getByText("Offline", { exact: true })).toBeVisible();
-    await expect(second.getByText("Running", { exact: true })).toBeVisible();
   } finally {
-    // A separate browser request restores the shared motors even after a UI assertion fails.
     await page.evaluate(async () => {
       const config = await (await fetch("/config.json")).json();
       const issuer = `https://cognito-idp.${config.region}.amazonaws.com/${config.userPoolId}`;
@@ -219,15 +194,10 @@ test("browser fault controls receive acknowledgement, produce alerts, and reset 
         headers: { Authorization: `Bearer ${session.access_token}` },
       });
       if (!result.ok)
-        throw new Error("Final motor restoration request was rejected");
+        throw new Error("Final equipment restoration request was rejected");
     });
   }
-  await page.getByRole("button", { name: "Refresh telemetry" }).click();
-  await expect(page.getByText("Running", { exact: true })).toHaveCount(3);
-  await page.screenshot({
-    path: "../docs/ui-overview-desktop.png",
-    fullPage: true,
-  });
+  await expect(page.getByText("Healthy", { exact: true })).toHaveCount(7);
 });
 
 test("three deployed Athena reports render results and CSV downloads", async ({
@@ -250,7 +220,7 @@ test("three deployed Athena reports render results and CSV downloads", async ({
     expect((await download).suggestedFilename()).toContain(`forge-${kind}`);
   }
   await page.screenshot({
-    path: "../docs/ui-reports-desktop.png",
+    path: "../docs/predictive-ui/ui-reports-desktop.png",
     fullPage: true,
   });
 });
@@ -292,4 +262,30 @@ test("operator browser lists existing users and persists role assignment", async
   }
   await page.getByRole("button", { name: "Sign out" }).click();
   await expect(page.getByRole("button", { name: "Sign in" })).toBeVisible();
+});
+
+test("new equipment metrics, maintenance history and model details are live", async ({
+  page,
+}) => {
+  await login(page, "OPERATOR");
+  await page
+    .getByRole("link", { name: "Generator", exact: true })
+    .first()
+    .click();
+  await expect(
+    page.getByRole("heading", { name: "Generator", exact: true }),
+  ).toBeVisible();
+  await expect(
+    page.getByText("Generated power", { exact: true }),
+  ).toBeVisible();
+  await expect(page.getByText("Frequency", { exact: true })).toBeVisible();
+  await expect(page.locator(".prediction-detail small")).toBeVisible();
+  await page.getByText("Model details", { exact: false }).click();
+  await expect(
+    page.getByText("Held-out precision", { exact: false }),
+  ).toContainText("90.3%");
+  await page.screenshot({
+    path: "../docs/predictive-ui/ui-predictive-generator.png",
+    fullPage: true,
+  });
 });

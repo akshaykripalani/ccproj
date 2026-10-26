@@ -1,4 +1,20 @@
-export type Mode = "normal" | "overheat" | "vibration" | "disconnect";
+export type Mode =
+  "normal" | "overheat" | "vibration" | "disconnect" | "cooldown" | "repair";
+export interface FailureProfile {
+  enabled: boolean;
+  failureAfterMinutes: number;
+  faultMode: "overheat" | "vibration" | "alternating" | "persistent_overheat";
+  speed: number;
+}
+export interface Prediction {
+  modelVersion: string;
+  riskScore: number;
+  faultType: string;
+  horizonMinutes: number;
+  warning: boolean;
+  at: string;
+  sourceObservedAt: string;
+}
 export type Role = "viewer" | "operator";
 export interface Config {
   region: string;
@@ -18,6 +34,8 @@ export interface Reading {
   vibrationMmS: number;
   powerWatts: number;
   operatingState: string;
+  metrics?: Record<string, number>;
+  simulationSpeed?: number;
 }
 export interface Rule {
   active: boolean;
@@ -33,6 +51,7 @@ export interface Control {
   requestedAt?: string;
   appliedAt?: string;
   reason?: string;
+  maintenanceAction?: string;
 }
 export interface Device {
   deviceId: string;
@@ -42,6 +61,9 @@ export interface Device {
   latest: (Reading & { rules?: Record<string, Rule> }) | null;
   thresholds: Record<string, { field: string; value: number }>;
   control: Control;
+  equipmentType?: string;
+  profile?: FailureProfile;
+  prediction?: Prediction | null;
 }
 export interface DeviceResponse {
   devices: Device[];

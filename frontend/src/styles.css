@@ -1646,3 +1646,132 @@ summary small {
     scroll-behavior: auto !important;
   }
 }
+.maintenance-panel,
+.equipment-signals {
+  margin: 20px 0;
+}
+.maintenance-log {
+  list-style: none;
+  margin: 0;
+  padding: 0 24px 12px;
+}
+.maintenance-log li {
+  display: grid;
+  grid-template-columns: minmax(130px, 1fr) 2fr auto;
+  gap: 16px;
+  padding: 11px 0;
+  border-top: 1px solid var(--border, #d8dde0);
+  font-size: 13px;
+}
+.maintenance-log time {
+  color: var(--muted, #55616c);
+  font-size: 12px;
+}
+.maintenance-empty,
+.model-details {
+  padding: 0 24px 18px;
+  font-size: 13px;
+}
+.model-details summary {
+  cursor: pointer;
+  color: var(--muted, #55616c);
+}
+.model-details p {
+  max-width: 85ch;
+  line-height: 1.6;
+}
+.equipment-signals dl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px 36px;
+  padding: 0 24px 18px;
+  margin: 0;
+}
+.equipment-signals dt {
+  font-size: 12px;
+  color: var(--muted, #55616c);
+}
+.equipment-signals dd {
+  margin: 5px 0 0;
+  font-family: var(--mono, monospace);
+  font-size: 20px;
+}
+.equipment-signals dd small {
+  font-size: 12px;
+}
+.prediction-detail {
+  border-top: 1px solid var(--border, #d8dde0);
+  padding: 18px 24px;
+  font-size: 13px;
+}
+.prediction-detail p {
+  margin: 8px 0;
+}
+.prediction-detail small {
+  color: var(--muted, #55616c);
+}
+.maintenance-action {
+  color: var(--muted, #55616c);
+}
+.profile-form {
+  width: 100%;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border, #d8dde0);
+}
+.profile-form h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+}
+.profile-enabled {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.profile-enabled input {
+  width: auto;
+}
+.profile-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+  margin-top: 14px;
+}
+.profile-fields label {
+  flex: 1;
+  min-width: 150px;
+  font-size: 12px;
+}
+.profile-fields select,
+.profile-fields input {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+}
+.demo-content {
+  flex-wrap: wrap;
+}
+@media (max-width: 680px) {
+  .maintenance-log {
+    padding: 0 16px 12px;
+  }
+  .maintenance-log li {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 12px;
+  }
+  .maintenance-log time {
+    grid-column: 1 / -1;
+  }
+  .profile-fields {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .profile-fields label {
+    min-width: 0;
+  }
+  .equipment-signals dl {
+    gap: 18px 24px;
+    padding: 0 16px 16px;
+  }
+}

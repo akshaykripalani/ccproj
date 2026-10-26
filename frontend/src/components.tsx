@@ -12,6 +12,11 @@ import {
   YAxis,
 } from "recharts";
 import { api } from "./api";
+import {
+  currentPrediction,
+  PredictionLine,
+  ProfileEditor,
+} from "./Maintenance";
 import { ago, modeName, motorName, number, when } from "./format";
 import { LIVE_INTERVAL_MS, usePoll } from "./hooks";
 import type { Control, Device, Mode, Reading } from "./types";
@@ -167,26 +172,18 @@ export function PanelHead({
 
 export function deviceCondition(device: Device) {
   if (!device.online) return { label: "Offline", tone: "neutral" };
-  const temperature =
-    device.latest &&
-    device.latest.temperatureC > (device.thresholds.temperature?.value ?? 75);
-  const vibration =
-    device.latest &&
-    device.latest.vibrationMmS > (device.thresholds.vibration?.value ?? 4.5);
   const active = Object.values(device.latest?.rules ?? {}).some(
     (rule) => rule.active,
   );
-  if (temperature && vibration)
-    return { label: "Temperature + vibration", tone: "danger" };
-  if (temperature)
-    return { label: "Over temperature", tone: active ? "danger" : "warning" };
-  if (vibration)
-    return { label: "High vibration", tone: active ? "danger" : "warning" };
-  if (active) return { label: "Recovering", tone: "danger" };
-  if (device.latest?.operatingState === "stopped")
-    return { label: "Stopped", tone: "neutral" };
+  if (active) return { label: "Fault", tone: "danger" };
+  if (
+    currentPrediction(device)?.warning ||
+    (device.latest &&
+      (device.latest.temperatureC > 75 || device.latest.vibrationMmS > 4.5))
+  )
+    return { label: "Warning", tone: "warning" };
   return {
-    label: device.latest ? "Running" : "Awaiting data",
+    label: device.latest ? "Healthy" : "Awaiting data",
     tone: "neutral",
   };
 }
@@ -281,11 +278,21 @@ export function Controls({
             Disconnect
           </button>
           <button
-            onClick={() => void change("normal")}
+            onClick={() =>
+              void change(
+                device.latest?.rules?.vibration?.active ||
+                  device.control.maintenanceAction === "Repair needed"
+                  ? "repair"
+                  : "normal",
+              )
+            }
             disabled={busy}
             className="control-button reset"
           >
-            Reset
+            {device.latest?.rules?.vibration?.active ||
+            device.control.maintenanceAction === "Repair needed"
+              ? "Repair"
+              : "Reset"}
           </button>
         </div>
       ) : null}
@@ -441,7 +448,13 @@ function MotorRow({
       setRequested(
         await api<Control>(`/controls/${device.deviceId}`, {
           method: "POST",
-          body: { mode: "normal" },
+          body: {
+            mode:
+              device.latest?.rules?.vibration?.active ||
+              device.control.maintenanceAction === "Repair needed"
+                ? "repair"
+                : "normal",
+          },
         }),
       );
       refresh();
@@ -481,6 +494,7 @@ function MotorRow({
           />
           {condition.label}
         </span>
+        <PredictionLine device={device} />
         {!device.online && (
           <small className="cell-sub">Last-known readings</small>
         )}
@@ -527,13 +541,19 @@ function MotorRow({
           {operator &&
             (attention ||
               !device.online ||
-              device.control.requestedMode !== "normal") && (
+              (device.control.requestedMode !== "normal" &&
+                device.control.requestedMode !== "repair")) && (
               <button
                 className="button signal"
                 disabled={busy}
                 onClick={() => void reset()}
               >
-                {busy ? "Resetting…" : "Reset"}
+                {busy
+                  ? "Applying…"
+                  : device.latest?.rules?.vibration?.active ||
+                      device.control.maintenanceAction === "Repair needed"
+                    ? "Repair"
+                    : "Reset"}
               </button>
             )}
         </div>
@@ -558,18 +578,18 @@ export function MotorTable({
   readings?: Reading[];
 }) {
   return (
-    <section className="panel motor-table" aria-label="Motors">
+    <section className="panel motor-table" aria-label="Equipment">
       <p className="mobile-limit-caption">Limits: 75 °C · 4.5 mm/s</p>
       <div
         className="table-scroll"
         tabIndex={0}
         role="region"
-        aria-label="Motor readings"
+        aria-label="Equipment readings"
       >
         <table>
           <thead>
             <tr>
-              <th>Motor</th>
+              <th>Equipment</th>
               <th>State</th>
               <th>
                 Temperature<span className="column-limit">75 °C limit</span>
@@ -622,7 +642,7 @@ export function DemoControls({
       </summary>
       <div className="demo-content">
         <label>
-          Motor
+          Equipment
           <select
             value={device.deviceId}
             onChange={(event) => setSelected(event.target.value)}
@@ -634,6 +654,11 @@ export function DemoControls({
             ))}
           </select>
         </label>
+        <ProfileEditor
+          key={`${device.deviceId}-profile`}
+          device={device}
+          refresh={refresh}
+        />
         <Controls
           key={device.deviceId}
           device={device}

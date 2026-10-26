@@ -82,7 +82,15 @@ export function AllMotorTrend({
       device.latest.temperatureC > (device.thresholds.temperature?.value ?? 75);
     const color = fault
       ? "#a8340a"
-      : ["#1d5c7a", "#30738c", "#406d82"][index % 3];
+      : [
+          "#1d5c7a",
+          "#30738c",
+          "#406d82",
+          "#517889",
+          "#256064",
+          "#5b677a",
+          "#476b55",
+        ][index % 7];
     const nearest =
       selectedTime === undefined || !readings.length
         ? undefined
@@ -123,7 +131,7 @@ export function AllMotorTrend({
   return (
     <section className="panel comparison-panel">
       <PanelHead
-        title="Temperature, all motors"
+        title="Temperature, all equipment"
         action={
           <label className="range-picker">
             <span className="sr-only">Chart time range</span>
@@ -183,7 +191,7 @@ export function AllMotorTrend({
               role="img"
               data-window-start={from}
               data-window-end={now}
-              aria-label={`Temperature chart with ${values.length} readings across all motors in °C`}
+              aria-label={`Temperature chart with ${values.length} readings across all equipment in °C`}
               onPointerMove={(event) => {
                 const bounds = event.currentTarget.getBoundingClientRect();
                 const px =

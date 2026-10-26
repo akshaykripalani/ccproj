@@ -3,6 +3,7 @@
 from decimal import Decimal
 
 from backend.domain import RULES, parse_time
+from backend.equipment import CATALOG
 
 
 def number(value):
@@ -13,7 +14,11 @@ def number(value):
 
 def render_email(intent, dashboard_url):
     reading = intent["reading"]
-    motor = intent["deviceId"].replace("motor-", "Motor ")
+    motor = (
+        intent["deviceId"].replace("motor-", "Motor ")
+        if intent["deviceId"].startswith("motor-")
+        else CATALOG[intent["deviceId"]]["name"]
+    )
     rule = intent["rule"]
     field, _ = RULES[rule]
     label, unit, description = {

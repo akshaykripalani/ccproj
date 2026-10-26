@@ -1161,6 +1161,22 @@
               {
                 "Name": "operatingstate",
                 "Type": "string"
+              },
+              {
+                "Name": "equipmenttype",
+                "Type": "string"
+              },
+              {
+                "Name": "simulationtime",
+                "Type": "double"
+              },
+              {
+                "Name": "simulationspeed",
+                "Type": "int"
+              },
+              {
+                "Name": "metrics",
+                "Type": "map<string,double>"
               }
             ],
             "Location": {
@@ -1413,6 +1429,15 @@
                   "Resource": {
                     "Fn::Sub": "${Archive.Arn}/telemetry/*"
                   }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "lambda:InvokeFunction"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:lambda:${AWS::Region}:${AWS::AccountId}:function:${AWS::StackName}-Predictor"
+                  }
                 }
               ]
             }
@@ -1493,7 +1518,16 @@
             "ATHENA_WORKGROUP": {
               "Ref": "Workgroup"
             },
-            "OFFLINE_SECONDS": "60"
+            "OFFLINE_SECONDS": "60",
+            "MODEL_VERSION": {
+              "Ref": "ModelVersion"
+            },
+            "MODEL_EVALUATION": {
+              "Ref": "ModelEvaluation"
+            },
+            "PREDICTOR_FUNCTION": {
+              "Fn::Sub": "${AWS::StackName}-Predictor"
+            }
           }
         },
         "Tags": [
@@ -1514,6 +1548,198 @@
       "DependsOn": [
         "ProcessorLogs"
       ]
+    },
+    "PredictorRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "ScopedAccess",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/${AWS::StackName}-Predictor:*"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "dynamodb:GetItem",
+                    "dynamodb:PutItem",
+                    "dynamodb:UpdateItem"
+                  ],
+                  "Resource": [
+                    {
+                      "Fn::GetAtt": [
+                        "Data",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "Controls",
+                        "Arn"
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:s3:::${ArtifactBucket}/models/*"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Portable learned-tree inference and bounded thermal maintenance; no always-on ML host",
+          "must": [
+            "Only enumerated application access; no user access keys"
+          ]
+        }
+      }
+    },
+    "PredictorLogs": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/${AWS::StackName}-Predictor"
+        },
+        "RetentionInDays": 7
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Bound diagnostic retention",
+          "must": []
+        }
+      }
+    },
+    "Predictor": {
+      "Type": "AWS::Lambda::Function",
+      "Properties": {
+        "FunctionName": {
+          "Fn::Sub": "${AWS::StackName}-Predictor"
+        },
+        "Runtime": "python3.12",
+        "Architectures": [
+          "arm64"
+        ],
+        "Handler": "backend.predictor.handler",
+        "Role": {
+          "Fn::GetAtt": [
+            "PredictorRole",
+            "Arn"
+          ]
+        },
+        "Code": {
+          "S3Bucket": {
+            "Ref": "ArtifactBucket"
+          },
+          "S3Key": {
+            "Ref": "BackendKey"
+          }
+        },
+        "Timeout": 30,
+        "MemorySize": 256,
+        "Environment": {
+          "Variables": {
+            "DATA_TABLE": {
+              "Ref": "Data"
+            },
+            "CONTROL_TABLE": {
+              "Ref": "Controls"
+            },
+            "ARCHIVE_BUCKET": {
+              "Ref": "Archive"
+            },
+            "ALERT_TOPIC": {
+              "Ref": "Alerts"
+            },
+            "USER_POOL": {
+              "Ref": "Pool"
+            },
+            "GLUE_DATABASE": {
+              "Ref": "Catalog"
+            },
+            "ATHENA_WORKGROUP": {
+              "Ref": "Workgroup"
+            },
+            "OFFLINE_SECONDS": "60",
+            "MODEL_VERSION": {
+              "Ref": "ModelVersion"
+            },
+            "MODEL_EVALUATION": {
+              "Ref": "ModelEvaluation"
+            },
+            "MODEL_BUCKET": {
+              "Ref": "ArtifactBucket"
+            },
+            "MODEL_KEY": {
+              "Ref": "ModelKey"
+            }
+          }
+        },
+        "Tags": [
+          {
+            "Key": "Project",
+            "Value": "ccproj"
+          }
+        ]
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Portable learned-tree inference and bounded thermal maintenance; no always-on ML host",
+          "must": [
+            "Role credentials only; no public function URL"
+          ]
+        }
+      },
+      "DependsOn": [
+        "PredictorLogs"
+      ]
+    },
+    "PredictionAsync": {
+      "Type": "AWS::Lambda::EventInvokeConfig",
+      "Properties": {
+        "FunctionName": {
+          "Ref": "Predictor"
+        },
+        "Qualifier": "$LATEST",
+        "MaximumEventAgeInSeconds": 120,
+        "MaximumRetryAttempts": 2
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Bound asynchronous inference retries; minute schedule reconciles missed work",
+          "must": []
+        }
+      }
     },
     "NotifierRole": {
       "Type": "AWS::IAM::Role",
@@ -1670,6 +1896,12 @@
               "Ref": "Workgroup"
             },
             "OFFLINE_SECONDS": "60",
+            "MODEL_VERSION": {
+              "Ref": "ModelVersion"
+            },
+            "MODEL_EVALUATION": {
+              "Ref": "ModelEvaluation"
+            },
             "DASHBOARD_URL": {
               "Fn::Sub": "https://${Distribution.DomainName}"
             }
@@ -1927,7 +2159,13 @@
             "ATHENA_WORKGROUP": {
               "Ref": "Workgroup"
             },
-            "OFFLINE_SECONDS": "60"
+            "OFFLINE_SECONDS": "60",
+            "MODEL_VERSION": {
+              "Ref": "ModelVersion"
+            },
+            "MODEL_EVALUATION": {
+              "Ref": "ModelEvaluation"
+            }
           }
         },
         "Tags": [
@@ -2027,12 +2265,20 @@
                   "Action": [
                     "lambda:InvokeFunction"
                   ],
-                  "Resource": {
-                    "Fn::GetAtt": [
-                      "Notifier",
-                      "Arn"
-                    ]
-                  }
+                  "Resource": [
+                    {
+                      "Fn::GetAtt": [
+                        "Notifier",
+                        "Arn"
+                      ]
+                    },
+                    {
+                      "Fn::GetAtt": [
+                        "Predictor",
+                        "Arn"
+                      ]
+                    }
+                  ]
                 }
               ]
             }
@@ -2082,6 +2328,44 @@
       "Metadata": {
         "com.aws.cloudformation.Context": {
           "why": "Periodic durable outbox drain through EventBridge Scheduler",
+          "must": []
+        }
+      }
+    },
+    "PredictionSchedule": {
+      "Type": "AWS::Scheduler::Schedule",
+      "Properties": {
+        "GroupName": {
+          "Ref": "ScheduleGroup"
+        },
+        "FlexibleTimeWindow": {
+          "Mode": "OFF"
+        },
+        "ScheduleExpression": "rate(1 minute)",
+        "State": "ENABLED",
+        "Target": {
+          "Arn": {
+            "Fn::GetAtt": [
+              "Predictor",
+              "Arn"
+            ]
+          },
+          "RoleArn": {
+            "Fn::GetAtt": [
+              "ScheduleRole",
+              "Arn"
+            ]
+          },
+          "Input": "{}",
+          "RetryPolicy": {
+            "MaximumRetryAttempts": 2,
+            "MaximumEventAgeInSeconds": 120
+          }
+        }
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Reconcile predictions and maintenance after retries without scanning history",
           "must": []
         }
       }
@@ -2608,6 +2892,90 @@
         }
       }
     },
+    "Route11": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "RouteKey": "GET /maintenance",
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "Jwt"
+        },
+        "AuthorizationScopes": [
+          "openid",
+          "aws.cognito.signin.user.admin"
+        ],
+        "Target": {
+          "Fn::Sub": "integrations/${DashboardIntegration}"
+        }
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Protected application endpoint",
+          "must": [
+            "Access-token scopes required; backend enforces viewer/operator roles"
+          ]
+        }
+      }
+    },
+    "Route12": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "RouteKey": "GET /model",
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "Jwt"
+        },
+        "AuthorizationScopes": [
+          "openid",
+          "aws.cognito.signin.user.admin"
+        ],
+        "Target": {
+          "Fn::Sub": "integrations/${DashboardIntegration}"
+        }
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Protected application endpoint",
+          "must": [
+            "Access-token scopes required; backend enforces viewer/operator roles"
+          ]
+        }
+      }
+    },
+    "Route13": {
+      "Type": "AWS::ApiGatewayV2::Route",
+      "Properties": {
+        "ApiId": {
+          "Ref": "HttpApi"
+        },
+        "RouteKey": "POST /profiles/{deviceId}",
+        "AuthorizationType": "JWT",
+        "AuthorizerId": {
+          "Ref": "Jwt"
+        },
+        "AuthorizationScopes": [
+          "openid",
+          "aws.cognito.signin.user.admin"
+        ],
+        "Target": {
+          "Fn::Sub": "integrations/${DashboardIntegration}"
+        }
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Protected application endpoint",
+          "must": [
+            "Access-token scopes required; backend enforces viewer/operator roles"
+          ]
+        }
+      }
+    },
     "BacklogAlarm": {
       "Type": "AWS::CloudWatch::Alarm",
       "Properties": {
@@ -2964,6 +3332,76 @@
         }
       }
     },
+    "PredictorErrorsAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName": {
+          "Fn::Sub": "${AWS::StackName}-PredictorErrors"
+        },
+        "Namespace": "AWS/Lambda",
+        "MetricName": "Errors",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": {
+              "Ref": "Predictor"
+            }
+          }
+        ],
+        "Statistic": "Sum",
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "AlarmActions": [
+          {
+            "Ref": "Alerts"
+          }
+        ]
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Small operational alarm set",
+          "must": []
+        }
+      }
+    },
+    "PredictorThrottlesAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName": {
+          "Fn::Sub": "${AWS::StackName}-PredictorThrottles"
+        },
+        "Namespace": "AWS/Lambda",
+        "MetricName": "Throttles",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": {
+              "Ref": "Predictor"
+            }
+          }
+        ],
+        "Statistic": "Sum",
+        "Period": 60,
+        "EvaluationPeriods": 1,
+        "Threshold": 1,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "AlarmActions": [
+          {
+            "Ref": "Alerts"
+          }
+        ]
+      },
+      "Metadata": {
+        "com.aws.cloudformation.Context": {
+          "why": "Small operational alarm set",
+          "must": []
+        }
+      }
+    },
     "ProjectBudget": {
       "Type": "AWS::Budgets::Budget",
       "Properties": {
@@ -3164,6 +3602,16 @@
         "Ref": "Notifier"
       }
     },
+    "PredictorFunction": {
+      "Value": {
+        "Ref": "Predictor"
+      }
+    },
+    "ModelVersion": {
+      "Value": {
+        "Ref": "ModelVersion"
+      }
+    },
     "ProcessingMapping": {
       "Value": {
         "Ref": "ProcessingMapping"
@@ -3176,6 +3624,17 @@
     },
     "BackendKey": {
       "Type": "String"
+    },
+    "ModelKey": {
+      "Type": "String",
+      "Description": "Immutable evaluated model artifact key"
+    },
+    "ModelVersion": {
+      "Type": "String"
+    },
+    "ModelEvaluation": {
+      "Type": "String",
+      "Description": "Compact held-out evaluation metrics"
     },
     "AlertEmail": {
       "Type": "String",

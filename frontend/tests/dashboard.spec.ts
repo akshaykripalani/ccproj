@@ -51,7 +51,7 @@ test("overview shows three healthy motors and current units", async ({
   await expect(
     page.getByRole("region", { name: "Plant overview" }),
   ).toBeVisible();
-  await expect(page.getByText("Running", { exact: true })).toHaveCount(3);
+  await expect(page.getByText("Healthy", { exact: true })).toHaveCount(3);
   for (const id of ["motor-01", "motor-02", "motor-03"]) {
     const card = page.getByTestId(id);
     await expect(card.getByText("55.0")).toBeVisible();
@@ -96,13 +96,13 @@ test("controls show requested and applied states separately", async ({
     page.locator(".demo-controls .control-status").getByText(/^Applied \w/),
   ).toBeVisible();
   await expect(
-    page.getByTestId("motor-02").getByText("Running", { exact: true }),
+    page.getByTestId("motor-02").getByText("Healthy", { exact: true }),
   ).toBeVisible();
-  await page.getByRole("button", { name: "Reset all motors" }).click();
+  await page.getByRole("button", { name: "Reset all equipment" }).click();
   await page
     .getByRole("button", { name: "Confirm reset", exact: true })
     .click();
-  await expect(page.getByText("Reset requested for all motors.")).toBeVisible();
+  await expect(page.getByText("Reset requested for all equipment.")).toBeVisible();
 });
 
 test("viewers cannot see controls or request user management", async ({
@@ -134,7 +134,7 @@ test("reset-all polls pending controls quickly and returns to normal cadence aft
     state.requests.filter((request) => request.path === "/devices").length;
   await page.goto("/");
   await expect(page.getByTestId("motor-03")).toBeVisible();
-  await page.getByRole("button", { name: "Reset all motors" }).click();
+  await page.getByRole("button", { name: "Reset all equipment" }).click();
   await page
     .getByRole("button", { name: "Confirm reset", exact: true })
     .click();
@@ -215,7 +215,7 @@ test("offline differs from a stopped reporting motor and timeout is visible", as
     page.getByTestId("motor-01").getByText("Offline", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByTestId("motor-02").getByText("Stopped", { exact: true }),
+    page.getByTestId("motor-02").getByText("Healthy", { exact: true }),
   ).toBeVisible();
   await expect(
     page.getByTestId("motor-03").getByText("Change not confirmed. Try again."),
@@ -505,7 +505,7 @@ test("clock advancement makes old live responses visibly stale and motors offlin
   const state = await mockApp(page);
   await page.goto("/");
   await expect(
-    page.getByTestId("motor-01").getByText("Running", { exact: true }),
+    page.getByTestId("motor-01").getByText("Healthy", { exact: true }),
   ).toBeVisible();
   state.failDevices = true;
   await page.clock.fastForward(65000);
@@ -608,7 +608,7 @@ test("compact overview keeps a fixed heading while readings and fault indicators
   ).toBeVisible();
   await expect(page.locator(".plant-summary")).toContainText("1 active fault");
   const chart = page.getByRole("img", {
-    name: /Temperature chart with \d+ readings across all motors/,
+    name: /Temperature chart with \d+ readings across all equipment/,
   });
   await expect(chart).toBeVisible();
   await expect(chart.locator('.fleet-line[d*="L"]')).toHaveCount(3);
@@ -654,7 +654,7 @@ test("compact overview keeps a fixed heading while readings and fault indicators
     }),
   ).toBeVisible();
   await expect(
-    page.getByTestId("motor-02").getByText("Running", { exact: true }),
+    page.getByTestId("motor-02").getByText("Healthy", { exact: true }),
   ).toBeVisible();
   await expect(page.locator(".plant-summary")).toContainText("0 active faults");
   await expect(page.locator(".fault-banner")).toHaveCount(0);

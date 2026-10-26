@@ -29,7 +29,16 @@ export function ago(value?: string, now = Date.now()) {
       : `${Math.floor(seconds / 3600)}h ago`;
 }
 export function motorName(id: string) {
-  return `Motor ${id.slice(-2)}`;
+  return id.startsWith("motor-")
+    ? `Motor ${id.slice(-2)}`
+    : ((
+        {
+          "pump-01": "Centrifugal pump",
+          "compressor-01": "Air compressor",
+          "fan-01": "Cooling fan",
+          "generator-01": "Generator",
+        } as Record<string, string>
+      )[id] ?? id);
 }
 export function utcDate(offset = 0) {
   return new Date(Date.now() + offset * 86400000).toISOString().slice(0, 10);
@@ -42,6 +51,8 @@ export function modeName(mode?: string) {
         overheat: "Overheat",
         vibration: "Vibration fault",
         disconnect: "Disconnected",
+        cooldown: "Cooling down",
+        repair: "Repair",
       } as Record<string, string>
     )[mode ?? ""] ?? "Not acknowledged"
   );

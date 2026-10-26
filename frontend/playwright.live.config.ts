@@ -22,6 +22,8 @@ export default defineConfig({
   use: {
     baseURL: process.env.CCPROJ_DASHBOARD_URL,
     browserName: "chromium",
+    actionTimeout: 30000,
+    navigationTimeout: 60000,
     viewport: { width: 1440, height: 1000 },
     trace: "off",
     screenshot: "off",
