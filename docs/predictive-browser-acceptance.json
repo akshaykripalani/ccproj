@@ -1,0 +1,62 @@
+{
+  "uniqueScenarios": 5,
+  "passed": 5,
+  "method": "Latest result per scenario; original failed runs retained",
+  "scenarios": [
+    {
+      "title": "real hosted PKCE login, current motors, live charts and protected viewer UI",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 56616
+        }
+      ],
+      "source": "predictive-browser-run2.json"
+    },
+    {
+      "title": "browser controls demonstrate automatic cooldown and manual mechanical repair",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 235841
+        }
+      ],
+      "source": "predictive-browser-run2.json"
+    },
+    {
+      "title": "three deployed Athena reports render results and CSV downloads",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 29595
+        }
+      ],
+      "source": "predictive-browser-report-retry.json"
+    },
+    {
+      "title": "operator browser lists existing users and persists role assignment",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 23777
+        }
+      ],
+      "source": "predictive-browser-run2.json"
+    },
+    {
+      "title": "new equipment metrics, maintenance history and model details are live",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 11484
+        }
+      ],
+      "source": "predictive-browser-run2.json"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "originalVersion": "rf-b8af65a6f20e",
+  "promotedVersion": "rf-2f7930ddaf26",
+  "candidatePrediction": {
+    "modelVersion": {
+      "S": "rf-2f7930ddaf26"
+    },
+    "sourceObservedAt": {
+      "S": "2026-10-26T21:52:12.495Z"
+    }
+  },
+  "simulatorInstance": "i-0e6f9f6b588c09de1",
+  "rollbackVerified": true,
+  "restoredPrediction": {
+    "modelVersion": {
+      "S": "rf-b8af65a6f20e"
+    },
+    "sourceObservedAt": {
+      "S": "2026-10-26T21:54:23.092Z"
+    }
+  }
+}

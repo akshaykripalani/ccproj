@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-27",
+  "renderer": "Dedicated hidden Microsoft Word instance, read-only export; Poppler PNGs at 130 dpi",
+  "pages": 7,
+  "reviewedPages": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "visualChecks": [
+    "No clipped text or overlapping objects",
+    "All three diagrams legible and captions paired",
+    "Tables fit text area and use repeating headers",
+    "References left aligned, genuine sources, no author placeholders",
+    "Section 5 begins cleanly on final page"
+  ],
+  "docxSha256": "71093a6691741cf2371c0f3fefb3fe13f752138b9a3c8e53aeeacbd916980206",
+  "pdfSha256": "ee432bca10d9ff3c61efa063b8fe899b46b94748118ef2ea598e6e26cfa0e2bf",
+  "sourceSha256": "d64c46262915d5fb18fd37c7d3482685376c5c754d6e7c9fdda2dde9e60d7a86",
+  "sourceUnmodified": true,
+  "wordCountParagraphs": 2332,
+  "authors": "Anonymous; source provided placeholder details only",
+  "fonts": "Times New Roman, title 14 pt, body 10 pt, headings 12/10 pt, captions 9 pt",
+  "textAreaCm": [
+    12.2,
+    19.3
+  ],
+  "pageBounds": [
+    {
+      "page": 1,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "textMinX": 124.7,
+      "textMaxX": 473.11636
+    },
+    {
+      "page": 2,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "textMinX": 124.7,
+      "textMaxX": 473.03668
+    },
+    {
+      "page": 3,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "textMinX": 124.7,
+      "textMaxX": 472.99
+    },
+    {
+      "page": 4,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "textMinX": 124.7,
+      "textMaxX": 473.11
+    },
+    {
+      "page": 5,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "textMinX": 124.7,
+      "textMaxX": 473.11
+    },
+    {
+      "page": 6,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "textMinX": 124.7,
+      "textMaxX": 473.11
+    },
+    {
+      "page": 7,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "textMinX": 124.7,
+      "textMaxX": 473.09836
+    }
+  ],
+  "springerGuidance": "https://link.springer.com/series/558/information-for-authors-and-editors",
+  "finalRevision": "Final expanded system; reviewed all pages; no split final operating paragraph"
+}

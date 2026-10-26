@@ -27,4 +27,8 @@ This documentation was prepared from checked-in source and recorded deployment e
 
 Run `build_submission.py` with Python and ReportLab, Pillow, pdfplumber and pypdfium2 available. It builds the diagrams and consolidated PDF from the Markdown sources, copies selected evidence, checks links, and records hashes. The authoring environment used Codex's bundled document runtime; it is not an application runtime dependency. The script does not call AWS. Intermediate visual QA files are written to an ignored directory.
 
-PRD.md remains the product scope; these documents describe its implemented design and evidence. This submission task does not edit PRD.md.
+PRD.old.md remains the product scope; these documents describe its implemented design and evidence. This submission task does not edit PRD.old.md.
+
+## Updated predictive maintenance manuscript
+
+The current seven-device project report is in `updated/Cloud_Equipment_Monitoring_LNCS.docx` and its matching PDF. `updated/README.md` records format, source preservation and authorship status; older submission artifacts remain historical snapshots.

@@ -1,0 +1,874 @@
+{
+  "stacks": [
+    {
+      "name": "ccproj-simulator",
+      "status": "UPDATE_COMPLETE"
+    },
+    {
+      "name": "ccproj",
+      "status": "UPDATE_COMPLETE"
+    },
+    {
+      "name": "ccproj-artifacts",
+      "status": "UPDATE_COMPLETE"
+    }
+  ],
+  "simulator": [
+    {
+      "id": "i-0e6f9f6b588c09de1",
+      "state": "running",
+      "type": "t4g.micro",
+      "image": "ami-087d45844d95e29aa"
+    }
+  ],
+  "consumer": {
+    "state": "Enabled"
+  },
+  "queue": {
+    "Attributes": {
+      "ApproximateNumberOfMessages": "0",
+      "ApproximateNumberOfMessagesNotVisible": "0"
+    }
+  },
+  "dlq": {
+    "Attributes": {
+      "ApproximateNumberOfMessages": "0"
+    }
+  },
+  "predictor": {
+    "state": "Active",
+    "update": "Successful",
+    "memoryMiB": 256,
+    "runtime": "python3.12",
+    "architecture": [
+      "arm64"
+    ],
+    "modelVersion": "rf-b8af65a6f20e"
+  },
+  "alarms": [
+    {
+      "name": "ccproj-ApiBackendErrors",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-ApiBackendThrottles",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-Backlog",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-DLQ",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-IngestionErrors",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-IngestionThrottles",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-NotifierErrors",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-NotifierThrottles",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-PredictorErrors",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-PredictorThrottles",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-ProcessorErrors",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-ProcessorThrottles",
+      "state": "OK"
+    }
+  ],
+  "budget": {
+    "limit": {
+      "Amount": "50.0",
+      "Unit": "USD"
+    },
+    "actual": {
+      "Amount": "7.365",
+      "Unit": "USD"
+    }
+  },
+  "projectInstances": [
+    {
+      "id": "i-098cf45e426dd3ab7",
+      "state": "terminated",
+      "type": "t4g.micro"
+    },
+    {
+      "id": "i-0e6f9f6b588c09de1",
+      "state": "running",
+      "type": "t4g.micro"
+    }
+  ],
+  "account": "039379078306",
+  "region": "ap-southeast-2",
+  "profile": "default",
+  "checkedAt": "2026-10-26T22:36:02.059054+00:00",
+  "devices": [
+    {
+      "deviceId": "motor-01",
+      "STATE": {
+        "rules": {
+          "M": {
+            "temperature": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "alertId": {
+                  "S": "2026-10-26T22:15:52.086Z#temperature#1d908ca63bff4c9fbdb43e64d225d2f4:motor-01:205"
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            },
+            "vibration": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "alertId": {
+                  "S": "2026-10-14T16:52:04.448Z#vibration#96d9266a63c24168b48147f08c0aac5c:motor-01:19"
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            }
+          }
+        },
+        "lastSeen": {
+          "S": "2026-10-26T22:35:59.676Z"
+        },
+        "operatingState": {
+          "S": "running"
+        },
+        "observedAt": {
+          "S": "2026-10-26T22:35:59.639Z"
+        },
+        "vibrationMmS": {
+          "N": "1.813"
+        },
+        "temperatureC": {
+          "N": "52.66"
+        },
+        "simulationSpeed": {
+          "N": "1"
+        }
+      },
+      "PREDICTION": {
+        "riskScore": {
+          "N": "0.0001"
+        },
+        "modelVersion": {
+          "S": "rf-b8af65a6f20e"
+        },
+        "warning": {
+          "BOOL": false
+        },
+        "simulationSpeed": {
+          "N": "1"
+        }
+      },
+      "CONTROL": {
+        "appliedMode": {
+          "S": "normal"
+        },
+        "maintenanceAction": {
+          "S": ""
+        },
+        "profile": {
+          "M": {
+            "enabled": {
+              "BOOL": true
+            },
+            "failureAfterMinutes": {
+              "N": "30"
+            },
+            "faultMode": {
+              "S": "alternating"
+            },
+            "speed": {
+              "N": "1"
+            }
+          }
+        },
+        "requestedMode": {
+          "S": "normal"
+        },
+        "status": {
+          "S": "applied"
+        }
+      }
+    },
+    {
+      "deviceId": "motor-02",
+      "STATE": {
+        "rules": {
+          "M": {
+            "temperature": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "alertId": {
+                  "S": "2026-10-15T07:27:23.833Z#temperature#f1ed77e0e7be451ea15d225e21fb64ce:motor-02:5031"
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            },
+            "vibration": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "alertId": {
+                  "S": "2026-10-26T22:17:22.476Z#vibration#1d908ca63bff4c9fbdb43e64d225d2f4:motor-02:214"
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            }
+          }
+        },
+        "simulationSpeed": {
+          "N": "1"
+        },
+        "observedAt": {
+          "S": "2026-10-26T22:35:59.639Z"
+        },
+        "temperatureC": {
+          "N": "49.8"
+        },
+        "vibrationMmS": {
+          "N": "1.592"
+        },
+        "lastSeen": {
+          "S": "2026-10-26T22:35:59.676Z"
+        },
+        "operatingState": {
+          "S": "running"
+        }
+      },
+      "PREDICTION": {
+        "riskScore": {
+          "N": "0"
+        },
+        "modelVersion": {
+          "S": "rf-b8af65a6f20e"
+        },
+        "warning": {
+          "BOOL": false
+        },
+        "simulationSpeed": {
+          "N": "1"
+        }
+      },
+      "CONTROL": {
+        "appliedMode": {
+          "S": "normal"
+        },
+        "maintenanceAction": {
+          "S": ""
+        },
+        "profile": {
+          "M": {
+            "enabled": {
+              "BOOL": true
+            },
+            "failureAfterMinutes": {
+              "N": "30"
+            },
+            "faultMode": {
+              "S": "alternating"
+            },
+            "speed": {
+              "N": "1"
+            }
+          }
+        },
+        "requestedMode": {
+          "S": "normal"
+        },
+        "status": {
+          "S": "applied"
+        }
+      }
+    },
+    {
+      "deviceId": "motor-03",
+      "STATE": {
+        "simulationSpeed": {
+          "N": "1"
+        },
+        "rules": {
+          "M": {
+            "temperature": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            },
+            "vibration": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            }
+          }
+        },
+        "temperatureC": {
+          "N": "54.2"
+        },
+        "operatingState": {
+          "S": "running"
+        },
+        "lastSeen": {
+          "S": "2026-10-26T22:35:59.676Z"
+        },
+        "vibrationMmS": {
+          "N": "1.695"
+        },
+        "observedAt": {
+          "S": "2026-10-26T22:35:59.639Z"
+        }
+      },
+      "PREDICTION": {
+        "riskScore": {
+          "N": "0"
+        },
+        "modelVersion": {
+          "S": "rf-b8af65a6f20e"
+        },
+        "warning": {
+          "BOOL": false
+        },
+        "simulationSpeed": {
+          "N": "1"
+        }
+      },
+      "CONTROL": {
+        "appliedMode": {
+          "S": "normal"
+        },
+        "maintenanceAction": {
+          "S": ""
+        },
+        "profile": {
+          "M": {
+            "enabled": {
+              "BOOL": true
+            },
+            "failureAfterMinutes": {
+              "N": "30"
+            },
+            "faultMode": {
+              "S": "alternating"
+            },
+            "speed": {
+              "N": "1"
+            }
+          }
+        },
+        "requestedMode": {
+          "S": "normal"
+        },
+        "status": {
+          "S": "applied"
+        }
+      }
+    },
+    {
+      "deviceId": "pump-01",
+      "STATE": {
+        "simulationSpeed": {
+          "N": "1"
+        },
+        "observedAt": {
+          "S": "2026-10-26T22:35:59.639Z"
+        },
+        "vibrationMmS": {
+          "N": "1.617"
+        },
+        "temperatureC": {
+          "N": "45.35"
+        },
+        "lastSeen": {
+          "S": "2026-10-26T22:35:59.676Z"
+        },
+        "operatingState": {
+          "S": "running"
+        },
+        "rules": {
+          "M": {
+            "temperature": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "alertId": {
+                  "S": "2026-10-26T21:56:23.748Z#temperature#1d908ca63bff4c9fbdb43e64d225d2f4:pump-01:89"
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            },
+            "vibration": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PREDICTION": {
+        "riskScore": {
+          "N": "0"
+        },
+        "modelVersion": {
+          "S": "rf-b8af65a6f20e"
+        },
+        "warning": {
+          "BOOL": false
+        },
+        "simulationSpeed": {
+          "N": "1"
+        }
+      },
+      "CONTROL": {
+        "appliedMode": {
+          "S": "normal"
+        },
+        "maintenanceAction": {
+          "S": ""
+        },
+        "profile": {
+          "M": {
+            "enabled": {
+              "BOOL": true
+            },
+            "failureAfterMinutes": {
+              "N": "30"
+            },
+            "faultMode": {
+              "S": "alternating"
+            },
+            "speed": {
+              "N": "1"
+            }
+          }
+        },
+        "requestedMode": {
+          "S": "normal"
+        },
+        "status": {
+          "S": "applied"
+        }
+      }
+    },
+    {
+      "deviceId": "compressor-01",
+      "STATE": {
+        "observedAt": {
+          "S": "2026-10-26T22:35:59.640Z"
+        },
+        "lastSeen": {
+          "S": "2026-10-26T22:35:59.676Z"
+        },
+        "operatingState": {
+          "S": "running"
+        },
+        "vibrationMmS": {
+          "N": "1.573"
+        },
+        "temperatureC": {
+          "N": "54.87"
+        },
+        "rules": {
+          "M": {
+            "temperature": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            },
+            "vibration": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "alertId": {
+                  "S": "2026-10-26T21:46:59.228Z#vibration#1d908ca63bff4c9fbdb43e64d225d2f4:compressor-01:33"
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            }
+          }
+        },
+        "simulationSpeed": {
+          "N": "1"
+        }
+      },
+      "PREDICTION": {
+        "riskScore": {
+          "N": "0"
+        },
+        "modelVersion": {
+          "S": "rf-b8af65a6f20e"
+        },
+        "warning": {
+          "BOOL": false
+        },
+        "simulationSpeed": {
+          "N": "1"
+        }
+      },
+      "CONTROL": {
+        "appliedMode": {
+          "S": "normal"
+        },
+        "maintenanceAction": {
+          "S": ""
+        },
+        "profile": {
+          "M": {
+            "enabled": {
+              "BOOL": true
+            },
+            "failureAfterMinutes": {
+              "N": "30"
+            },
+            "faultMode": {
+              "S": "alternating"
+            },
+            "speed": {
+              "N": "1"
+            }
+          }
+        },
+        "requestedMode": {
+          "S": "normal"
+        },
+        "status": {
+          "S": "applied"
+        }
+      }
+    },
+    {
+      "deviceId": "fan-01",
+      "STATE": {
+        "simulationSpeed": {
+          "N": "1"
+        },
+        "temperatureC": {
+          "N": "40.3"
+        },
+        "vibrationMmS": {
+          "N": "1.668"
+        },
+        "observedAt": {
+          "S": "2026-10-26T22:35:59.640Z"
+        },
+        "operatingState": {
+          "S": "running"
+        },
+        "lastSeen": {
+          "S": "2026-10-26T22:35:59.676Z"
+        },
+        "rules": {
+          "M": {
+            "temperature": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "alertId": {
+                  "S": "2026-10-26T22:27:57.276Z#temperature#1d908ca63bff4c9fbdb43e64d225d2f4:fan-01:277"
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            },
+            "vibration": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            }
+          }
+        }
+      },
+      "PREDICTION": {
+        "riskScore": {
+          "N": "0"
+        },
+        "modelVersion": {
+          "S": "rf-b8af65a6f20e"
+        },
+        "warning": {
+          "BOOL": false
+        },
+        "simulationSpeed": {
+          "N": "1"
+        }
+      },
+      "CONTROL": {
+        "appliedMode": {
+          "S": "normal"
+        },
+        "maintenanceAction": {
+          "S": ""
+        },
+        "profile": {
+          "M": {
+            "enabled": {
+              "BOOL": true
+            },
+            "failureAfterMinutes": {
+              "N": "30"
+            },
+            "faultMode": {
+              "S": "alternating"
+            },
+            "speed": {
+              "N": "1"
+            }
+          }
+        },
+        "requestedMode": {
+          "S": "normal"
+        },
+        "status": {
+          "S": "applied"
+        }
+      }
+    },
+    {
+      "deviceId": "generator-01",
+      "STATE": {
+        "rules": {
+          "M": {
+            "temperature": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            },
+            "vibration": {
+              "M": {
+                "above": {
+                  "N": "0"
+                },
+                "active": {
+                  "BOOL": false
+                },
+                "healthy": {
+                  "N": "3"
+                }
+              }
+            }
+          }
+        },
+        "vibrationMmS": {
+          "N": "1.814"
+        },
+        "simulationSpeed": {
+          "N": "1"
+        },
+        "observedAt": {
+          "S": "2026-10-26T22:35:59.640Z"
+        },
+        "temperatureC": {
+          "N": "57.46"
+        },
+        "lastSeen": {
+          "S": "2026-10-26T22:35:59.676Z"
+        },
+        "operatingState": {
+          "S": "running"
+        }
+      },
+      "PREDICTION": {
+        "riskScore": {
+          "N": "0.0278"
+        },
+        "modelVersion": {
+          "S": "rf-b8af65a6f20e"
+        },
+        "warning": {
+          "BOOL": false
+        },
+        "simulationSpeed": {
+          "N": "1"
+        }
+      },
+      "CONTROL": {
+        "appliedMode": {
+          "S": "normal"
+        },
+        "maintenanceAction": {
+          "S": ""
+        },
+        "profile": {
+          "M": {
+            "enabled": {
+              "BOOL": true
+            },
+            "failureAfterMinutes": {
+              "N": "30"
+            },
+            "faultMode": {
+              "S": "alternating"
+            },
+            "speed": {
+              "N": "1"
+            }
+          }
+        },
+        "requestedMode": {
+          "S": "normal"
+        },
+        "status": {
+          "S": "applied"
+        }
+      }
+    }
+  ],
+  "shutdownScheduled": false,
+  "publishedAssets": [
+    {
+      "path": "assets/charts-D5JkseK7.js",
+      "sha256": "ab811c2b28441394a129b262384467638ea2403a1dd8dcbdce8f457ed51c6915"
+    },
+    {
+      "path": "assets/index-lrCqEW_Y.css",
+      "sha256": "323e26a1a03192bef6264baf6145a6580675d948b6858e9788b805cbf47b6aa0"
+    },
+    {
+      "path": "assets/index-SqcOyrf_.js",
+      "sha256": "147c08a7d2520d6831a2a131a3635fb73af06e217ddf25ab083ee659ba947005"
+    },
+    {
+      "path": "assets/rolldown-runtime-XKyaHtl9.js",
+      "sha256": "548d1dbf321e7d2ae804fcc158b588706a7c52f8ca175de1490c6ccb4dbe55b7"
+    },
+    {
+      "path": "assets/vendor-B9iMLyJ4.js",
+      "sha256": "78b0fc2228b7b3695942c466b2fa66f20bd3f1d0df41bdd440b22f1fbfe35d0c"
+    },
+    {
+      "path": "favicon.svg",
+      "sha256": "b884228a71aa0e78d554c6a50400df9dd02178a8b4dac2eef73dcf9b8d11f30c"
+    },
+    {
+      "path": "fonts/ibm-plex-mono-400.woff2",
+      "sha256": "08949f728dc52d528e69b1667d15c89a5686a4ee9a296ff90983985f99c380f7"
+    },
+    {
+      "path": "fonts/ibm-plex-mono-500.woff2",
+      "sha256": "01d285447409c8a588692162439a038b8cbd7871309ee20267b0d2d91c6e8e22"
+    },
+    {
+      "path": "fonts/ibm-plex-sans.woff2",
+      "sha256": "e2291e842cf5af167122a22881a740c7f2dda7716f1e8cd76680264f4a859470"
+    },
+    {
+      "path": "fonts/OFL.txt",
+      "sha256": "7e6b2818edbd8f6a01ae80641cc8f16a51080d08fb4e532be3a0b6f74adb07da"
+    },
+    {
+      "path": "index.html",
+      "sha256": "68d9be37b4702c4af5e1037f605cca51adaca10e5d08d3b80d7bbce0af90db1d"
+    }
+  ],
+  "allPublishedHashesMatch": true
+}

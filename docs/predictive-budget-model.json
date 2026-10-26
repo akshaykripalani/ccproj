@@ -1,0 +1,31 @@
+{
+  "devices": 7,
+  "hours": 730,
+  "estimatedMonthlyUsd": 45.47,
+  "illustrativeSevenDayUsd": 10.46,
+  "inferenceLambdaMonthlyUsd": 1.08,
+  "measuredInference": {
+    "sampleCount": 84.0,
+    "averageDurationMs": 699.52,
+    "maximumDurationMs": 2586.45
+  },
+  "usdByComponent": {
+    "Existing EC2, disk, IPv4, KMS and twelve alarms": 14.356,
+    "Telemetry transactional writes: 12 units per reading allowance": 15.6734,
+    "Telemetry and controls reads": 1.3107,
+    "Prediction writes: one unit per device": 1.5238,
+    "Prediction reads: three units per device": 0.9175,
+    "Archive PUTs and FIFO queue requests": 1.8396,
+    "Existing Lambda calls: 1s ingest, 3s process, 1s notifier at 256MiB": 3.7639,
+    "Inference Lambda: 1s per batch at 256MiB": 1.0833,
+    "API, logs, storage, history queries, transfer and scheduler allowance": 5
+  },
+  "notes": [
+    "Planning estimate before credits/free allowances, not a bill or spending cap. Seven days is an illustration, not a shutdown schedule.",
+    "Current Sydney ARM compute and DynamoDB rates are in predictive-pricing.json. EC2/disk/IPv4/other baseline rates use the 14 October recorded price model; request pricing uses $0.20 per million.",
+    "All seven devices report every ten seconds; inference scores a batch, not a separate Lambda call for every device. A minute schedule reconciles retries.",
+    "Twelve transactional write units per reading is a conservative allowance for the bounded feature window; actual item sizes and charges vary. API activity and user-triggered reports vary.",
+    "The initial inference observations include cold/release transitions and are not a steady-state benchmark. Maximum duration is reported, not substituted as an average.",
+    "No second EC2, GPU, always-on ML endpoint, provisioned Lambda concurrency, NAT gateway or paid plan upgrade was added."
+  ]
+}

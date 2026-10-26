@@ -1,6 +1,6 @@
 # End-to-end implementation plan
 
-This plan groups the full scope in PRD.md into three implementation chats. PRD.md and AGENTS.md remain authoritative. Each part must leave working code, validation results, and a written handoff for the next chat.
+This historical plan groups the completed original scope in PRD.old.md into three implementation chats. The original PRD was archived on 27 October 2026; this plan does not define the upcoming expansion. Follow AGENTS.md and the user's current requirements. Each part was intended to leave working code, validation results, and a written handoff for the next chat.
 
 Implementation update, 14 October 2026: the user subsequently requested the **entire AWS portion** together, followed by the UI. Both are now implemented and deployed, including EC2 operation, Cognito, protected control/user-management/report APIs, the React dashboard, SNS delivery and recovery demonstrations. Browser acceptance covers hosted login, real chart data, controls/faults/recovery, reports and role management. Do not restart the infrastructure or replace the live EC2 simulator with a local process. Use PROGRESS.md, docs/AWS_ACCEPTANCE.md and docs/API.md as the current handoff; the part boundaries below preserve the original planning context.
 
@@ -32,7 +32,7 @@ Completion gate: the hosted dashboard supports all required user journeys agains
 
 - Deploy one small EC2 simulator through CloudFormation with the required VPC/subnet/routing/security group, instance role, supervised process, and repeatable updates. Include EBS and public IPv4 costs; avoid a NAT gateway.
 - Verify all three motors start normally and the simulator keeps running independently of the developer computer. Verify faults, disconnection, control acknowledgements, and gradual reset through the hosted dashboard.
-- Run and document every acceptance scenario in PRD.md section 12, including buffering during processing interruption, DLQ isolation/redrive, bounded load tests, authorization, and CloudFront cache updates.
+- Run and document every acceptance scenario in PRD.old.md section 12, including buffering during processing interruption, DLQ isolation/redrive, bounded load tests, authorization, and CloudFront cache updates.
 - Restore a versioned test archive object and rebuild a separate test state table from history while preserving event times and suppressing replay notifications. Measure recovery and its limits.
 - Verify 24-hour recent-reading retention, 30-day archive/version retention, bounded query scans, logs/alarms, and actual observed latency/usage/costs.
 - Complete architecture/course mapping, screenshots or recordings, query/recovery evidence, deployment instructions, operations guidance, and later user-requested teardown instructions. Reproducibility checks must use an isolated test environment and stay within the budget.
@@ -50,6 +50,6 @@ Never record access keys, passwords, authorization headers, tokens, or secret va
 
 At the end of each part, create or update PROGRESS.md with completed work, deployed resource identifiers/URLs, commands to build/test/run, actual verification results, cost observations, known issues, pending external actions, and the precise next tasks. Do not place credentials or tokens in it.
 
-Start the next chat with: "Read AGENTS.md, PRD.md, IMPLEMENTATION_PLAN.md, and PROGRESS.md. Continue Part N from the recorded state, inspect existing AWS resources before changing them, and append every AWS command to AWS_COMMANDS.txt."
+Start the next chat with: "Read AGENTS.md, PRD.old.md, IMPLEMENTATION_PLAN.md, and PROGRESS.md. Continue Part N from the recorded state, inspect existing AWS resources before changing them, and append every AWS command to AWS_COMMANDS.txt."
 
 If only two chats are desired, combine Parts 2 and 3. Three parts provide a clearer boundary between application implementation and full deployment/acceptance work.

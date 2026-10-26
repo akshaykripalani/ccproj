@@ -39,3 +39,7 @@ For each retained bucket, use logged `s3api list-object-versions` and prepare `d
 After export, use logged `dynamodb delete-table` for the two retained tables, `cognito-idp delete-user-pool` for the retained pool, and `kms schedule-key-deletion --pending-window-in-days 7` for the project encryption key. AWS requires a waiting period for KMS key deletion. The separate empty key from the failed first creation (`8a3697d6-4f91-4921-a54f-4062755636c3`) was already scheduled for deletion on 14 October.
 
 Finally verify the saved project instance is terminated, its EBS volume removed, distribution E2QMBAOSKXNVMX absent, and all owned buckets, tables, queues, functions, alarms, schedules, budgets and log groups removed or deliberately exported and retained. Check project-tagged resources for leftovers. Recheck delayed billing; an empty resource list is not an instantaneous final invoice. Do not modify unrelated teammate resources.
+
+## Expanded deployment
+
+No shutdown date is scheduled. Run cleanup only after a user request. Read current identifiers from `ccproj-deployment.json`: the October 27 expansion replaced the original simulator instance and added the Predictor Lambda, its role/log group, asynchronous configuration, reconciliation schedule and alarms to the platform stack. Confirm these are also removed during a future authorized cleanup. Preserve updated report, model/evaluation artifacts and predictive acceptance evidence first.

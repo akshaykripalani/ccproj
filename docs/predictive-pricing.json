@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-10-26T21:52:02.800883+00:00",
+  "source": "AWS Price List API, Sydney; pricing endpoint is global us-east-1; project resources remain in Sydney",
+  "rates": [
+    {
+      "usageType": "APS2-Lambda-GB-Second-ARM",
+      "usd": "0.0000133334",
+      "unit": "Lambda-GB-Second",
+      "description": "AWS Lambda - Total Compute for ARM - Asia Pacific (Sydney)-Tier-1",
+      "effectiveDate": "2026-10-01T00:00:00Z"
+    },
+    {
+      "usageType": "APS2-WriteRequestUnits",
+      "usd": "0.0000007100",
+      "unit": "WriteRequestUnits",
+      "description": "$0.71 per million write request units (Asia Pacific (Sydney))",
+      "effectiveDate": "2026-08-01T00:00:00Z"
+    },
+    {
+      "usageType": "APS2-ReadRequestUnits",
+      "usd": "0.0000001425",
+      "unit": "ReadRequestUnits",
+      "description": "$0.1425 per million read request units (Asia Pacific (Sydney))",
+      "effectiveDate": "2026-08-01T00:00:00Z"
+    }
+  ],
+  "lambdaDurationMetrics": {
+    "Label": "Duration",
+    "Datapoints": [
+      {
+        "Timestamp": "2026-10-27T03:02:00+05:30",
+        "SampleCount": 8.0,
+        "Average": 553.445,
+        "Maximum": 2036.23,
+        "Unit": "Milliseconds"
+      },
+      {
+        "Timestamp": "2026-10-27T03:07:00+05:30",
+        "SampleCount": 10.0,
+        "Average": 428.066,
+        "Maximum": 741.7,
+        "Unit": "Milliseconds"
+      },
+      {
+        "Timestamp": "2026-10-27T03:12:00+05:30",
+        "SampleCount": 34.0,
+        "Average": 761.4132352941176,
+        "Maximum": 2586.45,
+        "Unit": "Milliseconds"
+      },
+      {
+        "Timestamp": "2026-10-27T03:17:00+05:30",
+        "SampleCount": 32.0,
+        "Average": 755.11875,
+        "Maximum": 2189.41,
+        "Unit": "Milliseconds"
+      }
+    ]
+  }
+}

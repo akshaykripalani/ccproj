@@ -71,7 +71,7 @@ Codex assisted implementation, testing and documentation. The frontend-design sk
 
 | Repository location | Responsibility |
 | --- | --- |
-| `PRD.md` | Original functional scope and approved operating constraints |
+| `PRD.old.md` | Original functional scope and approved operating constraints |
 | `backend/domain.py` | Validation, canonical hashing, fault counters and predefined SQL |
 | `backend/ingestion.py` | Signed ingestion handler and queue envelope |
 | `backend/processor.py` | Archive, event deduplication, transactional state and alert transitions |

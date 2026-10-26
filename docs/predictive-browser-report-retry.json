@@ -1,0 +1,22 @@
+{
+  "stats": {
+    "startTime": "2026-10-26T22:22:17.555Z",
+    "duration": 31100.716,
+    "expected": 1,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "scenarios": [
+    {
+      "title": "three deployed Athena reports render results and CSV downloads",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 29595
+        }
+      ]
+    }
+  ]
+}

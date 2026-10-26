@@ -19,25 +19,27 @@
     "ClientId": "54ddf0h4j4g6c47e7cbmhpp5rt",
     "ControlTable": "ccproj-Controls-1SBLS2VLV34K5",
     "DlqArn": "arn:aws:sqs:ap-southeast-2:039379078306:ccproj-DeadLetter-YU54yXeRi1o8.fifo",
+    "ModelVersion": "rf-b8af65a6f20e",
     "FrontendBucket": "ccproj-frontend-ipu2nmzptkhj",
     "QueueArn": "arn:aws:sqs:ap-southeast-2:039379078306:ccproj-Telemetry-fZ6tZS66tzGn.fifo",
     "NotifierFunction": "ccproj-Notifier",
+    "PredictorFunction": "ccproj-Predictor",
     "DashboardUrl": "https://d1idggpc663p7f.cloudfront.net"
   },
   "simulator": {
-    "InstanceId": "i-098cf45e426dd3ab7",
+    "InstanceId": "i-0e6f9f6b588c09de1",
     "LogGroup": "ccproj-simulator-simulator"
   },
   "release": {
     "backend": {
       "path": "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip",
-      "key": "releases/9bd50c15b0618446c345544922d1e6cfc9481361a334b50e22dc09dc8ab92459/backend.zip",
-      "sha256": "9bd50c15b0618446c345544922d1e6cfc9481361a334b50e22dc09dc8ab92459"
+      "key": "releases/0301a9af30301c01c0208180694fe3d4750eba2f0e6c1ce9783fe55dd2ef9957/backend.zip",
+      "sha256": "0301a9af30301c01c0208180694fe3d4750eba2f0e6c1ce9783fe55dd2ef9957"
     },
     "simulator": {
       "path": "C:\\Akshay\\Projects-2\\ccproj\\build\\simulator.tar.gz",
-      "key": "releases/cad6d8d2adeea2c6d0f9afdd3243dbeae6509f2e8649fd9357b41c80302f001f/simulator.tar.gz",
-      "sha256": "cad6d8d2adeea2c6d0f9afdd3243dbeae6509f2e8649fd9357b41c80302f001f"
+      "key": "releases/1d7a3d4476a897b21f7db9670dce7d1ce2d372f6849e1915de442ffffbcf31e8/simulator.tar.gz",
+      "sha256": "1d7a3d4476a897b21f7db9670dce7d1ce2d372f6849e1915de442ffffbcf31e8"
     }
   },
   "budgetPeriod": {

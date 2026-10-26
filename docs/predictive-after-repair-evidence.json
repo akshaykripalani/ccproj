@@ -1,0 +1,8 @@
+{
+  "deviceId": "fan-01",
+  "repairRequestId": "0a52203804544529bf62770c13d20461",
+  "subsequentRecoveryRequestId": "186c8a388c654f518c0ab2a6cf4fb002",
+  "outcome": "A new natural thermal episode after manual repair cooled and restarted automatically",
+  "modelVersion": "rf-b8af65a6f20e",
+  "recoveryAt": "2026-10-26T22:28:27.409Z"
+}

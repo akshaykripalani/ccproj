@@ -1,0 +1,9 @@
+{
+  "deviceId": "pump-01",
+  "outcome": "Stopped, escalated once, required manual repair",
+  "cooldownRequestId": "c26e5a7140ed47feb2a981063fc1f796",
+  "requestedAt": "2026-10-26T21:56:25.026Z",
+  "escalationObservedAt": "2026-10-26T21:58:24.300Z",
+  "temperatureAtEscalation": 94.0,
+  "automaticRestartSuppressed": true
+}

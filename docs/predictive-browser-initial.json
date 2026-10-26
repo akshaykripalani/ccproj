@@ -1,0 +1,62 @@
+{
+  "stats": {
+    "startTime": "2026-10-26T22:01:04.123Z",
+    "duration": 556182.442,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "scenarios": [
+    {
+      "title": "real hosted PKCE login, current motors, live charts and protected viewer UI",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 67687
+        }
+      ]
+    },
+    {
+      "title": "browser controls demonstrate automatic cooldown and manual mechanical repair",
+      "ok": false,
+      "results": [
+        {
+          "status": "timedOut",
+          "durationMs": 420042
+        }
+      ]
+    },
+    {
+      "title": "three deployed Athena reports render results and CSV downloads",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 28060
+        }
+      ]
+    },
+    {
+      "title": "operator browser lists existing users and persists role assignment",
+      "ok": true,
+      "results": [
+        {
+          "status": "passed",
+          "durationMs": 24594
+        }
+      ]
+    },
+    {
+      "title": "new equipment metrics, maintenance history and model details are live",
+      "ok": false,
+      "results": [
+        {
+          "status": "failed",
+          "durationMs": 10860
+        }
+      ]
+    }
+  ]
+}
