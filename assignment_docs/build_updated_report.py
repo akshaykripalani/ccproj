@@ -219,10 +219,20 @@ def main():
     title.alignment = WD_ALIGN_PARAGRAPH.CENTER
     title.paragraph_format.space_before = Pt(0)
     title.paragraph_format.space_after = Pt(14)
-    authors = ROOT / ".runtime/report-authors.json"
+    authors = OUT / "authors.json"
+    if not authors.exists():
+        authors = ROOT / ".runtime/report-authors.json"
     if authors.exists():
-        for line in json.loads(authors.read_text())["lines"]:
-            paragraph(line, False).alignment = WD_ALIGN_PARAGRAPH.CENTER
+        author_data = json.loads(authors.read_text(encoding="utf-8"))
+        d.core_properties.author = "; ".join(author_data.get("names", []))
+        lines = [(line, 10) for line in author_data.get("nameLines", author_data.get("lines", []))]
+        lines += [(line, 9) for line in author_data.get("affiliationLines", [])]
+        for index, (line, size) in enumerate(lines):
+            p = paragraph(line, False, size)
+            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            p.paragraph_format.keep_with_next = True
+            if index == len(lines) - 1:
+                p.paragraph_format.space_after = Pt(12)
     abstract = paragraph("Abstract. This paper presents a deployed AWS system for monitoring seven simulated industrial assets and predicting faults within the next five simulated minutes. One EC2 gateway represents three induction motors, a centrifugal pump, an air compressor, a cooling fan and a generator. Signed telemetry passes through API Gateway, Lambda and a FIFO queue into DynamoDB and an S3 archive. Configurable deterioration profiles produce thermal and mechanical faults. A dataset of 420 independent simulation runs supports local training and evaluation. The trained random forest is exported as portable learned trees and served by a separate inference Lambda. On 76 held-out runs, fault-warning precision was 90.3%, recall was 94.3%, and the median warning lead was five simulated minutes. The deployed system demonstrated warnings before faults, automatic cooldown and restart, and mechanical faults requiring operator repair. An authenticated React dashboard combines measurements, predictions, maintenance history and bounded historical reports. The results establish a reproducible teaching demonstration; they do not establish predictive accuracy on real industrial equipment.", False, 9)
     abstract.paragraph_format.left_indent = abstract.paragraph_format.right_indent = Cm(.5)
     abstract.paragraph_format.space_after = Pt(6)
