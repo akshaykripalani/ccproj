@@ -52,9 +52,11 @@ export function ProfileEditor({
 }) {
   const [profile, setProfile] = useState<FailureProfile>(
     device.profile ?? {
-      enabled: true,
+      enabled: !device.deviceId.startsWith("motor-"),
       failureAfterMinutes: 30,
-      faultMode: "alternating",
+      faultMode: ["compressor-01", "generator-01"].includes(device.deviceId)
+        ? "vibration"
+        : "overheat",
       speed: 1,
     },
   );
@@ -85,6 +87,17 @@ export function ProfileEditor({
   return (
     <form className="profile-form" onSubmit={(event) => void save(event)}>
       <h3>Failure profile</h3>
+      <p className="tiny">
+        {!profile.enabled
+          ? "Runs normally until a manual fault is triggered."
+          : profile.faultMode === "overheat"
+            ? "Stops to cool, then restarts automatically."
+            : profile.faultMode === "vibration"
+              ? "Stops for mechanical repair; an operator must repair it."
+              : profile.faultMode === "alternating"
+                ? "Alternates recoverable overheating and mechanical faults requiring repair."
+                : "Persistent overheating requires manual repair."}
+      </p>
       <label className="profile-enabled">
         <input
           type="checkbox"

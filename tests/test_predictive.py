@@ -9,7 +9,7 @@ import pytest
 from backend import api, predictor
 from backend.aws_support import get_item
 from backend.domain import DEVICES, evolve, native, timestamp, utcnow, validate_reading
-from backend.equipment import CATALOG, validate_profile
+from backend.equipment import CATALOG, default_profile, validate_profile
 from backend.features import features, score
 from simulator.equipment import Equipment
 from simulator.main import Gateway
@@ -38,6 +38,29 @@ def test_all_equipment_types_emit_valid_type_specific_telemetry():
         "outputPowerWatts"
         in Equipment("generator-01", random.Random(1)).sample("normal", "test")["metrics"]
     )
+
+
+def test_default_fleet_has_three_manual_two_thermal_and_two_mechanical_profiles(aws):
+    gateway = Gateway(aws["controls"], boto3.Session(region_name="ap-southeast-2"))
+    gateway.initialize()
+    for device in DEVICES:
+        profile = get_item(aws["controls"], device, "CONTROL")["profile"]
+        assert profile == default_profile(device)
+        if device.startswith("motor-"):
+            assert not profile["enabled"]
+            machine = Equipment(device, random.Random(42))
+            for _ in range(720):
+                row = machine.sample("normal", "unattended")
+                assert row["temperatureC"] < 75 and row["vibrationMmS"] < 4.5
+                assert row["operatingState"] == "running"
+            for _ in range(5):
+                row = machine.sample("vibration", "manual")
+            assert row["operatingState"] == "stopped"
+        else:
+            assert profile["enabled"]
+            assert profile["faultMode"] == (
+                "overheat" if device in ("pump-01", "fan-01") else "vibration"
+            )
 
 
 @pytest.mark.parametrize(
@@ -180,3 +203,50 @@ def test_new_thermal_episode_after_manual_repair_still_cools_automatically(aws):
     predictor.maintenance("motor-01", state, control, utcnow())
     cooling = get_item(aws["controls"], "motor-01", "CONTROL")
     assert cooling["requestedMode"] == "cooldown" and cooling["maintenanceAction"] == "Cooling down"
+
+
+@pytest.mark.parametrize("rule", ["temperature", "vibration"])
+def test_pre_repair_telemetry_cannot_reassert_a_fault_after_repair(aws, rule):
+    gateway = Gateway(aws["controls"], boto3.Session(region_name="ap-southeast-2"))
+    gateway.initialize()
+    repaired = api.request_control("motor-01", "repair", {"sub": "operator"})
+    assert gateway.apply(repaired)
+    control = get_item(aws["controls"], "motor-01", "CONTROL")
+    applied = dt.datetime.fromisoformat(control["appliedAt"].replace("Z", "+00:00"))
+    state = {
+        "observedAt": timestamp(applied - dt.timedelta(seconds=1)),
+        "rules": {rule: {"active": True, "alertId": "pre-repair-fault"}},
+        "temperatureC": 95,
+    }
+    predictor.maintenance("motor-01", state, control, applied)
+    assert get_item(aws["controls"], "motor-01", "CONTROL") == control
+    # A real later thermal/mechanical episode must still trigger its maintenance path.
+    state["observedAt"] = timestamp(applied + dt.timedelta(seconds=10))
+    predictor.maintenance("motor-01", state, control, applied + dt.timedelta(seconds=10))
+    updated = get_item(aws["controls"], "motor-01", "CONTROL")
+    assert updated["maintenanceAction"] == (
+        "Cooling down" if rule == "temperature" else "Repair needed"
+    )
+
+
+def test_healthy_running_telemetry_clears_stale_repair_label(aws):
+    gateway = Gateway(aws["controls"], boto3.Session(region_name="ap-southeast-2"))
+    gateway.initialize()
+    control = get_item(aws["controls"], "motor-01", "CONTROL")
+    control.update(
+        maintenanceAction="Repair needed",
+        maintenanceEpisode="old-mechanical",
+        maintenanceAt=control["appliedAt"],
+    )
+    aws["controls"].put_item(Item=control)
+    state = {"observedAt": timestamp(utcnow()), "operatingState": "running", "rules": {}}
+    predictor.maintenance("motor-01", state, control, utcnow())
+    updated = get_item(aws["controls"], "motor-01", "CONTROL")
+    assert "maintenanceAction" not in updated
+    assert updated["requestId"] == control["requestId"]
+    # A stale invocation must not clear a label belonging to a newer fault episode.
+    aws["controls"].put_item(Item={**control, "maintenanceEpisode": "new-mechanical"})
+    predictor.maintenance("motor-01", state, control, utcnow())
+    assert (
+        get_item(aws["controls"], "motor-01", "CONTROL")["maintenanceEpisode"] == "new-mechanical"
+    )

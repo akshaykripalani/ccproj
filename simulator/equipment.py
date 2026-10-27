@@ -3,7 +3,7 @@
 import math
 
 from backend.domain import timestamp, utcnow
-from backend.equipment import CATALOG, DEFAULT_PROFILE, measurements
+from backend.equipment import CATALOG, default_profile, measurements
 
 
 class Equipment:
@@ -29,7 +29,7 @@ class Equipment:
         self.last_mode = "normal"
 
     def sample(self, mode, run_id, profile=None, interval=10):
-        profile = {**DEFAULT_PROFILE, **(profile or {})}
+        profile = {**default_profile(self.device), **(profile or {})}
         self.sequence += 1
         if mode == "disconnect":
             return None

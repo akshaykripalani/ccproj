@@ -1,0 +1,44 @@
+{
+  "outcome": "All seven assets automatically recovered twice without manual repair",
+  "method": "Real EC2 telemetry and inference Lambda; audited conditional control-table requests",
+  "account": "039379078306",
+  "region": "ap-southeast-2",
+  "profile": "default",
+  "recoveries": {
+    "motor-01": {
+      "104036a041754edda9569de53dea9e5a": "2026-10-27T04:10:27.791Z",
+      "1471c5d41ff34e998c365ce011f1b07e": "2026-10-27T04:12:18.445Z"
+    },
+    "motor-02": {
+      "855bc4f1dcad476b9ad80f938cc82c7c": "2026-10-27T04:10:37.845Z",
+      "6d36f196a63546cc9d974a8a1b243e06": "2026-10-27T04:12:38.563Z"
+    },
+    "motor-03": {
+      "2156c154e4024512bb1081b340f719b5": "2026-10-27T04:10:37.854Z",
+      "8f295cdd6d674fdd9371df9b38e237ef": "2026-10-27T04:12:38.571Z"
+    },
+    "pump-01": {
+      "cf1c9e0114d843c38d25c302d5e8ba6e": "2026-10-27T04:10:37.862Z",
+      "15cbc34e5ea248318f61351fe1cc6afd": "2026-10-27T04:12:38.580Z"
+    },
+    "compressor-01": {
+      "bfac9b15452b49fa874d4f883bacec30": "2026-10-27T04:10:37.870Z",
+      "b26cfbe0a48641d7be4b910af1efe3a1": "2026-10-27T04:12:38.590Z"
+    },
+    "fan-01": {
+      "d07dc648cc7b4a36b0517682231169f6": "2026-10-27T04:10:37.886Z",
+      "809fceea335b4e9eb86c9e3bb1de0f46": "2026-10-27T04:12:38.600Z"
+    },
+    "generator-01": {
+      "458acc2cd2634606b5349827d17b1f50": "2026-10-27T04:10:37.895Z",
+      "c1dbec1540834b1d866bae07a0b08c9a": "2026-10-27T04:12:28.505Z"
+    }
+  },
+  "checkedAt": "2026-10-27T04:12:51.110Z",
+  "testProfile": {
+    "enabled": true,
+    "faultMode": "overheat",
+    "failureAfterMinutes": 10,
+    "speed": 10
+  }
+}

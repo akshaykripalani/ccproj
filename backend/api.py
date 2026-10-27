@@ -22,7 +22,7 @@ from backend.domain import (
     timestamp,
     utcnow,
 )
-from backend.equipment import CATALOG, DEFAULT_PROFILE, validate_profile
+from backend.equipment import CATALOG, default_profile, validate_profile
 from backend.notifications import subscriptions
 
 log = logging.getLogger(__name__)
@@ -97,7 +97,7 @@ def device_view(device):
         "deviceId": device,
         "name": CATALOG[device]["name"],
         "equipmentType": CATALOG[device]["type"],
-        "profile": control.get("profile", DEFAULT_PROFILE),
+        "profile": control.get("profile", default_profile(device)),
         "prediction": get_item(table(), device, "PREDICTION"),
         "thresholds": {
             rule: {"field": field, "value": threshold} for rule, (field, threshold) in RULES.items()
@@ -163,7 +163,7 @@ def request_control(device, mode, user, profile=None):
         "requestedAt": timestamp(utcnow()),
         "status": "pending",
         "profile": validate_profile(
-            profile if profile is not None else existing.get("profile", {})
+            profile if profile is not None else existing.get("profile", default_profile(device))
         ),
         "maintenanceAction": "Repaired" if mode == "repair" else "",
         "maintenanceEpisode": "",

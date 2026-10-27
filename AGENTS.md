@@ -9,6 +9,7 @@
 - Kinesis Data Streams, Firehose, and QuickSight are blocked. Do not use them.
 - One EC2 instance simulates three induction motors, a centrifugal pump, an air compressor, a cooling fan and a generator. Configurable deterioration profiles and manual controls demonstrate faults. Train locally and use a compact inference Lambda for five-minute predictive maintenance.
 - Use simple Healthy/Warning/Fault labels. Transient overheating can cool/restart automatically; mechanical faults require manual repair. Preserve the dashboard design language.
+- Default profiles: three induction motors healthy until manually faulted; pump and fan recover automatically from overheating; compressor and generator require manual mechanical repair.
 - Do not set a shutdown date or scheduled teardown. Favor low-cost infrastructure.
 - Send telemetry through API Gateway, Lambda, and SQS. Use Lambda to process it.
 - Store current state and recent readings in DynamoDB. Store historical readings in S3.

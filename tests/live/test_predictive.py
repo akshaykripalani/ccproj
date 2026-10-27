@@ -5,6 +5,7 @@ import time
 
 import pytest
 
+from backend.equipment import default_profile
 from tests.live.conftest import PROJECT, wait_for
 
 pytestmark = pytest.mark.live
@@ -18,6 +19,18 @@ def profile(live, device, fault, enabled=True, minutes=10, speed=10):
     )
     assert result.status_code == 202, result.text
     wait_for(lambda: live.state(device)["control"]["status"] == "applied", timeout=40)
+
+
+def restore_default(live, device):
+    saved = default_profile(device)
+    profile(
+        live,
+        device,
+        saved["faultMode"],
+        saved["enabled"],
+        saved["failureAfterMinutes"],
+        saved["speed"],
+    )
 
 
 def test_predictive_maintenance_live(live, record_property):
@@ -127,7 +140,7 @@ def test_predictive_maintenance_live(live, record_property):
             "fan-01",
             "generator-01",
         ):
-            profile(live, device, "alternating", minutes=30, speed=1)
+            restore_default(live, device)
         (PROJECT / "docs/predictive-live-evidence.json").write_text(
             json.dumps(evidence, indent=2) + "\n", encoding="utf-8"
         )
@@ -169,7 +182,7 @@ def test_persistent_cooldown_is_bounded(live):
             + "\n"
         )
     finally:
-        profile(live, device, "alternating", minutes=30, speed=1)
+        restore_default(live, device)
 
 
 def test_thermal_recovery_after_manual_repair(live):
@@ -208,4 +221,4 @@ def test_thermal_recovery_after_manual_repair(live):
             + "\n"
         )
     finally:
-        profile(live, device, "alternating", minutes=30, speed=1)
+        restore_default(live, device)

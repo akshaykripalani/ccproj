@@ -1,0 +1,11 @@
+{
+  "status": "failed initial verification",
+  "causes": [
+    "ConnectionResetError 10054 during a profile acknowledgement GET",
+    "Test cleanup sent API numeric speed 1.0 instead of integer 1; fixed by normalizing saved speed"
+  ],
+  "productAssertionsCompleted": false,
+  "subsequentAuthSetup": "Disposable Cognito user creation failed with CLI exit 255; no controller assertion ran in that attempt",
+  "verificationMethod": "Audited conditional DynamoDB control requests; real EC2 telemetry, processing and inference; no fabricated readings",
+  "controlWriteRace": "The CLI verifier now reconciles a concurrent automatic-recovery request before retrying its bounded profile change; newer human commands are preserved"
+}

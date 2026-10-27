@@ -1,0 +1,382 @@
+{
+  "account": "039379078306",
+  "region": "ap-southeast-2",
+  "profile": "default",
+  "devices": {
+    "motor-01": {
+      "originalProfile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "alternating",
+        "speed": "1"
+      },
+      "previousMechanicalFaultAt": "2026-10-26T22:48:33.675Z",
+      "recentMaintenance": [
+        {
+          "action": "Repair needed",
+          "at": "2026-10-27T03:47:21.923Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-27T03:47:16.828Z"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T22:48:34.664Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:43:32.973Z"
+        },
+        {
+          "action": "Restarted automatically",
+          "at": "2026-10-26T22:16:52.344Z"
+        },
+        {
+          "action": "Cooling down",
+          "at": "2026-10-26T22:15:53.055Z",
+          "reason": "Transient thermal recovery: stop, cool and restart"
+        },
+        {
+          "action": "Restarted automatically",
+          "at": "2026-10-26T22:03:45.854Z"
+        },
+        {
+          "action": "Cooling down",
+          "at": "2026-10-26T22:02:46.515Z",
+          "reason": "Transient thermal recovery: stop, cool and restart"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:02:26.437Z"
+        }
+      ]
+    },
+    "motor-02": {
+      "originalProfile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "alternating",
+        "speed": "1"
+      },
+      "previousMechanicalFaultAt": "2026-10-26T23:24:24.998Z",
+      "recentMaintenance": [
+        {
+          "action": "Repair needed",
+          "at": "2026-10-27T03:47:22.044Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-27T03:47:15.341Z"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T23:24:26.102Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T23:18:24.489Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T23:18:03.929Z"
+        },
+        {
+          "action": "Restarted automatically",
+          "at": "2026-10-26T22:54:25.546Z"
+        },
+        {
+          "action": "Cooling down",
+          "at": "2026-10-26T22:53:26.275Z",
+          "reason": "Transient thermal recovery: stop, cool and restart"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:48:04.604Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:47:44.541Z"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-26T22:17:27.727Z"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T22:17:23.753Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T22:13:39.720Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T22:04:17.134Z",
+          "reason": "Mechanical inspection required"
+        }
+      ]
+    },
+    "motor-03": {
+      "originalProfile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "alternating",
+        "speed": "1"
+      },
+      "previousMechanicalFaultAt": "2026-10-26T22:51:44.698Z",
+      "recentMaintenance": [
+        {
+          "action": "Repair needed",
+          "at": "2026-10-27T03:47:22.164Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-27T03:47:14.041Z"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T22:51:45.850Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:46:34.239Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:12:19.421Z"
+        }
+      ]
+    },
+    "pump-01": {
+      "originalProfile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "alternating",
+        "speed": "1"
+      },
+      "previousMechanicalFaultAt": "2026-10-26T22:51:44.698Z",
+      "recentMaintenance": [
+        {
+          "action": "Repair needed",
+          "at": "2026-10-27T03:47:22.283Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-27T03:47:12.766Z"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T22:51:45.990Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:45:54.119Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:45:03.797Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:44:43.615Z"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-26T21:58:44.552Z"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T21:58:25.583Z",
+          "reason": "Overheating persisted during cooldown; automatic retry suppressed"
+        },
+        {
+          "action": "Cooling down",
+          "at": "2026-10-26T21:56:25.026Z",
+          "reason": "Transient thermal recovery: stop, cool and restart"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T21:55:44.846Z"
+        },
+        {
+          "action": "Restarted automatically",
+          "at": "2026-10-26T21:45:18.722Z"
+        },
+        {
+          "action": "Cooling down",
+          "at": "2026-10-26T21:44:49.884Z",
+          "reason": "Transient thermal recovery: stop, cool and restart"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T21:44:19.724Z"
+        }
+      ]
+    },
+    "compressor-01": {
+      "originalProfile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "alternating",
+        "speed": "1"
+      },
+      "previousMechanicalFaultAt": "2026-10-26T23:20:23.760Z",
+      "recentMaintenance": [
+        {
+          "action": "Repair needed",
+          "at": "2026-10-27T03:47:22.404Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-27T03:47:11.506Z"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T23:20:25.154Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T23:15:53.505Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T23:15:23.363Z"
+        },
+        {
+          "action": "Restarted automatically",
+          "at": "2026-10-26T22:51:54.753Z"
+        },
+        {
+          "action": "Cooling down",
+          "at": "2026-10-26T22:50:55.870Z",
+          "reason": "Transient thermal recovery: stop, cool and restart"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:44:53.777Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:10:49.143Z"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-26T21:47:17.297Z"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T21:47:00.616Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T21:46:30.444Z"
+        }
+      ]
+    },
+    "fan-01": {
+      "originalProfile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "alternating",
+        "speed": "1"
+      },
+      "previousMechanicalFaultAt": "2026-10-26T22:56:36.175Z",
+      "recentMaintenance": [
+        {
+          "action": "Repair needed",
+          "at": "2026-10-27T03:47:22.544Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-27T03:47:10.064Z"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T22:56:37.721Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:51:56.172Z"
+        },
+        {
+          "action": "Restarted automatically",
+          "at": "2026-10-26T22:28:27.409Z"
+        },
+        {
+          "action": "Cooling down",
+          "at": "2026-10-26T22:27:58.719Z",
+          "reason": "Transient thermal recovery: stop, cool and restart"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:27:18.557Z"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-26T22:26:22.860Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:12:59.900Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:12:29.701Z"
+        }
+      ]
+    },
+    "generator-01": {
+      "originalProfile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "alternating",
+        "speed": "1"
+      },
+      "previousMechanicalFaultAt": "2026-10-26T22:49:03.833Z",
+      "recentMaintenance": [
+        {
+          "action": "Repair needed",
+          "at": "2026-10-27T03:47:22.663Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Repaired",
+          "at": "2026-10-27T03:47:09.584Z"
+        },
+        {
+          "action": "Repair needed",
+          "at": "2026-10-26T22:49:05.426Z",
+          "reason": "Mechanical inspection required"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:44:03.755Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:10:49.363Z"
+        },
+        {
+          "action": "Fault predicted",
+          "at": "2026-10-26T22:09:59.124Z"
+        }
+      ]
+    }
+  }
+}

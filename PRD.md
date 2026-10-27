@@ -8,6 +8,8 @@ Extend the deployed Sydney monitoring platform to seven simulated assets: three 
 
 Each asset has configurable deterioration profiles, normally around 30 simulated minutes per failure episode. Include thermal and mechanical failure modes, varied load and noise, healthy operation, and accelerated demonstration speeds. Manual fault controls remain available. The simulator's hidden failure schedule is ground truth for supervised training only, never an inference feature.
 
+Default fleet behavior: the three induction motors remain healthy until manually faulted; the centrifugal pump and cooling fan repeatedly recover from overheating automatically; the air compressor and generator develop mechanical faults requiring manual repair. All profiles remain configurable. Do not leave every device on alternating faults for unattended operation.
+
 Train a compact classifier locally to identify faults within the next five simulated minutes. Evaluate on independent simulation runs, compare against a simple trend baseline, measure precision/recall, false alarms and warning lead time, and disclose synthetic-data limitations. Deploy versioned model artifacts through a separate low-cost inference Lambda. Include reproducible training, evaluation gates, release selection and rollback.
 
 Automatically stop, cool and restart recoverable transient overheating. Mechanical faults require an operator's explicit repair action. Persistent overheating escalates rather than repeatedly restarting. Keep the human workflow simple: Healthy, Warning, Fault, with short maintenance action text. Normal telemetry determines recovery without a separate operator verification workflow.

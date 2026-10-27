@@ -1,0 +1,181 @@
+{
+  "alarms": [
+    {
+      "name": "ccproj-ApiBackendErrors",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-ApiBackendThrottles",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-Backlog",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-DLQ",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-IngestionErrors",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-IngestionThrottles",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-NotifierErrors",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-NotifierThrottles",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-PredictorErrors",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-PredictorThrottles",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-ProcessorErrors",
+      "state": "OK"
+    },
+    {
+      "name": "ccproj-ProcessorThrottles",
+      "state": "OK"
+    }
+  ],
+  "instances": [
+    {
+      "id": "i-0e6f9f6b588c09de1",
+      "state": "running",
+      "type": "t4g.micro"
+    }
+  ],
+  "dlq": {
+    "Attributes": {
+      "ApproximateNumberOfMessages": "0"
+    }
+  },
+  "checkedAt": "2026-10-27T04:13:48.352Z",
+  "account": "039379078306",
+  "region": "ap-southeast-2",
+  "profile": "default",
+  "devices": [
+    {
+      "deviceId": "motor-01",
+      "profile": {
+        "enabled": false,
+        "failureAfterMinutes": "30",
+        "faultMode": "overheat",
+        "speed": "1"
+      },
+      "status": "applied",
+      "operatingState": "running",
+      "observedAt": "2026-10-27T04:13:38.898Z",
+      "temperatureC": "52.17",
+      "vibrationMmS": "1.504",
+      "activeFaults": []
+    },
+    {
+      "deviceId": "motor-02",
+      "profile": {
+        "enabled": false,
+        "failureAfterMinutes": "30",
+        "faultMode": "overheat",
+        "speed": "1"
+      },
+      "status": "applied",
+      "operatingState": "running",
+      "observedAt": "2026-10-27T04:13:38.899Z",
+      "temperatureC": "50.7",
+      "vibrationMmS": "1.608",
+      "activeFaults": []
+    },
+    {
+      "deviceId": "motor-03",
+      "profile": {
+        "enabled": false,
+        "failureAfterMinutes": "30",
+        "faultMode": "overheat",
+        "speed": "1"
+      },
+      "status": "applied",
+      "operatingState": "running",
+      "observedAt": "2026-10-27T04:13:38.899Z",
+      "temperatureC": "54.15",
+      "vibrationMmS": "1.614",
+      "activeFaults": []
+    },
+    {
+      "deviceId": "pump-01",
+      "profile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "overheat",
+        "speed": "1"
+      },
+      "status": "applied",
+      "operatingState": "running",
+      "observedAt": "2026-10-27T04:13:38.899Z",
+      "temperatureC": "45.1",
+      "vibrationMmS": "1.67",
+      "activeFaults": []
+    },
+    {
+      "deviceId": "compressor-01",
+      "profile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "vibration",
+        "speed": "1"
+      },
+      "status": "applied",
+      "operatingState": "running",
+      "observedAt": "2026-10-27T04:13:38.899Z",
+      "temperatureC": "54.67",
+      "vibrationMmS": "1.564",
+      "activeFaults": []
+    },
+    {
+      "deviceId": "fan-01",
+      "profile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "overheat",
+        "speed": "1"
+      },
+      "status": "applied",
+      "operatingState": "running",
+      "observedAt": "2026-10-27T04:13:38.899Z",
+      "temperatureC": "40.26",
+      "vibrationMmS": "1.587",
+      "activeFaults": []
+    },
+    {
+      "deviceId": "generator-01",
+      "profile": {
+        "enabled": true,
+        "failureAfterMinutes": "30",
+        "faultMode": "vibration",
+        "speed": "1"
+      },
+      "status": "applied",
+      "operatingState": "running",
+      "observedAt": "2026-10-27T04:13:38.899Z",
+      "temperatureC": "57.51",
+      "vibrationMmS": "1.681",
+      "activeFaults": []
+    }
+  ],
+  "validation": {
+    "backendTests": 86,
+    "controlledBrowserScenarios": 38,
+    "automaticLiveRecoveries": 14
+  },
+  "shutdownScheduled": false
+}

@@ -50,6 +50,31 @@ def maintenance(device, state, control, now):
     active = {key: value for key, value in state.get("rules", {}).items() if value.get("active")}
     if control.get("maintenanceAction") == "Restarted automatically":
         record(device, "Restarted automatically", control["maintenanceAt"], control["requestId"])
+    # The control poller can acknowledge a repair before its first new telemetry batch.
+    # Do not use pre-command faults to undo that repair or request another cooldown.
+    if (
+        state.get("observedAt")
+        and control.get("appliedAt")
+        and parse_time(state["observedAt"]) < parse_time(control["appliedAt"])
+    ):
+        return
+    if (
+        not active
+        and state.get("operatingState") == "running"
+        and control.get("status") == "applied"
+        and control.get("requestedMode") in ("normal", "repair")
+        and control.get("maintenanceAction") == "Repair needed"
+    ):
+        try:
+            table("CONTROL_TABLE").update_item(
+                Key={"pk": device, "sk": "CONTROL"},
+                ConditionExpression=Attr("requestId").eq(control["requestId"])
+                & Attr("maintenanceEpisode").eq(control["maintenanceEpisode"]),
+                UpdateExpression="REMOVE maintenanceAction, maintenanceAt, maintenanceEpisode",
+            )
+        except client("dynamodb").exceptions.ConditionalCheckFailedException:
+            pass  # A newer operator command or fault episode owns the current label.
+        return
     if not active or control.get("status") != "applied":
         return
     rule = "vibration" if "vibration" in active else "temperature"

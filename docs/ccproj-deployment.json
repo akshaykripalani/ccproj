@@ -33,13 +33,13 @@
   "release": {
     "backend": {
       "path": "C:\\Akshay\\Projects-2\\ccproj\\build\\backend.zip",
-      "key": "releases/0301a9af30301c01c0208180694fe3d4750eba2f0e6c1ce9783fe55dd2ef9957/backend.zip",
-      "sha256": "0301a9af30301c01c0208180694fe3d4750eba2f0e6c1ce9783fe55dd2ef9957"
+      "key": "releases/7b3cf8c963bfbbf2f03802b061372ab50556c195f09a92c021aee704dd89e6e5/backend.zip",
+      "sha256": "7b3cf8c963bfbbf2f03802b061372ab50556c195f09a92c021aee704dd89e6e5"
     },
     "simulator": {
       "path": "C:\\Akshay\\Projects-2\\ccproj\\build\\simulator.tar.gz",
-      "key": "releases/1d7a3d4476a897b21f7db9670dce7d1ce2d372f6849e1915de442ffffbcf31e8/simulator.tar.gz",
-      "sha256": "1d7a3d4476a897b21f7db9670dce7d1ce2d372f6849e1915de442ffffbcf31e8"
+      "key": "releases/990b5e38cfe03cfc2c667e85d66ed32896cfe1a3be99ed478e501d27984eb1ce/simulator.tar.gz",
+      "sha256": "990b5e38cfe03cfc2c667e85d66ed32896cfe1a3be99ed478e501d27984eb1ce"
     }
   },
   "budgetPeriod": {

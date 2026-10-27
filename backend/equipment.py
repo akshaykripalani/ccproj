@@ -45,6 +45,15 @@ DEFAULT_PROFILE = {
 }
 
 
+def default_profile(device):
+    """Three manually faulted motors, two thermal assets, two mechanical assets."""
+    return {
+        **DEFAULT_PROFILE,
+        "enabled": CATALOG[device]["type"] != "induction_motor",
+        "faultMode": "vibration" if device in ("compressor-01", "generator-01") else "overheat",
+    }
+
+
 def validate_profile(value):
     if not isinstance(value, dict) or set(value) - set(DEFAULT_PROFILE):
         raise ValueError("Profile fields: enabled, failureAfterMinutes, faultMode, speed")

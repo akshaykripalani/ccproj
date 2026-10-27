@@ -1,4 +1,4 @@
-"""One factory gateway, three motors, independently polled demo controls."""
+"""One factory gateway, seven assets, independently polled demo controls."""
 
 import argparse
 import json
@@ -17,7 +17,7 @@ from botocore.awsrequest import AWSRequest
 from botocore.config import Config
 
 from backend.domain import DEVICES, MODES, canonical, native, timestamp, utcnow
-from backend.equipment import DEFAULT_PROFILE, validate_profile
+from backend.equipment import default_profile, validate_profile
 from simulator.equipment import Equipment as Motor
 
 log = logging.getLogger("simulator")
@@ -44,7 +44,7 @@ class Gateway:
         self.session = session
         self.run_id = uuid.uuid4().hex
         self.modes = {device: "normal" for device in DEVICES}
-        self.profiles = {device: dict(DEFAULT_PROFILE) for device in DEVICES}
+        self.profiles = {device: default_profile(device) for device in DEVICES}
         self.interval = 10
         self.motors = [Motor(device, random.Random(seed + i)) for i, device in enumerate(DEVICES)]
         self.stop = threading.Event()
@@ -57,7 +57,9 @@ class Gateway:
         )
         for device in DEVICES:
             previous = self.table.get_item(Key={"pk": device, "sk": "CONTROL"}).get("Item", {})
-            self.profiles[device] = validate_profile(previous.get("profile", {}))
+            self.profiles[device] = validate_profile(
+                previous.get("profile", default_profile(device))
+            )
             self.table.put_item(
                 Item={
                     "profile": native(self.profiles[device]),
@@ -97,7 +99,7 @@ class Gateway:
             return False
         with self.lock:
             self.modes[device] = "normal" if mode == "repair" else mode
-            self.profiles[device] = validate_profile(record.get("profile", {}))
+            self.profiles[device] = validate_profile(record.get("profile", default_profile(device)))
             if mode in ("normal", "repair"):
                 next(m for m in self.motors if m.device == device).reset()
         return True
