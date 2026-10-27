@@ -23,6 +23,27 @@ export function currentPrediction(device: Device) {
     : undefined;
 }
 
+export function currentOutlook(device: Device) {
+  if (!device.online) return "Offline · outlook unavailable";
+  const rules = device.latest?.rules;
+  if (rules?.vibration?.active && rules?.temperature?.active)
+    return "Current fault · overheating and mechanical";
+  if (rules?.vibration?.active) return "Current fault · mechanical";
+  if (rules?.temperature?.active) return "Current fault · overheating";
+  if (
+    device.control.appliedMode === "cooldown" &&
+    device.latest?.operatingState === "stopped"
+  )
+    return "Cooling down · automatic restart pending";
+  if (device.latest?.operatingState === "stopped")
+    return "Stopped · outlook unavailable";
+  const prediction = currentPrediction(device);
+  if (!prediction) return "Prediction updating as readings arrive.";
+  return prediction.warning
+    ? `${prediction.faultType === "vibration" ? "Mechanical fault" : "Overheating"} risk · next 5 simulated min`
+    : "No approaching fault detected.";
+}
+
 export function PredictionLine({ device }: { device: Device }) {
   const prediction = currentPrediction(device);
   const action = device.control.maintenanceAction;
@@ -208,13 +229,7 @@ export function EquipmentMetrics({ device }: { device: Device }) {
       </dl>
       <div className="prediction-detail">
         <strong>Next 5 simulated minutes</strong>
-        <p>
-          {prediction
-            ? prediction.warning
-              ? `${prediction.faultType === "vibration" ? "Mechanical fault" : "Overheating"} risk. ${prediction.faultType === "vibration" ? "Plan a mechanical inspection." : "Monitor load and cooling."}`
-              : "No approaching fault detected."
-            : "Prediction updating as readings arrive."}
-        </p>
+        <p>{currentOutlook(device)}</p>
         {prediction && (
           <small>
             Risk score {number(prediction.riskScore * 100, 0)}/100 · model{" "}
@@ -247,7 +262,13 @@ interface ModelInfo {
   };
 }
 
-export function MaintenancePanel({ deviceId }: { deviceId?: string }) {
+export function MaintenancePanel({
+  devices,
+  deviceId,
+}: {
+  devices: Device[];
+  deviceId?: string;
+}) {
   const events = usePoll(
     (signal) =>
       api<{ events: MaintenanceEvent[] }>(
@@ -265,37 +286,73 @@ export function MaintenancePanel({ deviceId }: { deviceId?: string }) {
     <section className="panel maintenance-panel">
       <div className="panel-head">
         <h2>Predictive maintenance</h2>
-        <span className="tiny">5-minute outlook</span>
+        <span className="tiny">Next 5 simulated minutes</span>
       </div>
-      {events.error && (
-        <p className="notice error" role="alert">
-          {events.error}
-        </p>
-      )}
-      {!events.data ? (
-        <p className="maintenance-empty">Loading maintenance history…</p>
-      ) : events.data.events.length ? (
-        <ol className="maintenance-log">
-          {events.data.events.slice(0, 8).map((event) => (
-            <li key={event.deviceId + event.sk}>
-              <a href={`#/devices/${event.deviceId}`}>
-                {motorName(event.deviceId)}
+      <ul className="maintenance-log" aria-label="Current five-minute outlook">
+        {devices.map((device) => {
+          const prediction = currentPrediction(device);
+          const attention =
+            prediction?.warning ||
+            Object.values(device.latest?.rules ?? {}).some(
+              (rule) => rule.active,
+            );
+          return (
+            <li
+              key={device.deviceId}
+              data-testid={`outlook-${device.deviceId}`}
+            >
+              <a href={`#/devices/${device.deviceId}`}>
+                {motorName(device.deviceId)}
               </a>
-              <span
-                className={event.action === "Repair needed" ? "problem" : ""}
-              >
-                {event.action}
-                {event.faultType
-                  ? ` · ${event.faultType === "vibration" ? "mechanical" : "overheating"}`
-                  : ""}
+              <span className={attention ? "problem" : ""}>
+                {currentOutlook(device)}
               </span>
-              <time dateTime={event.at}>{when(event.at)}</time>
+              {prediction ? (
+                <time dateTime={prediction.at} title="Prediction updated">
+                  {when(prediction.at)}
+                </time>
+              ) : (
+                <span>—</span>
+              )}
             </li>
-          ))}
-        </ol>
-      ) : (
-        <p className="maintenance-empty">No maintenance events yet.</p>
-      )}
+          );
+        })}
+      </ul>
+      <details className="maintenance-history">
+        <summary>Maintenance history</summary>
+        <p>
+          Past predictions and actions. These are not current device outlooks.
+        </p>
+        {events.error && (
+          <p className="notice error" role="alert">
+            {events.error}
+          </p>
+        )}
+        {!events.data ? (
+          <p className="maintenance-empty">Loading maintenance history…</p>
+        ) : events.data.events.length ? (
+          <ol className="maintenance-log">
+            {events.data.events.slice(0, 8).map((event) => (
+              <li key={event.deviceId + event.sk}>
+                <a href={`#/devices/${event.deviceId}`}>
+                  {motorName(event.deviceId)}
+                </a>
+                <span
+                  className={event.action === "Repair needed" ? "problem" : ""}
+                >
+                  {event.action}
+                  {event.faultType
+                    ? ` · ${event.faultType === "vibration" ? "mechanical" : "overheating"}`
+                    : ""}
+                </span>
+                <time dateTime={event.at}>{when(event.at)}</time>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <p className="maintenance-empty">No maintenance events yet.</p>
+        )}
+      </details>
       <details className="model-details">
         <summary>
           Model details{model.data ? ` · ${model.data.version}` : ""}

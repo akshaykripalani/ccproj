@@ -259,7 +259,7 @@ export function Overview({ devices, operator, now, refresh }: LiveProps) {
         refresh={refresh}
         readings={history.data}
       />
-      <MaintenancePanel />
+      <MaintenancePanel devices={devices} />
       <div className="overview-bottom">
         <AllMotorTrend
           devices={devices}
@@ -434,7 +434,7 @@ function EquipmentDetail({
         </div>
       </div>
       <EquipmentMetrics device={device} />
-      <MaintenancePanel deviceId={device.deviceId} />
+      <MaintenancePanel devices={[device]} deviceId={device.deviceId} />
       <div className="detail-layout">
         <div className="detail-main">
           <RecentCharts deviceId={device.deviceId} />

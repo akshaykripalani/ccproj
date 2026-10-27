@@ -8,6 +8,8 @@ One `t4g.micro` simulates three induction motors, a centrifugal pump, an air com
 
 The initial all-alternating configuration caused all seven assets to reach manual mechanical faults overnight even though thermal cooldown worked. The subsequent investigation, stale post-repair label fix, approved three/two/two profiles and repeated live recovery evidence are documented in `COOLDOWN_FIX.md`.
 
+The outlook panel now displays current per-device forecasts separately from collapsed maintenance history. Current faults override a nonwarning prediction, and stale predictions are withheld. The follow-up frontend build passes 40 browser scenarios and was verified through a signed-in CloudFront browser session; see `OUTLOOK_FIX.md` and `outlook-live-evidence.json`.
+
 Raw sensor windows, not the hidden schedule, drive learned predictions. Transient overheating stops/cools/restarts automatically. Mechanical faults latch a stop until explicit operator repair/reset. Persistent heat escalates once and remains stopped rather than looping through restarts. The interface preserves the Forge design with Healthy / Warning / Fault labels and short maintenance action text. Existing authentication, manual fault buttons, reports and alert history remain.
 
 ## Model evidence

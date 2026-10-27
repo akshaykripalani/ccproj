@@ -121,3 +121,81 @@ test("mobile predictive maintenance remains within the viewport", async ({
     ),
   ).toBe(true);
 });
+
+test("current outlook stays healthy when history contains old overheating predictions", async ({
+  page,
+}) => {
+  const state = await mockApp(page);
+  state.devices.devices[0].prediction = {
+    modelVersion: "rf-test",
+    warning: false,
+    faultType: "overheat",
+    riskScore: 0,
+    horizonMinutes: 5,
+    at: new Date().toISOString(),
+    sourceObservedAt: new Date().toISOString(),
+  };
+  await page.route("https://api.example.test/maintenance", (route) =>
+    route.fulfill({
+      json: {
+        events: [
+          {
+            deviceId: "motor-01",
+            action: "Fault predicted",
+            faultType: "overheat",
+            at: new Date(Date.now() - 3600000).toISOString(),
+            sk: "old-warning",
+          },
+        ],
+      },
+    }),
+  );
+  await page.goto("/");
+  await expect(page.getByTestId("outlook-motor-01")).toContainText(
+    "No approaching fault detected.",
+  );
+  await expect(
+    page.getByText("Fault predicted", { exact: false }),
+  ).not.toBeVisible();
+  await page.getByText("Maintenance history", { exact: true }).click();
+  await expect(
+    page.getByText("Fault predicted", { exact: false }),
+  ).toBeVisible();
+  await expect(page.getByTestId("outlook-motor-01")).not.toContainText(
+    "Overheating risk",
+  );
+});
+
+test("current mechanical faults override a nonwarning model score and stale predictions expire", async ({
+  page,
+}) => {
+  const state = await mockApp(page);
+  const [mechanical, stale, warning] = state.devices.devices;
+  mechanical.latest!.rules!.vibration.active = true;
+  const prediction = {
+    modelVersion: "rf-test",
+    warning: false,
+    faultType: "vibration",
+    riskScore: 0.2,
+    horizonMinutes: 5,
+    at: new Date().toISOString(),
+    sourceObservedAt: new Date().toISOString(),
+  };
+  mechanical.prediction = prediction;
+  stale.prediction = {
+    ...prediction,
+    warning: true,
+    at: new Date(Date.now() - 120000).toISOString(),
+  };
+  warning.prediction = { ...prediction, warning: true };
+  await page.goto("/");
+  await expect(page.getByTestId("outlook-motor-01")).toContainText(
+    "Current fault · mechanical",
+  );
+  await expect(page.getByTestId("outlook-motor-02")).toContainText(
+    "Prediction updating as readings arrive.",
+  );
+  await expect(page.getByTestId("outlook-motor-03")).toContainText(
+    "Mechanical fault risk · next 5 simulated min",
+  );
+});

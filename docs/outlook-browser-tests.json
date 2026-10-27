@@ -1,0 +1,172 @@
+{
+  "stats": {
+    "startTime": "2026-10-27T04:49:21.309Z",
+    "duration": 47380.367999999995,
+    "expected": 40,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "scenarios": [
+    {
+      "title": "sign-in page is concise, responsive and explains initial password setup",
+      "ok": true
+    },
+    {
+      "title": "overview shows three healthy motors and current units",
+      "ok": true
+    },
+    {
+      "title": "controls show requested and applied states separately",
+      "ok": true
+    },
+    {
+      "title": "viewers cannot see controls or request user management",
+      "ok": true
+    },
+    {
+      "title": "reset-all polls pending controls quickly and returns to normal cadence after acknowledgement",
+      "ok": true
+    },
+    {
+      "title": "failed refreshes cannot keep a stale command on fast polling indefinitely",
+      "ok": true
+    },
+    {
+      "title": "offline differs from a stopped reporting motor and timeout is visible",
+      "ok": true
+    },
+    {
+      "title": "device detail loads all charts and pagination for 24h",
+      "ok": true
+    },
+    {
+      "title": "alerts filter by device and state with truthful email statuses",
+      "ok": true
+    },
+    {
+      "title": "temperature report shows asynchronous result chart and CSV",
+      "ok": true
+    },
+    {
+      "title": "vibration report shows asynchronous result chart and CSV",
+      "ok": true
+    },
+    {
+      "title": "power report shows asynchronous result chart and CSV",
+      "ok": true
+    },
+    {
+      "title": "reports show empty results and query failures without false success",
+      "ok": true
+    },
+    {
+      "title": "report date window is validated before query starts",
+      "ok": true
+    },
+    {
+      "title": "operators invite accounts and update roles while protecting self",
+      "ok": true
+    },
+    {
+      "title": "API failures preserve visible readings and support retry",
+      "ok": true
+    },
+    {
+      "title": "hosted sign-in uses authorization code with PKCE and random state",
+      "ok": true
+    },
+    {
+      "title": "callback rejects a missing OAuth state and clears code from URL",
+      "ok": true
+    },
+    {
+      "title": "session rejection and refresh failure return to sign-in",
+      "ok": true
+    },
+    {
+      "title": "mobile navigation and dashboard have no horizontal overflow",
+      "ok": true
+    },
+    {
+      "title": "dashboard and report form have accessible controls and landmarks",
+      "ok": true
+    },
+    {
+      "title": "clock advancement makes old live responses visibly stale and motors offline",
+      "ok": true
+    },
+    {
+      "title": "refresh token renewal replaces the access token after a read rejection",
+      "ok": true
+    },
+    {
+      "title": "sign-out clears local tokens and requests the hosted logout URL",
+      "ok": true
+    },
+    {
+      "title": "compact overview keeps a fixed heading while readings and fault indicators update",
+      "ok": true
+    },
+    {
+      "title": "reference styling and self-hosted fonts remain usable across desktop and mobile views",
+      "ok": true
+    },
+    {
+      "title": "alert history, team roles and report results pass accessibility checks",
+      "ok": true
+    },
+    {
+      "title": "last-reading ages tick between polls and row sparklines use real history",
+      "ok": true
+    },
+    {
+      "title": "fleet chart fits available data and supports shared hover, keyboard inspection and event linking",
+      "ok": true
+    },
+    {
+      "title": "reset-all requires confirmation and cancel sends no command",
+      "ok": true
+    },
+    {
+      "title": "mobile cards expose every metric and all navigation at 320 and 390 pixels",
+      "ok": true
+    },
+    {
+      "title": "equipment skeleton and value changes respect reduced motion",
+      "ok": true
+    },
+    {
+      "title": "detail charts share inspection, expose metadata and use a zero power baseline",
+      "ok": true
+    },
+    {
+      "title": "alert timeline includes ongoing episodes that began before its visible window",
+      "ok": true
+    },
+    {
+      "title": "report shortcuts retain query bounds and recent results reopen without new queries",
+      "ok": true
+    },
+    {
+      "title": "seven assets display warnings, measurements and a configurable profile",
+      "ok": true
+    },
+    {
+      "title": "manual repair is explicit and viewers cannot change profiles",
+      "ok": true
+    },
+    {
+      "title": "mobile predictive maintenance remains within the viewport",
+      "ok": true
+    },
+    {
+      "title": "current outlook stays healthy when history contains old overheating predictions",
+      "ok": true
+    },
+    {
+      "title": "current mechanical faults override a nonwarning model score and stale predictions expire",
+      "ok": true
+    }
+  ]
+}

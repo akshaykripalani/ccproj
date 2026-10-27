@@ -1,0 +1,12 @@
+{
+  "url": "https://d1idggpc663p7f.cloudfront.net/#/overview",
+  "checkedAt": "2026-10-27T04:52:41.139Z",
+  "method": "Signed-in CloudFront browser inspection using a disposable viewer",
+  "noApproachingFaultCount": 5,
+  "currentMechanicalFaultCount": 2,
+  "currentOutlookVisible": true,
+  "historyCollapsed": true,
+  "screenshot": "docs/predictive-ui/current-outlook-live.png",
+  "controlledBrowserTestsPassed": 40,
+  "inspectionAccountRemoved": true
+}
