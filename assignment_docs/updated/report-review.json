@@ -14,22 +14,24 @@
   ],
   "visualChecks": [
     "No clipped text or overlapping objects",
-    "Confirmed five authors in alphabetical surname order and shared affiliation",
+    "Five students alphabetical by first name; Rama Varshney last as Assistant Professor",
+    "All six confirmed emails readable and in author order",
     "All three diagrams legible and captions paired",
     "Tables fit text area and use repeating headers",
     "References left aligned, genuine sources, no author placeholders"
   ],
-  "docxSha256": "4231b276dfa46e59dc43e44951636e01c51cf2d881dcbc4c7288d329c7031b1f",
-  "pdfSha256": "73e2afc70896d09330452937838d837a7ed7ab8d221292616caf2cea878a60b1",
+  "docxSha256": "75cf8b29d566c069fbe7dec34b6d3eb5ba6503439cd3b2dd17f186905497d7fd",
+  "pdfSha256": "7cc62c9c7b52e8229db5fdd987e6cb43740e60d4ef9d6067a2692148dc2bdedc",
   "sourceSha256": "d64c46262915d5fb18fd37c7d3482685376c5c754d6e7c9fdda2dde9e60d7a86",
   "sourceUnmodified": true,
-  "wordCountParagraphs": 2358,
+  "wordCountParagraphs": 2370,
   "authors": [
-    "Joel Jacob",
-    "Kanish Jain",
-    "Kaivalya Joglekar",
     "Akshay Kripalani",
-    "Manas Kulkarni"
+    "Joel Jacob",
+    "Kaivalya Joglekar",
+    "Kanish Jain",
+    "Manas Kulkarni",
+    "Rama Varshney"
   ],
   "fonts": "Times New Roman, title 14 pt, body 10 pt, headings 12/10 pt, captions 9 pt",
   "textAreaCm": [
@@ -95,12 +97,23 @@
     }
   ],
   "springerGuidance": "https://link.springer.com/series/558/information-for-authors-and-editors",
-  "finalRevision": "Confirmed author block added; all eight pages visually reviewed; references on final page",
-  "authorOrder": "Alphabetical by surname; does not indicate contribution",
+  "finalRevision": "First-name student ordering, faculty coauthor and six emails added; all eight pages visually reviewed",
+  "authorOrder": "Students alphabetical by first name; Rama Varshney last; does not indicate contribution",
   "affiliation": [
     "Department of Computer Engineering",
     "Mukesh Patel School of Technology Management and Engineering",
     "NMIMS, Mumbai, India"
   ],
-  "correspondingEmail": "Not supplied; omitted"
+  "emails": {
+    "Akshay Kripalani": "akshay.kripalani74@nmims.in",
+    "Joel Jacob": "joelchirayil.jacob78@nmims.in",
+    "Kaivalya Joglekar": "kaivalyarakesh.joglekar57@nmims.in",
+    "Kanish Jain": "kanish.jain82@nmims.in",
+    "Manas Kulkarni": "manas.kulkarni73@nmims.in",
+    "Rama Varshney": "rama.varshney@nmims.edu"
+  },
+  "correspondingAuthor": "Not designated",
+  "facultyRole": {
+    "Rama Varshney": "Assistant Professor"
+  }
 }

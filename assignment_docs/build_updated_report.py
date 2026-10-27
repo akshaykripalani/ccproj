@@ -227,6 +227,8 @@ def main():
         d.core_properties.author = "; ".join(author_data.get("names", []))
         lines = [(line, 10) for line in author_data.get("nameLines", author_data.get("lines", []))]
         lines += [(line, 9) for line in author_data.get("affiliationLines", [])]
+        lines += [(line, 9) for line in author_data.get("roleLines", [])]
+        lines += [(line, 8) for line in author_data.get("emailLines", [])]
         for index, (line, size) in enumerate(lines):
             p = paragraph(line, False, size)
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER

@@ -62,7 +62,7 @@ No second EC2, GPU, managed ML endpoint, NAT gateway, provisioned Lambda concurr
 
 `assignment_docs/updated/Cloud_Equipment_Monitoring_LNCS.docx` and its matching PDF describe the final system in approximately 2,350 words and eight pages, with three simple diagrams and six real references. Layout follows the supplied Springer LNCS template and official author guidance. Every page is rendered and reviewed using a dedicated hidden Word instance and Poppler because LibreOffice is unavailable. The source Downloads document is untouched.
 
-The manuscript now includes the five confirmed authors in alphabetical surname order and their shared Computer Engineering affiliation at Mukesh Patel School of Technology Management and Engineering, NMIMS, Mumbai. Author order does not indicate contribution. The corresponding email remains omitted because none was supplied. `assignment_docs/updated/authors.json` makes the author block reproducible. Artifact hashes and visual checks are in `report-review.json`.
+The manuscript includes the five student authors in alphabetical first-name order, followed by Rama Varshney, Assistant Professor, and all six confirmed emails. They share the Computer Engineering affiliation at Mukesh Patel School of Technology Management and Engineering, NMIMS, Mumbai. Author order does not indicate contribution. `assignment_docs/updated/authors.json` makes the author block reproducible. Artifact hashes and visual checks are in `report-review.json`.
 
 ## Final verification and handoff
 

@@ -4,7 +4,7 @@
 
 The manuscript follows the supplied LNCS layout: A4 page, 12.2 × 19.3 cm text area, Times New Roman body at 10 pt, 14 pt title, 12/10 pt section headings, 9 pt captions, numbered citations, table captions above and figure captions below. Three simple figures have editable SVG sources and high-resolution PNGs under `figures/`. Source guidance was checked against [Springer’s author instructions](https://link.springer.com/series/558/information-for-authors-and-editors).
 
-The confirmed authors are Joel Jacob, Kanish Jain, Kaivalya Joglekar, Akshay Kripalani and Manas Kulkarni, in alphabetical order by surname. All share the Department of Computer Engineering, Mukesh Patel School of Technology Management and Engineering, NMIMS, Mumbai, India affiliation. Author order does not indicate contribution. The reproducible author block is stored in `authors.json`. No corresponding email has been supplied, so the manuscript omits it.
+The student authors are Akshay Kripalani, Joel Jacob, Kaivalya Joglekar, Kanish Jain and Manas Kulkarni, in alphabetical order by first name. Rama Varshney appears last and is identified as Assistant Professor. All share the Department of Computer Engineering, Mukesh Patel School of Technology Management and Engineering, NMIMS, Mumbai, India affiliation. Author order does not indicate contribution. The reproducible author block and all six confirmed emails are stored in `authors.json`. Emails appear in author order; no corresponding author has been designated.
 
 Build with the bundled artifact Python:
 

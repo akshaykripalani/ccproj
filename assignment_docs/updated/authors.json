@@ -1,19 +1,36 @@
 {
   "names": [
-    "Joel Jacob",
-    "Kanish Jain",
-    "Kaivalya Joglekar",
     "Akshay Kripalani",
-    "Manas Kulkarni"
+    "Joel Jacob",
+    "Kaivalya Joglekar",
+    "Kanish Jain",
+    "Manas Kulkarni",
+    "Rama Varshney"
   ],
-  "order": "Alphabetical by surname; does not indicate contribution",
+  "order": "Students alphabetical by first name; Rama Varshney last; does not indicate contribution",
   "nameLines": [
-    "Joel Jacob, Kanish Jain, Kaivalya Joglekar,",
-    "Akshay Kripalani and Manas Kulkarni"
+    "Akshay Kripalani, Joel Jacob, Kaivalya Joglekar,",
+    "Kanish Jain, Manas Kulkarni and Rama Varshney"
   ],
   "affiliationLines": [
     "Department of Computer Engineering",
     "Mukesh Patel School of Technology Management and Engineering",
     "NMIMS, Mumbai, India"
+  ],
+  "roleLines": [
+    "Rama Varshney: Assistant Professor"
+  ],
+  "emails": {
+    "Akshay Kripalani": "akshay.kripalani74@nmims.in",
+    "Joel Jacob": "joelchirayil.jacob78@nmims.in",
+    "Kaivalya Joglekar": "kaivalyarakesh.joglekar57@nmims.in",
+    "Kanish Jain": "kanish.jain82@nmims.in",
+    "Manas Kulkarni": "manas.kulkarni73@nmims.in",
+    "Rama Varshney": "rama.varshney@nmims.edu"
+  },
+  "emailLines": [
+    "akshay.kripalani74@nmims.in, joelchirayil.jacob78@nmims.in",
+    "kaivalyarakesh.joglekar57@nmims.in, kanish.jain82@nmims.in",
+    "manas.kulkarni73@nmims.in, rama.varshney@nmims.edu"
   ]
 }
