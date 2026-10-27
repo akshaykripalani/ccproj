@@ -28,4 +28,4 @@ Use account `039379078306`, explicit CLI profile `default`, and Sydney `ap-south
 4. Profiles, accelerated timing, model version and maintenance history are usable in the dashboard.
 5. Existing fault, report, authorization, ordering, deduplication and recovery behavior remains tested.
 6. Deployment is reproducible and the previous model release can be restored.
-7. Revise the supplied Springer LNCS DOCX into a concise report of the final system, with measured results and simple architecture/sequence diagrams. Preserve the source document and deliver visually checked DOCX/PDF outputs.
+7. Revise the supplied DOCX into a concise paper of the final system, with measured results and simple architecture/sequence diagrams. The final user-requested format is Springer Nature journal-style double column, replacing the earlier single-column LNCS layout. Preserve the source document and deliver visually checked DOCX/PDF outputs.

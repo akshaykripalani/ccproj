@@ -1,4 +1,4 @@
-"""Build the concise final LNCS manuscript from the supplied Word template and evidence.
+"""Build the final paper in Springer Nature two-column journal layout.
 
 Run with the bundled artifact Python; render with scripts/render_report.py on Windows.
 The source document is never overwritten. SVG diagram sources accompany high-resolution PNGs.
@@ -10,6 +10,7 @@ import math
 from pathlib import Path
 
 from docx import Document
+from docx.enum.section import WD_SECTION
 from docx.enum.table import WD_CELL_VERTICAL_ALIGNMENT
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.oxml import OxmlElement
@@ -85,29 +86,31 @@ def diagrams():
     f.arrow([(513, 163), (513, 188)])
     f.save()
 
-    f = Figure("sequence", 324)
+    f = Figure("sequence", 268)
     centers = [43, 138, 232, 327, 422, 517]
     labels = [["EC2", "Gateway"], ["API / SQS", "Ingestion"], ["Processing", "Lambda"], ["DynamoDB", "State / controls"], ["Inference", "Lambda"], ["Dashboard", "via API"]]
     for x, lines in zip(centers, labels, strict=True):
         f.box(x - 41, 8, 82, 40, lines)
-        f.draw.line([(x * 8, 48 * 8), (x * 8, 315 * 8)], fill="#aaaaaa", width=6)
-        f.svg.append(f'<line x1="{x}" y1="48" x2="{x}" y2="315" stroke="#aaa"/>')
-    for y, a, b, label in [(78, 0, 1, "Signed telemetry"), (112, 1, 2, "Consume batch"), (146, 2, 3, "Commit state and history"), (180, 2, 4, "Request inference"), (214, 4, 3, "Save risk / maintenance"), (248, 5, 3, "Read current status"), (282, 0, 3, "Poll controls; apply action")]:
+        f.draw.line([(x * 8, 48 * 8), (x * 8, 260 * 8)], fill="#aaaaaa", width=6)
+        f.svg.append(f'<line x1="{x}" y1="48" x2="{x}" y2="260" stroke="#aaa"/>')
+    for y, a, b, label in [(72, 0, 1, "Signed telemetry"), (100, 1, 2, "Consume batch"), (128, 2, 3, "Commit state and history"), (156, 2, 4, "Request inference"), (184, 4, 3, "Save risk / maintenance"), (212, 5, 3, "Read current status"), (240, 0, 3, "Poll controls; apply action")]:
         f.arrow([(centers[a], y), (centers[b], y)], label, ((centers[a] + centers[b]) / 2, y - 12))
     f.save()
 
-    f = Figure("model_lifecycle", 172)
+    f = Figure("model_lifecycle", 136)
     items = [(8, ["Simulated runs", "Independent episodes"]), (150, ["Local training", "Validation / test"]), (292, ["Versioned S3", "Model + evaluation"]), (434, ["Inference Lambda", "Portable learned trees"])]
     for x, lines in items:
         f.box(x, 16, 118, 52, lines)
     for a, b in [(126, 150), (268, 292), (410, 434)]:
         f.arrow([(a, 42), (b, 42)])
-    f.text(280, 109, "Telemetry windows → fault risk within five simulated minutes", 13, True)
-    f.text(280, 139, "CloudFormation selects the version; a prior release supports rollback", 11)
+    f.text(280, 96, "Telemetry windows → fault risk within five simulated minutes", 13, True)
+    f.text(280, 122, "CloudFormation selects the version; a prior release supports rollback", 11)
     f.save()
 
 
-def main():
+def main(layout="springer-two-column"):
+    assert layout in ("springer-two-column", "lncs")
+    two_column = layout == "springer-two-column"
     release = json.loads((ROOT / "models/release.json").read_text())
     evaluation = json.loads((ROOT / release["evaluationPath"]).read_text())
     live = json.loads((ROOT / "docs/predictive-live-evidence.json").read_text())
@@ -119,8 +122,26 @@ def main():
             d._element.body.remove(child)
     section = d.sections[0]
     section.page_width, section.page_height = Cm(21), Cm(29.7)
-    section.top_margin = section.bottom_margin = Cm(5.2)
-    section.left_margin = section.right_margin = Cm(4.4)
+    section.top_margin = Cm(2.6 if two_column else 5.2)
+    section.bottom_margin = Cm(5.5 if two_column else 5.2)
+    section.left_margin = Cm(2.8 if two_column else 4.4)
+    section.right_margin = Cm(2.2 if two_column else 4.4)
+    page_numbering = section._sectPr.find(qn("w:pgNumType"))
+    if page_numbering is not None:
+        section._sectPr.remove(page_numbering)
+    cols = section._sectPr.find(qn("w:cols"))
+    if cols is None:
+        cols = OxmlElement("w:cols"); section._sectPr.append(cols)
+    cols.set(qn("w:num"), "1")
+    d.settings.odd_and_even_pages_header_footer = False
+    if two_column:
+        auto_hyphens = OxmlElement("w:autoHyphenation")
+        auto_hyphens.set(qn("w:val"), "1")
+        d.settings.element.append(auto_hyphens)
+        for tag, value in [("consecutiveHyphenLimit", "2"), ("hyphenationZone", "360")]:
+            setting = OxmlElement("w:" + tag)
+            setting.set(qn("w:val"), value)
+            d.settings.element.append(setting)
     for part in (section.header, section.footer):
         for p in part.paragraphs:
             p.text = ""
@@ -130,15 +151,22 @@ def main():
             style.font.color.rgb = RGBColor(0, 0, 0)
     normal = d.styles["Normal"]
     normal.font.name, normal.font.size = "Times New Roman", Pt(10)
-    normal.paragraph_format.line_spacing = 1
+    normal.paragraph_format.line_spacing = Pt(12) if two_column else 1
     normal.paragraph_format.space_after = Pt(0)
     normal.paragraph_format.first_line_indent = Cm(.4)
-    for name, size in [("Heading 1", 12), ("Heading 2", 10), ("Title", 14)]:
+    for name, size in [("Heading 1", 14 if two_column else 12), ("Heading 2", 12 if two_column else 10), ("Title", 17 if two_column else 14)]:
         st = d.styles[name]
         st.font.size, st.font.bold = Pt(size), True
         st.paragraph_format.first_line_indent = Cm(0)
         st.paragraph_format.space_before, st.paragraph_format.space_after = Pt(12), Pt(6)
         st.paragraph_format.keep_with_next = True
+        if two_column:
+            suppress = OxmlElement("w:suppressAutoHyphens")
+            suppress.set(qn("w:val"), "1")
+            st.element.get_or_add_pPr().append(suppress)
+        st.paragraph_format.line_spacing = Pt(size + 2)
+        if name == "Title" and two_column:
+            st.font.bold = False
         if st._element.pPr is not None:
             number = st._element.pPr.find(qn("w:numPr"))
             if number is not None:
@@ -149,6 +177,32 @@ def main():
     d.core_properties.comments = ""
     d.core_properties.subject = "College cloud computing project"
 
+    if two_column:
+        footer = section.footer.paragraphs[0]
+        footer.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        footer.paragraph_format.first_line_indent = Cm(0)
+        field = OxmlElement("w:fldSimple"); field.set(qn("w:instr"), "PAGE")
+        footer._p.append(field)
+        footer.paragraph_format.line_spacing = Pt(10)
+
+    def columns(count):
+        if not two_column:
+            return
+        new = d.add_section(WD_SECTION.CONTINUOUS)
+        element = new._sectPr.find(qn("w:cols"))
+        if element is None:
+            element = OxmlElement("w:cols"); new._sectPr.append(element)
+        for child in list(element):
+            element.remove(child)
+        element.set(qn("w:num"), str(count))
+        element.set(qn("w:space"), str(round(Cm(.8).twips)))
+        element.set(qn("w:equalWidth"), "1")
+        # Section-break paragraphs must not consume an ordinary body line.
+        boundary = d.paragraphs[-1]
+        boundary.paragraph_format.space_before = boundary.paragraph_format.space_after = Pt(0)
+        boundary.paragraph_format.line_spacing = Pt(1)
+        boundary.paragraph_format.first_line_indent = Cm(0)
+
     def paragraph(text, indent=True, size=10):
         p = d.add_paragraph()
         p.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
@@ -156,6 +210,8 @@ def main():
         p.paragraph_format.widow_control = True
         r = p.add_run(text)
         r.font.name, r.font.size = "Times New Roman", Pt(size)
+        if two_column:
+            p.paragraph_format.line_spacing = Pt(size + 2)
         return p
 
     def heading(text, level=1):
@@ -167,18 +223,24 @@ def main():
         return p
 
     def figure(name, caption, width=12.2):
+        columns(1)
         p = d.add_paragraph()
         p.paragraph_format.first_line_indent = Cm(0)
         p.paragraph_format.keep_with_next = True
         p.paragraph_format.space_before = Pt(6)
-        p.add_run().add_picture(str(FIGURES / (name + ".png")), width=Cm(width))
-        cap = paragraph(caption, False, 9)
+        p.paragraph_format.line_spacing = 1
+        p.add_run().add_picture(str(FIGURES / (name + ".png")), width=Cm(16 if two_column else width))
+        cap = paragraph(caption, False, 8 if two_column else 9)
         cap.paragraph_format.space_after = Pt(8)
         for inline in p._p.xpath('.//wp:docPr'):
             inline.set("descr", caption)
+        columns(2)
 
     def table(caption, headers, rows, widths):
-        cap = paragraph(caption, False, 9)
+        if two_column:
+            widths = [width / sum(widths) * 7.6 for width in widths]
+            headers = ["n" if value == "Count" else value for value in headers]
+        cap = paragraph(caption, False, 8 if two_column else 9)
         cap.paragraph_format.keep_with_next = True
         cap.paragraph_format.space_before = Pt(6)
         cap.paragraph_format.space_after = Pt(4)
@@ -194,7 +256,9 @@ def main():
             for cell, text, width in zip(t.add_row().cells, row, widths, strict=True):
                 cell.text, cell.width = str(text), Cm(width)
         for index, row in enumerate(t.rows):
-            for cell in row.cells:
+            no_split = OxmlElement("w:cantSplit")
+            row._tr.get_or_add_trPr().append(no_split)
+            for column_index, cell in enumerate(row.cells):
                 cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.CENTER
                 tcpr = cell._tc.get_or_add_tcPr()
                 margins = OxmlElement("w:tcMar")
@@ -210,9 +274,14 @@ def main():
                 for p in cell.paragraphs:
                     p.paragraph_format.first_line_indent = Cm(0)
                     p.paragraph_format.space_after = Pt(0)
-                    p.paragraph_format.keep_with_next = index == 0
+                    p.paragraph_format.keep_with_next = index < len(t.rows) - 1
+                    p.alignment = WD_ALIGN_PARAGRAPH.LEFT
+                    if (caption.startswith("Table 2") and column_index > 0) or (caption.startswith("Table 1") and column_index == 1):
+                        p.alignment = WD_ALIGN_PARAGRAPH.CENTER
                     for r in p.runs:
-                        r.font.name, r.font.size, r.font.bold = "Times New Roman", Pt(9), index == 0
+                        r.font.name, r.font.size, r.font.bold = "Times New Roman", Pt(8 if two_column else 9), index == 0
+                    if two_column:
+                        p.paragraph_format.line_spacing = Pt(9.5)
         d.add_paragraph().paragraph_format.space_after = Pt(2)
 
     title = d.add_paragraph(d.core_properties.title, style="Title")
@@ -225,10 +294,10 @@ def main():
     if authors.exists():
         author_data = json.loads(authors.read_text(encoding="utf-8"))
         d.core_properties.author = "; ".join(author_data.get("names", []))
-        lines = [(line, 10) for line in author_data.get("nameLines", author_data.get("lines", []))]
-        lines += [(line, 9) for line in author_data.get("affiliationLines", [])]
+        lines = [(line, 12 if two_column else 10) for line in author_data.get("nameLines", author_data.get("lines", []))]
+        lines += [(line, 11 if two_column else 9) for line in author_data.get("affiliationLines", [])]
         lines += [(line, 9) for line in author_data.get("roleLines", [])]
-        lines += [(line, 8) for line in author_data.get("emailLines", [])]
+        lines += [(line, 9 if two_column else 8) for line in author_data.get("emailLines", [])]
         for index, (line, size) in enumerate(lines):
             p = paragraph(line, False, size)
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER
@@ -239,15 +308,16 @@ def main():
     abstract.paragraph_format.left_indent = abstract.paragraph_format.right_indent = Cm(.5)
     abstract.paragraph_format.space_after = Pt(6)
     paragraph("Keywords: Predictive maintenance · Cloud computing · Industrial simulation · Random forest · Serverless inference · AWS", False, 9)
+    columns(2)
 
     heading("1 Introduction")
     paragraph("Equipment monitoring becomes more useful when it gives an operator time to act before a fault occurs. Condition-based maintenance links observed equipment condition to maintenance decisions [1]. A college demonstration must also make the data path, failure behavior and resulting actions visible without depending on physical sensors or an expensive deployment.", False)
-    paragraph("We implemented a small industrial monitoring platform on AWS and extended it with predictive maintenance. The system combines a configurable simulator, retry-safe telemetry processing, learned fault warnings, two maintenance paths and a protected dashboard. Its objective is to demonstrate these functions together and support them with reproducible tests and measured evidence. The deployment uses the Sydney region and a USD 50 project budget.")
-    paragraph("The contribution is an integrated teaching implementation rather than a new predictive algorithm. Scheduled deterioration makes demonstrations repeatable, while the classifier uses observed measurement windows rather than the simulator's hidden failure time. This distinction allows the project to show a learned warning before an ordinary threshold alert.")
+    paragraph("The implemented platform combines a configurable simulator, retry-safe telemetry processing, learned fault warnings, two maintenance paths and a protected dashboard. Its objective is to demonstrate these functions together and support them with reproducible tests and measured evidence. The deployment uses the Sydney region and a USD 50 project budget.")
+    paragraph("The contribution is an integrated teaching implementation. Scheduled deterioration makes demonstrations repeatable; inference uses observed measurement windows rather than hidden failure times, allowing a learned warning before threshold activation.")
 
     heading("2 Background and Design Rationale")
     paragraph("A threshold rule identifies a condition that has already crossed a limit. Prognostic methods instead use condition information to anticipate future deterioration [1]. Random forests combine multiple learned decision trees [2] and provide a compact classifier for the small tabular feature set used here. We use scikit-learn for training [3], then export the tree structures so that cloud inference does not require a scientific Python installation.", False)
-    paragraph("Evaluation must respect dependencies between measurements. Randomly splitting overlapping windows would place closely related samples in training and testing and give an optimistic estimate. Scikit-learn's evaluation guidance explains the importance of temporal dependence and suitable splits [4]. We therefore separate entire simulation episodes before fitting the model or choosing its warning threshold. Independent episodes share the simulator's assumptions, so this split measures performance within that synthetic domain.")
+    paragraph("Overlapping measurement windows are dependent. Randomly splitting them would place closely related samples in training and testing, producing an optimistic estimate. Following scikit-learn's guidance on suitable splits [4], we separate entire simulation episodes before fitting the model or choosing its warning threshold. Episodes share the simulator's assumptions, so this measures performance within that synthetic domain.")
     paragraph("The cloud design separates ingestion, processing and inference. AWS documents that Lambda consumers of SQS can receive messages more than once [5]. Event identifiers and conditional DynamoDB transactions [6] therefore protect telemetry state under retries, while prediction failure remains separate from the durable monitoring path.")
 
     heading("3 System Implementation")
@@ -259,9 +329,10 @@ def main():
     figure("sequence", "Fig. 2. Simplified telemetry, prediction and control sequence. Dashboard reads pass through the authenticated application API")
 
     heading("3.2 Equipment and Failure Profiles", 2)
-    paragraph("The three original motors are induction motors. Four additional assets have distinct nominal temperatures, power requirements and supplementary measurements (Table 1). Common temperature, vibration and power fields preserve comparable charts and the existing reports. Generator output is a separate metric; its common power field represents auxiliary consumption.", False)
+    paragraph("The fleet contains three induction motors, a centrifugal pump, an air compressor, a cooling fan and a generator (Table 1). Nominal temperatures, power requirements and supplementary measurements vary by type. Common temperature, vibration and power fields support comparable charts and reports. Generator output is separate from its auxiliary power consumption.", False)
     table("Table 1. Simulated equipment and supplementary measurements", ["Equipment", "Count", "Supplementary readings"], [("Induction motor", 3, "Load and shaft speed"), ("Centrifugal pump", 1, "Flow and pressure"), ("Air compressor", 1, "Pressure"), ("Cooling fan", 1, "Airflow"), ("Generator", 1, "Output power, voltage, frequency")], [3.6, 1.2, 7.4])
     paragraph("Profiles select recoverable overheating, mechanical vibration, alternating modes or persistent overheating. A nominal 30-minute cycle can be configured between 10 and 120 simulated minutes. Seeded variation changes cycle timing by approximately ten percent; load and sensor noise vary within a run. Deterioration gradually affects measurements instead of switching directly from healthy to failed. Operators can disable deterioration or retain the manual overheat, vibration and disconnect controls.")
+    paragraph("The default demonstration uses three healthy motors whose faults are introduced manually, two automatically recoverable thermal assets (pump and fan), and two mechanical assets requiring manual repair (compressor and generator). These profiles remain configurable.")
     paragraph("Presentation speeds of 5× and 10× advance simulated time faster while retaining ten-second transmissions. Consequently, five simulated minutes represent 30 wall-clock seconds at 10×. The dashboard displays the speed so that prediction lead time is not mistaken for elapsed real time. Mechanical damage latches the device into a stopped condition until an operator repairs or resets it.")
 
     heading("3.3 Predictive Model and Reproducible Releases", 2)
@@ -273,6 +344,7 @@ def main():
 
     heading("3.4 Maintenance and Dashboard", 2)
     paragraph("Three consecutive readings above 75 °C or 4.5 mm/s activate the corresponding fault; three healthy readings resolve it. Predictions provide earlier warnings while these deterministic rules remain the fault criteria. The interface uses Healthy, Warning and Fault labels, with offline connectivity shown separately. Equipment pages show type-specific readings, the five-minute outlook, model version and maintenance history. Operators can configure profiles or record repair; viewers can inspect data and reports.", False)
+    paragraph("The outlook displays one current forecast per device. Active faults take precedence over the model score, and stale predictions are withheld. Past warnings and actions appear separately in maintenance history, so a historical warning cannot be mistaken for a current prediction.")
     paragraph("For recoverable overheating, the cloud controller records a cooldown request in the control table. The simulator stops the affected device, cools it toward its nominal temperature and restarts it after the bounded cooldown. A persistent thermal condition remains stopped and escalates to Repair needed; the controller does not repeatedly restart the same fault episode. Mechanical faults also require explicit operator action. Conditional control updates respect a superseding operator request. The history records predictions, cooldown, automatic restart and manual repair without adding a separate human verification workflow.")
     paragraph("Cognito provides hosted authorization-code login with PKCE. API Gateway protects application routes, and the backend checks operator membership before accepting controls or profile changes. Service roles supply cloud credentials. S3 buckets remain private, and CloudFront serves the React build. Recent readings are retained for 24 hours and archived telemetry for 30 days. Athena exposes three bounded reports for temperature, vibration breaches and running power, with Glue defining the archive schema. CloudWatch logs and alarms monitor platform health.")
 
@@ -284,17 +356,18 @@ def main():
 
     heading("4.2 Deployed Demonstrations and Verification", 2)
     paragraph("The live acceptance exercised a pump thermal episode and an air-compressor mechanical episode through the deployed API, EC2 simulator, queue, processing and inference functions. In both cases, a stored model warning preceded the active fault. The pump cooled and restarted automatically. The compressor stayed stopped with Repair needed until the authenticated operator issued a repair action. The maintenance history retained all five action categories, and a viewer's direct profile-change request was rejected. A separate live persistent-overheating test confirmed that the device remained stopped, escalated once and required manual repair. Model promotion and rollback were also verified through new live predictions. All seven assets reported online, including generator-specific output measurements.", False)
-    table("Table 3. Verification evidence for the expanded implementation", ["Layer", "Result"], [("Backend and infrastructure", "82 local tests; schema and security rules passed"), ("React browser checks", "38 controlled scenarios and five real browser journeys"), ("Model export", "500 held-out predictions matched training-library output"), ("Live maintenance", "Predictive warning, automatic restart and manual repair")], [4.2, 8.0])
+    table("Table 3. Verification evidence for the implementation", ["Layer", "Result"], [("Backend and infrastructure", "86 local tests; schema and security rules passed"), ("React browser checks", "40 controlled scenarios; deployed browser verification"), ("Model export", "500 held-out predictions matched training-library output"), ("Live maintenance", "14 automatic recoveries across seven assets; explicit mechanical repair")], [4.2, 8.0])
+    paragraph("A further controller exercise ran two accelerated overheating cycles on every asset through real EC2 telemetry and cloud inference. All seven cooled and restarted twice without manual repair, producing 14 automatic recoveries. The three/two/two default profiles were restored afterward. Regression checks also prevent pre-repair telemetry from reasserting an old fault after an acknowledged repair.")
     paragraph("Five real browser journeys verified hosted PKCE login, live charts and mobile viewer access, automatic and manual maintenance controls, all three historical reports with CSV export, persistent team-role changes, and generator measurements with model details. Local failure-injection tests cover duplicate and older-event handling, invalid messages, storage retries and fault transitions. These checks support the defined application behavior; they are not a throughput benchmark or a guarantee of future cloud availability.")
 
     heading("4.3 Cost and Operating Scope", 2)
-    paragraph("The implementation retains one small EC2 simulator and adds no second host, GPU, managed ML endpoint, NAT gateway or load balancer. Local training has no AWS training charge. Inference is event-driven, with a minute reconciliation schedule and bounded retries. Its cost depends on measured execution time and the existing database writes; the seven-device expansion increases telemetry storage and processing. Initial CloudWatch observations of 84 inference calls averaged 700 ms, with a maximum of 2,586 ms including cold and release transitions. A conservative 730-hour planning model estimates USD 1.08 for inference Lambda and USD 45.47 for the complete seven-device platform before credits. The estimate includes bounded database activity and variable-service allowances, and is not a measured bill. The project retains a USD 50 service-usage ceiling and notifications at USD 20, 30 and 40. Billing snapshots are delayed and account-wide, so they must not be presented as a precise project-only cost.", False)
-    paragraph("No shutdown date or scheduled teardown is configured. The service remains online until the user requests shutdown. Bounded history, seven-day logs, on-demand database capacity and limited historical queries control ongoing usage.")
+    paragraph("The implementation retains one small EC2 simulator and adds no second host, GPU, managed ML endpoint, NAT gateway or load balancer. Local training has no AWS training charge. Inference is event-driven, with a minute reconciliation schedule and bounded retries. Its cost depends on measured execution time and the existing database writes; the seven-device expansion increases telemetry storage and processing. Initial CloudWatch observations of 84 inference calls averaged 700 ms, with a maximum of 2,586 ms including cold and release transitions. A conservative 730-hour planning model estimates USD 1.08 for inference Lambda and USD 45.47 for the complete seven-device platform before credits. The estimate includes bounded database activity and variable-service allowances, and is not a measured bill. The project tracks a USD 50 budget, with notifications at USD 20, 30 and 40. Billing snapshots are delayed and account-wide, so they must not be presented as a precise project-only cost.", False)
+    paragraph("Bounded history, seven-day logs, on-demand database capacity and limited historical queries constrain ongoing usage. Budget notifications provide oversight rather than a hard spending cap or automatic shutdown.")
 
     heading("5 Limitations and Conclusion")
     paragraph("The principal limitation is synthetic validity. Training and test episodes come from the same simulator family, and the implemented fault dynamics are simplified teaching models. No real sensor dataset, independent physical failure process or industrial safety assessment was used. The model does not estimate remaining useful life or justify autonomous repair of real equipment. Restart-based recovery applies only to the explicitly modeled transient thermal scenario; mechanical repair resets simulated damage rather than repairing hardware.", False)
     paragraph("A single gateway and FIFO message group remain shared dependencies. Dashboard updates use polling, notification delivery can repeat after a worker crash, and recovery evidence covers a bounded archive exercise rather than regional disaster recovery. A useful next evaluation would introduce independently designed fault dynamics and real operating traces, measure drift and calibration, and benchmark latency and cost over a longer controlled workload.")
-    paragraph("Within these limits, the project demonstrates predictive maintenance as an operational loop: configurable equipment deterioration produces telemetry, a locally trained and versioned model warns before a fault, and the cloud coordinates automatic or manual maintenance. The deployed dashboard makes the measurements, outlook and actions understandable while preserving the existing authentication, history and reporting functions. The result is a reproducible college-scale cloud and ML operations demonstration supported by held-out evaluation and live evidence.")
+    paragraph("The project demonstrates an operational predictive-maintenance loop: simulated deterioration produces telemetry, a locally trained and versioned model warns before a fault, and the cloud coordinates automatic or manual maintenance. The authenticated dashboard presents measurements, current outlooks, maintenance history and reports. Held-out evaluation and live evidence support this reproducible college-scale cloud and ML operations demonstration.")
 
     heading("References")
     references = [
@@ -310,7 +383,9 @@ def main():
         p.alignment = WD_ALIGN_PARAGRAPH.LEFT
         p.paragraph_format.space_after = Pt(4)
     OUT.mkdir(parents=True, exist_ok=True)
-    path = OUT / "Cloud_Equipment_Monitoring_LNCS.docx"
+    if two_column:
+        columns(2)  # Balance the final page's text across both columns.
+    path = OUT / ("Cloud_Equipment_Monitoring_Springer_TwoColumn.docx" if two_column else "Cloud_Equipment_Monitoring_LNCS.docx")
     d.save(path)
     print(json.dumps({"docx": str(path), "words": sum(len(p.text.split()) for p in d.paragraphs), "figures": len(d.inline_shapes), "tables": len(d.tables), "modelVersion": evaluation["version"], "authorDetailsProvided": authors.exists()}, indent=2))
 

@@ -96,4 +96,4 @@ The dashboard preserves the existing Forge visual language, using Healthy / Warn
 .venv\Scripts\python.exe -m scripts.promote_model rf-b8af65a6f20e
 ```
 
-All operator commands use the audited CLI wrapper, which explicitly pins `default`, rejects `provision`, and removes inherited session credentials. Deploy/release entry points verify account `039379078306` first. The updated report is under `assignment_docs/updated/`, including the visually checked LNCS DOCX/PDF and simple diagram sources. The supplied Downloads report remains untouched.
+All operator commands use the audited CLI wrapper, which explicitly pins `default`, rejects `provision`, and removes inherited session credentials. Deploy/release entry points verify account `039379078306` first. The updated report is under `assignment_docs/updated/`, including the visually checked Springer two-column DOCX/PDF and simple diagram sources. The supplied Downloads report remains untouched.

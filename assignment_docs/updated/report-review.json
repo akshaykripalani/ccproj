@@ -1,30 +1,146 @@
 {
   "date": "2026-10-27",
-  "renderer": "Dedicated hidden Microsoft Word instance, read-only export; Poppler PNGs at 130 dpi",
-  "pages": 8,
+  "format": "Springer Nature journal-style two-column Word adaptation of sn-jnl iicol layout",
+  "officialTemplate": "https://cms-resources.apps.public.k8s.springernature.io/springer-cms/rest/v1/content/18782940/data/v12",
+  "officialTemplateSha256": "812e76dcaa9c28dc1bff1fb6065d51729b67d4ea140552a05088317414a3ecae",
+  "docx": "Cloud_Equipment_Monitoring_Springer_TwoColumn.docx",
+  "pdf": "Cloud_Equipment_Monitoring_Springer_TwoColumn.pdf",
+  "pages": 6,
   "reviewedPages": [
     1,
     2,
     3,
     4,
     5,
-    6,
-    7,
-    8
+    6
   ],
+  "renderer": "Dedicated hidden Microsoft Word read-only export; Poppler PNGs at 130 dpi",
   "visualChecks": [
-    "No clipped text or overlapping objects",
-    "Five students alphabetical by first name; Rama Varshney last as Assistant Professor",
-    "All six confirmed emails readable and in author order",
-    "All three diagrams legible and captions paired",
-    "Tables fit text area and use repeating headers",
-    "References left aligned, genuine sources, no author placeholders"
+    "All six pages reviewed after final render",
+    "Two-column body: 76 mm columns, 8 mm gap; full-width front matter",
+    "Three full-width diagrams legible with captions below",
+    "All three tables fit a single column and remain intact",
+    "Headings do not hyphenate; final page columns balanced",
+    "Six authors in confirmed order, faculty role, affiliation and six emails preserved",
+    "Final profiles, current outlook/history distinction and latest test counts included",
+    "Complete references; no clipped text or overlaps"
   ],
-  "docxSha256": "75cf8b29d566c069fbe7dec34b6d3eb5ba6503439cd3b2dd17f186905497d7fd",
-  "pdfSha256": "7cc62c9c7b52e8229db5fdd987e6cb43740e60d4ef9d6067a2692148dc2bdedc",
-  "sourceSha256": "d64c46262915d5fb18fd37c7d3482685376c5c754d6e7c9fdda2dde9e60d7a86",
-  "sourceUnmodified": true,
-  "wordCountParagraphs": 2370,
+  "wordCountParagraphs": 2434,
+  "figures": 3,
+  "tables": 3,
+  "fonts": "Times New Roman; title 17 pt, authors 12 pt, affiliation 11 pt, body 10/12 pt, headings 14/12 pt, captions/tables 8 pt, references 9 pt",
+  "sections": [
+    {
+      "columns": 1,
+      "textWidthCm": 16.002,
+      "textHeightCm": 21.601,
+      "gapMm": 0.0
+    },
+    {
+      "columns": 2,
+      "textWidthCm": 16.002,
+      "textHeightCm": 21.601,
+      "gapMm": 8.008
+    },
+    {
+      "columns": 1,
+      "textWidthCm": 16.002,
+      "textHeightCm": 21.601,
+      "gapMm": 8.008
+    },
+    {
+      "columns": 2,
+      "textWidthCm": 16.002,
+      "textHeightCm": 21.601,
+      "gapMm": 8.008
+    },
+    {
+      "columns": 1,
+      "textWidthCm": 16.002,
+      "textHeightCm": 21.601,
+      "gapMm": 8.008
+    },
+    {
+      "columns": 2,
+      "textWidthCm": 16.002,
+      "textHeightCm": 21.601,
+      "gapMm": 8.008
+    },
+    {
+      "columns": 1,
+      "textWidthCm": 16.002,
+      "textHeightCm": 21.601,
+      "gapMm": 8.008
+    },
+    {
+      "columns": 2,
+      "textWidthCm": 16.002,
+      "textHeightCm": 21.601,
+      "gapMm": 8.008
+    },
+    {
+      "columns": 2,
+      "textWidthCm": 16.002,
+      "textHeightCm": 21.601,
+      "gapMm": 8.008
+    }
+  ],
+  "pageBounds": [
+    {
+      "page": 1,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "leftColumnWords": 212,
+      "rightColumnWords": 204,
+      "textMinX": 79.344,
+      "textMaxX": 533.0788
+    },
+    {
+      "page": 2,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "leftColumnWords": 178,
+      "rightColumnWords": 161,
+      "textMinX": 79.344,
+      "textMaxX": 532.975
+    },
+    {
+      "page": 3,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "leftColumnWords": 131,
+      "rightColumnWords": 163,
+      "textMinX": 79.344,
+      "textMaxX": 533.03812
+    },
+    {
+      "page": 4,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "leftColumnWords": 244,
+      "rightColumnWords": 262,
+      "textMinX": 79.344,
+      "textMaxX": 533.16592
+    },
+    {
+      "page": 5,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "leftColumnWords": 267,
+      "rightColumnWords": 270,
+      "textMinX": 79.344,
+      "textMaxX": 533.1752799999999
+    },
+    {
+      "page": 6,
+      "widthPt": 595.32,
+      "heightPt": 841.92,
+      "leftColumnWords": 273,
+      "rightColumnWords": 221,
+      "textMinX": 79.344,
+      "textMaxX": 533.21668
+    }
+  ],
   "authors": [
     "Akshay Kripalani",
     "Joel Jacob",
@@ -32,77 +148,6 @@
     "Kanish Jain",
     "Manas Kulkarni",
     "Rama Varshney"
-  ],
-  "fonts": "Times New Roman, title 14 pt, body 10 pt, headings 12/10 pt, captions 9 pt",
-  "textAreaCm": [
-    12.2,
-    19.3
-  ],
-  "pageBounds": [
-    {
-      "page": 1,
-      "widthPt": 595.32,
-      "heightPt": 841.92,
-      "textMinX": 124.7,
-      "textMaxX": 470.72596
-    },
-    {
-      "page": 2,
-      "widthPt": 595.32,
-      "heightPt": 841.92,
-      "textMinX": 124.7,
-      "textMaxX": 470.5552
-    },
-    {
-      "page": 3,
-      "widthPt": 595.32,
-      "heightPt": 841.92,
-      "textMinX": 124.7,
-      "textMaxX": 470.6300800000001
-    },
-    {
-      "page": 4,
-      "widthPt": 595.32,
-      "heightPt": 841.92,
-      "textMinX": 124.7,
-      "textMaxX": 470.81668
-    },
-    {
-      "page": 5,
-      "widthPt": 595.32,
-      "heightPt": 841.92,
-      "textMinX": 124.7,
-      "textMaxX": 470.81668
-    },
-    {
-      "page": 6,
-      "widthPt": 595.32,
-      "heightPt": 841.92,
-      "textMinX": 124.7,
-      "textMaxX": 470.67964
-    },
-    {
-      "page": 7,
-      "widthPt": 595.32,
-      "heightPt": 841.92,
-      "textMinX": 124.7,
-      "textMaxX": 470.66956000000005
-    },
-    {
-      "page": 8,
-      "widthPt": 595.32,
-      "heightPt": 841.92,
-      "textMinX": 124.7,
-      "textMaxX": 466.60400000000016
-    }
-  ],
-  "springerGuidance": "https://link.springer.com/series/558/information-for-authors-and-editors",
-  "finalRevision": "First-name student ordering, faculty coauthor and six emails added; all eight pages visually reviewed",
-  "authorOrder": "Students alphabetical by first name; Rama Varshney last; does not indicate contribution",
-  "affiliation": [
-    "Department of Computer Engineering",
-    "Mukesh Patel School of Technology Management and Engineering",
-    "NMIMS, Mumbai, India"
   ],
   "emails": {
     "Akshay Kripalani": "akshay.kripalani74@nmims.in",
@@ -112,8 +157,8 @@
     "Manas Kulkarni": "manas.kulkarni73@nmims.in",
     "Rama Varshney": "rama.varshney@nmims.edu"
   },
-  "correspondingAuthor": "Not designated",
-  "facultyRole": {
-    "Rama Varshney": "Assistant Professor"
-  }
+  "sourceSha256": "d64c46262915d5fb18fd37c7d3482685376c5c754d6e7c9fdda2dde9e60d7a86",
+  "sourceUnmodified": true,
+  "docxSha256": "d061a00868428c2814c9232f860327a1c05d4bbbd3f3fd6f94c52010a8a73f0a",
+  "pdfSha256": "baf71dbf39be8d44654bf17741bfbcf81e7f82deb9c401af319b16e286ff3c8d"
 }

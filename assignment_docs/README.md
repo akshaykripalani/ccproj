@@ -1,5 +1,7 @@
 # Assignment submission
 
+The final expanded project paper is the six-page [Springer two-column PDF](updated/Cloud_Equipment_Monitoring_Springer_TwoColumn.pdf), with an [editable Word copy](updated/Cloud_Equipment_Monitoring_Springer_TwoColumn.docx). The material below records the earlier assignment baseline.
+
 **Cloud-Based Industrial Equipment Monitoring and Fault Detection**  
 Prepared: 15 October 2026. Source baseline: Git `b31c746`, followed by documentation-only commits.
 
