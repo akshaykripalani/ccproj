@@ -16,19 +16,17 @@
   ],
   "renderer": "Dedicated hidden Microsoft Word read-only export; Poppler PNGs at 130 dpi",
   "visualChecks": [
-    "All six pages reviewed after final render",
-    "Two-column body: 76 mm columns, 8 mm gap; full-width front matter",
-    "Three full-width diagrams legible with captions below",
-    "All three tables fit a single column and remain intact",
-    "Headings do not hyphenate; final page columns balanced",
-    "Six authors in confirmed order, faculty role, affiliation and six emails preserved",
-    "Final profiles, current outlook/history distinction and latest test counts included",
-    "Complete references; no clipped text or overlaps"
+    "All six pages visually reviewed after final render",
+    "Each author has a separate name, role, full affiliation and email block",
+    "Three author columns across two rows; first-name alphabetical student order, faculty last",
+    "All emails remain within their author column",
+    "Two-column body, three intact data tables, three readable full-width figures",
+    "No blank final page, clipping, overlap or missing references"
   ],
-  "wordCountParagraphs": 2434,
+  "wordCountParagraphs": 2396,
   "figures": 3,
   "tables": 3,
-  "fonts": "Times New Roman; title 17 pt, authors 12 pt, affiliation 11 pt, body 10/12 pt, headings 14/12 pt, captions/tables 8 pt, references 9 pt",
+  "fonts": "Times New Roman; title 17 pt, author names 11 pt bold, roles/affiliations 8.5 pt, author emails 8 pt, body 10/12 pt, headings 14/12 pt, captions/data tables 8 pt, references 9 pt",
   "sections": [
     {
       "columns": 1,
@@ -77,12 +75,6 @@
       "textWidthCm": 16.002,
       "textHeightCm": 21.601,
       "gapMm": 8.008
-    },
-    {
-      "columns": 2,
-      "textWidthCm": 16.002,
-      "textHeightCm": 21.601,
-      "gapMm": 8.008
     }
   ],
   "pageBounds": [
@@ -90,53 +82,53 @@
       "page": 1,
       "widthPt": 595.32,
       "heightPt": 841.92,
-      "leftColumnWords": 212,
-      "rightColumnWords": 204,
+      "leftColumnWords": 233,
+      "rightColumnWords": 218,
       "textMinX": 79.344,
-      "textMaxX": 533.0788
+      "textMaxX": 533.0745999999999
     },
     {
       "page": 2,
       "widthPt": 595.32,
       "heightPt": 841.92,
-      "leftColumnWords": 178,
-      "rightColumnWords": 161,
+      "leftColumnWords": 192,
+      "rightColumnWords": 167,
       "textMinX": 79.344,
-      "textMaxX": 532.975
+      "textMaxX": 533.12596
     },
     {
       "page": 3,
       "widthPt": 595.32,
       "heightPt": 841.92,
-      "leftColumnWords": 131,
-      "rightColumnWords": 163,
+      "leftColumnWords": 123,
+      "rightColumnWords": 156,
       "textMinX": 79.344,
-      "textMaxX": 533.03812
+      "textMaxX": 533.14888
     },
     {
       "page": 4,
       "widthPt": 595.32,
       "heightPt": 841.92,
-      "leftColumnWords": 244,
-      "rightColumnWords": 262,
+      "leftColumnWords": 218,
+      "rightColumnWords": 253,
       "textMinX": 79.344,
-      "textMaxX": 533.16592
+      "textMaxX": 533.12848
     },
     {
       "page": 5,
       "widthPt": 595.32,
       "heightPt": 841.92,
-      "leftColumnWords": 267,
-      "rightColumnWords": 270,
+      "leftColumnWords": 290,
+      "rightColumnWords": 258,
       "textMinX": 79.344,
-      "textMaxX": 533.1752799999999
+      "textMaxX": 533.21668
     },
     {
       "page": 6,
       "widthPt": 595.32,
       "heightPt": 841.92,
-      "leftColumnWords": 273,
-      "rightColumnWords": 221,
+      "leftColumnWords": 309,
+      "rightColumnWords": 242,
       "textMinX": 79.344,
       "textMaxX": 533.21668
     }
@@ -159,6 +151,55 @@
   },
   "sourceSha256": "d64c46262915d5fb18fd37c7d3482685376c5c754d6e7c9fdda2dde9e60d7a86",
   "sourceUnmodified": true,
-  "docxSha256": "d061a00868428c2814c9232f860327a1c05d4bbbd3f3fd6f94c52010a8a73f0a",
-  "pdfSha256": "baf71dbf39be8d44654bf17741bfbcf81e7f82deb9c401af319b16e286ff3c8d"
+  "docxSha256": "2d842674e03bcaf60b7e3f90e997a7a314a30da7f0e5b6dc451f966fdb3407de",
+  "pdfSha256": "68c19ace0ac8e96fc1dc7f587c954bed65f9520c5544b23f2f7b2601c192049c",
+  "docxTables": 4,
+  "authorBlocks": {
+    "rows": 2,
+    "columns": 3,
+    "positions": [
+      {
+        "name": "Akshay Kripalani",
+        "row": 1,
+        "column": 1,
+        "emailX0": 105.98,
+        "emailX1": 203.98760000000001
+      },
+      {
+        "name": "Joel Jacob",
+        "row": 1,
+        "column": 2,
+        "emailX0": 255.65,
+        "emailX1": 356.80124
+      },
+      {
+        "name": "Kaivalya Joglekar",
+        "row": 1,
+        "column": 3,
+        "emailX0": 396.67,
+        "emailX1": 518.1785199999999
+      },
+      {
+        "name": "Kanish Jain",
+        "row": 2,
+        "column": 1,
+        "emailX0": 114.86,
+        "emailX1": 195.13136
+      },
+      {
+        "name": "Manas Kulkarni",
+        "row": 2,
+        "column": 2,
+        "emailX0": 259.01,
+        "emailX1": 353.47195999999997
+      },
+      {
+        "name": "Rama Varshney",
+        "row": 2,
+        "column": 3,
+        "emailX0": 412.63,
+        "emailX1": 502.14735999999994
+      }
+    ]
+  }
 }

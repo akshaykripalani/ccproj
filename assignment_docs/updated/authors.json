@@ -8,6 +8,21 @@
     "Rama Varshney"
   ],
   "order": "Students alphabetical by first name; Rama Varshney last; does not indicate contribution",
+  "blockColumns": 3,
+  "blockAffiliationLines": [
+    "Department of Computer Engineering",
+    "Mukesh Patel School of Technology",
+    "Management and Engineering",
+    "NMIMS, Mumbai, India"
+  ],
+  "roles": {
+    "Akshay Kripalani": "Student",
+    "Joel Jacob": "Student",
+    "Kaivalya Joglekar": "Student",
+    "Kanish Jain": "Student",
+    "Manas Kulkarni": "Student",
+    "Rama Varshney": "Assistant Professor"
+  },
   "nameLines": [
     "Akshay Kripalani, Joel Jacob, Kaivalya Joglekar,",
     "Kanish Jain, Manas Kulkarni and Rama Varshney"

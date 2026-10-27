@@ -294,16 +294,57 @@ def main(layout="springer-two-column"):
     if authors.exists():
         author_data = json.loads(authors.read_text(encoding="utf-8"))
         d.core_properties.author = "; ".join(author_data.get("names", []))
-        lines = [(line, 12 if two_column else 10) for line in author_data.get("nameLines", author_data.get("lines", []))]
-        lines += [(line, 11 if two_column else 9) for line in author_data.get("affiliationLines", [])]
-        lines += [(line, 9) for line in author_data.get("roleLines", [])]
-        lines += [(line, 9 if two_column else 8) for line in author_data.get("emailLines", [])]
-        for index, (line, size) in enumerate(lines):
-            p = paragraph(line, False, size)
-            p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-            p.paragraph_format.keep_with_next = True
-            if index == len(lines) - 1:
-                p.paragraph_format.space_after = Pt(12)
+        if two_column:
+            names = author_data["names"]
+            block_columns = author_data.get("blockColumns", 3)
+            blocks = d.add_table(rows=math.ceil(len(names) / block_columns), cols=block_columns)
+            blocks.autofit = False
+            for col in blocks.columns:
+                col.width = Cm(16 / block_columns)
+            for index, name in enumerate(names):
+                cell = blocks.cell(index // block_columns, index % block_columns)
+                cell.width = Cm(16 / block_columns)
+                cell.vertical_alignment = WD_CELL_VERTICAL_ALIGNMENT.TOP
+                cell._tc.clear_content()
+                tcpr = cell._tc.get_or_add_tcPr()
+                borders = OxmlElement("w:tcBorders")
+                for side in ("top", "bottom", "left", "right", "insideH", "insideV"):
+                    edge = OxmlElement("w:" + side); edge.set(qn("w:val"), "nil"); borders.append(edge)
+                tcpr.append(borders)
+                padding = OxmlElement("w:tcMar")
+                for side, amount in [("top", 140 if index >= block_columns else 0), ("bottom", 40), ("left", 20), ("right", 20)]:
+                    margin = OxmlElement("w:" + side); margin.set(qn("w:w"), str(amount)); margin.set(qn("w:type"), "dxa"); padding.append(margin)
+                tcpr.append(padding)
+                lines = [(name, 11, True, False)]
+                lines += [(author_data["roles"][name], 8.5, False, True)]
+                lines += [(line, 8.5, False, False) for line in author_data["blockAffiliationLines"]]
+                lines += [(author_data["emails"][name], 8, False, False)]
+                for line, size, bold, italic in lines:
+                    p = cell.add_paragraph()
+                    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                    p.paragraph_format.first_line_indent = Cm(0)
+                    p.paragraph_format.space_before = p.paragraph_format.space_after = Pt(0)
+                    p.paragraph_format.line_spacing = Pt(size + 1.5)
+                    p.paragraph_format.keep_with_next = True
+                    suppress = OxmlElement("w:suppressAutoHyphens"); suppress.set(qn("w:val"), "1"); p._p.get_or_add_pPr().append(suppress)
+                    r = p.add_run(line)
+                    r.font.name, r.font.size, r.bold, r.italic = "Times New Roman", Pt(size), bold, italic
+            for row in blocks.rows:
+                row._tr.get_or_add_trPr().append(OxmlElement("w:cantSplit"))
+            spacer = d.add_paragraph()
+            spacer.paragraph_format.line_spacing = Pt(1)
+            spacer.paragraph_format.space_after = Pt(10)
+        else:
+            lines = [(line, 10) for line in author_data.get("nameLines", author_data.get("lines", []))]
+            lines += [(line, 9) for line in author_data.get("affiliationLines", [])]
+            lines += [(line, 9) for line in author_data.get("roleLines", [])]
+            lines += [(line, 8) for line in author_data.get("emailLines", [])]
+            for index, (line, size) in enumerate(lines):
+                p = paragraph(line, False, size)
+                p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+                p.paragraph_format.keep_with_next = True
+                if index == len(lines) - 1:
+                    p.paragraph_format.space_after = Pt(12)
     abstract = paragraph("Abstract. This paper presents a deployed AWS system for monitoring seven simulated industrial assets and predicting faults within the next five simulated minutes. One EC2 gateway represents three induction motors, a centrifugal pump, an air compressor, a cooling fan and a generator. Signed telemetry passes through API Gateway, Lambda and a FIFO queue into DynamoDB and an S3 archive. Configurable deterioration profiles produce thermal and mechanical faults. A dataset of 420 independent simulation runs supports local training and evaluation. The trained random forest is exported as portable learned trees and served by a separate inference Lambda. On 76 held-out runs, fault-warning precision was 90.3%, recall was 94.3%, and the median warning lead was five simulated minutes. The deployed system demonstrated warnings before faults, automatic cooldown and restart, and mechanical faults requiring operator repair. An authenticated React dashboard combines measurements, predictions, maintenance history and bounded historical reports. The results establish a reproducible teaching demonstration; they do not establish predictive accuracy on real industrial equipment.", False, 9)
     abstract.paragraph_format.left_indent = abstract.paragraph_format.right_indent = Cm(.5)
     abstract.paragraph_format.space_after = Pt(6)
@@ -383,8 +424,6 @@ def main(layout="springer-two-column"):
         p.alignment = WD_ALIGN_PARAGRAPH.LEFT
         p.paragraph_format.space_after = Pt(4)
     OUT.mkdir(parents=True, exist_ok=True)
-    if two_column:
-        columns(2)  # Balance the final page's text across both columns.
     path = OUT / ("Cloud_Equipment_Monitoring_Springer_TwoColumn.docx" if two_column else "Cloud_Equipment_Monitoring_LNCS.docx")
     d.save(path)
     print(json.dumps({"docx": str(path), "words": sum(len(p.text.split()) for p in d.paragraphs), "figures": len(d.inline_shapes), "tables": len(d.tables), "modelVersion": evaluation["version"], "authorDetailsProvided": authors.exists()}, indent=2))
